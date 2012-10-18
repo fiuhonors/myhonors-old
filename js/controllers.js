@@ -12,6 +12,7 @@ function AppCtrl($scope, $route) {
 AppCtrl.$inject = ['$scope', '$route'];
 
 /* Controllers */
+
 function CalendarCtrl($scope, $routeParams, Post) {
 	$scope.eventId = $routeParams.eventId;
 	Post.get({postId: $scope.eventId}, function(posts) {
@@ -23,17 +24,6 @@ function CalendarCtrl($scope, $routeParams, Post) {
 	$scope.renderMap = function(location) {
 		return '<iframe width="950" height="300" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=d&amp;source=s_d&amp;saddr=' + location + '&amp;daddr=&amp;hl=en&amp;geocode=&amp;sll=25.755411,-80.372983&amp;sspn=0.007508,0.009645&amp;mra=mift&amp;mrsp=0&amp;sz=17&amp;ie=UTF8&amp;t=m&amp;ll=25.756319,-80.369604&amp;spn=0.005798,0.020363&amp;z=16&amp;output=embed"></iframe>';
 	}
-
-	// copied from discuss
-	$scope.getPostGrid = function(depth) {
-		var number = 11; // default value
-		if (depth < 7) { number = 18 - depth; }
-		return number;
-	};
-
-	$scope.getContentGrid = function(depth) {
-		return $scope.getPostGrid(depth) - 2; // subtracts 2 because the profile pic div is 2 grids wide
-	};
 };
 
 CalendarCtrl.$inject = ['$scope', '$routeParams', 'Post'];
