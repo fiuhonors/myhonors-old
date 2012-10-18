@@ -4,7 +4,7 @@
 
 function AppCtrl($scope, $route) {
 	$scope.$route = $route;
-	$scope.page_title = "Calendar";
+	$scope.page_title = "";
 
 	$scope.profile = {};
 };
@@ -13,7 +13,7 @@ AppCtrl.$inject = ['$scope', '$route'];
 
 /* Controllers */
 
-function CalendarCtrl($scope, $routeParams, Post) {
+function EventCtrl($scope, $routeParams, Post) {
 	$scope.eventId = $routeParams.eventId;
 	Post.get({postId: $scope.eventId}, function(posts) {
 		//success
@@ -33,7 +33,7 @@ function CalendarCtrl($scope, $routeParams, Post) {
 	}
 };
 
-CalendarCtrl.$inject = ['$scope', '$routeParams', 'Post'];
+EventCtrl.$inject = ['$scope', '$routeParams', 'Post'];
 
 function CitizenshipCtrl($scope, $http) {
 	$scope.pid = null;
