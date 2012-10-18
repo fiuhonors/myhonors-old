@@ -2,7 +2,7 @@
 	<div class="mapoverlay">
 		<div>
 			<h1>{{event.title}}</h1>
-			<p class="smalltext">{{event.date}}. Counts as 1 {{event.event_type}}.</p>
+			<p class="smalltext">{{event.date*1000 | date:"EEEE, MMMM d 'at' h:mma"}}. Counts as 1 {{event.event_type}}.</p>
 			<p>{{event.description}}</p>
 		</div>
 	</div>
