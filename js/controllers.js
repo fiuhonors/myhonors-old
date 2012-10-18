@@ -19,6 +19,13 @@ function CalendarCtrl($scope, $routeParams, Post) {
 		//success
 		$scope.comments = posts[0].children;
 		$scope.event = posts[0].content;
+
+		switch ($scope.event.event_type)
+		{
+			case "h": $scope.event.event_type = "Honors Hour"; break;
+			case "c": $scope.event.event_type = "Colloquia"; break;
+			case "e": $scope.event.event_type = "Excellence Lecture"; break;
+		}
 	});
 
 	$scope.renderMap = function(location) {
