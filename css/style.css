@@ -264,3 +264,13 @@ h3 {
 	font-size: 12px;
 	text-shadow: 1px 1px 1px black;
 }
+
+.event-title, .event-title:visited, .event-title:active {
+	font-size: 20px;
+	color: #444;
+	font-weight: bold;
+}
+
+.event-title:hover {
+	color: #00baff;
+}

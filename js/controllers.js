@@ -13,7 +13,27 @@ AppCtrl.$inject = ['$scope', '$route'];
 
 /* Controllers */
 
-function EventCtrl($scope, $routeParams, Post) {
+function EventBrowseCtrl($scope, Events) {
+	Events.query(function(events) {
+		//success
+		$scope.events = events;
+
+		for (var i = 0; i < $scope.events.length; i++)
+		{
+			// format event types
+			switch ($scope.events[i].type)
+			{
+				case "h": $scope.events[i].type = "Honors Hour"; break;
+				case "c": $scope.events[i].type = "Colloquia"; break;
+				case "e": $scope.events[i].type = "Excellence Lecture"; break;
+			}
+		}
+	});
+}
+
+EventBrowseCtrl.$inject = ['$scope', 'Events'];
+
+function EventViewCtrl($scope, $routeParams, Post) {
 	$scope.eventId = $routeParams.eventId;
 	Post.get({postId: $scope.eventId}, function(posts) {
 		//success
@@ -33,7 +53,7 @@ function EventCtrl($scope, $routeParams, Post) {
 	}
 };
 
-EventCtrl.$inject = ['$scope', '$routeParams', 'Post'];
+EventViewCtrl.$inject = ['$scope', '$routeParams', 'Post'];
 
 function CitizenshipCtrl($scope, $http) {
 	$scope.pid = null;
