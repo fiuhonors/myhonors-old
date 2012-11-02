@@ -36,6 +36,10 @@ body:before { /* thanks to Maleika (Kohoutec)*/
 
 /* General CSS ------------------------------------------------------------ */
 
+html {
+	overflow-y: scroll;
+}
+
 body {
 	background: url('http://thc.fiu.edu/myhonors/images/body-bg.png');
 	font-family: Verdana, Geneva, sans-serif;
