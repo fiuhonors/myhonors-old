@@ -6,9 +6,9 @@
 vertical margins (top and bottom) to add spacing, else those margins get added to total height 
 and your footer gets pushed down a bit more, creating vertical scroll bars in the browser */
 
-html, body {height: 100%;}
+html, body {height: 100%; width:100%;}
 
-#wrap {min-height: 100%;}
+#wrap {min-height: 100%; width:100%}
 
 #main {
 	overflow: auto;
@@ -99,18 +99,21 @@ button:hover {
 /* Header ----------------------------------------------------------------- */
 
 #head-wrap {
-	height: 100px;
+	width: 100%;
+	height: 68px;
 	background: url('../img/header-bg.gif') repeat;
 	border-bottom: 3px solid #00baff;
 	margin-bottom: 10px;
 }
 
+#logo {height: 100%;}
+
 #head-nav {
 	position: relative;
-	margin-top: 10px;
-	line-height: 92px;
+	margin-top: 8px;
+	line-height: 60px;
 	font-family: Georgia, Serif;
-	font-size: 20px;
+	font-size: 18px;
 }
 
 #head-wrap a, #head-wrap a:hover, #head-wrap a:active, #head-wrap a:visited {
@@ -134,8 +137,8 @@ button:hover {
 
 #head-search {
 	position: relative;
-	margin-top: 10px;
-	line-height: 92px;
+	margin-top: 8px;
+	line-height: 60px;
 	text-align: right;
 }
 
