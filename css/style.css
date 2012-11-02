@@ -106,8 +106,6 @@ button:hover {
 	margin-bottom: 10px;
 }
 
-#logo {height: 100%;}
-
 #head-nav {
 	position: relative;
 	margin-top: 8px;
@@ -117,7 +115,6 @@ button:hover {
 }
 
 #head-wrap a, #head-wrap a:hover, #head-wrap a:active, #head-wrap a:visited {
-	display: block;
 	height: 100%;
 	border: 0;
 	color: #f2f2f2;
