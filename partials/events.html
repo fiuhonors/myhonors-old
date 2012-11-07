@@ -1,10 +1,14 @@
-<div class="prefix_5 grid_14 suffix_5" data-ng-repeat="event in events">
-	<div class="box">
-		<p>
-			<a href="#/events/{{event.eid}}" class="event-title">{{event.name}}</a><br />
-			<span style="margin: 0">{{event.begins*1000 | date:"MMMM d"}} from {{event.begins*1000 | date:"h:mma"}} to {{event.ends*1000 | date:"h:mma"}}. Counts as 1 <strong>{{event.type}}</strong>.</span>
-		</p>
-		<p><a href="http://thc.fiu.edu/myhonors/events/swipe/{{event.eid}}/in">[Swipe In]</a> <a href="http://thc.fiu.edu/myhonors/events/swipe/{{event.eid}}/out">[Swipe Out]</a> <a href="http://thc.fiu.edu/myhonors/events/override/{{event.eid}}">[Override]</a></p>
+<div class="grid_6 events-tidbit" data-ng-repeat="event in events">
+	<div class="content">
+		<div class="image">
+			<img src="{{event.thumb}}" />
+			<a href="#/events/{{event.eid}}" class="text">
+				<span class="event-title">{{event.name}}</span>
+				<span style="color: #444">{{event.begins*1000 | date:"MMMM d"}} from {{event.begins*1000 | date:"h:mma"}} to {{event.ends*1000 | date:"h:mma"}}. Counts as 1 <strong>{{event.type}}</strong>.</span>
+			</a>
+		</div>
+		<div class="inside-footer"><span style="float: left">{{event.type}}</span><span style="float: right">{{event.begins*1000 | date:"M/d/yy"}}</div>
 	</div>
+	<div class="outside-footer"></div>
 </div>
 <div class="clear"></div>
