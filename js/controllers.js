@@ -26,6 +26,7 @@ function EventBrowseCtrl($scope, Events) {
 				case "h": $scope.events[i].type = "Honors Hour"; break;
 				case "c": $scope.events[i].type = "Colloquia"; break;
 				case "e": $scope.events[i].type = "Excellence Lecture"; break;
+				case "a": $scope.events[i].type = "Attendance Only"; break;
 			}
 		}
 	});
@@ -44,10 +45,11 @@ function EventViewCtrl($scope, $routeParams, Events) {
 			case "h": $scope.event.type = "Honors Hour"; break;
 			case "c": $scope.event.type = "Colloquia"; break;
 			case "e": $scope.event.type = "Excellence Lecture"; break;
+			case "a": $scope.event.type = "Attendance Only"; break;
 		}
 	});
 
-	$scope.renderMap = function(location) {
+	$scope.renderMap = function(location) {	
 		return '<iframe width="950" height="300" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="' + location + '"></iframe>';
 	}
 };
