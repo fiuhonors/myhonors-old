@@ -11,7 +11,8 @@ angular.module('myhonorsServices', ['ngResource']).
 	}).
 
 	factory('Events', function($resource) {
-		return $resource('http://thc.fiu.edu/myhonors/events/browse/json', {}, {
-			query: {method:'GET', isArray:true}
+		return $resource('http://thc.fiu.edu/myhonors/events/:action/json', {}, {
+			get: {method: 'GET', params:{action: 'details'}},
+			query: {method:'GET', params:{action: 'browse'}, isArray:true}
 		});
 	});

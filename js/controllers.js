@@ -33,27 +33,26 @@ function EventBrowseCtrl($scope, Events) {
 
 EventBrowseCtrl.$inject = ['$scope', 'Events'];
 
-function EventViewCtrl($scope, $routeParams, Post) {
+function EventViewCtrl($scope, $routeParams, Events) {
 	$scope.eventId = $routeParams.eventId;
-	Post.get({postId: $scope.eventId}, function(posts) {
+	Events.get({eventId: $scope.eventId}, function(data) {
 		//success
-		$scope.comments = posts[0].children;
-		$scope.event = posts[0].content;
+		$scope.event = data;
 
-		switch ($scope.event.event_type)
+		switch ($scope.event.type)
 		{
-			case "h": $scope.event.event_type = "Honors Hour"; break;
-			case "c": $scope.event.event_type = "Colloquia"; break;
-			case "e": $scope.event.event_type = "Excellence Lecture"; break;
+			case "h": $scope.event.type = "Honors Hour"; break;
+			case "c": $scope.event.type = "Colloquia"; break;
+			case "e": $scope.event.type = "Excellence Lecture"; break;
 		}
 	});
 
 	$scope.renderMap = function(location) {
-		return '<iframe width="950" height="300" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=d&amp;source=s_d&amp;saddr=' + location + '&amp;daddr=&amp;hl=en&amp;geocode=&amp;sll=25.755411,-80.372983&amp;sspn=0.007508,0.009645&amp;mra=mift&amp;mrsp=0&amp;sz=17&amp;ie=UTF8&amp;t=m&amp;ll=25.756319,-80.369604&amp;spn=0.005798,0.020363&amp;z=16&amp;output=embed"></iframe>';
+		return '<iframe width="950" height="300" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="' + location + '"></iframe>';
 	}
 };
 
-EventViewCtrl.$inject = ['$scope', '$routeParams', 'Post'];
+EventViewCtrl.$inject = ['$scope', '$routeParams', 'Events'];
 
 function CitizenshipCtrl($scope, $http) {
 	$scope.pid = null;
