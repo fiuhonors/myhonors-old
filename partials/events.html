@@ -1,4 +1,4 @@
-<div class="grid_6 events-tidbit" data-ng-repeat="event in events">
+<div class="grid_6 events-tidbit" data-ng-repeat="event in events | filter:searchText">
 	<div class="content">
 		<div class="image">
 			<img ng-src="img/honorshours/{{event.eid}}.jpg" />

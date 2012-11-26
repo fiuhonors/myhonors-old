@@ -2,14 +2,20 @@
 
 /* MAIN APP CONTROLLER */
 
-function AppCtrl($scope, $route) {
-	$scope.$route = $route;
+function AppCtrl($scope, $location) {
 	$scope.page_title = "";
 
 	$scope.profile = {};
+
+	$scope.toEventsPage = function() {
+		if ($scope.searchText.length > 0)
+		{
+			$location.path('/events');
+		}
+	}
 };
 
-AppCtrl.$inject = ['$scope', '$route'];
+AppCtrl.$inject = ['$scope', '$location'];
 
 /* Controllers */
 

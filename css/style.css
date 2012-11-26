@@ -146,13 +146,16 @@ button:hover {
 }
 
 #head-search input {
-	width: 120px;
+	width: 160px;
 	padding: 4px;
 	outline: 0;
 	background-color: #fff;
 	border: 1px solid gainsboro;
 	color: #444;
 	font-size: 12px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
 }
 
 /* Container Styling ------------------------------------------------------ */
