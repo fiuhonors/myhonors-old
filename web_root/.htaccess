@@ -1,3 +1,6 @@
+# This removes the index.php from CodeIgniter URLs
+# http://ellislab.com/codeigniter/user-guide/general/urls.html
+
 RewriteEngine on
 RewriteCond $1 !^(index\.html|index\.php|css|img|js|lib|partials)
-RewriteRule ^(.*)$ /index.php/$1 [L]
+RewriteRule ^(.*)$ ./index.php/$1 [L]
