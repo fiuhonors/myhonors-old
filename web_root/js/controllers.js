@@ -63,8 +63,17 @@ function EventViewCtrl($scope, $routeParams, Events) {
 EventViewCtrl.$inject = ['$scope', '$routeParams', 'Events'];
 
 function CitizenshipCtrl($scope, $http) {
-	$scope.userid = null;
+	$scope.userid = '';
 	$scope.loading = false; // used to adjust display when waiting for AJAX responses
+
+	var clearRequirements = function() {
+		$scope.honorshours = [];
+		$scope.colloquia = [];
+		$scope.excellence = [];
+	}
+
+	// initialize the arrays
+	clearRequirements();
 
 	$scope.fetch = function() {
 		$scope.loading = true;
@@ -88,7 +97,7 @@ function CitizenshipCtrl($scope, $http) {
 	$scope.requirementsComplete = function(type) {
 		switch (type)
 		{
-			case "h":	return Boolean($scope.honorshours.length >= 3);
+			case "h": return Boolean($scope.honorshours.length >= 3);
 			case "c": return Boolean($scope.colloquia.length >= 1);
 			case "e": return Boolean($scope.excellence.length >= 1);
 		}
@@ -97,11 +106,7 @@ function CitizenshipCtrl($scope, $http) {
 	// checks whether we want to fetch the user's info or not, based on whether they've entered a 7-digit number
 	$scope.doFetch = function() {
 		if ($scope.userid.length === 7) {
-			// initialize and clear the arrays
-			$scope.honorshours = new Array();
-			$scope.colloquia = new Array();
-			$scope.excellence = new Array();
-
+			clearRequirements(); // start fresh
 			$scope.fetch();
 		}
 	};
