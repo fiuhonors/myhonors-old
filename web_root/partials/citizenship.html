@@ -1,11 +1,11 @@
 <div class="prefix_4 grid_16 suffix_4">
 
-	<input class="largeinput grid_16 alpha" type="text" ng-model="pid" ng-change="doFetch()" maxlength="7" />
+	<input class="largeinput grid_16 alpha" type="text" ng-model="userid" ng-change="doFetch()" maxlength="7" />
 	<div class="clear"></div>
 
-	<div ng-show="pid.length < 7" class="center"><img src="img/enterpidhere.png" style="margin-top:20px;" /></div>
+	<div ng-show="userid.length < 7" class="center"><img src="img/enter-userid-here.png" style="margin-top:20px;" /></div>
 
-	<div ng-show="pid.length >= 7 && !loading">
+	<div ng-show="userid.length >= 7 && !loading">
 
 		<h2>Honors Hours <span class="smalltext">3 Required per Semester</span></h2>
 		<div class="box grid_13 alpha omega" style="min-height: 64px">

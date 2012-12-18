@@ -63,13 +63,13 @@ function EventViewCtrl($scope, $routeParams, Events) {
 EventViewCtrl.$inject = ['$scope', '$routeParams', 'Events'];
 
 function CitizenshipCtrl($scope, $http) {
-	$scope.pid = null;
+	$scope.userid = null;
 	$scope.loading = false; // used to adjust display when waiting for AJAX responses
 
 	$scope.fetch = function() {
 		$scope.loading = true;
 
-		var data = 'pid=' + $scope.pid; // POST data in the header is formatted just like GET data in the URL (e.g. one=1&two=2)
+		var data = 'userid=' + $scope.userid; // POST data in the header is formatted just like GET data in the URL (e.g. one=1&two=2)
 		$http.post('http://thc.fiu.edu/myhonors/swipe/lookup/', data, {headers: {'Content-Type' : 'application/x-www-form-urlencoded'}}).success(function(data) {
 			// sorts the data into their separate event types
 			angular.forEach(data.events, function(e) {
@@ -96,7 +96,7 @@ function CitizenshipCtrl($scope, $http) {
 
 	// checks whether we want to fetch the user's info or not, based on whether they've entered a 7-digit number
 	$scope.doFetch = function() {
-		if ($scope.pid.length === 7) {
+		if ($scope.userid.length === 7) {
 			// initialize and clear the arrays
 			$scope.honorshours = new Array();
 			$scope.colloquia = new Array();
