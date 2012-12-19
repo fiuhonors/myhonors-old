@@ -31,7 +31,8 @@ class Eventslibrary {
 
 			if (!empty($event))
 			{
-				$result['events'][] = array(
+				$result['events'][$event['eid']] = array(
+					'eid' => $event['eid'],
 					'type' => $event['type'],
 					'name' => $event['name'],
 					'date' => $event['begins'],
