@@ -41,7 +41,7 @@ html {
 }
 
 body {
-	background: url('assets/img/body-bg.png');
+	background: url('../img/body-bg.png');
 	font-family: Verdana, Geneva, sans-serif;
 	font-size: 12px;
 	color: #000;
@@ -107,7 +107,7 @@ button:hover {
 #head-wrap {
 	width: 100%;
 	height: 68px;
-	background: url('assets/img/header-bg.gif') repeat;
+	background: url('../img/header-bg.gif') repeat;
 	border-bottom: 3px solid #00baff;
 	margin-bottom: 10px;
 }
