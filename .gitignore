@@ -1,8 +1,8 @@
 # Workspace-specific
 *sublime-project
 *sublime-workspace
-web_root/img/honorshours
-web_root/json
+assets/img/honorshours
+assets/json
 
 # Code Igniter
 application/cache/*

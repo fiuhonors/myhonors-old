@@ -107,7 +107,7 @@ button:hover {
 #head-wrap {
 	width: 100%;
 	height: 68px;
-	background: url('../img/header-bg.gif') repeat;
+	background: url('assets/img/header-bg.gif') repeat;
 	border-bottom: 3px solid #00baff;
 	margin-bottom: 10px;
 }

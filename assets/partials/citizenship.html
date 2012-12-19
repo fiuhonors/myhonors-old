@@ -3,7 +3,7 @@
 	<input class="largeinput grid_16 alpha" type="text" ng-model="userid" ng-change="doFetch()" maxlength="7" />
 	<div class="clear"></div>
 
-	<div ng-show="userid.length < 7" class="center"><img src="img/enter-userid-here.png" style="margin-top:20px;" /></div>
+	<div ng-show="userid.length < 7" class="center"><img src="assets/img/enter-userid-here.png" style="margin-top:20px;" /></div>
 
 	<div ng-show="userid.length >= 7 && !loading">
 
@@ -12,7 +12,7 @@
 			<p>Honors Hours provide seminars, enriching lectures, and workshops to expand your undergraduate experience. Honors Hours are on Tuesdays and Thursdays from 3:30 p.m. — 4:45 p.m. during the fall and spring semesters. <a href="http://honors.fiu.edu/events/honorshours/">View the full list of Honors Hours</a></p>
 			<p>Status for Fall 2012: <span ng-class="'complete_' + requirementsComplete('h')">{{honorshours.length}}</span> / 3</p>
 		</div>
-		<div class="grid_3 omega center"><img ng-show="requirementsComplete('h')" src="img/tick_64.png" /><img ng-hide="requirementsComplete('h')" src="img/delete_64.png" /></div>
+		<div class="grid_3 omega center"><img ng-show="requirementsComplete('h')" src="assets/img/tick_64.png" /><img ng-hide="requirementsComplete('h')" src="assets/img/delete_64.png" /></div>
 		<div class="clear"></div>
 
 		<h2>Colloquia <span class="smalltext">1 Required per Semester</span></h2>
@@ -20,7 +20,7 @@
 			<p>Three times a semester we invite Honors College faculty fellow to give a presentation on a topic of interest.  Colloquia occur at the same time as Honors Hours, Tuesday or Thursday at 3:30p.m. <a href="http://honors.fiu.edu/events/">View upcoming colloquia</a></p>
 			<p>Status for Fall 2012: <span ng-class="'complete_' + requirementsComplete('c')">{{colloquia.length}}</span> / 1</p>
 		</div>
-		<div class="grid_3 omega center"><img ng-show="requirementsComplete('c')" src="img/tick_64.png" /><img ng-hide="requirementsComplete('c')" src="img/delete_64.png" /></div>
+		<div class="grid_3 omega center"><img ng-show="requirementsComplete('c')" src="assets/img/tick_64.png" /><img ng-hide="requirementsComplete('c')" src="assets/img/delete_64.png" /></div>
 		<div class="clear"></div>
 
 		<h2>Excellence Lectures <span class="smalltext">1 Required per Academic Year</span></h2>
@@ -28,7 +28,7 @@
 			<p>Twice a year we invite guests from outside FIU to come address the student body.  Our excellence lectures have brought such noted guests as Senator Bob Graham and noted author Anya Kamenetz. <a href="http://honors.fiu.edu/events/">View upcoming lectures</a></p>
 			<p>Status for Fall & Spring 2012: <span ng-class="'complete_' + requirementsComplete('e')">{{excellence.length}}</span> / 1</p>
 		</div>
-		<div class="grid_3 omega center"><img ng-show="requirementsComplete('e')" src="img/tick_64.png" /><img ng-hide="requirementsComplete('e')" src="img/delete_64.png" /></div>
+		<div class="grid_3 omega center"><img ng-show="requirementsComplete('e')" src="assets/img/tick_64.png" /><img ng-hide="requirementsComplete('e')" src="assets/img/delete_64.png" /></div>
 		<div class="clear"></div>
 
 	</div>

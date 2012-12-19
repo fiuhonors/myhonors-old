@@ -1,7 +1,7 @@
 <div class="grid_6 events-tidbit" data-ng-repeat="event in events | filter:searchText">
 	<div class="content">
 		<div class="image">
-			<img ng-src="img/honorshours/{{event.eid}}.jpg" />
+			<img ng-src="assets/img/honorshours/{{event.eid}}.jpg" />
 			<a href="#/events/{{event.eid}}" class="text">
 				<span class="event-title">{{event.name}}</span>
 				<span style="color: #444">{{event.begins*1000 | date:"MMMM d"}} from {{event.begins*1000 | date:"h:mma"}} to {{event.ends*1000 | date:"h:mma"}}. Counts as 1 <strong>{{event.type}}</strong>.</span>

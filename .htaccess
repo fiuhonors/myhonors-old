@@ -2,5 +2,5 @@
 # http://ellislab.com/codeigniter/user-guide/general/urls.html
 
 RewriteEngine on
-RewriteCond $1 !^(index\.html|index\.php|css|img|js|lib|partials)
+RewriteCond $1 !^(index\.php|assets)
 RewriteRule ^(.*)$ ./index.php/$1 [L]

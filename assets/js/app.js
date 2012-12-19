@@ -6,9 +6,9 @@ angular.module('MyHonors', ['myhonorsServices']).
 
 	config(['$routeProvider', function($routeProvider) {
 	$routeProvider.		
-		when('/events', {templateUrl: 'partials/events.html', controller: EventBrowseCtrl}).
-		when('/events/:eventId', {templateUrl: 'partials/events-view.html', controller: EventViewCtrl}).
-		when('/events/add', {templateUrl: 'partials/events-add.html', controller: EventViewCtrl}).
-		when('/citizenship', {templateUrl: 'partials/citizenship.html', controller: CitizenshipCtrl}).
-		otherwise({redirectTo:'/home', templateUrl: 'partials/home.html'});
+		when('/events', {templateUrl: 'assets/partials/events.html', controller: EventBrowseCtrl}).
+		when('/events/:eventId', {templateUrl: 'assets/partials/events-view.html', controller: EventViewCtrl}).
+		when('/events/add', {templateUrl: 'assets/partials/events-add.html', controller: EventViewCtrl}).
+		when('/citizenship', {templateUrl: 'assets/partials/citizenship.html', controller: CitizenshipCtrl}).
+		otherwise({redirectTo:'/home', templateUrl: 'assets/partials/home.html'});
 	}]);
