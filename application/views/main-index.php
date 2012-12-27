@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:ng="http://angularjs.org" data-ng-app="MyHonors">
+<html xmlns:ng="http://angularjs.org" data-ng-app="myhonors">
 <head>
 	<title>MyHonors</title>
 	<link rel="stylesheet" type="text/css" href="assets/css/reset.css" />
@@ -57,8 +57,7 @@
 <script src="assets/lib/angular.js"></script>
 <script src="assets/lib/angular-resource.js"></script>
 <script src="assets/js/app.js"></script>
-<script src="assets/js/controllers.js"></script>
-<script src="assets/js/services.js"></script>
+<script src="assets/js/events.js"></script>
 
 </body>
 </html>
