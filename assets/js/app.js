@@ -1,14 +1,24 @@
 'use strict';
 
-/* App Module */
+var myhonors = angular.module('myhonors', ['myhonorsEvents']);
 
-angular.module('MyHonors', ['myhonorsServices']).
+/* Config */
 
-	config(['$routeProvider', function($routeProvider) {
-	$routeProvider.		
-		when('/events', {templateUrl: 'assets/partials/events.html', controller: EventBrowseCtrl}).
-		when('/events/:eventId', {templateUrl: 'assets/partials/events-view.html', controller: EventViewCtrl}).
-		when('/events/add', {templateUrl: 'assets/partials/events-add.html', controller: EventViewCtrl}).
-		when('/citizenship', {templateUrl: 'assets/partials/citizenship.html', controller: CitizenshipCtrl}).
-		otherwise({redirectTo:'/home', templateUrl: 'assets/partials/home.html'});
-	}]);
+myhonors.config(['$routeProvider', function($routeProvider) {
+	$routeProvider.otherwise({redirectTo:'/home', templateUrl: 'assets/partials/home.html'});
+}]);
+
+/* Controllers */
+
+myhonors.controller('AppCtrl', ['$scope', '$location', function AppCtrl($scope, $location) {
+	$scope.page_title = "";
+
+	$scope.profile = {};
+
+	$scope.toEventsPage = function() {
+		if ($scope.searchText.length > 0)
+		{
+			$location.path('/events');
+		}
+	}
+}]);

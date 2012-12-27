@@ -1,25 +1,29 @@
 'use strict';
 
-/* MAIN APP CONTROLLER */
+var myhonorsEvents = angular.module('myhonorsEvents', ['ngResource']);
 
-function AppCtrl($scope, $location) {
-	$scope.page_title = "";
+/* Config */
 
-	$scope.profile = {};
+myhonorsEvents.config(['$routeProvider', function($routeProvider) {
+	$routeProvider.
+		when('/events', {templateUrl: 'assets/partials/events.html', controller: 'EventBrowseCtrl'}).
+		when('/events/:eventId', {templateUrl: 'assets/partials/events-view.html', controller: 'EventViewCtrl'}).
+		when('/events/add', {templateUrl: 'assets/partials/events-add.html', controller: 'EventViewCtrl'}).
+		when('/citizenship', {templateUrl: 'assets/partials/citizenship.html', controller: 'CitizenshipCtrl'});
+}]);
 
-	$scope.toEventsPage = function() {
-		if ($scope.searchText.length > 0)
-		{
-			$location.path('/events');
-		}
-	}
-};
+/* Services */
 
-AppCtrl.$inject = ['$scope', '$location'];
+myhonorsEvents.factory('Events', ['$resource', function($resource) {
+	return $resource('events/:action/:eventId/json', {}, {
+		get: {method: 'GET', params:{action: 'details'}},
+		query: {method:'GET', params:{action: 'browse'}, isArray:true}
+	});
+}]);
 
 /* Controllers */
 
-function EventBrowseCtrl($scope, Events) {
+myhonorsEvents.controller('EventBrowseCtrl', ['$scope', 'Events', function EventBrowseCtrl($scope, Events) {
 	Events.query(function(events) {
 		//success
 		$scope.events = events;
@@ -36,11 +40,9 @@ function EventBrowseCtrl($scope, Events) {
 			}
 		}
 	});
-}
+}]);
 
-EventBrowseCtrl.$inject = ['$scope', 'Events'];
-
-function EventViewCtrl($scope, $routeParams, Events) {
+myhonorsEvents.controller('EventViewCtrl', ['$scope', '$routeParams', 'Events', function EventViewCtrl($scope, $routeParams, Events) {
 	$scope.eventId = $routeParams.eventId;
 	Events.get({eventId: $scope.eventId}, function(data) {
 		//success
@@ -58,11 +60,9 @@ function EventViewCtrl($scope, $routeParams, Events) {
 	$scope.renderMap = function(location) {	
 		return '<iframe width="950" height="300" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="' + location + '"></iframe>';
 	}
-};
+}]);
 
-EventViewCtrl.$inject = ['$scope', '$routeParams', 'Events'];
-
-function CitizenshipCtrl($scope, $http) {
+myhonorsEvents.controller('CitizenshipCtrl', ['$scope', '$http', function CitizenshipCtrl($scope, $http) {
 	$scope.userid = '';
 	$scope.loading = false; // used to adjust display when waiting for AJAX responses
 
@@ -110,6 +110,4 @@ function CitizenshipCtrl($scope, $http) {
 			$scope.fetch();
 		}
 	};
-};
-
-CitizenshipCtrl.$inject = ['$scope', '$http'];
+}]);
