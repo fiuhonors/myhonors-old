@@ -42,6 +42,20 @@ class Eventslibrary {
 
 		return $result;
 	}
+
+	public function getEvents($eventid = null)
+	{
+		if (isset($eventid))
+		{
+			$result = $this->ci->guide->get('events', array('eid' => $eventid));
+		}
+		else
+		{
+			$result = $this->ci->guide->get('events');
+		}
+
+		return $result;
+	}
 }
 
 /* End of file Eventslibrary.php */

@@ -8,9 +8,20 @@ class Events extends CI_Controller {
 		$this->load->library(array('form_validation', 'eventslibrary'));
 	}
 
-	public function index()
+	public function index($eventid = null)
 	{
-		// todo
+		if (isset($eventid))
+		{
+			// grab a single event
+			$events = $this->eventslibrary->getEvents($eventid);
+		}
+		else
+		{
+			// grab all events
+			$events = $this->eventslibrary->getEvents();
+		}
+
+		$this->output->set_content_type('application/json')->set_output(json_encode($event));
 	}
 
 	public function attendance()
