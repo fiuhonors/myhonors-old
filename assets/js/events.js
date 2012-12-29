@@ -15,10 +15,7 @@ myhonorsEvents.config(['$routeProvider', function($routeProvider) {
 /* Services */
 
 myhonorsEvents.factory('Events', ['$resource', function($resource) {
-	return $resource('events/:action/:eventId/json', {}, {
-		get: {method: 'GET', params:{action: 'details'}},
-		query: {method:'GET', params:{action: 'browse'}, isArray:true}
-	});
+	return $resource('events/:eventId');
 }]);
 
 /* Controllers */
