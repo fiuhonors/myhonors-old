@@ -74,9 +74,8 @@ myhonorsEvents.controller('CitizenshipCtrl', ['$scope', '$http', function Citize
 
 	$scope.fetch = function() {
 		$scope.loading = true;
-
-		var data = 'userid=' + $scope.userid; // POST data in the header is formatted just like GET data in the URL (e.g. one=1&two=2)
-		$http.post('events/attendance/', data, {headers: {'Content-Type' : 'application/x-www-form-urlencoded'}}).success(function(data) {
+		
+		$http.get('attendance/' + $scope.userid).success(function(data) {
 			// sorts the data into their separate event types
 			angular.forEach(data.events, function(e) {
 				switch (e.type)
