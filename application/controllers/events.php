@@ -41,22 +41,6 @@ class Events extends CI_Controller {
 
 		$this->output->set_content_type('application/json')->set_output(json_encode($events));
 	}
-
-	public function attendance()
-	{
-		$this->form_validation->set_rules('userid', 'Panther ID', 'required');
-
-		if ($this->form_validation->run() == false)
-		{
-			$this->load->view('events/attendance');
-		}
-		else
-		{
-			$userid = $this->input->post('userid');
-			$attendance = $this->eventslibrary->getAttendance($userid);
-			$this->output->set_content_type('application/json')->set_output(json_encode($attendance));
-		}
-	}
 }
 
 /* End of file events.php */
