@@ -14,7 +14,7 @@ class Events extends CI_Controller {
 	 * API can ask for resource/id instead of resource/index/id
 	 * @param  mixed $method the first parameter in the URL
 	 */
-	private function _remap($method)
+	public function _remap($method)
 	{
 		if (method_exists($this, $method))
 		{
