@@ -21,7 +21,7 @@ class Events extends CI_Controller {
 			$events = $this->eventslibrary->getEvents();
 		}
 
-		$this->output->set_content_type('application/json')->set_output(json_encode($event));
+		$this->output->set_content_type('application/json')->set_output(json_encode($events));
 	}
 
 	public function attendance()
