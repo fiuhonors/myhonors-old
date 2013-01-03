@@ -16,7 +16,7 @@ class Attendancelibrary {
 	 * @param  string|int $userid the user's identification number
 	 * @return array              an multidimensional array that contains the user's id, and 
 	 */
-	public function getAttendance($userid = null)
+	public function get($userid = null)
 	{
 		if (isset($userid))
 		{

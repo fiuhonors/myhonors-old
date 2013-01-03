@@ -11,7 +11,7 @@ class Eventslibrary {
 		$this->ci->load->model(array('guide'));
 	}
 
-	public function getEvents($eventid = null)
+	public function get($eventid = null)
 	{
 		if (isset($eventid))
 		{

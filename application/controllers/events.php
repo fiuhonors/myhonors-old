@@ -31,12 +31,12 @@ class Events extends CI_Controller {
 		if (isset($eventid))
 		{
 			// grab a single event
-			$events = $this->eventslibrary->getEvents($eventid);
+			$events = $this->eventslibrary->get($eventid);
 		}
 		else
 		{
 			// grab all events
-			$events = $this->eventslibrary->getEvents();
+			$events = $this->eventslibrary->get();
 		}
 
 		$this->output->set_content_type('application/json')->set_output(json_encode($events));

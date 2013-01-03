@@ -31,12 +31,12 @@ class Attendance extends CI_Controller {
 		if (isset($userid))
 		{
 			// grab attendance of a single user
-			$attendance = $this->attendancelibrary->getAttendance($userid);
+			$attendance = $this->attendancelibrary->get($userid);
 		}
 		else
 		{
 			// grab attendance of all users
-			$attendance = $this->attendancelibrary->getAttendance();
+			$attendance = $this->attendancelibrary->get();
 		}
 
 		$this->output->set_content_type('application/json')->set_output(json_encode($attendance));
