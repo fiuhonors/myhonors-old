@@ -20,7 +20,7 @@
 	<!-- header -->
 	<div class="navbar navbar-static-top navbar-inverse">
 		<div class="navbar-inner">
-			<div class="container">
+			<div class="container-fluid">
 				<a class="brand" href="#/home">&nbsp;</a>
 				<ul class="nav">
 					<li><a href="#/events"><i class="icon-calendar icon-white"></i> Events</a></li>
@@ -34,10 +34,10 @@
 	</div>
 
 	<!-- content -->
-	<div class="container">
+	<div class="container-fluid">
 
 		<!-- this div gets populated with AngularJS's views -->
-		<div class="span12" data-ng-view></div>
+		<div class="row-fluid" data-ng-view></div>
 
 	</div>
 
@@ -48,8 +48,8 @@
 
 <!-- footer -->
 <div id="footer">
-	<div class="container">
-		<div class="row">
+	<div class="container-fluid">
+		<div class="row-fluid">
 			<div class="span6 pagination-right" id="footer-image">
 				<img src="assets/img/honors-logo.jpg" alt="Honors College - Florida International University" />
 			</div>
