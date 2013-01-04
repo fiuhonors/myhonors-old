@@ -12,7 +12,7 @@ Provided by The Honors College at Florida International University. More informa
 |         | 0.3 | Linked Authentication with phpCAS and LDAP |
 |         | 0.4 | Application |
 |         | 0.5 | ARCH Registration |
-| **1.x** |     | Adding Scoial features |
+| **1.x** |     | Adding Social features |
 |         | 1.1 | Text posts and comments |
 |         | 1.2 | Photo posts, comments, and captions |
 |         | 1.3 | Private Messages |
