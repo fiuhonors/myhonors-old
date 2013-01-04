@@ -26,6 +26,7 @@
 					<li><a href="#/events"><i class="icon-calendar icon-white"></i> Events</a></li>
 					<li><a href="#/citizenship"><i class="icon-ok icon-white"></i> Citizenship</a></li>
 				</ul>
+				<p class="navbar-text pull-right">Logged in as <i class="icon-user icon-white"></i> <a href="#/events">Sergio Pantoja</a></p>
 			</div>
 		</div>
 	</div>
