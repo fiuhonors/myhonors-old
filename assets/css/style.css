@@ -1,353 +1,85 @@
-/* Sticky Footer Solution by Steve Hatcher -------------------------------- */
+/* Custom Bootstrap Styling
+--------------------------------------------------
+@navbarHeight: 68px
 
-* {margin:0;padding:0;} 
+ */
 
-/* must declare 0 margins on everything, also for main layout components use padding, not 
-vertical margins (top and bottom) to add spacing, else those margins get added to total height 
-and your footer gets pushed down a bit more, creating vertical scroll bars in the browser */
+/* Sticky footer styles
+-------------------------------------------------- */
 
-html, body {height: 100%; width:100%;}
+html,
+body {
+	height: 100%;
+	/* The html and body elements cannot have any padding or margin. */
+}
 
-#wrap {min-height: 100%; width:100%}
+/* Wrapper for page content to push down footer */
+#wrap {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	/* Negative indent footer by it's height */
+	margin: 0 auto -102px;
+}
 
-#main {
-	overflow: auto;
-	padding-bottom: 121px; /* must be same height as the footer */
+/* Set the fixed height of the footer here */
+#push,
+#footer {
+	height: 101px;
 }
 
 #footer {
-	position: relative;
-	margin-top: -121px; /* negative value of footer height, don't forget to include border height */
-	height: 120px;
-	clear: both;
-	/* custom styling below */
-	background-color: #fff;
-	border-top: 1px solid #ccc; /* if you change this, also change margin-top and #main's padding-bottom */
-} 
-
-/* Opera Fix for Sticky Footer */
-body:before { /* thanks to Maleika (Kohoutec)*/
-	content: "";
-	height: 100%;
-	float: left;
-	width: 0;
-	margin-top: -32767px; /* thank you Erik J - negate effect of float*/
+	background-color: white;
+	border-top: 1px solid #ccc; /* if you change this, also change fixed height & negative indent */
 }
 
-/* General CSS ------------------------------------------------------------ */
+#footer address {
+	margin-bottom: 0px;
+}
+
+#footer-image {
+	margin-top: 10px;
+}
+
+#footer-content {
+	margin-top: 31px;
+}
+
+/* Lastly, apply responsive CSS fixes as necessary */
+@media (max-width: 767px) {
+#footer {
+	margin-left: -20px;
+	margin-right: -20px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+}
+
+/* Everything else! */
 
 html {
 	overflow-y: scroll;
 }
 
 body {
-	background: url('../img/body-bg.png');
-	font-family: Verdana, Geneva, sans-serif;
-	font-size: 12px;
-	color: #000;
+	background: url(../img/body-bg.png);
 }
 
-a, a:hover, a:active, a:visited {
-	outline: 0;
-	border: 0;
-	color: #00baff;
-	text-decoration: none;
-}
-
-button {
-	height: 25px;
-	min-width: 54px;
-	line-height: 25px;
-	padding: 0 8px;
-	outline: 0;
-	border: 1px solid gainsboro;
-	background-color: #fff;
-	background-image: -webkit-linear-gradient(top,#fff,#F1F1F1);
-	background-image: -moz-linear-gradient(top,#fff,#F1F1F1);
-	background-image: -ms-linear-gradient(top,#fff,#F1F1F1);
-	background-image: -o-linear-gradient(top,#fff,#F1F1F1);
-	background-image: linear-gradient(top,#fff,#F1F1F1);
-	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
-	border-radius: 2px;
-	color: #444;
-	text-align: center;
-	font-size: 11px;
-	font-weight: bold;
-	white-space: nowrap;
-	cursor: default;
-}
-
-button:hover {
-	border: 1px solid #c6c6c6;
-	background-color: #fff;
-	background-image: -webkit-linear-gradient(top,whitesmoke,#F1F1F1);
-	background-image: -moz-linear-gradient(top,whitesmoke,#F1F1F1);
-	background-image: -ms-linear-gradient(top,whitesmoke,#F1F1F1);
-	background-image: -o-linear-gradient(top,whitesmoke,#F1F1F1);
-	background-image: linear-gradient(top,whitesmoke,#F1F1F1);
-	cursor:pointer;
-}
-
-.center {
-	text-align: center;
-}
-
-.smalltext {
-	font-size: 11px;
-	color: #999;
-	margin-left: 6px;
-}
-
-.show_true {display: block;}
-.show_false {display: none;}
-
-/* Header ----------------------------------------------------------------- */
-
-#head-wrap {
-	width: 100%;
-	height: 68px;
-	background: url('../img/header-bg.gif') repeat;
+.navbar {
+	margin-bottom: 20px;
 	border-bottom: 3px solid #00baff;
-	margin-bottom: 10px;
 }
 
-#head-nav {
-	position: relative;
-	margin-top: 8px;
-	line-height: 60px;
-	font-family: Georgia, Serif;
-	font-size: 18px;
+.brand {
+	background: url(../img/myhonors.png) no-repeat center center;
+	width: 156px;
 }
 
-#head-wrap a, #head-wrap a:hover, #head-wrap a:active, #head-wrap a:visited {
-	height: 100%;
-	border: 0;
-	color: #f2f2f2;
-	text-decoration: none;
-	text-shadow: 1px 1px 1px #000;
+.navbar .nav > li > a {
+	color: silver;
+	padding-top: 27px;
 }
 
-#head-nav li {
-	display: inline;
-	margin-left: 20px;
-	list-style-type: none;
-}
-
-#head-nav li a {
- 	display: inline; /* to overwrite display: block; in #head-wrap a */
- }
-
-#head-search {
-	position: relative;
-	margin-top: 8px;
-	line-height: 60px;
-	text-align: right;
-}
-
-#head-search input {
-	width: 160px;
-	padding: 4px;
-	outline: 0;
-	background-color: #fff;
-	border: 1px solid gainsboro;
-	color: #444;
-	font-size: 12px;
-	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
-	border-radius: 2px;
-}
-
-/* Container Styling ------------------------------------------------------ */
-
-h2 {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 20px;
-	font-weight: bold;
-	margin: 15px 0 5px 5px;
-	text-align: left;
-	color: #444;
-	text-shadow: 1px 1px 1px #fff;
-}
-
-h2 .smalltext {color: #666;}
-
-h3 {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 16px;
-	font-weight: bold;
-	margin-top: 10px;
-	margin-bottom: 5px;
-}
-
-.box-header {
-	text-align: center;
-	color: #aaa;
-	text-shadow: 1px 1px 1px #fff;
-}
-
-.box {
-	position: relative;
-	background-color: #fff;
-	font-size: 11px;
-	margin-bottom: 5px;
-	box-sizing: border-box;
-	border: 1px solid #fff;
-	border-radius: 4px;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-	-moz-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-	-webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-	background: #fff; /* Old browsers */
-	background: -moz-linear-gradient(top,  #f9f9f9 0%, #ffffff 20%, #f9f9f9 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f9f9f9), color-stop(20%,#ffffff), color-stop(100%,#f9f9f9)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  #f9f9f9 0%,#ffffff 20%,#f9f9f9 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  #f9f9f9 0%,#ffffff 20%,#f9f9f9 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  #f9f9f9 0%,#ffffff 20%,#f9f9f9 100%); /* IE10+ */
-	background: linear-gradient(to bottom,  #f9f9f9 0%,#ffffff 20%,#f9f9f9 100%); /* W3C */
-	overflow: hidden;
-}
-
-.box p, .box ul {
-	padding: 10px 15px;
-}
-
-.largeinput {
-	margin-top: 20px;
-	padding: 10px 0;
-	font-size: 45px;
-	text-align: center;
-	color: #444;
-	border: 1px solid #ccc;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
-}
-
-.complete_true {color: green; font-weight: bold}
-.complete_false {color: red; font-weight: bold}
-
-.center {text-align: center;}
-
-.navleft a, .navleft a:active, .navleft a:visited {
-	color: #000;
-}
-
-.navleft a:hover {
-	color: #00baff;
-}
-
-/* MAP OVERLAY */
-
-.mapoverlay {
-	position: absolute;
-	background: rgba(0, 0, 0, 0.85);
-	min-height: 150px;
-	width: 450px;
-	bottom: 40px;
-	right: 0;
-	color: white;
-	box-shadow: 1px 1px 5px rgba(0,0,0,0.8);
-}
-
-.mapoverlay div {
-	margin: 15px 22px;
-}
-
-.mapoverlay h1 {
-	font-size: 32px;
-	font-family: Georgia, Serif;
-	font-weight: normal;
-	text-shadow: 2px 2px 1px black;
-}
-
-.mapoverlay p {
-	padding: 0px !important;
-	margin: 10px 0;
-}
-
-.mapoverlay .smalltext {
-	padding: 0px;
-	margin: 0px;
-	color: #DDD;
-	font-size: 12px;
-	text-shadow: 1px 1px 1px black;
-}
-
-.events-tidbit .content {
-	min-height: 150px;
-	position: relative;
-	padding: 10px 10px 5px;
-	background-color: #fff;
-	font-size: 11px;
-	box-sizing: border-box;
-	border: 1px solid #fff;
-	border-radius: 4px;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-	-moz-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-	-webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-	background: #fff; /* Old browsers */
-	background: -moz-linear-gradient(top,  #f9f9f9 0%, #ffffff 20%, #f9f9f9 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f9f9f9), color-stop(20%,#ffffff), color-stop(100%,#f9f9f9)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  #f9f9f9 0%,#ffffff 20%,#f9f9f9 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  #f9f9f9 0%,#ffffff 20%,#f9f9f9 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  #f9f9f9 0%,#ffffff 20%,#f9f9f9 100%); /* IE10+ */
-	background: linear-gradient(to bottom,  #f9f9f9 0%,#ffffff 20%,#f9f9f9 100%); /* W3C */
-	overflow: hidden;
-}
-
-.content .image {
-	width: 208px;
-	height: 130px;
-	position: relative;
-}
-
-.content img {
-	width: 208px;
-	height: 130px;
-}
-
-.content a.text {
-	width: 208px;
-	height: 130px;
-	position: absolute;
-	top: 0;
-	left: 0;
-	opacity: 0;
-	padding: 20px 10px 10px;
-	box-sizing: border-box;
-	background-color: white;
-	-webkit-transition: opacity 0.2s ease;
-	-moz-transition: opacity 0.2s ease;
-	-o-transition: opacity 0.2s ease;
-	transition: opacity 0.2s ease;
-	overflow: hidden;
-}
-
-.content a.text:hover {
-	opacity: 0.9;
-}
-
-.content .inside-footer {
-	margin-top: 5px;
-	line-height: 16px;
-}
-
-.events-tidbit .outside-footer {
-	margin-bottom: 10px;
-}
-
-.event-title, .event-title:visited, .event-title:active {
-	display: block;
-	font-size: 16px;
-	color: #444;
-	font-weight: bold;
-}
-
-.event-title:hover {
-	display: block;
-	color: #00baff;
+.navbar-form input {
+	margin-top: 22px;
 }
