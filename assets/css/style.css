@@ -83,3 +83,25 @@ body {
 .navbar-form input {
 	margin-top: 22px;
 }
+
+.well {
+	background: #fff; /* Old browsers */
+	background: -moz-linear-gradient(top,  whitesmoke 0%, #ffffff 20%, whitesmoke 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,whitesmoke), color-stop(20%,#ffffff), color-stop(100%,whitesmoke)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  whitesmoke 0%,#ffffff 20%,whitesmoke 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  whitesmoke 0%,#ffffff 20%,whitesmoke 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  whitesmoke 0%,#ffffff 20%,whitesmoke 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  whitesmoke 0%,#ffffff 20%,whitesmoke 100%); /* W3C */
+}
+
+.thumbnail {background-color: white; text-align: center}
+.thumbnail .caption {padding: 5px 5px 3px;}
+a.thumbnail:hover {text-decoration: none;}
+
+/* Fix for fluid thumbnails (https://github.com/twitter/bootstrap/issues/3494) */
+.row-fluid ul.thumbnails li.span12 + li {margin-left : 0px; clear:left;}
+.row-fluid ul.thumbnails li.span6:nth-child(2n + 3) {margin-left : 0px; clear:left;}
+.row-fluid ul.thumbnails li.span4:nth-child(3n + 4) {margin-left : 0px; clear:left;}
+.row-fluid ul.thumbnails li.span3:nth-child(4n + 5) {margin-left : 0px; clear:left;}
+.row-fluid ul.thumbnails li.span2:nth-child(6n + 7) {margin-left : 0px; clear:left;}
+.row-fluid ul.thumbnails li.span1:nth-child(12n + 13) {margin-left : 0px; clear:left;}

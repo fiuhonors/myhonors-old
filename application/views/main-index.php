@@ -26,9 +26,6 @@
 					<li><a href="#/events"><i class="icon-calendar icon-white"></i> Events</a></li>
 					<li><a href="#/citizenship"><i class="icon-ok icon-white"></i> Citizenship</a></li>
 				</ul>
-				<form class="navbar-form pull-right">
-					<input type="text" placeholder="Search Events" ng-model="searchText" ng-change="toEventsPage()" />
-				</form>
 			</div>
 		</div>
 	</div>

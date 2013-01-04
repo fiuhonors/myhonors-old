@@ -1,14 +1,25 @@
-<div class="grid_6 events-tidbit" data-ng-repeat="event in events | filter:searchText">
-	<div class="content">
-		<div class="image">
-			<img ng-src="assets/img/honorshours/{{event.eid}}.jpg" />
-			<a href="#/events/{{event.eid}}" class="text">
-				<span class="event-title">{{event.name}}</span>
-				<span style="color: #444">{{event.begins*1000 | date:"MMMM d"}} from {{event.begins*1000 | date:"h:mma"}} to {{event.ends*1000 | date:"h:mma"}}. Counts as 1 <strong>{{event.type}}</strong>.</span>
-			</a>
-		</div>
-		<div class="inside-footer"><span style="float: left">{{event.type}}</span><span style="float: right">{{event.begins*1000 | date:"M/d/yy"}}</div>
+<div class="span3">
+	<div class="well">
+		<input class="span12" type="text" placeholder="Search Events" ng-model="searchText" ng-change="toEventsPage()" />
+		<ul class="nav nav-list">
+			<li class="nav-header">View Specific Events</li>
+			<li><a href="#">Honors Hours</a></li>
+			<li><a href="#">Excellence Lectures</a></li>
+			<li><a href="#">Colloquia</a></li>
+			<li><a href="#">Miscellaneous</a></li>
+		</ul>
 	</div>
-	<div class="outside-footer"></div>
 </div>
-<div class="clear"></div>
+
+<div class="span9">
+	<div class="row-fluid">
+		<ul class="thumbnails">
+			<li class="span3" data-ng-repeat="event in events | filter:searchText">
+				<a class="thumbnail" href="#/events/{{event.eid}}">
+					<img ng-src="assets/img/honorshours/{{event.eid}}.jpg" />
+					<div class="caption"><small>{{event.name}}</small></div>
+				</a>
+			</li>
+		</ul>
+	</div>
+</div>
