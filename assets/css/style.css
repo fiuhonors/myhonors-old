@@ -94,6 +94,17 @@ body {
 	background: linear-gradient(to bottom,  whitesmoke 0%,#ffffff 20%,whitesmoke 100%); /* W3C */
 }
 
+h1 small,
+h2 small,
+h3 small,
+h4 small,
+h5 small,
+h6 small {
+  font-weight: normal;
+  line-height: 1;
+  color: #666;
+}
+
 .thumbnail {background-color: white; text-align: center}
 .thumbnail .caption {padding: 5px 5px 3px;}
 a.thumbnail:hover {text-decoration: none;}

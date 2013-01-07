@@ -1,35 +1,52 @@
-<div class="prefix_4 grid_16 suffix_4">
+<div class="offset2 span8">
 
-	<input class="largeinput grid_16 alpha" type="text" ng-model="userid" ng-change="doFetch()" maxlength="7" />
-	<div class="clear"></div>
+	<input class="span12" type="text" ng-model="userid" ng-change="doFetch()" maxlength="7" style="height: auto; margin-top: 20px; padding: 10px 0; font-size: 45px; text-align: center; color: #444; border: 1px solid #ccc; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px;" />
 
-	<div ng-show="userid.length < 7" class="center"><img src="assets/img/enter-userid-here.png" style="margin-top:20px;" /></div>
+	<div ng-show="userid.length < 7" class="pagination-centered"><img src="assets/img/enter-userid-here.png" style="margin-top:20px;" /></div>
 
-	<div ng-show="userid.length >= 7 && !loading">
+	<div class="row-fluid" ng-show="userid.length >= 7 && !loading">
 
-		<h2>Honors Hours <span class="smalltext">3 Required per Semester</span></h2>
-		<div class="box grid_13 alpha omega" style="min-height: 64px">
-			<p>Honors Hours provide seminars, enriching lectures, and workshops to expand your undergraduate experience. Honors Hours are on Tuesdays and Thursdays from 3:30 p.m. — 4:45 p.m. during the fall and spring semesters. <a href="http://honors.fiu.edu/events/honorshours/">View the full list of Honors Hours</a></p>
-			<p>Status for Fall 2012: <span ng-class="'complete_' + requirementsComplete('h')">{{honorshours.length}}</span> / 3</p>
+		<div class="row-fluid">
+			<h4>Honors Hours <small>3 Required per Semester</small></h4>
 		</div>
-		<div class="grid_3 omega center"><img ng-show="requirementsComplete('h')" src="assets/img/tick_64.png" /><img ng-hide="requirementsComplete('h')" src="assets/img/delete_64.png" /></div>
-		<div class="clear"></div>
-
-		<h2>Colloquia <span class="smalltext">1 Required per Semester</span></h2>
-		<div class="box grid_13 alpha omega" style="min-height: 64px">
-			<p>Three times a semester we invite Honors College faculty fellow to give a presentation on a topic of interest.  Colloquia occur at the same time as Honors Hours, Tuesday or Thursday at 3:30p.m. <a href="http://honors.fiu.edu/events/">View upcoming colloquia</a></p>
-			<p>Status for Fall 2012: <span ng-class="'complete_' + requirementsComplete('c')">{{colloquia.length}}</span> / 1</p>
+		<div class="row-fluid">
+			<div class="span10 well" style="min-height: 64px">
+				<div class="alert" ng-class="{'alert-success': requirementsComplete('h')}">Status for Fall 2012: <strong>{{honorshours.length}} / 3</strong></div>
+				<p style="margin-bottom: 0">Honors Hours provide seminars, enriching lectures, and workshops to expand your undergraduate experience. Honors Hours are on Tuesdays and Thursdays from 3:30 p.m. — 4:45 p.m. during the fall and spring semesters.</p>
+			</div>
+			<div class="span2 pagination-centered">
+				<img ng-show="requirementsComplete('h')" src="assets/img/tick_64.png" />
+				<img ng-hide="requirementsComplete('h')" src="assets/img/delete_64.png" />
+			</div>
 		</div>
-		<div class="grid_3 omega center"><img ng-show="requirementsComplete('c')" src="assets/img/tick_64.png" /><img ng-hide="requirementsComplete('c')" src="assets/img/delete_64.png" /></div>
-		<div class="clear"></div>
 
-		<h2>Excellence Lectures <span class="smalltext">1 Required per Academic Year</span></h2>
-		<div class="box grid_13 alpha omega" style="min-height: 64px">
-			<p>Twice a year we invite guests from outside FIU to come address the student body.  Our excellence lectures have brought such noted guests as Senator Bob Graham and noted author Anya Kamenetz. <a href="http://honors.fiu.edu/events/">View upcoming lectures</a></p>
-			<p>Status for Fall & Spring 2012: <span ng-class="'complete_' + requirementsComplete('e')">{{excellence.length}}</span> / 1</p>
+		<div class="row-fluid">
+			<h4>Colloquia <small>1 Required per Semester</small></h4>
 		</div>
-		<div class="grid_3 omega center"><img ng-show="requirementsComplete('e')" src="assets/img/tick_64.png" /><img ng-hide="requirementsComplete('e')" src="assets/img/delete_64.png" /></div>
-		<div class="clear"></div>
+		<div class="row-fluid">
+			<div class="span10 well" style="min-height: 64px">
+				<div class="alert" ng-class="{'alert-success': requirementsComplete('c')}">Status for Fall 2012: <strong>{{colloquia.length}} / 1</strong></div>
+				<p style="margin-bottom: 0">Three times a semester we invite Honors College faculty fellow to give a presentation on a topic of interest.  Colloquia occur at the same time as Honors Hours, Tuesday or Thursday at 3:30p.m.</p>
+			</div>
+			<div class="span2 pagination-centered">
+				<img ng-show="requirementsComplete('c')" src="assets/img/tick_64.png" />
+				<img ng-hide="requirementsComplete('c')" src="assets/img/delete_64.png" />
+			</div>
+		</div>
+
+		<div class="row-fluid">
+			<h4>Excellence Lectures <small>1 Required per Academic Year</small></h4>
+		</div>
+		<div class="row-fluid">
+			<div class="span10 well" style="min-height: 64px">
+				<div class="alert" ng-class="{'alert-success': requirementsComplete('e')}">Status for Fall & Spring 2012: <strong>{{excellence.length}} / 1</strong></div>
+				<p style="margin-bottom: 0">Twice a year we invite guests from outside FIU to come address the student body.  Our excellence lectures have brought such noted guests as Senator Bob Graham and noted author Anya Kamenetz.</p>
+			</div>
+			<div class="span2 pagination-centered">
+				<img ng-show="requirementsComplete('e')" src="assets/img/tick_64.png" />
+				<img ng-hide="requirementsComplete('e')" src="assets/img/delete_64.png" />
+			</div>
+		</div>
 
 	</div>
 
