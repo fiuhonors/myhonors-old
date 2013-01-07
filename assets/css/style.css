@@ -116,3 +116,40 @@ a.thumbnail:hover {text-decoration: none;}
 .row-fluid ul.thumbnails li.span3:nth-child(4n + 5) {margin-left : 0px; clear:left;}
 .row-fluid ul.thumbnails li.span2:nth-child(6n + 7) {margin-left : 0px; clear:left;}
 .row-fluid ul.thumbnails li.span1:nth-child(12n + 13) {margin-left : 0px; clear:left;}
+
+/* MAP OVERLAY */
+
+.mapoverlay {
+	position: absolute;
+	background: rgba(0, 0, 0, 0.85);
+	min-height: 150px;
+	width: 450px;
+	bottom: 40px;
+	right: 0;
+	color: white;
+	box-shadow: 1px 1px 5px rgba(0,0,0,0.8);
+}
+
+.mapoverlay div {
+	margin: 15px 22px;
+}
+
+.mapoverlay h1 {
+	font-size: 32px;
+	font-family: Georgia, Serif;
+	font-weight: normal;
+	text-shadow: 2px 2px 1px black;
+}
+
+.mapoverlay p {
+	padding: 0px !important;
+	margin: 10px 0;
+}
+
+.mapoverlay .smalltext {
+	padding: 0px;
+	margin: 0px;
+	color: #DDD;
+	font-size: 12px;
+	text-shadow: 1px 1px 1px black;
+}

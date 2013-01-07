@@ -43,8 +43,8 @@ myhonorsEvents.controller('EventBrowseCtrl', ['$scope', 'Events', function Event
 }]);
 
 myhonorsEvents.controller('EventViewCtrl', ['$scope', '$routeParams', 'Events', function EventViewCtrl($scope, $routeParams, Events) {
-	$scope.eventId = $routeParams.eventId;
-	Events.get({eventId: $scope.eventId}, function(data) {
+	var eventId = $routeParams.eventId;
+	Events.get({eventId: eventId}, function(data) {
 		//success
 		$scope.event = data;
 
