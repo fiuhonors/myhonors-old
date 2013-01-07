@@ -21,7 +21,8 @@ myhonorsEvents.factory('Events', ['$resource', function($resource) {
 /* Controllers */
 
 myhonorsEvents.controller('EventBrowseCtrl', ['$scope', 'Events', function EventBrowseCtrl($scope, Events) {
-	$scope.searchText = '';
+	$scope.searchName = '';
+	$scope.searchType = '';
 	
 	Events.query(function(events) {
 		//success
@@ -35,7 +36,7 @@ myhonorsEvents.controller('EventBrowseCtrl', ['$scope', 'Events', function Event
 				case "h": $scope.events[i].type = "Honors Hour"; break;
 				case "c": $scope.events[i].type = "Colloquia"; break;
 				case "e": $scope.events[i].type = "Excellence Lecture"; break;
-				case "a": $scope.events[i].type = "Attendance Only"; break;
+				case "a": $scope.events[i].type = "Miscellaneous"; break;
 			}
 		}
 	});
@@ -52,7 +53,7 @@ myhonorsEvents.controller('EventViewCtrl', ['$scope', '$routeParams', 'Events', 
 			case "h": $scope.event.type = "Honors Hour"; break;
 			case "c": $scope.event.type = "Colloquia"; break;
 			case "e": $scope.event.type = "Excellence Lecture"; break;
-			case "a": $scope.event.type = "Attendance Only"; break;
+			case "a": $scope.event.type = "Miscellaneous"; break;
 		}
 	});
 
