@@ -21,6 +21,8 @@ myhonorsEvents.factory('Events', ['$resource', function($resource) {
 /* Controllers */
 
 myhonorsEvents.controller('EventBrowseCtrl', ['$scope', 'Events', function EventBrowseCtrl($scope, Events) {
+	$scope.searchText = '';
+	
 	Events.query(function(events) {
 		//success
 		$scope.events = events;

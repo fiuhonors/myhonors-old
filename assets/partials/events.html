@@ -14,7 +14,7 @@
 <div class="span9">
 	<div class="row-fluid">
 		<ul class="thumbnails">
-			<li class="span3" data-ng-repeat="event in events | filter:searchText">
+			<li class="span3" data-ng-repeat="event in events | filter:{name: searchText}">
 				<a class="thumbnail" href="#/events/{{event.eid}}">
 					<img ng-src="assets/img/honorshours/{{event.eid}}.jpg" />
 					<div class="caption"><small>{{event.name}}</small></div>
