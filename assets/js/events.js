@@ -42,11 +42,42 @@ myhonorsEvents.controller('EventBrowseCtrl', ['$scope', 'Events', function Event
 	});
 }]);
 
-myhonorsEvents.controller('EventViewCtrl', ['$scope', '$routeParams', 'Events', function EventViewCtrl($scope, $routeParams, Events) {
+myhonorsEvents.controller('EventViewCtrl', ['$scope', '$routeParams', '$window', 'Events', function EventViewCtrl($scope, $routeParams, $window, Events) {
+	$window.initializeMap = function() {
+		var latLng = new google.maps.LatLng($scope.event.lat, $scope.event.lng);
+		var latLngOffset = new google.maps.LatLng($scope.event.lat, parseFloat($scope.event.lng) + 0.002);
+
+		var mapOptions = {
+			zoom: 18,
+			center: latLngOffset,
+			mapTypeId: google.maps.MapTypeId.SATELLITE
+		};
+
+		var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+
+		var buildingsLayer = new google.maps.KmlLayer('http://sites.fiu.edu/emap/layers/Buildings.kmz', 
+			{suppressInfoWindows: true, preserveViewport: true}
+		);
+		buildingsLayer.setMap(map);
+
+		var marker = new google.maps.Marker({
+			position: latLng,
+			map: map,
+			title: "DM 100"
+		});
+	}
+
 	var eventId = $routeParams.eventId;
+
 	Events.get({eventId: eventId}, function(data) {
 		//success
 		$scope.event = data;
+
+		// asynchronously load the Google Maps API script
+		var script = document.createElement("script");
+		script.type = "text/javascript";
+		script.src = "https://maps.googleapis.com/maps/api/js?key=&sensor=false&callback=initializeMap";
+		document.body.appendChild(script);
 
 		switch ($scope.event.type)
 		{

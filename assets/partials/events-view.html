@@ -1,5 +1,6 @@
 <div class="row-fluid">
-	<div class="span12 well" style="position: relative">
+	<div class="span12 well well-small" style="position: relative">
+		<div id="map_canvas" style="height: 250px"></div>
 		<div class="mapoverlay">
 			<div>
 				<h1>{{event.name}}</h1>
@@ -7,7 +8,6 @@
 				<p>{{event.description}}</p>
 			</div>
 		</div>
-		<div data-ng-bind-html-unsafe="renderMap(event.location)"></div>
 	</div>
 </div>
 
