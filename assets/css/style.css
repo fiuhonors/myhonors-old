@@ -41,7 +41,7 @@ html {
 }
 
 body {
-	background: url('http://thc.fiu.edu/myhonors/images/body-bg.png');
+	background: url('../img/body-bg.png');
 	font-family: Verdana, Geneva, sans-serif;
 	font-size: 12px;
 	color: #000;

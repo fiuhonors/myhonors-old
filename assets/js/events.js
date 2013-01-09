@@ -1,25 +1,26 @@
 'use strict';
 
-/* MAIN APP CONTROLLER */
+var myhonorsEvents = angular.module('myhonorsEvents', ['ngResource']);
 
-function AppCtrl($scope, $location) {
-	$scope.page_title = "";
+/* Config */
 
-	$scope.profile = {};
+myhonorsEvents.config(['$routeProvider', function($routeProvider) {
+	$routeProvider.
+		when('/events', {templateUrl: 'assets/partials/events.html', controller: 'EventBrowseCtrl'}).
+		when('/events/:eventId', {templateUrl: 'assets/partials/events-view.html', controller: 'EventViewCtrl'}).
+		when('/events/add', {templateUrl: 'assets/partials/events-add.html', controller: 'EventViewCtrl'}).
+		when('/citizenship', {templateUrl: 'assets/partials/citizenship.html', controller: 'CitizenshipCtrl'});
+}]);
 
-	$scope.toEventsPage = function() {
-		if ($scope.searchText.length > 0)
-		{
-			$location.path('/events');
-		}
-	}
-};
+/* Services */
 
-AppCtrl.$inject = ['$scope', '$location'];
+myhonorsEvents.factory('Events', ['$resource', function($resource) {
+	return $resource('events/:eventId');
+}]);
 
 /* Controllers */
 
-function EventBrowseCtrl($scope, Events) {
+myhonorsEvents.controller('EventBrowseCtrl', ['$scope', 'Events', function EventBrowseCtrl($scope, Events) {
 	Events.query(function(events) {
 		//success
 		$scope.events = events;
@@ -36,11 +37,9 @@ function EventBrowseCtrl($scope, Events) {
 			}
 		}
 	});
-}
+}]);
 
-EventBrowseCtrl.$inject = ['$scope', 'Events'];
-
-function EventViewCtrl($scope, $routeParams, Events) {
+myhonorsEvents.controller('EventViewCtrl', ['$scope', '$routeParams', 'Events', function EventViewCtrl($scope, $routeParams, Events) {
 	$scope.eventId = $routeParams.eventId;
 	Events.get({eventId: $scope.eventId}, function(data) {
 		//success
@@ -58,19 +57,25 @@ function EventViewCtrl($scope, $routeParams, Events) {
 	$scope.renderMap = function(location) {	
 		return '<iframe width="950" height="300" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="' + location + '"></iframe>';
 	}
-};
+}]);
 
-EventViewCtrl.$inject = ['$scope', '$routeParams', 'Events'];
-
-function CitizenshipCtrl($scope, $http) {
-	$scope.pid = null;
+myhonorsEvents.controller('CitizenshipCtrl', ['$scope', '$http', function CitizenshipCtrl($scope, $http) {
+	$scope.userid = '';
 	$scope.loading = false; // used to adjust display when waiting for AJAX responses
+
+	var clearRequirements = function() {
+		$scope.honorshours = [];
+		$scope.colloquia = [];
+		$scope.excellence = [];
+	}
+
+	// initialize the arrays
+	clearRequirements();
 
 	$scope.fetch = function() {
 		$scope.loading = true;
-
-		var data = 'pid=' + $scope.pid; // POST data in the header is formatted just like GET data in the URL (e.g. one=1&two=2)
-		$http.post('http://thc.fiu.edu/myhonors/swipe/lookup/', data, {headers: {'Content-Type' : 'application/x-www-form-urlencoded'}}).success(function(data) {
+		
+		$http.get('attendance/' + $scope.userid).success(function(data) {
 			// sorts the data into their separate event types
 			angular.forEach(data.events, function(e) {
 				switch (e.type)
@@ -88,7 +93,7 @@ function CitizenshipCtrl($scope, $http) {
 	$scope.requirementsComplete = function(type) {
 		switch (type)
 		{
-			case "h":	return Boolean($scope.honorshours.length >= 3);
+			case "h": return Boolean($scope.honorshours.length >= 3);
 			case "c": return Boolean($scope.colloquia.length >= 1);
 			case "e": return Boolean($scope.excellence.length >= 1);
 		}
@@ -96,15 +101,9 @@ function CitizenshipCtrl($scope, $http) {
 
 	// checks whether we want to fetch the user's info or not, based on whether they've entered a 7-digit number
 	$scope.doFetch = function() {
-		if ($scope.pid.length === 7) {
-			// initialize and clear the arrays
-			$scope.honorshours = new Array();
-			$scope.colloquia = new Array();
-			$scope.excellence = new Array();
-
+		if ($scope.userid.length === 7) {
+			clearRequirements(); // start fresh
 			$scope.fetch();
 		}
 	};
-};
-
-CitizenshipCtrl.$inject = ['$scope', '$http'];
+}]);

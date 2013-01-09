@@ -19,7 +19,8 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('welcome_message');
+		// loads the view that contains our main AngularJS container
+		$this->load->view('main-index');
 	}
 }
 
