@@ -63,7 +63,7 @@ myhonorsEvents.controller('EventViewCtrl', ['$scope', '$routeParams', '$window',
 		var marker = new google.maps.Marker({
 			position: latLng,
 			map: map,
-			title: "DM 100"
+			title: $scope.event.location_name
 		});
 	}
 
