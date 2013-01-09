@@ -10,8 +10,9 @@ We use the [CodeIgniter](http://ellislab.com/codeigniter/) PHP framework to hand
 1. [Download](https://github.com/sergiopantoja/MyHonors/archive/master.zip) or [clone](https://github.com/sergiopantoja/MyHonors) the MyHonors repository and upload the files to your webserver.
 2. Rename **application/config/config.sample.php** to **config.php**. Set your base URL and create a random encryption key.
 3. Rename **application/config/database.sample.php** to **database.php**. Add your database information.
-3. Rename **assets/js/config.sample.js** to **config.js**. Add all necessary information (see file for more details).
-4. *More instructions coming soon. Go to an install page to populate the database, setup auth settings (CAS?), etc.*
+4. Rename **assets/js/config.sample.js** to **config.js**. Add all necessary information (see file for more details).
+5. Make sure the **captcha** folder is writable by the web server.
+6. *More instructions coming soon. Go to an install page to populate the database, setup auth settings (CAS?), etc.*
 
 ## Development
 
