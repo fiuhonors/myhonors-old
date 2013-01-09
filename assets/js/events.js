@@ -45,12 +45,12 @@ myhonorsEvents.controller('EventBrowseCtrl', ['$scope', 'Events', function Event
 myhonorsEvents.controller('EventViewCtrl', ['$scope', '$routeParams', '$window', 'Events', 'apikey_google', function EventViewCtrl($scope, $routeParams, $window, Events, apikey_google) {
 	$window.initializeMap = function() {
 		var latLng = new google.maps.LatLng($scope.event.lat, $scope.event.lng);
-		var latLngOffset = new google.maps.LatLng($scope.event.lat, parseFloat($scope.event.lng) + 0.002);
+		var latLngOffset = new google.maps.LatLng($scope.event.lat, parseFloat($scope.event.lng) + 0.0015);
 
 		var mapOptions = {
 			zoom: 18,
 			center: latLngOffset,
-			mapTypeId: google.maps.MapTypeId.SATELLITE
+			mapTypeId: google.maps.MapTypeId.ROADMAP
 		};
 
 		var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
