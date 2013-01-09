@@ -15,7 +15,7 @@ class Eventslibrary {
 	{
 		if (isset($eventid))
 		{
-			$result = $this->ci->guide->get('events', array('eid' => $eventid));
+			$result = $this->ci->guide->get('events', array('eid' => $eventid), true);
 		}
 		else
 		{

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:ng="http://angularjs.org" data-ng-app="myhonors">
+<html lang="en" xmlns:ng="http://angularjs.org" data-ng-app="myhonors">
 <head>
 	<title>MyHonors</title>
-	<link rel="stylesheet" type="text/css" href="assets/css/reset.css" />
-	<link rel="stylesheet" type="text/css" href="assets/css/960_24_col.css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css" />
 	<!-- this is for the Sticky Footer Solution -->
 	<!--[if !IE 7]>
@@ -16,47 +16,55 @@
 
 <!-- we use these two div's for the sticky footer -->
 <div id="wrap">
-<div id="main">
 
 	<!-- header -->
-	<div id="head-wrap">
-		<div class="container_24">
-			<div class="grid_4">
-				<a href="#/home"><img src="assets/img/myhonors.png" alt="MyHonors" /></a>
+	<div class="navbar navbar-static-top navbar-inverse">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<a class="brand" href="#/home">&nbsp;</a>
+				<ul class="nav">
+					<li><a href="#/events"><i class="icon-calendar icon-white"></i> Events</a></li>
+					<li><a href="#/citizenship"><i class="icon-ok icon-white"></i> Citizenship</a></li>
+				</ul>
+				<p class="navbar-text pull-right">Logged in as <i class="icon-user icon-white"></i> <a href="#/events">Sergio Pantoja</a></p>
 			</div>
-			<ul class="grid_13" id="head-nav">
-				<li><a href="#/events">Events</a></li>
-				<li><a href="#/citizenship">Citizenship</a></li>
-			</ul>
-			<div class="grid_7" id="head-search">
-				<input type="text" placeholder="Search Events" ng-model="searchText" ng-change="toEventsPage()" />
-			</div>
-			<div class="clear"></div>
 		</div>
 	</div>
-	<!-- end header -->
 
-	<div class="container_24" data-ng-view></div>
+	<!-- content -->
+	<div class="container-fluid">
+
+		<!-- this div gets populated with AngularJS's views -->
+		<div class="row-fluid" data-ng-view></div>
+
+	</div>
+
+	<!-- this is needed for the sticky footer -->
+	<div id="push"></div>
 
 </div>
-</div>
 
-<!-- footer - we need the extra div wrapper for the sticky footer -->
+<!-- footer -->
 <div id="footer">
-	<div class="container_24">
-		<div class="prefix_4 grid_16 suffix_4 center">
-			<img src="assets/img/honors-logo.jpg" alt="Honors College - Florida International University" width="430" />
-			<p class="smalltext">The Honors College (DM 233), 11200 SW 8th Street, Miami, FL 33199</p>
-			<p class="smalltext">Phone: (305) 348-4100 &#8226; Fax: (305) 348-2118 &#8226; Email: <a href="mailto:honors@fiu.edu">honors@fiu.edu</a></p>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span6 pagination-right" id="footer-image">
+				<img src="assets/img/honors-logo.jpg" alt="Honors College - Florida International University" />
+			</div>
+			<div class="span6" id="footer-content">
+				<address><small>The Honors College (DM 233), 11200 SW 8th Street, Miami, FL 33199</small></address>
+				<small>Phone: (305) 348-4100 &#8226; Fax: (305) 348-2118 &#8226; Email: <a href="mailto:honors@fiu.edu">honors@fiu.edu</a></small>
+			</div>
 		</div>
-		<div class="clear"></div>
 	</div>
 </div>
 
 <script src="assets/lib/jquery.min.js"></script>
 <script src="assets/lib/angular.js"></script>
 <script src="assets/lib/angular-resource.js"></script>
+<script src="assets/lib/bootstrap.js"></script>
 <script src="assets/js/app.js"></script>
+<script src="assets/js/config.js"></script>
 <script src="assets/js/events.js"></script>
 
 </body>

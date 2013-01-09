@@ -1,6 +1,6 @@
 'use strict';
 
-var myhonors = angular.module('myhonors', ['myhonorsEvents']);
+var myhonors = angular.module('myhonors', ['myhonorsConfig', 'myhonorsEvents']);
 
 /* Config */
 
@@ -12,13 +12,5 @@ myhonors.config(['$routeProvider', function($routeProvider) {
 
 myhonors.controller('AppCtrl', ['$scope', '$location', function AppCtrl($scope, $location) {
 	$scope.page_title = "";
-
 	$scope.profile = {};
-
-	$scope.toEventsPage = function() {
-		if ($scope.searchText.length > 0)
-		{
-			$location.path('/events');
-		}
-	}
 }]);

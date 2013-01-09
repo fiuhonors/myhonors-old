@@ -4,6 +4,9 @@
 assets/img/honorshours
 assets/json
 
+# AngularJS
+assets/js/config.js
+
 # Code Igniter
 application/cache/*
 application/cache/!index.html
