@@ -1,6 +1,6 @@
 'use strict';
 
-var myhonors = angular.module('myhonors', ['myhonorsEvents']);
+var myhonors = angular.module('myhonors', ['myhonorsConfig', 'myhonorsEvents']);
 
 /* Config */
 

@@ -42,7 +42,7 @@ myhonorsEvents.controller('EventBrowseCtrl', ['$scope', 'Events', function Event
 	});
 }]);
 
-myhonorsEvents.controller('EventViewCtrl', ['$scope', '$routeParams', '$window', 'Events', function EventViewCtrl($scope, $routeParams, $window, Events) {
+myhonorsEvents.controller('EventViewCtrl', ['$scope', '$routeParams', '$window', 'Events', 'apikey_google', function EventViewCtrl($scope, $routeParams, $window, Events, apikey_google) {
 	$window.initializeMap = function() {
 		var latLng = new google.maps.LatLng($scope.event.lat, $scope.event.lng);
 		var latLngOffset = new google.maps.LatLng($scope.event.lat, parseFloat($scope.event.lng) + 0.002);
@@ -76,7 +76,7 @@ myhonorsEvents.controller('EventViewCtrl', ['$scope', '$routeParams', '$window',
 		// asynchronously load the Google Maps API script
 		var script = document.createElement("script");
 		script.type = "text/javascript";
-		script.src = "https://maps.googleapis.com/maps/api/js?key=&sensor=false&callback=initializeMap";
+		script.src = "https://maps.googleapis.com/maps/api/js?key=" + apikey_google + "&sensor=false&callback=initializeMap";
 		document.body.appendChild(script);
 
 		switch ($scope.event.type)

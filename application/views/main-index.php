@@ -64,6 +64,7 @@
 <script src="assets/lib/angular-resource.js"></script>
 <script src="assets/lib/bootstrap.js"></script>
 <script src="assets/js/app.js"></script>
+<script src="assets/js/config.js"></script>
 <script src="assets/js/events.js"></script>
 
 </body>
