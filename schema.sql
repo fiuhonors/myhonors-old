@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `meta` VARCHAR(2000) NULL DEFAULT '' ,
   `last_ip` VARCHAR(40) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL ,
   `last_login` DATETIME NOT NULL ,
-  `create` DATETIME NOT NULL ,
+  `created` DATETIME NOT NULL ,
   `modified` TIMESTAMP NOT NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `username` (`username` ASC) ,
