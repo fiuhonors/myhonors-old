@@ -12,5 +12,6 @@ application/cache/*
 application/cache/!index.html
 application/config/config.php
 application/config/database.php
+application/config/tank_auth.php
 application/logs/*.php
 application/logs/!index.html
