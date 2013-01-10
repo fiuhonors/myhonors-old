@@ -7,7 +7,7 @@
 | These details are used in emails sent by authentication library.
 |--------------------------------------------------------------------------
 */
-$config['website_name'] = 'Tank Auth';
+$config['website_name'] = 'MyHonors';
 $config['webmaster_email'] = 'admin@yoursite.com';
 
 /*
@@ -66,7 +66,7 @@ $config['logout-success'] = FALSE; // Set FALSE for landing page in /views/landi
 | 'phpass_hash_strength' = Password hash strength.
 |--------------------------------------------------------------------------
 */
-$config['phpass_hash_portable'] = FALSE;
+$config['phpass_hash_portable'] = TRUE;
 $config['phpass_hash_strength'] = 8;
 
 /*
