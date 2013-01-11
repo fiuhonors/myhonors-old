@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-require_once('phpass-0.3/PasswordHash.php');
+require_once('phpass-0.1/PasswordHash.php');
 
 define('STATUS_ACTIVATED', '1');
 define('STATUS_NOT_ACTIVATED', '0');
@@ -19,22 +19,21 @@ define('STATUS_NOT_ACTIVATED', '0');
 class Tank_auth
 {
 	private $error = array();
-	public $ci;
 
 	function __construct()
 	{
 		$this->ci =& get_instance();
 
 		$this->ci->load->config('tank_auth', TRUE);
+
 		$this->ci->load->library('session');
-		$this->ci->load->model('tank_auth/users');
-		$this->ci->load->helper('url');
 		$this->ci->load->database();
+		$this->ci->load->model('tank_auth/users');
 
 		// Try to autologin
 		$this->autologin();
 	}
-	
+
 	/**
 	 * Login user on the site. Return TRUE if login is successful
 	 * (user exists and activated, password is correct), otherwise FALSE.
@@ -68,22 +67,17 @@ class Tank_auth
 					if ($user->banned == 1) {									// fail - banned
 						$this->error = array('banned' => $user->ban_reason);
 
-					} else {						
-						// Save to session
+					} else {
 						$this->ci->session->set_userdata(array(
 								'user_id'	=> $user->id,
 								'username'	=> $user->username,
 								'status'	=> ($user->activated == 1) ? STATUS_ACTIVATED : STATUS_NOT_ACTIVATED,
-								'roles'=>$this->ci->users->get_roles($user->id)
 						));
-						
+
 						if ($user->activated == 0) {							// fail - not activated
 							$this->error = array('not_activated' => '');
 
 						} else {												// success
-							$user_profile = $this->ci->users->get_user_profile($user->id);
-							$this->ci->session->set_userdata('user_profile', $user_profile);
-							
 							if ($remember) {
 								$this->create_autologin($user->id);
 							}
@@ -117,7 +111,7 @@ class Tank_auth
 	function logout()
 	{
 		$this->delete_autologin();
-		
+
 		// See http://codeigniter.com/forums/viewreply/662369/ as the reason for the next line
 		$this->ci->session->set_userdata(array('user_id' => '', 'username' => '', 'status' => ''));
 
@@ -125,8 +119,7 @@ class Tank_auth
 	}
 
 	/**
-	 * Check if user logged in. Also test if user is activated and approved.
-	 * User can log in only if acct has been approved.
+	 * Check if user logged in. Also test if user is activated or not.
 	 *
 	 * @param	bool
 	 * @return	bool
@@ -135,7 +128,7 @@ class Tank_auth
 	{
 		return $this->ci->session->userdata('status') === ($activated ? STATUS_ACTIVATED : STATUS_NOT_ACTIVATED);
 	}
-	
+
 	/**
 	 * Get user_id
 	 *
@@ -166,7 +159,7 @@ class Tank_auth
 	 * @param	bool
 	 * @return	array
 	 */
-	function create_user($username, $email, $password, $email_activation, $custom)
+	function create_user($username, $email, $password, $email_activation)
 	{
 		if ((strlen($username) > 0) AND !$this->ci->users->is_username_available($username)) {
 			$this->error = array('username' => 'auth_username_in_use');
@@ -186,10 +179,7 @@ class Tank_auth
 				'password'	=> $hashed_password,
 				'email'		=> $email,
 				'last_ip'	=> $this->ci->input->ip_address(),
-				'approved'=>(int)$this->ci->config->item('acct_approval', 'tank_auth')
 			);
-			
-			if($custom) $data['meta'] = $custom;
 
 			if ($email_activation) {
 				$data['new_email_key'] = md5(rand().microtime());
@@ -394,7 +384,8 @@ class Tank_auth
 				$hashed_password = $hasher->HashPassword($new_pass);
 
 				// Replace old password with new one
-				return $this->ci->users->change_password($user_id, $hashed_password);
+				$this->ci->users->change_password($user_id, $hashed_password);
+				return TRUE;
 
 			} else {															// fail
 				$this->error = array('old_password' => 'auth_incorrect_password');
@@ -647,186 +638,6 @@ class Tank_auth
 					$login,
 					$this->ci->config->item('login_attempt_expire', 'tank_auth'));
 		}
-	}
-	
-	/**
-	 * Gets the datatype of a table and converts it to the format $arr['column_name'] = 'datatype'
-	 */
-	public function get_profile_datatypes(){
-		$result_array = $this->ci->users->get_profile_datatypes();
-		return $this->multi_to_assoc($result_array);
-	}
-	
-	/**
-	 * Converts a multidimensional array (2 levels only) into a single associative
-	 * array where $arr[0] is the key and $arr[1] is the value.
-	 *
-	 * @param array $result_array: The result of $query->result_array()
-	 */
-	public function multi_to_assoc($result_array){
-		foreach($result_array as $val){
-			$val = array_values($val);
-			$arr[$val[0]] = $val[1];
-		}
-		
-		return $arr;
-	}
-	
-	/**
-	 * Gets $query->result_array() except this deals with only the first element of each array.
-	 * This gets the value of that first element and saves them in an array.
-	 * This works on indexed and assoc arrays.
-	 *
-	 * @param array $result_array: The result of $query->result_array()
-	 */
-	public function multi_to_single($result_array){
-		$keys = array_keys($result_array[0]);
-		foreach($result_array as $val){
-			$arr[] = $val[$keys[0]];
-		}
-		
-		return $arr;
-	}
-	
-	/**
-	 * User has permission to do an action
-	 *
-	 * @param string $permission: The permission you want to check for from the `permissions.permission` table
-	 * @return bool
-	 */
-	public function permit($permission){
-		$user_id = $this->ci->session->userdata('user_id');
-		$user_permissions = $this->ci->users->get_permissions($user_id);
-		$overrides = $this->ci->users->get_permission_overrides($user_id);
-		$allow = FALSE;
-		
-		// Check role permissions
-		foreach($user_permissions as $val){
-			if($val == $permission){
-				$allow = TRUE;
-				break;
-			}
-		}
-		
-		// Check if there are overrides and overturn the result as needed
-		if($overrides){
-			foreach($overrides as $val){
-				if($val['permission'] == $permission){
-					$allow = (bool)$val['allow'];
-					break;
-				}
-			}
-		}
-		
-		return $allow;
-	}
-	
-	/**
-	 * Get a user's roles
-	 *
-	 * @param int $user_id
-	 * @return array
-	 */
-	public function get_roles($user_id = NULL){
-		$user_id = is_null($user_id) ? $this->ci->session->userdata('user_id') : $user_id;
-		return $this->ci->users->get_roles($user_id);
-	}
-	
-	/**
-	 * Overriding permissions method
-	 */
-	public function add_override($user_id, $permission, $allow){
-		return $this->ci->users->add_override($user_id, $permission, $allow);
-	}
-	public function remove_override($user_id, $permission){
-		return $this->ci->users->remove_override($user_id, $permission);
-	}
-	public function flip_override($user_id, $permission){
-		return $this->ci->users->flip_override($user_id, $permission);
-	}
-	
-	/**
-	 * Role management methods
-	 */
-	public function add_role($user_id, $role){
-		return $this->ci->users->add_role($user_id, $role);
-	}
-	public function remove_role($user_id, $role){
-		return $this->ci->users->remove_role($user_id, $role);
-	}
-	public function change_role($user_id, $old, $new){
-		return $this->ci->users->change_role($user_id, $old, $new);
-	}
-	
-	/**
-	 * Permission mangement methods
-	 */
-	public function add_permission($permission, $role){
-		return $this->ci->users->add_permission($permission, $role);
-	}
-	public function remove_permission($permission, $role){
-		return $this->ci->users->remove_permission($permission, $role);
-	}
-	public function new_permission($permission, $description){
-		return $this->ci->users->new_permission($permission, $description);
-	}
-	public function clear_permission($permission){
-		return $this->ci->users->clear_permission($permission);
-	}
-	public function save_permission($permission_ident, $permission = FALSE, $description = FALSE, $parent = FALSE, $sort = FALSE){
-		$data = array(
-			'permission_ident'=>$permission_ident,
-			'permission'=>$permission,
-			'description'=>$description,
-			'parent'=>$parent,
-			'sort'=>$sort
-		);
-		
-		return $this->ci->users->save_permission($data);
-	}
-	
-	/**
-	 * Get user profile contents
-	 */
-	public function get_user_profile($user_id = NULL){
-		$user_id = is_null($user_id) ? $this->session->userdata('user_id') : $user_id;
-		return $this->ci->users->get_user_profile($user_id);
-	}
-	
-	/**
-	 * Account approval methods
-	 */
-	public function is_approved($user_id = NULL){
-		$user_id = is_null($user_id) ? $this->ci->session->userdata('user_id') : $user_id;
-		return $this->ci->users->is_approved($user_id);
-	}
-	public function approve_user($user_id){
-		return $this->ci->users->approve_user($user_id);
-	}
-	public function unapprove_user($user_id){
-		return $this->ci->users->unapprove_user($user_id);
-	}
-	
-	/**
-	 * Open a notice page
-	 */
-	public function notice($page, $data = FALSE){
-		// Create a new session if the old one gets deleted (from logout)
-		if(!$this->ci->session->userdata('user_id')){
-			$this->ci->session->sess_create();
-			$this->ci->session->set_flashdata('is_logged_out', TRUE);
-		}
-
-		$this->ci->session->set_flashdata('tankauth_allow_notice', TRUE);
-		$this->ci->session->set_flashdata('tankauth_notice_data', $data);
-		redirect('/notice/view/'.$page);
-	}
-	
-	/**
-	 *
-	 */
-	public function create_regdb_dropdown($dbname, $fields){
-		return $this->ci->users->create_regdb_dropdown($dbname, $fields);
 	}
 }
 

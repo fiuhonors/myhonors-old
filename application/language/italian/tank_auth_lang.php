@@ -11,7 +11,6 @@ $lang['auth_incorrect_captcha'] = "Il codice inserito non &egrave; uguale a quel
 $lang['auth_captcha_expired'] = "Il tuo codice di conferma &egrave; scaduto. Perfavore riprova.";
 
 // Notifications
-/*
 $lang['auth_message_logged_out'] = "Logout avvenuto con successo.";
 $lang['auth_message_registration_disabled'] = "La registrazione &egrave; disabilitata";
 $lang['auth_message_registration_completed_1'] = "Registrazione avvenuta con successo. Controlla il tuo indirizzo e-mail per attivare il tuo account.";
@@ -28,7 +27,6 @@ $lang['auth_message_new_email_activated'] = "E-mail cambiata con successo";
 $lang['auth_message_new_email_failed'] =  "Il tuo codice di attivazione &egrave; errato o scaduto. Perfavore controlla la tua e-mail e segui le istruzioni"; 
 $lang['auth_message_banned'] = "Sei stato bannato";
 $lang['auth_message_unregistered'] = "Il tuo account &egrave; stato cancellato...";
-*/
 
 // Email subjects
 $lang['auth_subject_welcome'] = "Benvanuto in %s!";

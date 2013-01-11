@@ -1,1 +1,0 @@
-Your account has not yet been approved by us. <?php echo anchor('auth/login', 'Try to login again &raquo;'); ?>

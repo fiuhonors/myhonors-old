@@ -11,7 +11,6 @@ $lang['auth_incorrect_captcha'] = 'Votre code de confirmation ne correspond pas 
 $lang['auth_captcha_expired'] = 'Votre code de confirmation est expiré. S.v.p. essayez de nouveau.';
 
 // Notifications
-/*
 $lang['auth_message_logged_out'] = 'Déconnexion réussie.';
 $lang['auth_message_registration_disabled'] = 'Inscription désactivée.';
 $lang['auth_message_registration_completed_1'] = 'Inscription réussie. Vérifiez vos courriel pour activer votre.';
@@ -28,7 +27,6 @@ $lang['auth_message_new_email_activated'] = 'Votre adresse courriel a été chan
 $lang['auth_message_new_email_failed'] = 'Votre clef d\'activation est incorrecte ou expirée. Vérifiez votre courriel à nouveau.';
 $lang['auth_message_banned'] = 'Vous êtes banni.';
 $lang['auth_message_unregistered'] = 'Votre compte a été détruit...';
-*/
 
 // Email subjects
 $lang['auth_subject_welcome'] = 'Bienvenue à %s!';

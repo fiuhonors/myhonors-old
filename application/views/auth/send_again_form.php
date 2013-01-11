@@ -15,6 +15,5 @@ $email = array(
 		<td style="color: red;"><?php echo form_error($email['name']); ?><?php echo isset($errors[$email['name']])?$errors[$email['name']]:''; ?></td>
 	</tr>
 </table>
-<p>You can always <a href="<?php echo $logout_link; ?>">logout and try later.</a></p>
 <?php echo form_submit('send', 'Send'); ?>
 <?php echo form_close(); ?>

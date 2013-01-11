@@ -11,7 +11,6 @@ $lang['auth_incorrect_captcha'] = 'Seu código de confirmação não corresponde
 $lang['auth_captcha_expired'] = 'Seu código de confirmação está expirado. Por favor tente novamente.';
 
 // Notifications
-/*
 $lang['auth_message_logged_out'] = 'Você saiu com sucesso.';
 $lang['auth_message_registration_disabled'] = 'Registro esta desabilitado.';
 $lang['auth_message_registration_completed_1'] = 'Você efetuou seu cadastro com sucesso. Verifique seu e-mail para ativar sua conta.';
@@ -28,7 +27,6 @@ $lang['auth_message_new_email_activated'] = 'Você alterou seu e-mail com sucess
 $lang['auth_message_new_email_failed'] = 'Sua chave de ativação está incorreta ou expirada. Por favor verifique seu e-mail novamente e siga as instruções.';
 $lang['auth_message_banned'] = 'Você está proibido.';
 $lang['auth_message_unregistered'] = 'Sua conta foi deletada...';
-*/
 
 // Email subjects
 $lang['auth_subject_welcome'] = 'Bem Vindo ao %s!';

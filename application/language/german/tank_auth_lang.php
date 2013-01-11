@@ -11,7 +11,6 @@ $lang['auth_incorrect_captcha'] = 'Der Bestätigungscode stimmt nicht mit dem im
 $lang['auth_captcha_expired'] = 'Ihr Bestätigungscode ist abgelaufen. Bitte versuchen Sie es erneut.';
 
 // Notifications
-/*
 $lang['auth_message_logged_out'] = 'Sie wurden erfolgreich ausgeloggt.';
 $lang['auth_message_registration_disabled'] = 'Die Registrierung ist deaktiviert.';
 $lang['auth_message_registration_completed_1'] = 'Sie wurden erfolgreich registriert. Überprüfen Sie Ihre E-Mails, um Ihr Konto zu aktivieren.';
@@ -28,7 +27,6 @@ $lang['auth_message_new_email_activated'] = 'Sie haben Ihre E-Mail-Adresse erfol
 $lang['auth_message_new_email_failed'] = 'Ihr Aktivierungscode ist falsch oder abgelaufen. Bitte überprüfen Sie erneut Ihre E-Mails und folgen Sie den Anweisungen.';
 $lang['auth_message_banned'] = 'Sie sind gebannt.';
 $lang['auth_message_unregistered'] = 'Ihr Konto wurde gelöscht...';
-*/
 
 // Email subjects
 $lang['auth_subject_welcome'] = 'Willkommen bei %s!';

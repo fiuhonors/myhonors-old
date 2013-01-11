@@ -11,7 +11,6 @@ $lang['auth_incorrect_captcha'] = '您验证码不配图示代码.';
 $lang['auth_captcha_expired'] = '您验证码已过期，请重试.';
 
 // Notifications
-/*
 $lang['auth_message_logged_out'] = '您已成功退出.';
 $lang['auth_message_registration_disabled'] = '不允许注册.';
 $lang['auth_message_registration_completed_1'] = '您已成功注册，检查您的电子邮件激活帐号.';
@@ -28,7 +27,6 @@ $lang['auth_message_new_email_activated'] = '您已成功改变电子邮件';
 $lang['auth_message_new_email_failed'] = '您激活密钥已过期. 请检查电子邮件的提示并激活您的帐号.';
 $lang['auth_message_banned'] = '您被禁止.';
 $lang['auth_message_unregistered'] = '您的帐号已被删除...';
-*/
 
 // Email subjects
 $lang['auth_subject_welcome'] = '欢迎访问 %s!';

@@ -11,7 +11,6 @@ $lang['auth_incorrect_captcha'] = 'Codul de confirmare nu este identic cu cel di
 $lang['auth_captcha_expired'] = 'Codul de confirmare a expirat. Mai încearcă.';
 
 // Notifications
-/*
 $lang['auth_message_logged_out'] = 'Deconectarea s-a efectuat cu succes.';
 $lang['auth_message_registration_disabled'] = 'Înregistrările nu sunt permise pentru moment.';
 $lang['auth_message_registration_completed_1'] = 'Te-ai înregistrat cu bine. Accesează căsuța ta de poștă electronică, caută mesajul nostru și activează-ți contul.';
@@ -28,7 +27,6 @@ $lang['auth_message_new_email_activated'] = 'Adresa e-mai a fost schimbată cu b
 $lang['auth_message_new_email_failed'] = 'Cheia de activare este incorectă sau a expirat. Verifică din nou căsuța ta de poștă electronică și urmează instrucțiunile din mesajul pe care tocmai ți l-am trimis.';
 $lang['auth_message_banned'] = 'Accesul tău nu mai este permis.';
 $lang['auth_message_unregistered'] = 'Contul tău a fost șters...';
-*/
 
 // Email subjects
 $lang['auth_subject_welcome'] = 'Bine ai venit pe %s!';

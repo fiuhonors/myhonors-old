@@ -11,7 +11,6 @@ $lang['auth_incorrect_captcha'] = '確認コードが提示したイメージと
 $lang['auth_captcha_expired'] = '確認コードの有効時間が過ぎました。もう一度、お願いします。';
 
 // Notifications
-/*
 $lang['auth_message_logged_out'] = 'ログアウトしました。';
 $lang['auth_message_registration_disabled'] = '登録はできません。';
 $lang['auth_message_registration_completed_1'] = '登録しました。アカウントを有効にするためにメールを確認ください。';
@@ -28,7 +27,6 @@ $lang['auth_message_new_email_activated'] = 'メールアドレスを変更し�
 $lang['auth_message_new_email_failed'] = 'アクティベーション・キーが正しくないか有効な時間を過ぎています。メールの内容をもう一度ご確認ください。';
 $lang['auth_message_banned'] = '非アクティベートしました。';
 $lang['auth_message_unregistered'] = 'アカウントを削除しました...';
-*/
 
 // Email subjects
 $lang['auth_subject_welcome'] = 'ようこそ %s さん!';

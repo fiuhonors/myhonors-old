@@ -15,7 +15,6 @@ $lang['auth_incorrect_captcha'] = 'Uw bevestigingscode komt niet overeen met die
 $lang['auth_captcha_expired'] = 'Uw bevestigingscode is verlopen. Probeer het opnieuw.';
 
 // Notifications
-/*
 $lang['auth_message_logged_out'] = 'U bent succesvol uitgelogd.';
 $lang['auth_message_registration_disabled'] = 'Registratie is uitgeschakeld.';
 $lang['auth_message_registration_completed_1'] = 'Uw heeft zich met succes geregistreerd. Controleer uw e-mailadres om je account te activeren.';
@@ -32,7 +31,6 @@ $lang['auth_message_new_email_activated'] = 'U heeft met succes veranderd uw e-m
 $lang['auth_message_new_email_failed'] = 'Uw activeringscode is onjuist of vervallen. Geef nogmaals uw e-mail en volg de instructies.';
 $lang['auth_message_banned'] = 'Uw account is geblokkeerd!';
 $lang['auth_message_unregistered'] = 'Uw account is verwijderd.';
-*/
 
 // Email subjects
 $lang['auth_subject_welcome'] = 'Welkom bij %s!';
