@@ -8,6 +8,7 @@ $email = array(
 );
 ?>
 <?php echo form_open($this->uri->uri_string()); ?>
+<div class="box" style="padding: 30px">
 <table>
 	<tr>
 		<td><?php echo form_label('Email Address', $email['id']); ?></td>
@@ -15,5 +16,6 @@ $email = array(
 		<td style="color: red;"><?php echo form_error($email['name']); ?><?php echo isset($errors[$email['name']])?$errors[$email['name']]:''; ?></td>
 	</tr>
 </table>
-<?php echo form_submit('send', 'Send'); ?>
+<button class="button">Send Again</button>
+</div>
 <?php echo form_close(); ?>
