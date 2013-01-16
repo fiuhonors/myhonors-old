@@ -85,8 +85,30 @@ body {
 	padding-top: 27px;
 }
 
-.navbar-form input {
-	margin-top: 22px;
+.navbar .btn, .navbar .btn-group {
+	font-size: inherit;
+	padding: 4px;
+	text-shadow: none;
+	margin-top: 0;
+}
+
+.dropdown-text {
+	display: inline-block;
+	margin-top: 27px;
+	color: silver;
+}
+
+.dropdown.open .btn-link.dropdown-toggle {
+	color: #00baff;
+	background-color: transparent;
+}
+
+.btn-link, .btn-link:hover, .btn-link:active, .btn-link.visited, .btn-link:focus {outline: 0; border: 0;}
+
+.btn-link:hover {
+	color: #00baff;
+	text-decoration: none;
+	background-color: transparent;
 }
 
 .well {

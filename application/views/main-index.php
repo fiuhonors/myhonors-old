@@ -26,7 +26,16 @@
 					<li><a href="#/events"><i class="icon-calendar icon-white"></i> Events</a></li>
 					<li><a href="#/citizenship"><i class="icon-ok icon-white"></i> Citizenship</a></li>
 				</ul>
-				<p class="navbar-text pull-right">Logged in as <i class="icon-user icon-white"></i> <a href="#/events">Sergio Pantoja</a></p>
+				<div class="dropdown pull-right">
+					<span class="dropdown-text">Logged in as</span> <button class="btn btn-link dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> Sergio Pantoja</button>
+					<ul class="dropdown-menu pull-right" role="menu">
+						<li><a href="#">View Profile</a></li>
+						<li><a href="#">Update Profile</a></li>
+						<li class="divider"></li>
+						<li><a href="auth/logout">Logout</a></li>
+					</ul>
+				</div>
+				</p>
 			</div>
 		</div>
 	</div>
