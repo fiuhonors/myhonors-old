@@ -65,6 +65,11 @@ body {
 	background: url(../img/body-bg.png);
 }
 
+/* Fix for IE9 displaying #wrap as table */
+#wrap {
+	display: block !important;
+}
+
 .container-fluid {
 	max-width: 1100px;
 	margin: 0 auto;
