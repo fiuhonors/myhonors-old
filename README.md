@@ -8,11 +8,10 @@ MyHonors currently features an Events Calendar, Attendance Tracker, Citizenship 
 We use the [CodeIgniter](http://ellislab.com/codeigniter/) PHP framework to handle data from the backend and [AngularJS](http://angularjs.org/)--an amazing Javascript framework from Google--to power the frontend. Our HTML & CSS code is based on [Twitter Bootstrap](twitter.github.com/bootstrap/).  All necessary files are already included in the repository, so you can get started with just a few steps:
 
 1. [Download](https://github.com/sergiopantoja/MyHonors/archive/master.zip) or [clone](https://github.com/sergiopantoja/MyHonors) the MyHonors repository and upload the files to your webserver.
-2. Rename **application/config/config.sample.php** to **config.php**. Set your base URL and create a random encryption key.
-3. Rename **application/config/database.sample.php** to **database.php**. Add your database information.
-3. Rename **application/config/tank_auth.sample.php** to **tank_auth.php**. Change 'webmaster_email' and any other settings as needed.
-4. Rename **assets/js/config.sample.js** to **config.js**. Add all necessary information (see file for more details).
-5. Make sure the **captcha** folder is writable by the web server.
+2. Rename **application/config/config.sample.php** to **config.php**. Set your base URL and create a random encryption key. We suggest using the [1dl.us](http://1dl.us/) password generator with 32 characters.
+3. Rename **application/config/database.sample.php** to **database.php**. Add your database information, including host, username, and password.
+3. Rename **application/config/tank_auth.sample.php** to **tank_auth.php**. Change settings like 'webmaster_email' and 'project_name'. Be sure to create and add your [ReCaptcha](https://www.google.com/recaptcha/admin/create) keys.
+5. Rename **assets/js/config.sample.js** to **config.js**. Add all necessary information (see file for more details).
 6. *More instructions coming soon. Go to an install page to populate the database, setup auth settings (CAS?), etc.*
 
 ## Development
