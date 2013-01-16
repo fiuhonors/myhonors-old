@@ -1,5 +1,9 @@
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
+-- --------------------------------------------------------
+-- Table structure for MyHonors
+-- --------------------------------------------------------
+
 CREATE TABLE IF NOT EXISTS `attendance` (
   `swipe_id` int(11) NOT NULL AUTO_INCREMENT,
   `event_id` int(10) NOT NULL,
@@ -24,115 +28,61 @@ CREATE TABLE IF NOT EXISTS `events` (
   PRIMARY KEY (`eid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
 
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
+-- --------------------------------------------------------
+-- Table structure for Tank_Auth
+-- --------------------------------------------------------
+
 CREATE TABLE IF NOT EXISTS `ci_sessions` (
-  `session_id` VARCHAR(40) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL DEFAULT 0 ,
-  `ip_address` VARCHAR(16) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL DEFAULT 0 ,
-  `user_agent` VARCHAR(150) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL ,
-  `last_activity` INT UNSIGNED NOT NULL DEFAULT 0 ,
-  `user_data` TEXT CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL ,
-  PRIMARY KEY (`session_id`) )
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_bin;
+  `session_id` varchar(40) COLLATE utf8_bin NOT NULL DEFAULT '0',
+  `ip_address` varchar(16) COLLATE utf8_bin NOT NULL DEFAULT '0',
+  `user_agent` varchar(150) COLLATE utf8_bin NOT NULL,
+  `last_activity` int(10) unsigned NOT NULL DEFAULT '0',
+  `user_data` text COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`session_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 CREATE TABLE IF NOT EXISTS `login_attempts` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `ip_address` VARCHAR(40) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL ,
-  `login` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL ,
-  `time` TIMESTAMP NOT NULL ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_bin;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ip_address` varchar(40) COLLATE utf8_bin NOT NULL,
+  `login` varchar(50) COLLATE utf8_bin NOT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 CREATE TABLE IF NOT EXISTS `user_autologin` (
-  `key_id` CHAR(32) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL ,
-  `user_id` INT UNSIGNED NOT NULL DEFAULT 0 ,
-  `user_agent` VARCHAR(150) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL ,
-  `last_ip` VARCHAR(40) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL ,
-  `last_login` TIMESTAMP NOT NULL ,
-  PRIMARY KEY (`key_id`, `user_id`) )
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_bin;
+  `key_id` char(32) COLLATE utf8_bin NOT NULL,
+  `user_id` int(11) NOT NULL DEFAULT '0',
+  `user_agent` varchar(150) COLLATE utf8_bin NOT NULL,
+  `last_ip` varchar(40) COLLATE utf8_bin NOT NULL,
+  `last_login` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`key_id`,`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 CREATE TABLE IF NOT EXISTS `user_profiles` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(200) NULL DEFAULT '' ,
-  `gender` CHAR(1) NULL DEFAULT '' ,
-  `dob` DATE NULL ,
-  `country` CHAR(2) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NULL DEFAULT '' ,
-  `website` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NULL DEFAULT '' ,
-  `modified` TIMESTAMP NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  INDEX `name` (`name` ASC) )
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_bin;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `country` varchar(20) COLLATE utf8_bin DEFAULT NULL,
+  `website` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 CREATE TABLE IF NOT EXISTS `users` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `username` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL ,
-  `password` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL ,
-  `email` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL ,
-  `activated` TINYINT(1) NOT NULL DEFAULT 1 ,
-  `banned` TINYINT(1) NOT NULL DEFAULT 0 ,
-  `ban_reason` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NULL ,
-  `new_password_key` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NULL ,
-  `new_password_requested` DATETIME NULL ,
-  `new_email` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NULL ,
-  `new_email_key` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NULL ,
-  `approved` TINYINT(1) NULL COMMENT 'For acct approval.' ,
-  `meta` VARCHAR(2000) NULL DEFAULT '' ,
-  `last_ip` VARCHAR(40) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL ,
-  `last_login` DATETIME NOT NULL ,
-  `created` DATETIME NOT NULL ,
-  `modified` TIMESTAMP NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  INDEX `username` (`username` ASC) ,
-  INDEX `email` (`email` ASC) )
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_bin;
-
-CREATE TABLE IF NOT EXISTS `permissions` (
-  `permission_id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `permission` VARCHAR(100) NOT NULL ,
-  `description` VARCHAR(160) NULL ,
-  `parent` VARCHAR(100) NULL ,
-  `sort` TINYINT UNSIGNED NULL ,
-  PRIMARY KEY (`permission_id`) )
-ENGINE = InnoDB;
-
-CREATE TABLE IF NOT EXISTS `roles` (
-  `role_id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `role` VARCHAR(50) NOT NULL ,
-  `full` VARCHAR(50) NOT NULL ,
-  `default` TINYINT(1) NOT NULL ,
-  PRIMARY KEY (`role_id`) )
-ENGINE = InnoDB;
-
-CREATE TABLE IF NOT EXISTS `role_permissions` (
-  `role_id` SMALLINT UNSIGNED NOT NULL ,
-  `permission_id` SMALLINT UNSIGNED NOT NULL ,
-  PRIMARY KEY (`role_id`, `permission_id`) ,
-  INDEX `role_id_idx` (`role_id` ASC) ,
-  INDEX `task_id_idx` (`permission_id` ASC) )
-ENGINE = InnoDB;
-
-CREATE TABLE IF NOT EXISTS `user_roles` (
-  `user_id` INT UNSIGNED NOT NULL ,
-  `role_id` SMALLINT UNSIGNED NOT NULL ,
-  PRIMARY KEY (`user_id`, `role_id`) ,
-  INDEX `user_id_idx` (`user_id` ASC) ,
-  INDEX `role_id_idx` (`role_id` ASC) )
-ENGINE = InnoDB;
-
-CREATE TABLE IF NOT EXISTS `overrides` (
-  `user_id` INT UNSIGNED NOT NULL ,
-  `permission_id` SMALLINT UNSIGNED NOT NULL ,
-  `allow` TINYINT(1) UNSIGNED NOT NULL ,
-  PRIMARY KEY (`user_id`, `permission_id`) ,
-  INDEX `user_id_idx` (`user_id` ASC) ,
-  INDEX `task_id_idx` (`permission_id` ASC) )
-ENGINE = InnoDB;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) COLLATE utf8_bin NOT NULL,
+  `password` varchar(255) COLLATE utf8_bin NOT NULL,
+  `email` varchar(100) COLLATE utf8_bin NOT NULL,
+  `activated` tinyint(1) NOT NULL DEFAULT '1',
+  `banned` tinyint(1) NOT NULL DEFAULT '0',
+  `ban_reason` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `new_password_key` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `new_password_requested` datetime DEFAULT NULL,
+  `new_email` varchar(100) COLLATE utf8_bin DEFAULT NULL,
+  `new_email_key` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `last_ip` varchar(40) COLLATE utf8_bin NOT NULL,
+  `last_login` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
