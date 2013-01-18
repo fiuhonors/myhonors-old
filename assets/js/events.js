@@ -15,7 +15,7 @@ myhonorsEvents.config(['$routeProvider', function($routeProvider) {
 /* Services */
 
 myhonorsEvents.factory('Events', ['$resource', function($resource) {
-	return $resource('events/:eventId');
+	return $resource('api/events?id=:eventId');
 }]);
 
 /* Controllers */
@@ -109,7 +109,7 @@ myhonorsEvents.controller('CitizenshipCtrl', ['$scope', '$http', function Citize
 	$scope.fetch = function() {
 		$scope.loading = true;
 		
-		$http.get('attendance/' + $scope.userid).success(function(data) {
+		$http.get('api/attendance?id=' + $scope.userid).success(function(data) {
 			// sorts the data into their separate event types
 			angular.forEach(data.events, function(e) {
 				switch (e.type)
