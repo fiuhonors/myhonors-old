@@ -12,53 +12,6 @@ $config['webmaster_email'] = 'admin@yoursite.com';
 
 /*
 |--------------------------------------------------------------------------
-| Blacklisted usernames
-|
-| 'username_blacklist' = Usernames which will be blocked upon registration
-| 'username_blacklist_prepend' = Each item will be appended to each element of 'username_blacklist' (increasing the # of blacklisted usernames)
-| 'username_exceptions' = Allow these names even if they're in the total list of blacklisted usernames
-|
-|--------------------------------------------------------------------------
-*/
-// Blacklisted usernames
-$config['username_blacklist'] = array('admin', 'administrator', 'mod', 'moderator', 'root');
-$config['username_blacklist_prepend'] = array('the', 'sys', 'system', 'site', 'super');
-$config['username_exceptions'] = array();
-
-/*
-|--------------------------------------------------------------------------
-| Custom registration fields
-|
-| Add custom fields to your registration page. See full instructions on how to
-| properly use this at https://github.com/enchance/Tank-Auth#custom-registration-fields
-|
-|--------------------------------------------------------------------------
-*/
-/*
-// Sample fields. Add as many as you like and customize as needed. View README.md for more info and how to use.
-$config['registration_fields'][] = array('name', 'Full name', 'trim|required', 'text');
-$config['registration_fields'][] = array('website', 'Website', 'trim|required', 'text', array('class'=>'something'));
-
-$config['registration_fields'][] = array('gender', 'Gender', 'trim|required|alpha|max_length[1]', 'radio', array('m'=>'Male', 'f'=>'Female'), '<p>', '</p>');
-$config['registration_fields'][] = array('checkit', 'Do you want money?', 'trim|numeric', 'checkbox', 'I want money');
-
-$config['registration_fields'][] = array('country', 'Country', 'trim|required|callback__not_zero', 'dropdown', array('0'=>'- choose -', 'US'=>'USA', 'PH'=>'Philippines'));
-$config['registration_fields'][] = array('category', 'Categories', 'trim|required|callback__not_zero', 'dropdown', '[table.field1, table.field2]');
-*/
-
-/*
-|--------------------------------------------------------------------------
-| Landing pages
-|
-| List of landing pages for redirection. I had this separated so you can eventually redirect it
-| to your own controller with flashdata to restrict its viewing.
-|--------------------------------------------------------------------------
-*/
-$config['login-success'] = 'welcome';
-$config['logout-success'] = FALSE; // Set FALSE for landing page in /views/landing/, '' for home, or 'controller' for your custom controller
-
-/*
-|--------------------------------------------------------------------------
 | Security settings
 |
 | The library uses PasswordHash library for operating with hashed passwords.
@@ -92,9 +45,6 @@ $config['email_activation'] = TRUE;
 $config['email_activation_expire'] = 60*60*24*2;
 $config['email_account_details'] = FALSE;
 $config['use_username'] = FALSE;
-
-// To manually approve accounts, set this to FALSE
-$config['acct_approval'] = TRUE;
 
 $config['username_min_length'] = 4;
 $config['username_max_length'] = 20;
@@ -148,13 +98,25 @@ $config['forgot_password_expire'] = 60*15;
 
 /*
 |--------------------------------------------------------------------------
-| Cool Captcha settings
+| Captcha
 |
-| When upgraidng Cool Captcha, simple replace the contents of the captcha folder
-| with the new version. No editing required.
+| You can set captcha that created by Auth library in here.
+| 'captcha_path' = Directory where the catpcha will be created.
+| 'captcha_fonts_path' = Font in this directory will be used when creating captcha.
+| 'captcha_font_size' = Font size when writing text to captcha. Leave blank for random font size.
+| 'captcha_grid' = Show grid in created captcha.
+| 'captcha_expire' = Life time of created captcha before expired, default is 3 minutes (180 seconds).
+| 'captcha_case_sensitive' = Captcha case sensitive or not.
 |--------------------------------------------------------------------------
 */
-$config['cool_captcha_folder'] = 'captcha';
+$config['captcha_path'] = 'captcha/';
+$config['captcha_fonts_path'] = 'captcha/fonts/5.ttf';
+$config['captcha_width'] = 200;
+$config['captcha_height'] = 50;
+$config['captcha_font_size'] = 14;
+$config['captcha_grid'] = FALSE;
+$config['captcha_expire'] = 180;
+$config['captcha_case_sensitive'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------
