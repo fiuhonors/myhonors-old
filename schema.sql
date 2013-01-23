@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `attendance` (
   `user_id` varchar(7) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `inout` int(1) NOT NULL DEFAULT '0' COMMENT '0:in 1:out 2:override',
-  PRIMARY KEY (`P_KEY`)
+  PRIMARY KEY (`swipe_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
 
 CREATE TABLE IF NOT EXISTS `events` (
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `events` (
   `location_name` varchar(100) NOT NULL,
   `lat` varchar(100) NOT NULL COMMENT 'Latitude of Location',
   `lng` varchar(100) NOT NULL COMMENT 'Longitude of Location',
-  PRIMARY KEY (`eid`)
+  PRIMARY KEY (`event_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
