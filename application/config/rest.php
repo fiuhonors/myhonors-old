@@ -59,7 +59,7 @@ $config['rest_realm'] = 'REST API';
 |	'' = no login required, 'basic' = unsecure login, 'digest' = more secure login
 |
 */
-$config['rest_auth'] = false;
+$config['rest_auth'] = 'tank_auth';
 
 /*
 |--------------------------------------------------------------------------
