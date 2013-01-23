@@ -15,4 +15,4 @@ application/config/database.php
 application/config/tank_auth.php
 application/logs/*.php
 application/logs/!index.html
-captcha/*.jpg
+assets/captcha/*.jpg
