@@ -23,7 +23,7 @@ class Api extends REST_Controller {
 		if ($this->get('id'))
 		{
 			// grab a single event
-			$result = $this->guide->get('events', array('eid' => $this->get('id')), true);
+			$result = $this->guide->get('events', array('event_id' => $this->get('id')), true);
 		}
 		else
 		{
@@ -41,7 +41,7 @@ class Api extends REST_Controller {
 	{
 		if ($this->get('id'))
 		{
-			$query = $this->guide->get('attendance', array('pid' => $this->get('id')));
+			$query = $this->guide->get('attendance', array('user_id' => $this->get('id')));
 
 			$result = array(
 				'userid' => $this->get('id'),
@@ -50,12 +50,12 @@ class Api extends REST_Controller {
 
 			foreach ($query as $attended)
 			{
-				$event = $this->guide->get('events', array('eid' => $attended['eid']), true);
+				$event = $this->guide->get('events', array('event_id' => $attended['event_id']), true);
 
 				if (!empty($event))
 				{
-					$result['events'][$event['eid']] = array(
-						'eid' => $event['eid'],
+					$result['events'][$event['event_id']] = array(
+						'event_id' => $event['event_id'],
 						'type' => $event['type'],
 						'name' => $event['name'],
 						'date' => $event['begins'],
@@ -72,7 +72,7 @@ class Api extends REST_Controller {
 			foreach ($query as $attended)
 			{
 				// generate desired structure
-				$result[$attended['pid']][$attended['eid']] = $attended['timestamp'];
+				$result[$attended['user_id']][$attended['event_id']] = $attended['timestamp'];
 			}
 		}
 
