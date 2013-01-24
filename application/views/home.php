@@ -88,7 +88,7 @@ myhonors.config(['$routeProvider', function($routeProvider) {
 
 myhonors.controller('AppCtrl', ['$scope', '$location', function AppCtrl($scope, $location) {
 	$scope.page_title = "";
-	$scope.profile = {};
+	$scope.profileData = <?php echo(json_encode($profile_data)); ?>;
 }]);
 
 </script>
