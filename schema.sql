@@ -63,6 +63,8 @@ CREATE TABLE IF NOT EXISTS `user_autologin` (
 CREATE TABLE IF NOT EXISTS `user_profiles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
+  `fname` varchar(32) COLLATE utf8_bin NOT NULL,
+  `lname` varchar(32) COLLATE utf8_bin NOT NULL,
   `country` varchar(20) COLLATE utf8_bin DEFAULT NULL,
   `website` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`id`)
