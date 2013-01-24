@@ -27,7 +27,7 @@
 					<li><a href="#/citizenship"><i class="icon-ok icon-white"></i> Citizenship</a></li>
 				</ul>
 				<div class="dropdown pull-right">
-					<span class="dropdown-text">Logged in as</span> <button class="btn btn-link dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> Sergio Pantoja</button>
+					<span class="dropdown-text">Logged in as</span> <button class="btn btn-link dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> {{profileData.fname}} {{profileData.lname}}</button>
 					<ul class="dropdown-menu pull-right" role="menu">
 						<li><a href="#">View Profile</a></li>
 						<li><a href="#">Update Profile</a></li>
