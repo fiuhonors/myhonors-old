@@ -1,0 +1,10 @@
+<div class="offset3 span6 well well-large">
+	<h2>Edit Profile</h2>
+	<label>First Name</label>
+	<input type="text" ng-model="profileEdit.fname" value="{{profileData.fname}}" />
+	<label>Last Name</label>
+	<input type="text" ng-model="profileEdit.lname" value="{{profileData.lname}}" />
+	<label>Majors & Minors</label>
+	<input type="text" ng-model="profileEdit.major" value="{{profileData.major}}" />
+	<p><button class="btn btn-primary" ng-click="profileSave()">Save</button> <a href="#/profile/{{profileData.user_id}}" class="btn btn-link">Go Back</a></p>
+</div>

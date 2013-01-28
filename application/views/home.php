@@ -29,9 +29,9 @@
 
 	/* Controllers */
 
-	myhonors.controller('AppCtrl', ['$scope', '$location', function AppCtrl($scope, $location) {
-		$scope.page_title = "";
-		$scope.profileData = <?php echo(json_encode($profile_data)); ?>;
+	myhonors.controller('AppCtrl', ['$scope', '$rootScope', '$location', function AppCtrl($scope, $rootScope, $location) {
+		$rootScope.page_title = "";
+		$rootScope.profileData = <?php echo(json_encode($profile_data)); ?>;
 	}]);
 
 	</script>
@@ -56,8 +56,8 @@
 				<div class="dropdown pull-right" ng-cloak ng-show="profileData">
 					<span class="dropdown-text">Logged in as</span> <button class="btn btn-link dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> {{profileData.fname}} {{profileData.lname}}</button>
 					<ul class="dropdown-menu pull-right" role="menu">
-						<li><a href="#/profile">View Profile</a></li>
-						<li><a href="#">Update Profile</a></li>
+						<li><a href="#/profile/{{profileData.user_id}}">View Profile</a></li>
+						<li><a href="#/profile/{{profileData.user_id}}/edit">Update Profile</a></li>
 						<li class="divider"></li>
 						<li><a href="auth/logout">Logout</a></li>
 					</ul>

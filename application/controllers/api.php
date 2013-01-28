@@ -78,4 +78,50 @@ class Api extends REST_Controller {
 
 		$this->response($result);
 	}
+
+	/**
+	 * @todo clean GET input
+	 */
+	public function user_get()
+	{
+		if ($this->get('id'))
+		{
+			// grab a single user
+			$result = $this->guide->get('user_profiles', array('user_id' => $this->get('id')), true);
+		}
+		else
+		{
+			// grab all users
+			$result = $this->guide->get('user_profiles');
+		}
+
+		$this->response($result);
+	}
+
+	/**
+	 * @todo clean GET input
+	 */
+	public function user_post()
+	{
+		// only allow if a user is trying to edit their own profile
+		if ($this->tank_auth->get_user_id() == $this->post('user_id'))
+		{
+			$data = array(
+				'fname' => $this->post('fname'),
+				'lname' => $this->post('lname'),
+				'major' => $this->post('major')
+			);
+
+			$affected_rows = $this->guide->update('user_profiles', array('user_id' => $this->post('user_id')), $data);
+			$result = $this->guide->get('user_profiles', array('user_id' => $this->post('user_id')), true);
+
+			// return the data so the resource in AngularJS maintains its state
+			$this->response($result, 200);
+		}
+		else
+		{
+			$this->response(array('status' => false, 'error' => 'Not authorized'), 401);
+		}
+
+	}
 }
