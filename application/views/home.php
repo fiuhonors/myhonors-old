@@ -19,7 +19,7 @@
 
 	'use strict';
 
-	var myhonors = angular.module('myhonors', ['myhonorsConfig', 'myhonorsEvents']);
+	var myhonors = angular.module('myhonors', ['myhonorsConfig', 'myhonorsProfile', 'myhonorsEvents']);
 
 	/* Config */
 
@@ -36,6 +36,7 @@
 
 	</script>
 	<script src="assets/js/config.js"></script>
+	<script src="assets/js/profile.js"></script>
 	<script src="assets/js/events.js"></script>
 </head>
 <body data-ng-controller="AppCtrl">
@@ -55,7 +56,7 @@
 				<div class="dropdown pull-right" ng-cloak ng-show="profileData">
 					<span class="dropdown-text">Logged in as</span> <button class="btn btn-link dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> {{profileData.fname}} {{profileData.lname}}</button>
 					<ul class="dropdown-menu pull-right" role="menu">
-						<li><a href="#">View Profile</a></li>
+						<li><a href="#/profile">View Profile</a></li>
 						<li><a href="#">Update Profile</a></li>
 						<li class="divider"></li>
 						<li><a href="auth/logout">Logout</a></li>
