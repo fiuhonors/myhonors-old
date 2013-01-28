@@ -11,6 +11,32 @@
 		#wrap {display:table;height:100%}
 	</style>
 	<![endif]-->
+	<script src="assets/lib/jquery.min.js"></script>
+	<script src="assets/lib/angular.js"></script>
+	<script src="assets/lib/angular-resource.js"></script>
+	<script src="assets/lib/bootstrap.js"></script>
+	<script type="text/javascript">
+
+	'use strict';
+
+	var myhonors = angular.module('myhonors', ['myhonorsConfig', 'myhonorsEvents']);
+
+	/* Config */
+
+	myhonors.config(['$routeProvider', function($routeProvider) {
+		$routeProvider.otherwise({redirectTo:'/home', templateUrl: 'assets/partials/home.html'});
+	}]);
+
+	/* Controllers */
+
+	myhonors.controller('AppCtrl', ['$scope', '$location', function AppCtrl($scope, $location) {
+		$scope.page_title = "";
+		$scope.profileData = <?php echo(json_encode($profile_data)); ?>;
+	}]);
+
+	</script>
+	<script src="assets/js/config.js"></script>
+	<script src="assets/js/events.js"></script>
 </head>
 <body data-ng-controller="AppCtrl">
 
@@ -26,7 +52,7 @@
 					<li><a href="#/events"><i class="icon-calendar icon-white"></i> Events</a></li>
 					<li><a href="#/citizenship"><i class="icon-ok icon-white"></i> Citizenship</a></li>
 				</ul>
-				<div class="dropdown pull-right">
+				<div class="dropdown pull-right" ng-cloak>
 					<span class="dropdown-text">Logged in as</span> <button class="btn btn-link dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> {{profileData.fname}} {{profileData.lname}}</button>
 					<ul class="dropdown-menu pull-right" role="menu">
 						<li><a href="#">View Profile</a></li>
@@ -67,33 +93,6 @@
 		</div>
 	</div>
 </div>
-
-<script src="assets/lib/jquery.min.js"></script>
-<script src="assets/lib/angular.js"></script>
-<script src="assets/lib/angular-resource.js"></script>
-<script src="assets/lib/bootstrap.js"></script>
-<script type="text/javascript">
-
-'use strict';
-
-var myhonors = angular.module('myhonors', ['myhonorsConfig', 'myhonorsEvents']);
-
-/* Config */
-
-myhonors.config(['$routeProvider', function($routeProvider) {
-	$routeProvider.otherwise({redirectTo:'/home', templateUrl: 'assets/partials/home.html'});
-}]);
-
-/* Controllers */
-
-myhonors.controller('AppCtrl', ['$scope', '$location', function AppCtrl($scope, $location) {
-	$scope.page_title = "";
-	$scope.profileData = <?php echo(json_encode($profile_data)); ?>;
-}]);
-
-</script>
-<script src="assets/js/config.js"></script>
-<script src="assets/js/events.js"></script>
 
 </body>
 </html>
