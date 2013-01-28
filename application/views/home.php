@@ -52,7 +52,7 @@
 					<li><a href="#/events"><i class="icon-calendar icon-white"></i> Events</a></li>
 					<li><a href="#/citizenship"><i class="icon-ok icon-white"></i> Citizenship</a></li>
 				</ul>
-				<div class="dropdown pull-right" ng-cloak>
+				<div class="dropdown pull-right" ng-cloak ng-show="profileData">
 					<span class="dropdown-text">Logged in as</span> <button class="btn btn-link dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> {{profileData.fname}} {{profileData.lname}}</button>
 					<ul class="dropdown-menu pull-right" role="menu">
 						<li><a href="#">View Profile</a></li>
@@ -61,7 +61,10 @@
 						<li><a href="auth/logout">Logout</a></li>
 					</ul>
 				</div>
-				</p>
+				<ul class="unstyled inline pull-right" ng-show="!profileData">
+					<li><a href="auth/login" class="btn btn-primary">Login</a></li>
+					<li><a href="auth/register" class="btn btn-link">Register</a></li>
+				</ul>
 			</div>
 		</div>
 	</div>
