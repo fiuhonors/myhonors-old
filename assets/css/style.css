@@ -200,3 +200,9 @@ a.thumbnail:hover {text-decoration: none;}
 	border: 1px solid #aaa;
 	background-image: url(../img/gplaypattern.png);
 }
+
+.media.well {
+	margin-top: 0px;
+	margin-bottom: 3px;
+	padding-bottom: 10px;
+}
