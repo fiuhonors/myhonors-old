@@ -193,3 +193,10 @@ a.thumbnail:hover {text-decoration: none;}
 	font-size: 12px;
 	text-shadow: 1px 1px 1px black;
 }
+
+/* PROFILE */
+
+.hero-unit {
+	border: 1px solid #aaa;
+	background-image: url(../img/gplaypattern.png);
+}
