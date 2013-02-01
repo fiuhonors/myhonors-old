@@ -49,7 +49,7 @@
 		<div class="navbar-inner">
 			<div class="container-fluid">
 				<a class="brand" href="#/home">&nbsp;</a>
-				<ul class="nav">
+				<ul class="nav" ng-show="profileData">
 					<li><a href="#/events"><i class="icon-calendar icon-white"></i> Events</a></li>
 					<li><a href="#/citizenship"><i class="icon-ok icon-white"></i> Citizenship</a></li>
 				</ul>
