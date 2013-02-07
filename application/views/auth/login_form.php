@@ -44,14 +44,21 @@ $captcha = array(
 			</div>
 			<div class="well well-large" style="padding-top: 70px">
 				<?php echo form_open($this->uri->uri_string()); ?>
+
+				<?php // this is ugly but this is how errors need to be handled for now ?>
+				<?php echo isset($errors[$login['name']]) ? '<div class="alert">' . $errors[$login['name']] . '</div>' : ''; ?>
+				<?php echo isset($errors[$password['name']]) ? '<div class="alert">' . $errors[$password['name']] . '</div>' : ''; ?>
+				<?php echo validation_errors('<div class="alert">', '</div>'); ?>
+
 				<?php echo form_label($login_label, $login['id']); ?>
 				<?php echo form_input($login); ?>
-				<?php echo form_error($login['name']); ?><?php echo isset($errors[$login['name']])?$errors[$login['name']]:''; ?>
+
 				<?php echo form_label('Password', $password['id']); ?>
 				<?php echo form_password($password); ?>
-				<?php echo form_error($password['name']); ?><?php echo isset($errors[$password['name']])?$errors[$password['name']]:''; ?>
+
 				<br /><br />
 				<button type="submit" class="btn btn-primary" >Login</button> <a class="btn btn-link" href="auth/forgot_password/">Forgot Password?</a>
+
 				<?php echo form_close(); ?>
 			</div>
 
