@@ -74,7 +74,7 @@ $captcha = array(
 				<?php }
 				} ?>
 				<br /><br />
-				<button type="submit" class="btn btn-primary" >Login</button> <a class="btn btn-link" href="auth/forgot_password/">Forgot Password?</a>
+				<button type="submit" class="btn btn-primary" >Login</button> <?php if ($this->config->item('allow_registration', 'tank_auth')) { ?><a class="btn btn-link" href="auth/forgot_password/">Forgot Password?</a><?php } ?>
 
 				<?php echo form_close(); ?>
 			</div>
