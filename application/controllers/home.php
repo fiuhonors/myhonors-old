@@ -23,9 +23,17 @@ class Home extends CI_Controller
 		if ($this->tank_auth->is_logged_in())
 		{
 			$data['profile_data'] = $this->guide->get('user_profiles', array('user_id' => $this->tank_auth->get_user_id()), true);
-		}
+			$data['load_angular'] = true;
 
-		$this->load->view('home', $data);
+			// we separate the header & footer so CodeIgniter views can still be inserted easily
+			// but most templates are generated via AngularJS 
+			$this->load->view('header', $data);
+			$this->load->view('footer');
+		}
+		else
+		{
+			redirect('auth/login');
+		}
 	}
 }
 
