@@ -35,7 +35,7 @@ $captcha = array(
 
 	<div class="row-fluid" ng-show="!profileData">
 		<div class="span7" style="">
-			<p><img src="http://placekitten.com/414/414" class="img-polaroid img-rounded" /></p>
+			<p><img src="http://placehold.it/414x414" class="img-polaroid img-rounded" /></p>
 		</div>
 
 		<div class="span5" style="margin-top: 60px; position: relative;">
