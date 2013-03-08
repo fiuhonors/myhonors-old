@@ -221,3 +221,13 @@ a.thumbnail:hover {text-decoration: none;}
 	border-bottom: 1px solid #666;
 	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
 }
+
+.img-rotate {
+	position: relative;
+}
+
+.img-rotate img {
+	position: absolute;
+	top: 0;
+	left: 0;
+}

@@ -34,8 +34,10 @@ $captcha = array(
 <div class="span8 offset2" style="margin-top: 100px">
 
 	<div class="row-fluid" ng-show="!profileData">
-		<div class="span7" style="">
-			<p><img src="http://placehold.it/414x414" class="img-polaroid img-rounded" /></p>
+		<div class="span7" img-rotate>
+			<img src="http://placehold.it/414&text=Image+1" class="img-polaroid img-rounded" />
+			<img src="http://placehold.it/414&text=Image+2" class="img-polaroid img-rounded" />
+			<img src="http://placehold.it/414&text=Image+3" class="img-polaroid img-rounded" />
 		</div>
 
 		<div class="span5" style="margin-top: 60px; position: relative;">
