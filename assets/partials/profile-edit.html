@@ -6,5 +6,6 @@
 	<input type="text" ng-model="profileEdit.lname" value="{{profileData.lname}}" />
 	<label>Majors & Minors</label>
 	<input type="text" ng-model="profileEdit.major" value="{{profileData.major}}" />
+	<fileupload />
 	<p><button class="btn btn-primary" ng-click="profileSave()">Save</button> <a href="#/profile/{{profileData.user_id}}" class="btn btn-link">Go Back</a></p>
 </div>

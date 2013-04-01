@@ -124,4 +124,22 @@ class Api extends REST_Controller {
 		}
 
 	}
+
+	public function upload_post()
+	{
+		$config['upload_path'] = './uploads/';
+		$config['allowed_types'] = 'gif|jpg|png';
+
+		$this->load->library('upload', $config);
+
+		if (!$this->upload->do_upload('file'))
+		{
+			$this->response(array('error' => strip_tags($this->upload->display_errors())), 400);
+		}
+		else
+		{
+			$upload = $this->upload->data();
+			$this->response($upload, 200);
+		}
+	}
 }
