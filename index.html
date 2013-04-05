@@ -4,7 +4,6 @@
 	<title>MyHonors</title>
 	<base href="localhost" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
 	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css" />
 	<!-- this is for the Sticky Footer Solution -->
@@ -13,10 +12,14 @@
 		#wrap {display:table;height:100%}
 	</style>
 	<![endif]-->
+
+	<!-- load our libraries! these make all the real magic happen -->
 	<script src="assets/lib/jquery.min.js"></script>
 	<script src="assets/lib/bootstrap.js"></script>
 	<script src="assets/lib/angular.js"></script>
 	<script src="assets/lib/angular-resource.js"></script>
+
+	<!-- load our app files -->
 	<script src="assets/js/app.js"></script>
 	<script src="assets/js/config.js"></script>
 	<script src="assets/js/profile.js"></script>
@@ -28,15 +31,15 @@
 <div id="wrap">
 
 	<!-- header -->
-	<div class="navbar navbar-static-top navbar-inverse" ng-show="profileData">
+	<div class="navbar navbar-static-top navbar-inverse" data-ng-show="profileData">
 		<div class="navbar-inner">
 			<div class="container-fluid">
 				<a class="brand" href="#/home">&nbsp;</a>
-				<ul class="nav" ng-show="profileData">
+				<ul class="nav" data-ng-show="profileData">
 					<li><a href="#/events"><i class="icon-calendar icon-white"></i> Events</a></li>
 					<li><a href="#/citizenship"><i class="icon-ok icon-white"></i> Citizenship</a></li>
 				</ul>
-				<div class="dropdown pull-right" ng-cloak ng-show="profileData">
+				<div class="dropdown pull-right" data-ng-cloak data-ng-show="profileData">
 					<span class="dropdown-text">Logged in as</span> <button class="btn btn-link dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> {{profileData.fname}} {{profileData.lname}}</button>
 					<ul class="dropdown-menu pull-right" role="menu">
 						<li><a href="#/profile/{{profileData.user_id}}">View Profile</a></li>
@@ -45,7 +48,7 @@
 						<li><a href="auth/logout">Logout</a></li>
 					</ul>
 				</div>
-				<ul class="unstyled inline pull-right" ng-show="!profileData">
+				<ul class="unstyled inline pull-right" data-ng-show="!profileData">
 					<li><a href="auth/login" class="btn btn-primary">Login</a></li>
 					<li><a href="auth/register" class="btn btn-link">Register</a></li>
 				</ul>
