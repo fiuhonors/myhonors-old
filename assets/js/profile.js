@@ -6,6 +6,7 @@ var myhonorsProfile = angular.module('myhonorsProfile', ['ngResource']);
 
 myhonorsProfile.config(['$routeProvider', function($routeProvider) {
 	$routeProvider.
+		when('/login', {templateUrl: 'assets/partials/login.html'}).
 		when('/profile/:userId', {templateUrl: 'assets/partials/profile.html'}).
 		when('/profile/:userId/edit', {templateUrl: 'assets/partials/profile-edit.html', controller: 'ProfileEditCtrl'});
 
