@@ -4,6 +4,7 @@
 	<title>MyHonors</title>
 	<base href="localhost" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
 	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css" />
 	<!-- this is for the Sticky Footer Solution -->
@@ -16,90 +17,7 @@
 	<script src="assets/lib/bootstrap.js"></script>
 	<script src="assets/lib/angular.js"></script>
 	<script src="assets/lib/angular-resource.js"></script>
-	<script type="text/javascript">
-
-	'use strict';
-
-	var myhonors = angular.module('myhonors', ['myhonorsConfig', 'myhonorsProfile', 'myhonorsEvents']);
-
-	/* Config */
-
-	myhonors.config(['$routeProvider', function($routeProvider) {
-		$routeProvider.otherwise({redirectTo:''});
-	}]);
-
-	/* Controllers */
-
-	myhonors.controller('AppCtrl', ['$scope', '$rootScope', '$location', function AppCtrl($scope, $rootScope, $location) {
-		$rootScope.page_title = "";
-		$rootScope.profileData = null;
-
-		$scope.results = function(content) {
-			$scope.response = content;
-		};
-	}]);
-
-	myhonors.directive('imgRotate', function($timeout) {
-			return function(scope, elm, attrs) {
-				// make the images sit on top of each other
-				elm.addClass('img-rotate');
-
-				var children = elm.children();
-				var first = children.first();
-				var current = first;
-				var previous = null;
-
-				var delay = attrs.delay || 2000;
-
-				children.css('display', 'none');
-				current.css('display', 'block');
-
-				// base case: if there are less than two images, we have nothing to rotate
-				if (children.length < 2) {
-					return;
-				}
-
-				// rotate!
-				$timeout(function rotate() {
-					if (current.next().length === 0) {
-						first.css('display', 'block');
-						current.fadeOut();
-						current = first;
-					}
-					else {
-						previous = current;
-						current = current.next();
-						current.fadeIn(function() {
-							previous.css('display', 'none');
-						})
-;					}
-
-					// do it again!
-					$timeout(rotate, delay, false);
-				}, delay, false);
-		};
-	});
-
-	myhonors.directive('fileupload', function () {
-		return {
-			restrict: 'E',
-			template: '<input type="file" name="file" onchange="angular.element(this).scope().setFile(this)">',
-			replace: true,
-			controller: function ($scope) {
-				$scope.setFile = function (elem) {
-					var fd = new FormData(),
-						xhr = new XMLHttpRequest();
-
-					fd.append("file", elem.files[0]);
-
-					xhr.open("POST", "api/upload", true);
-					xhr.send(fd);
-				};
-			}
-		};
-	});
-
-	</script>
+	<script src="assets/js/app.js"></script>
 	<script src="assets/js/config.js"></script>
 	<script src="assets/js/profile.js"></script>
 	<script src="assets/js/events.js"></script>
