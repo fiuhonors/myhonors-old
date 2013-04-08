@@ -6,7 +6,7 @@ var myhonorsProfile = angular.module('myhonorsProfile', ['ngResource']);
 
 myhonorsProfile.config(['$routeProvider', function($routeProvider) {
 	$routeProvider.
-		when('/login', {templateUrl: 'assets/partials/login.html'}).
+		when('/login', {templateUrl: 'assets/partials/login.html', controller: 'LoginCtrl'}).
 		when('/profile/:userId', {templateUrl: 'assets/partials/profile.html'}).
 		when('/profile/:userId/edit', {templateUrl: 'assets/partials/profile-edit.html', controller: 'ProfileEditCtrl'});
 
@@ -19,6 +19,11 @@ myhonorsProfile.factory('Profile', ['$resource', function($resource) {
 }]);
 
 /* Controllers */
+
+myhonorsProfile.controller('LoginCtrl', ['$scope', function($scope) {
+	$scope.currentPage = 'login';
+	$scope.login = {email: '', password: ''};
+}]);
 
 myhonorsProfile.controller('ProfileEditCtrl', ['$scope', '$rootScope', '$routeParams', '$location', 'Profile', function EventBrowseCtrl($scope, $rootScope, $routeParams, $location, Profile) {
 	$scope.profileEdit = Profile.get({id: $routeParams.userId}, function(data) {console.log(data);});
