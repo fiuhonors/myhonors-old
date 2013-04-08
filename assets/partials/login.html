@@ -8,25 +8,30 @@
 		</div>
 
 		<div class="span5" style="margin-top: 60px; position: relative;">
-			<div class="btn-primary login-header">
-				<strong>Login to FIU MyHonors</strong>
+			<div class="btn-primary login-header" data-ng-switch="currentPage">
+				<strong ng-switch-when="login">Login to FIU MyHonors</strong>
+				<strong ng-switch-when="forgotPass">Forgot your password?</strong>
 			</div>
-			<div class="well well-large" style="padding-top: 70px">
-				<form>
 
-				<label for="email">Email Address</label>
-				<input type="text" id="email" name="email" placeholder="panther@fiu.edu" />
+			<div class="well well-large" style="padding-top: 70px" data-ng-switch="currentPage">
+				<div ng-switch-when="login">
+					<label for="email">Email Address</label>
+					<input type="text" id="email" placeholder="panther@fiu.edu" ng-model="login.email" />
 
-				<label for="password">Password</label>
-				<input type="password" id="password" name="password" />
+					<label for="password">Password</label>
+					<input type="password" id="password" name="password" ng-model="login.password" />
 
-				<button type="submit" class="btn btn-primary" >Login</button> <a class="btn btn-link" href="auth/forgot_password/">Forgot Password?</a>
-
-				</form>
+					<button type="submit" class="btn btn-primary">Login</button> <button class="btn btn-link" ng-click="$parent.currentPage = 'forgotPass'">Forgot Password?</button>
+				</div>
+				<div ng-switch-when="forgotPass">
+					<p>To reset your password, please email <a href="mailto:honors@fiu.edu">honors@fiu.edu</a> with your name and Panther ID. We will take you through the reset process from there.</p>
+					<button class="btn btn-primary" ng-click="$parent.currentPage = 'login'"><i class="icon-chevron-left icon-white"></i> Go back</button>
+				</div>
 			</div>
 
 			<div class="pagination-centered">
-				<p>Not a member? <a href="auth/register">Sign up now</a></p>
+				<p>Not a member? <a href="/#/signup">Sign up now</a></p>
+				<p>{{login}}</p>
 			</div>
 
 		</div>
