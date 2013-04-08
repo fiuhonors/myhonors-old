@@ -1,0 +1,44 @@
+<div class="span10 offset1" style="margin-top: 100px">
+
+	<div class="row-fluid">
+		<div class="span12" style="position: relative;">
+			<div class="btn-primary login-header">
+				<strong>Sign up for FIU MyHonors</strong>
+			</div>
+			<div class="well well-large" style="padding-top: 70px">
+				<div class="row-fluid">
+					<div class="span4" style="border-right: 1px solid #ccc">
+						<h3 style="margin-bottom: 0px">BASIC INFO</h3>
+						<label for="email">Email Address</label>
+						<input type="text" id="email" placeholder="panther@fiu.edu" ng-model="signup.email" />
+
+						<label for="password">Password</label>
+						<input type="password" id="password" ng-model="signup.password" />
+
+						<label for="password2">Confirm Password</label>
+						<input type="password" id="password2" ng-model="signup.passwordConfirm" />
+					</div>
+					<div class="span4"  style="border-right: 1px solid #ccc">
+						<h3 style="margin-bottom: 0px">VERIFY ACCOUNT</h3>
+						<p style="line-height: 1em"><small>We need to verify your identity. Please enter your FIU Panther ID and MyAccounts password.</small></p>
+						<label for="pid">Panther ID</label>
+						<input type="text" id="pid" placeholder="Example: 1234567" ng-model="signup.pantherID" />
+
+						<label for="password">MyAccounts Password</label>
+						<input type="password" id="password" ng-model="signup.myAccountsPassword" />
+
+						<button class="btn btn-primary">Verify Account</button>
+					</div>
+					<div class="span4">
+						<h3 style="font-weight: bolder">PRESS BUTTON</h3>
+						<button class="btn btn-large btn-block disabled" style="padding: 60px;">Take me to<br />MyHonors</button>
+					</div>
+				</div>
+			</div>
+			<div class="pagination-centered">
+				<p>Need help? Email us at <a href="mailto:honors@fiu.edu">honors@fiu.edu</a></p>
+			</div>
+		</div>
+	</div>
+
+</div>
