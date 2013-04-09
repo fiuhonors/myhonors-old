@@ -21,7 +21,7 @@
 					<label for="password">Password</label>
 					<input type="password" id="password" name="password" ng-model="login.password" />
 
-					<button type="submit" class="btn btn-primary">Login</button> <button class="btn btn-link" ng-click="$parent.currentPage = 'forgotPass'">Forgot Password?</button>
+					<button class="btn btn-primary" ng-click="doLogin()">Login</button> <button class="btn btn-link" ng-click="$parent.currentPage = 'forgotPass'">Forgot Password?</button>
 				</div>
 				<div ng-switch-when="forgotPass">
 					<p>To reset your password, please email <a href="mailto:honors@fiu.edu">honors@fiu.edu</a> with your name and Panther ID. We will take you through the reset process from there.</p>

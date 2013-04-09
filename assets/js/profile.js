@@ -15,15 +15,78 @@ myhonorsProfile.config(['$routeProvider', function($routeProvider) {
 
 /* Services */
 
-myhonorsProfile.factory('Profile', ['$resource', function($resource) {
-	return $resource('api/user');
-}]);
+myhonorsProfile.factory('Profile', function() {
+	var profileObject = {};
+	return profileObject;
+});
+
+myhonorsProfile.factory('Firebase', function() {
+	return new Firebase('https://myhonors.firebaseio.com/');
+});
+
+myhonorsProfile.factory('FirebaseAuth', function($rootScope, Firebase) {
+	var dataObject = {};
+	var authClient = new FirebaseAuthClient(Firebase, function(error, user) {
+		if (error) {
+			// an error occurred while attempting login
+			// todo: implement error messages into HTML
+			alert('error: ' + error.message);
+		}
+		else if (user) {
+			// user authenticated with Firebase
+			console.log('logged in: ', user);
+			dataObject.user = user;
+			$rootScope.$apply();
+		}
+		else {
+			// user is logged out
+			console.log('user logged out');
+			dataObject.user = null;
+		}
+	});
+	
+	dataObject.login = function(provider, email, password) {
+		if (provider === 'password') {
+			authClient.login('password', {
+				email: email,
+				password: password
+			});
+		}
+	};
+	
+	dataObject.logout = function() {
+		authClient.logout();  
+	};
+	
+	return dataObject;
+});
 
 /* Controllers */
 
-myhonorsProfile.controller('LoginCtrl', ['$scope', function($scope) {
-	$scope.currentPage = 'login';
+myhonorsProfile.controller('LoginCtrl', ['$scope', 'Firebase', 'FirebaseAuth', 'Profile', function($scope, Firebase, FirebaseAuth, Profile) {
 	$scope.login = {email: '', password: ''};
+	$scope.auth = FirebaseAuth;
+	$scope.profile = Profile;
+	
+	$scope.$watch('auth.user', function() {
+		if ($scope.auth.user) {
+			Firebase.child('user_profiles/' + $scope.auth.user.id).on('value', function(snapshot) {
+				$scope.$apply(function() {
+					$scope.profile = snapshot.val();
+				});
+			});
+		}
+	});
+	
+	$scope.doLogin = function() {
+		FirebaseAuth.login('password', $scope.login.email, $scope.login.password);
+		$scope.login.password = '';
+	};
+
+	$scope.doLogout = function() {FirebaseAuth.logout()};
+
+	//used for navigating between the Login box and the Forgot Password? box
+	$scope.currentPage = 'login';
 }]);
 
 myhonorsProfile.controller('SignupCtrl', ['$scope', function($scope) {
