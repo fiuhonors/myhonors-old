@@ -1,25 +1,21 @@
 'use strict';
 
-var myhonors = angular.module('myhonors', ['myhonorsConfig', 'Firebase', 'myhonorsUser', 'myhonorsEvents']);
+angular.module('myhonors', ['myhonorsConfig', 'Firebase', 'myhonorsUser', 'myhonorsEvents']).
 
-/* Config */
-
-myhonors.config(['$routeProvider', function($routeProvider) {
+config(['$routeProvider', function($routeProvider) {
 	$routeProvider.otherwise({redirectTo:''});
-}]);
+}]).
 
-/* Controllers */
-
-myhonors.controller('AppCtrl', ['$scope', '$rootScope', '$location', 'Profile', function AppCtrl($scope, $rootScope, $location, Profile) {
+controller('AppCtrl', ['$scope', '$rootScope', '$location', 'Profile', function AppCtrl($scope, $rootScope, $location, Profile) {
 	$rootScope.page_title = "";
 	$rootScope.profile = Profile;
 
 	$scope.results = function(content) {
 		$scope.response = content;
 	};
-}]);
+}]).
 
-myhonors.directive('imgRotate', function($timeout) {
+directive('imgRotate', function($timeout) {
 		return function(scope, elm, attrs) {
 			// make the images sit on top of each other
 			elm.addClass('img-rotate');
@@ -51,16 +47,16 @@ myhonors.directive('imgRotate', function($timeout) {
 					current = current.next();
 					current.fadeIn(function() {
 						previous.css('display', 'none');
-					})
-;					}
+					});
+				}
 
 				// do it again!
 				$timeout(rotate, delay, false);
 			}, delay, false);
 	};
-});
+}).
 
-myhonors.directive('fileupload', function () {
+directive('fileupload', function () {
 	return {
 		restrict: 'E',
 		template: '<input type="file" name="file" onchange="angular.element(this).scope().setFile(this)">',
