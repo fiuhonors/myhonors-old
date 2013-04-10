@@ -10,9 +10,9 @@ myhonors.config(['$routeProvider', function($routeProvider) {
 
 /* Controllers */
 
-myhonors.controller('AppCtrl', ['$scope', '$rootScope', '$location', function AppCtrl($scope, $rootScope, $location) {
+myhonors.controller('AppCtrl', ['$scope', '$rootScope', '$location', 'Profile', function AppCtrl($scope, $rootScope, $location, Profile) {
 	$rootScope.page_title = "";
-	$rootScope.profileData = null;
+	$rootScope.profile = Profile;
 
 	$scope.results = function(content) {
 		$scope.response = content;
