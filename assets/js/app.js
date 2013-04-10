@@ -8,6 +8,12 @@ myhonors.config(['$routeProvider', function($routeProvider) {
 	$routeProvider.otherwise({redirectTo:''});
 }]);
 
+/* Services */
+
+myhonors.factory('Database', function() {
+	return new Firebase('https://myhonors.firebaseio.com/');
+});
+
 /* Controllers */
 
 myhonors.controller('AppCtrl', ['$scope', '$rootScope', '$location', 'Profile', function AppCtrl($scope, $rootScope, $location, Profile) {

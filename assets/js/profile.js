@@ -20,10 +20,6 @@ myhonorsProfile.factory('Profile', function() {
 	return profileObject;
 });
 
-myhonorsProfile.factory('Firebase', function() {
-	return new Firebase('https://myhonors.firebaseio.com/');
-});
-
 myhonorsProfile.factory('FirebaseAuth', function($rootScope, Firebase) {
 	var dataObject = {};
 	var authClient = new FirebaseAuthClient(Firebase, function(error, user) {
