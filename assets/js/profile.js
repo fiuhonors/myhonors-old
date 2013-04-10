@@ -20,9 +20,9 @@ myhonorsProfile.factory('Profile', function() {
 	return profileObject;
 });
 
-myhonorsProfile.factory('FirebaseAuth', function($rootScope, Database) {
+myhonorsProfile.factory('FirebaseAuth', function($rootScope, FirebaseIO) {
 	var dataObject = {};
-	var authClient = new FirebaseAuthClient(Database, function(error, user) {
+	var authClient = new FirebaseAuthClient(FirebaseIO, function(error, user) {
 		if (error) {
 			// an error occurred while attempting login
 			// todo: implement error messages into HTML
@@ -59,14 +59,14 @@ myhonorsProfile.factory('FirebaseAuth', function($rootScope, Database) {
 
 /* Controllers */
 
-myhonorsProfile.controller('LoginCtrl', ['$scope', '$location', 'Database', 'FirebaseAuth', 'Profile', function($scope, $location, Database, FirebaseAuth, Profile) {
+myhonorsProfile.controller('LoginCtrl', ['$scope', '$location', 'FirebaseIO', 'FirebaseAuth', 'Profile', function($scope, $location, FirebaseIO, FirebaseAuth, Profile) {
 	$scope.login = {email: '', password: ''};
 	$scope.auth = FirebaseAuth;
 	$scope.profile = Profile;
 	
 	$scope.$watch('auth.user', function() {
 		if ($scope.auth.user) {
-			Database.child('user_profiles/' + $scope.auth.user.id).on('value', function(snapshot) {
+			FirebaseIO.child('user_profiles/' + $scope.auth.user.id).on('value', function(snapshot) {
 				$scope.$apply(function() {
 					$scope.profile = snapshot.val();
 					$location.path('/');
