@@ -63,7 +63,7 @@ myhonorsProfile.factory('FirebaseAuth', function($rootScope, Firebase) {
 
 /* Controllers */
 
-myhonorsProfile.controller('LoginCtrl', ['$scope', 'Firebase', 'FirebaseAuth', 'Profile', function($scope, Firebase, FirebaseAuth, Profile) {
+myhonorsProfile.controller('LoginCtrl', ['$scope', '$location', 'Firebase', 'FirebaseAuth', 'Profile', function($scope, $location, Firebase, FirebaseAuth, Profile) {
 	$scope.login = {email: '', password: ''};
 	$scope.auth = FirebaseAuth;
 	$scope.profile = Profile;
@@ -73,6 +73,7 @@ myhonorsProfile.controller('LoginCtrl', ['$scope', 'Firebase', 'FirebaseAuth', '
 			Firebase.child('user_profiles/' + $scope.auth.user.id).on('value', function(snapshot) {
 				$scope.$apply(function() {
 					$scope.profile = snapshot.val();
+					$location.path('/');
 				});
 			});
 		}
