@@ -1,26 +1,22 @@
 'use strict';
 
-var myhonorsProfile = angular.module('myhonorsProfile', ['ngResource']);
+angular.module('myhonorsUser', []).
 
-/* Config */
-
-myhonorsProfile.config(['$routeProvider', function($routeProvider) {
+config(['$routeProvider', function($routeProvider) {
 	$routeProvider.
 		when('/login', {templateUrl: 'assets/partials/login.html', controller: 'LoginCtrl'}).
 		when('/signup', {templateUrl: 'assets/partials/signup.html', controller: 'SignupCtrl'}).
 		when('/profile/:userId', {templateUrl: 'assets/partials/profile.html'}).
 		when('/profile/:userId/edit', {templateUrl: 'assets/partials/profile-edit.html', controller: 'ProfileEditCtrl'});
 
-}]);
+}]).
 
-/* Services */
-
-myhonorsProfile.factory('Profile', function() {
+factory('Profile', function() {
 	var profileObject = {};
 	return profileObject;
-});
+}).
 
-myhonorsProfile.factory('FirebaseAuth', function($rootScope, FirebaseIO) {
+factory('FirebaseAuth', function($rootScope, FirebaseIO) {
 	var dataObject = {};
 	var authClient = new FirebaseAuthClient(FirebaseIO, function(error, user) {
 		if (error) {
@@ -55,11 +51,9 @@ myhonorsProfile.factory('FirebaseAuth', function($rootScope, FirebaseIO) {
 	};
 	
 	return dataObject;
-});
+}).
 
-/* Controllers */
-
-myhonorsProfile.controller('LoginCtrl', ['$scope', '$location', 'FirebaseIO', 'FirebaseAuth', 'Profile', function($scope, $location, FirebaseIO, FirebaseAuth, Profile) {
+controller('LoginCtrl', ['$scope', '$location', 'FirebaseIO', 'FirebaseAuth', 'Profile', function($scope, $location, FirebaseIO, FirebaseAuth, Profile) {
 	$scope.login = {email: '', password: ''};
 	$scope.auth = FirebaseAuth;
 	$scope.profile = Profile;
@@ -84,13 +78,13 @@ myhonorsProfile.controller('LoginCtrl', ['$scope', '$location', 'FirebaseIO', 'F
 
 	//used for navigating between the Login box and the Forgot Password? box
 	$scope.currentPage = 'login';
-}]);
+}]).
 
-myhonorsProfile.controller('SignupCtrl', ['$scope', function($scope) {
+controller('SignupCtrl', ['$scope', function($scope) {
 	$scope.signup = {email: '', password: '', confirmPassword: '', pantherID: '', myAccountsPassword: ''};
-}]);
+}]).
 
-myhonorsProfile.controller('ProfileEditCtrl', ['$scope', '$rootScope', '$routeParams', '$location', 'Profile', function EventBrowseCtrl($scope, $rootScope, $routeParams, $location, Profile) {
+controller('ProfileEditCtrl', ['$scope', '$rootScope', '$routeParams', '$location', 'Profile', function EventBrowseCtrl($scope, $rootScope, $routeParams, $location, Profile) {
 	$scope.profileEdit = Profile.get({id: $routeParams.userId}, function(data) {console.log(data);});
 
 	$scope.profileSave = function() {
