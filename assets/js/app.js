@@ -1,18 +1,12 @@
 'use strict';
 
-var myhonors = angular.module('myhonors', ['myhonorsConfig', 'myhonorsProfile', 'myhonorsEvents']);
+var myhonors = angular.module('myhonors', ['myhonorsConfig', 'Firebase', 'myhonorsProfile', 'myhonorsEvents']);
 
 /* Config */
 
 myhonors.config(['$routeProvider', function($routeProvider) {
 	$routeProvider.otherwise({redirectTo:''});
 }]);
-
-/* Services */
-
-myhonors.factory('Database', function() {
-	return new Firebase('https://myhonors.firebaseio.com/');
-});
 
 /* Controllers */
 
