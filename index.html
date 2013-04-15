@@ -2,7 +2,7 @@
 <html lang="en" xmlns:ng="http://angularjs.org" data-ng-app="myhonors">
 <head>
 	<title>MyHonors</title>
-	<base href="localhost" />
+	<base href="http://localhost/" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css" />
@@ -48,12 +48,12 @@
 						<li><a href="#/profile/{{profile.user_id}}">View Profile</a></li>
 						<li><a href="#/profile/{{profile.user_id}}/edit">Update Profile</a></li>
 						<li class="divider"></li>
-						<li><a href="auth/logout">Logout</a></li>
+						<li><a href="#/login" ng-click="doLogout()">Logout</a></li>
 					</ul>
 				</div>
 				<ul class="unstyled inline pull-right" data-ng-show="!profile">
-					<li><a href="auth/login" class="btn btn-primary">Login</a></li>
-					<li><a href="auth/register" class="btn btn-link">Register</a></li>
+					<li><a href="#/login" class="btn btn-primary">Login</a></li>
+					<li><a href="#/signup" class="btn btn-link">Register</a></li>
 				</ul>
 			</div>
 		</div>

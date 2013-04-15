@@ -9,12 +9,12 @@
 
 		<div class="span5" style="margin-top: 60px; position: relative;">
 			<div class="btn-primary login-header" data-ng-switch="currentPage">
-				<strong ng-switch-when="login">Login to FIU MyHonors</strong>
+				<strong ng-switch-when="loginPage">Login to FIU MyHonors</strong>
 				<strong ng-switch-when="forgotPass">Forgot your password?</strong>
 			</div>
 
 			<div class="well well-large" style="padding-top: 70px" data-ng-switch="currentPage">
-				<div ng-switch-when="login">
+				<div ng-switch-when="loginPage">
 					<label for="email">Email Address</label>
 					<input type="text" id="email" placeholder="panther@fiu.edu" ng-model="login.email" />
 
@@ -25,7 +25,7 @@
 				</div>
 				<div ng-switch-when="forgotPass">
 					<p>To reset your password, please email <a href="mailto:honors@fiu.edu">honors@fiu.edu</a> with your name and Panther ID. We will take you through the reset process from there.</p>
-					<button class="btn btn-primary" ng-click="$parent.currentPage = 'login'"><i class="icon-chevron-left icon-white"></i> Go back</button>
+					<button class="btn btn-primary" ng-click="$parent.currentPage = 'loginPage'"><i class="icon-chevron-left icon-white"></i> Go back</button>
 				</div>
 			</div>
 
