@@ -17,8 +17,19 @@ controller('LoginCtrl', ['$scope', '$rootScope', '$route', '$location', 'Firebas
 	$scope.currentPage = 'loginPage';
 }]).
 
-controller('SignupCtrl', ['$scope', function($scope) {
-	$scope.signup = {email: '', password: '', confirmPassword: '', pantherID: '', myAccountsPassword: ''};
+controller('SignupCtrl', ['$scope', '$http', function($scope, $http) {
+	$scope.signup = $rootScope.signup;
+	$scope.doRegistration = $rootScope.doRegistration;
+		
+	$scope.doVerification = function() {
+		var data = 'pid=' + $scope.signup.pantherID + '&password=' + $scope.signup.myAccountsPassword;
+		$http.post('auth.php', data).success(function(result) {
+			console.log(result);
+			if (result.success === true) {
+				$scope.verified = true;
+			}
+		})
+	};
 }]).
 
 controller('ProfileEditCtrl', ['$scope', '$rootScope', '$routeParams', '$location', function EventBrowseCtrl($scope, $rootScope, $routeParams, $location) {

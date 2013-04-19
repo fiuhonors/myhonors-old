@@ -27,11 +27,13 @@
 						<label for="password">MyAccounts Password</label>
 						<input type="password" id="password" ng-model="signup.myAccountsPassword" />
 
-						<button class="btn btn-primary">Verify Account</button>
+						<div ng-show="!verified"><button class="btn btn-primary" ng-click="doVerification()">Verify Account</button></div>
+						<div ng-show="verified"><button class="btn btn-success disabled">Account Verified!</button></div>
 					</div>
 					<div class="span4">
 						<h3 style="font-weight: bolder">PRESS BUTTON</h3>
-						<button class="btn btn-large btn-block disabled" style="padding: 60px;">Take me to<br />MyHonors</button>
+						<div ng-show="!verified"><button class="btn btn-large btn-block disabled" style="padding: 60px;">Take me to<br />MyHonors</button></div>
+						<div ng-show="verified"><button ng-click="doRegistration()" class="btn btn-large btn-success btn-block" style="padding: 60px;">Take me to<br />MyHonors</button></div>
 					</div>
 				</div>
 			</div>

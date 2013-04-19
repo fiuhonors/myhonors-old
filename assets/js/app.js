@@ -94,6 +94,7 @@ controller('AppCtrl', ['$scope', '$rootScope', 'FirebaseIO', '$route', '$locatio
 	};
 
 	$rootScope.login = {email: '', password: '', error: ''};
+	$rootScope.signup = {email: '', password: '', confirmPassword: '', pantherID: '', myAccountsPassword: '', verified: false};
 
 	var authClient = new FirebaseAuthClient(FirebaseIO, function(error, user) {
 		if (error) {
@@ -127,6 +128,14 @@ controller('AppCtrl', ['$scope', '$rootScope', 'FirebaseIO', '$route', '$locatio
 		$rootScope.profile = null;
 		$location.path('/login');
 	};
+
+	$rootScope.doRegistration = function() {
+		authClient.createUser($rootScope.signup.email, $rootScope.signup.password, function(error, user) {
+			if (!error) {
+				console.log('Success! User Id: ' + user.id + ', Email: ' + user.email);
+			}
+		});
+	}
 
 	$rootScope.profile = null;
 
