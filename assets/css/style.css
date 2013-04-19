@@ -157,6 +157,12 @@ a.thumbnail:hover {text-decoration: none;}
 .row-fluid ul.thumbnails li.span2:nth-child(6n + 7) {margin-left : 0px; clear:left;}
 .row-fluid ul.thumbnails li.span1:nth-child(12n + 13) {margin-left : 0px; clear:left;}
 
+.row-fluid .media.span6:nth-child(2n + 3) {margin-left : 0px; clear:left;}
+.row-fluid .media.span4:nth-child(3n + 4) {margin-left : 0px; clear:left;}
+.row-fluid .media.span3:nth-child(4n + 5) {margin-left : 0px; clear:left;}
+.row-fluid .media.span2:nth-child(6n + 7) {margin-left : 0px; clear:left;}
+.row-fluid .media.span1:nth-child(12n + 13) {margin-left : 0px; clear:left;}
+
 /* MAP OVERLAY */
 
 .mapoverlay {
@@ -231,3 +237,34 @@ a.thumbnail:hover {text-decoration: none;}
 	top: 0;
 	left: 0;
 }
+
+.example-repeat-enter-setup,
+.example-repeat-leave-setup,
+.example-repeat-move-setup {
+  -webkit-transition:all linear 0.4s;
+  -moz-transition:all linear 0.4s;
+  -ms-transition:all linear 0.4s;
+  -o-transition:all linear 0.4s;
+  transition:all linear 0.4s;
+}
+ 
+.example-repeat-enter-setup {
+  line-height:0;
+  opacity:0;
+}
+.example-repeat-enter-setup.example-repeat-enter-start {
+  line-height:20px;
+  opacity:1;
+}
+ 
+.example-repeat-leave-setup {
+  opacity:1;
+  line-height:20px;
+}
+.example-repeat-leave-setup.example-repeat-leave-start {
+  opacity:0;
+  line-height:0;
+}
+ 
+.example-repeat-move-setup { }
+.example-repeat-move-setup.example-repeat-move-start { }

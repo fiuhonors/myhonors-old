@@ -71,7 +71,7 @@ var appResolve = {
 	}
 };
 
-angular.module('myhonors', ['myhonorsConfig', 'Firebase', 'myhonorsUser', 'myhonorsEvents']).
+angular.module('myhonors', ['myhonorsConfig', 'Firebase', 'myhonorsUser', 'myhonorsEvents', 'myhonorsCareer']).
 
 config(['$routeProvider', function($routeProvider) {
 	$routeProvider.

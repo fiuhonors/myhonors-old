@@ -1,0 +1,46 @@
+<div class="span8">
+	<div class="row">
+		<div class="well">
+			<h3>Jobs & Internships</h3>
+			<p>As a student of The Honors College, you have many job and internship opportunities available to you. Below is a list of companies that have contacted us directly. If you have any questions, please email <a href="mailto:luli.szeinblum@fiu.edu">luli.szeinblum@fiu.edu</a></p>
+			<input type="text" ng-model="searchText" placeholder="Search all jobs & internships...">
+		</div>
+	</div>
+	<div class="row">
+		<div class="media well span6" ng-repeat="item in careers | filter:searchText" ng-animate="{enter: 'example-repeat-enter', leave: 'example-repeat-leave', move: 'example-repeat-move'}">
+			<a class="pull-left" href="#"><img class="media-object" src="http://upload.wikimedia.org/wikipedia/commons/7/7d/Xynth_logo_64x64.jpg"></a>
+			<div class="media-body" style="line-height: 15px">
+				<h5 class="media-heading"><a href="#">{{item.companyName}}</a> <span class="label label-success" ng-show="item.paid">$</span></h5>
+				<small>{{item.description}}</small>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="span4">
+	<div class="well">
+		<h3>Add New Position</h3>
+		<form ng-submit="doAdd()">
+			
+			<label for="company">Company Name</label>
+			<input type="text" ng-model="newPosition.companyName" id="company" placeholder="Your Company, Inc.">
+			
+			<label for="name">Your Name</label>
+			<input type="text" ng-model="newPosition.contactName" id="name" placeholder="">
+
+			<label for="email">Contact Email</label>
+			<input type="email" ng-model="newPosition.contactEmail" id="email" placeholder="you@company.com">
+			
+			<label for="name">Short Description of Internship</label>
+			<textarea ng-model="newPosition.description" rows="3"></textarea>
+			
+			<label class="checkbox">
+				<input type="checkbox" ng-model="newPosition.paid" value="">
+				This is a paid internship
+			</label>
+			
+			<button type="submit" class="btn btn-primary">Submit</button>
+
+		</form>
+	</div>
+</div>
