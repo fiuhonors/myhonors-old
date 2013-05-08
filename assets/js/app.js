@@ -102,10 +102,21 @@ controller('AppCtrl', ['$scope', '$rootScope', 'FirebaseIO', '$route', '$locatio
 			alert(error);
 		}
 		else if (user) {
-			// user is logged in, redirect to homepage
-			$rootScope.safeApply(function() {
-				$location.path('');
+			// user is logged in. we first want to check if the user has a profile. if not, create it
+			var ref = FirebaseIO.child(/user_profiles/ + user.id);
+
+			ref.on('value', function(snap) {
+				if (snap.val() === null) {
+					// new user, create profile for them
+					ref.set({fname: "", lname: "", pid: $rootScope.signup.pantherID});
+				} else {
+					// user has profile, just redirect to homepage
+					$rootScope.safeApply(function() {
+						$location.path('');
+					});
+				}
 			});
+
 		}
 		else {
 			// user is logged out
@@ -133,6 +144,17 @@ controller('AppCtrl', ['$scope', '$rootScope', 'FirebaseIO', '$route', '$locatio
 		authClient.createUser($rootScope.signup.email, $rootScope.signup.password, function(error, user) {
 			if (!error) {
 				console.log('Success! User Id: ' + user.id + ', Email: ' + user.email);
+				
+				// now we want to add the user_profile entry, but we need to be authenicated in order
+				// to write to the user_profiles location. since we still have the email/password combination
+				// in $rootScope.signup, let's just do it for the user!
+
+				// since this is an asynchronous request, we can only call the login function and place the
+				// user_profile logic in the authClient's callback
+				authClient.login('password', {
+					email: $rootScope.signup.email,
+					password: $rootScope.signup.password,
+				});
 			}
 		});
 	}
