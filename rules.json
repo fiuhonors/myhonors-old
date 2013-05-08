@@ -1,0 +1,20 @@
+{
+	"rules": {
+		// set defaults to no reads and no writes
+		".read": false,
+		".write": false,
+		
+		"user_profiles": {
+			"$userId": {
+				".read": "auth.id == $userId",
+				".write": "auth.id == $userId"
+			}
+		},
+		
+		"careers": {
+			".read": true,
+			".write": true
+		}
+		
+	}
+}
