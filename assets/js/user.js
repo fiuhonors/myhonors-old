@@ -24,9 +24,11 @@ controller('SignupCtrl', ['$scope', '$rootScope', '$http', function($scope, $roo
 	$scope.doVerification = function() {
 		var data = 'pid=' + $scope.signup.pantherID + '&password=' + $scope.signup.myAccountsPassword;
 		$http.post('auth.php', data).success(function(result) {
-			console.log(result);
 			if (result.success === true) {
 				$scope.signup.verified = true;
+				$scope.signup.error = ''; // reset in case user previously made an error, so no error is displayed when verification is successful
+			} else {
+				$scope.signup.error = result.error;
 			}
 		})
 	};

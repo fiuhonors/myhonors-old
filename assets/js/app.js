@@ -94,7 +94,7 @@ controller('AppCtrl', ['$scope', '$rootScope', 'FirebaseIO', '$route', '$locatio
 	};
 
 	$rootScope.login = {email: '', password: '', error: ''};
-	$rootScope.signup = {email: '', password: '', confirmPassword: '', pantherID: '', myAccountsPassword: '', verified: false};
+	$rootScope.signup = {email: '', password: '', confirmPassword: '', pantherID: '', myAccountsPassword: '', verified: false, error: ''};
 
 	var authClient = new FirebaseAuthClient(FirebaseIO, function(error, user) {
 		if (error) {
