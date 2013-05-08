@@ -14,6 +14,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 	// all output after POSTing will be delivered in JSON format
 	header('Content-Type: application/json');
 
+	// checks for empty username/password combinations to prevent LDAP from
+	// successully binding with an anonymous login
+	if (!isset($_POST['pid']) || !isset($_POST['password']) || empty($_POST['pid']) || empty($_POST['password'])) {
+		$result = array('success' => false, 'error' => $errorStatement, 'pid' => $_POST['pid']);
+		echo json_encode($result);
+		die();
+	}
+
 	$ldaprdn  = $before_username . $_POST['pid'] . $after_username; // ldap rdn or dn
 	$ldappass = $_POST['password']; // associated password
 
