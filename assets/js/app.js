@@ -93,8 +93,25 @@ controller('AppCtrl', ['$scope', '$rootScope', 'FirebaseIO', '$route', '$locatio
 		}
 	};
 
-	$rootScope.login = {email: '', password: '', error: ''};
-	$rootScope.signup = {email: '', password: '', confirmPassword: '', pantherID: '', myAccountsPassword: '', verified: false, error: ''};
+	$rootScope.login = {
+		email: '',
+		password: '',
+		error: ''
+	};
+
+	$rootScope.signup = {
+		email: '',
+		password: '',
+		confirmPassword: '',
+		pantherID: '',
+		myAccountsPassword: '',
+		verification: {
+			'success': false,
+			'fname': '',
+			'lname': ''
+		},
+		error: '' // this will hold signup form errors (e.g. passwords aren't the same) and verification errors
+	};
 
 	var authClient = new FirebaseAuthClient(FirebaseIO, function(error, user) {
 		if (error) {
@@ -108,7 +125,11 @@ controller('AppCtrl', ['$scope', '$rootScope', 'FirebaseIO', '$route', '$locatio
 			ref.on('value', function(snap) {
 				if (snap.val() === null) {
 					// new user, create profile for them
-					ref.set({fname: "", lname: "", pid: $rootScope.signup.pantherID});
+					ref.set({
+						fname: $rootScope.signup.verification.fname,
+						lname: $rootScope.signup.verification.lname,
+						pid: $rootScope.signup.pantherID
+					});
 				} else {
 					// user has profile, just redirect to homepage
 					$rootScope.safeApply(function() {

@@ -35,9 +35,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 		$ldapbind = ldap_bind($ldapconn, $ldaprdn, $ldappass);
 
 		// verify binding
-		if ($ldapbind) {
-			$result = array('success' => true);
-		} else {
+		if ($ldapbind)
+		{
+			$search = ldap_search($ldapconn, ($before_username . $_POST['pid'] . $after_username), "(objectClass=*)", array("givenName", "sn"));
+			$data = ldap_get_entries($ldapconn, $search);
+
+			$result = array('success' => true, "fname" => $data[0]["givenname"][0], "lname" => $data[0]["sn"][0]);
+
+			ldap_unbind($ldapconn);
+		}
+		else
+		{
 			$result = array('success' => false, 'error' => $errorStatement);
 		}
 

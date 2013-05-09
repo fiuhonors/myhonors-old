@@ -6,11 +6,11 @@
 				<strong>Sign up for FIU MyHonors</strong>
 			</div>
 			<div class="well well-large" style="padding-top: 70px">
-                                <div ng-show="signup.error" class="row-fluid">
-                                        <div class="span12">
+				<div class="row-fluid" ng-show="signup.error">
+					<div class="span12">
 						<div class="alert">{{signup.error}}</div>
 					</div>
-                                </div>
+				</div>
 				<div class="row-fluid">
 					<div class="span4" style="border-right: 1px solid #ccc">
 						<h3 style="margin-bottom: 0px">BASIC INFO</h3>
@@ -32,13 +32,13 @@
 						<label for="password">MyAccounts Password</label>
 						<input type="password" id="password" ng-model="signup.myAccountsPassword" />
 
-						<div ng-show="!signup.verified"><button class="btn btn-primary" ng-click="doVerification()">Verify Account</button></div>
-						<div ng-show="signup.verified"><button class="btn btn-success disabled">Account Verified!</button></div>
+						<div ng-show="!signup.verification.success"><button class="btn btn-primary" ng-click="doVerification()">Verify Account</button></div>
+						<div ng-show="signup.verification.success"><button class="btn btn-success disabled">Verified</button><span style="margin-left: 10px"><small>Thanks, {{signup.verification.fname}}!</small></div>
 					</div>
 					<div class="span4">
 						<h3 style="font-weight: bolder">PRESS BUTTON</h3>
-						<div ng-show="!signup.verified"><button class="btn btn-large btn-block disabled" style="padding: 60px;">Take me to<br />MyHonors</button></div>
-						<div ng-show="signup.verified"><button ng-click="doRegistration()" class="btn btn-large btn-success btn-block" style="padding: 60px;">Take me to<br />MyHonors</button></div>
+						<div ng-show="!signup.verification.success"><button class="btn btn-large btn-block disabled" style="padding: 60px;">Take me to<br />MyHonors</button></div>
+						<div ng-show="signup.verification.success"><button ng-click="doRegistration()" class="btn btn-large btn-success btn-block" style="padding: 60px;">Take me to<br />MyHonors</button></div>
 					</div>
 				</div>
 			</div>
