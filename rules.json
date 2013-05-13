@@ -1,13 +1,33 @@
 {
-	"rules": {
+  "rules": {
 		// set defaults to no reads and no writes
 		".read": false,
 		".write": false,
 		
 		"user_profiles": {
+			".read": true,
 			"$userId": {
 				".read": "auth.id == $userId",
-				".write": "auth.id == $userId"
+				".write": "auth.id == $userId",
+				".validate": "newData.hasChildren(['fname', 'lname', 'pid'])",
+
+				// validate specific entries
+				"fname": {
+					".validate": "newData.isString()"
+				},
+				"lname": {
+					".validate": "newData.isString()"
+				},
+				"pid": {
+					// Panther ID is intentionally stored as a string instead of a number. Think of it like a
+					// username, we're never going to perform any numerical additions or subtractions with it
+					".validate": "newData.isString()"
+				},
+
+				// prevents any extra children (we only want the fields that are explicitly identified here)
+				"$other": {
+					".validate": false
+				}
 			}
 		},
 		
