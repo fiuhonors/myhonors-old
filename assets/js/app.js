@@ -93,6 +93,9 @@ controller('AppCtrl', ['$scope', '$rootScope', 'FirebaseIO', '$route', '$locatio
 		}
 	};
 
+	// used to show spinners and "Loading..." messages
+	$rootScope.loading = false;
+
 	$rootScope.login = {
 		email: '',
 		password: '',
@@ -114,6 +117,7 @@ controller('AppCtrl', ['$scope', '$rootScope', 'FirebaseIO', '$route', '$locatio
 	};
 
 	var authClient = new FirebaseAuthClient(FirebaseIO, function(error, user) {
+		// evaluate the status of the login attempt
 		if (error) {
 			// an error occurred while attempting login
 			alert(error);
@@ -143,16 +147,23 @@ controller('AppCtrl', ['$scope', '$rootScope', 'FirebaseIO', '$route', '$locatio
 			// user is logged out
 			// do nothing
 		}
+
+		// clear the password and loading message after we get a response and evaluate it
+		// (it looks best on the UI to wait until this point)
+		$rootScope.safeApply(function() {
+			$rootScope.loading = false;
+			$rootScope.login.password = '';
+		});
 	});
 
 	$rootScope.doLogin = function() {
+		// change state of the login button (see the HTML of the login page)
+		$rootScope.loading = true;
+
 		authClient.login('password', {
 			email: $rootScope.login.email,
 			password: $rootScope.login.password
 		});
-
-		$rootScope.login.password = '';
-		// $rootScope.login.error = '';
 	};
 	
 	$rootScope.doLogout = function() {

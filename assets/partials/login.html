@@ -16,11 +16,18 @@
 			<div class="well well-large" style="padding-top: 70px" data-ng-switch="currentPage">
 				<div ng-switch-when="loginPage">
 					<form ng-submit="doLogin()">
+						
 						<label for="email">Email Address</label>
 						<input type="text" id="email" placeholder="panther@fiu.edu" ng-model="login.email" />
+						
 						<label for="password">Password</label>
 						<input type="password" id="password" name="password" ng-model="login.password" />
-						<button type="submit" class="btn btn-primary">Login</button> <button class="btn btn-link" ng-click="$parent.currentPage = 'forgotPass'">Forgot Password?</button>
+						
+						<button ng-show="!loading" class="btn btn-primary" type="submit" >Login</button>
+						<button ng-show="loading" class="btn btn-primary disabled">Loading...</button>
+
+						<button class="btn btn-link" ng-click="$parent.currentPage = 'forgotPass'">Forgot Password?</button>
+						
 					</form>
 				</div>
 				<div ng-switch-when="forgotPass">
