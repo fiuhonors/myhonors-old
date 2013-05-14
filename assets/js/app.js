@@ -75,7 +75,7 @@ angular.module('myhonors', ['myhonorsConfig', 'Firebase', 'myhonorsUser', 'myhon
 
 config(['$routeProvider', function($routeProvider) {
 	$routeProvider.
-		when('/home', {template: 'Welcome home!', requireLogin: true, resolve: appResolve}).
+		when('/home', {templateUrl: 'assets/partials/home.html', requireLogin: true, resolve: appResolve}).
 		otherwise({redirectTo:'/home'});
 }]).
 
