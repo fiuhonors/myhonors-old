@@ -1,5 +1,3 @@
 'use strict';
 
-var myhonorsConfig = angular.module('myhonorsConfig', []);
-
-myhonorsConfig.constant('apikey_google', '');
+angular.module('myhonorsConfig').constant('apikey_google', '');

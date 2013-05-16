@@ -1,13 +1,11 @@
 'use strict';
 
-angular.module('myhonorsCareer', []).
-
-config(['$routeProvider', function($routeProvider) {
+angular.module('myhonorsCareer').config(['$routeProvider', function($routeProvider) {
 	$routeProvider.
 		when('/career', {templateUrl: 'assets/partials/career.html', controller: 'CareerCtrl', requireLogin: false, resolve: appResolve})
-}]).
+}]);
 
-controller('CareerCtrl', ['$scope', '$rootScope', 'FirebaseIO', function($scope, $rootScope, FirebaseIO) {
+angular.module('myhonorsCareer').controller('CareerCtrl', ['$scope', '$rootScope', 'FirebaseIO', function($scope, $rootScope, FirebaseIO) {
 	$scope.careers = null;
 	$scope.searchText = '';
 	$scope.newPosition = {companyName: '', contactName: '', contactEmail: '', description: '', paid: false};

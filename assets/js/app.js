@@ -1,5 +1,20 @@
 'use strict';
 
+angular.module('myhonors', [
+	// module dependencies
+	'myhonorsConfig',
+	'Firebase',
+	'myhonorsUser',
+	'myhonorsEvents',
+	'myhonorsCareer'
+]);
+
+angular.module('myhonorsConfig', []);
+angular.module('Firebase', []);
+angular.module('myhonorsUser', []);
+angular.module('myhonorsEvents', ['ngResource']);
+angular.module('myhonorsCareer', []);
+
 var appResolve = {
 	/**
 	 * This auth function gets executed on each page load of every route
@@ -71,15 +86,13 @@ var appResolve = {
 	}
 };
 
-angular.module('myhonors', ['myhonorsConfig', 'Firebase', 'myhonorsUser', 'myhonorsEvents', 'myhonorsCareer']).
-
-config(['$routeProvider', function($routeProvider) {
+angular.module('myhonors').config(['$routeProvider', function($routeProvider) {
 	$routeProvider.
 		when('/home', {templateUrl: 'assets/partials/home.html', requireLogin: true, resolve: appResolve}).
 		otherwise({redirectTo:'/home'});
-}]).
+}]);
 
-controller('AppCtrl', ['$scope', '$rootScope', 'FirebaseIO', '$route', '$location', function AppCtrl($scope, $rootScope, FirebaseIO, $route, $location) {
+angular.module('myhonors').controller('AppCtrl', ['$scope', '$rootScope', 'FirebaseIO', '$route', '$location', function AppCtrl($scope, $rootScope, FirebaseIO, $route, $location) {
 	// AngularJS workaround for certain callbacks.
 	// see https://coderwall.com/p/ngisma
 	$rootScope.safeApply = function(fn) {
@@ -206,9 +219,9 @@ controller('AppCtrl', ['$scope', '$rootScope', 'FirebaseIO', '$route', '$locatio
 	});
 
 	$rootScope.page_title = "";
-}]).
+}]);
 
-directive('imgRotate', function($timeout) {
+angular.module('myhonors').directive('imgRotate', function($timeout) {
 		return function(scope, elm, attrs) {
 			// make the images sit on top of each other
 			elm.addClass('img-rotate');
@@ -247,9 +260,9 @@ directive('imgRotate', function($timeout) {
 				$timeout(rotate, delay, false);
 			}, delay, false);
 	};
-}).
+});
 
-directive('fileupload', function () {
+angular.module('myhonors').directive('fileupload', function () {
 	return {
 		restrict: 'E',
 		template: '<input type="file" name="file" onchange="angular.element(this).scope().setFile(this)">',

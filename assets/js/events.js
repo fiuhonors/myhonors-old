@@ -1,10 +1,8 @@
 'use strict';
 
-var myhonorsEvents = angular.module('myhonorsEvents', ['ngResource']);
-
 /* Config */
 
-myhonorsEvents.config(['$routeProvider', function($routeProvider) {
+angular.module('myhonorsEvents').config(['$routeProvider', function($routeProvider) {
 	$routeProvider.
 		when('/events', {templateUrl: 'assets/partials/events.html', controller: 'EventBrowseCtrl'}).
 		when('/events/:eventId', {templateUrl: 'assets/partials/events-view.html', controller: 'EventViewCtrl'}).
@@ -14,13 +12,13 @@ myhonorsEvents.config(['$routeProvider', function($routeProvider) {
 
 /* Services */
 
-myhonorsEvents.factory('Events', ['$resource', function($resource) {
+angular.module('myhonorsEvents').factory('Events', ['$resource', function($resource) {
 	return $resource('api/events?id=:eventId');
 }]);
 
 /* Controllers */
 
-myhonorsEvents.controller('EventBrowseCtrl', ['$scope', 'Events', function EventBrowseCtrl($scope, Events) {
+angular.module('myhonorsEvents').controller('EventBrowseCtrl', ['$scope', 'Events', function EventBrowseCtrl($scope, Events) {
 	$scope.searchName = '';
 	$scope.searchType = '';
 	
@@ -42,7 +40,7 @@ myhonorsEvents.controller('EventBrowseCtrl', ['$scope', 'Events', function Event
 	});
 }]);
 
-myhonorsEvents.controller('EventViewCtrl', ['$scope', '$routeParams', '$window', 'Events', 'apikey_google', function EventViewCtrl($scope, $routeParams, $window, Events, apikey_google) {
+angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeParams', '$window', 'Events', 'apikey_google', function EventViewCtrl($scope, $routeParams, $window, Events, apikey_google) {
 	$window.initializeMap = function() {
 		var latLng = new google.maps.LatLng($scope.event.lat, $scope.event.lng);
 		var latLngOffset = new google.maps.LatLng($scope.event.lat, parseFloat($scope.event.lng) + 0.0015);
@@ -93,7 +91,7 @@ myhonorsEvents.controller('EventViewCtrl', ['$scope', '$routeParams', '$window',
 	}
 }]);
 
-myhonorsEvents.controller('CitizenshipCtrl', ['$scope', '$http', function CitizenshipCtrl($scope, $http) {
+angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$http', function CitizenshipCtrl($scope, $http) {
 	$scope.userid = '';
 	$scope.loading = false; // used to adjust display when waiting for AJAX responses
 
