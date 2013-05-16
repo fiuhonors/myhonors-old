@@ -1,10 +1,5 @@
 'use strict';
 
-angular.module('myhonorsCareer').config(['$routeProvider', function($routeProvider) {
-	$routeProvider.
-		when('/career', {templateUrl: 'assets/partials/career.html', controller: 'CareerCtrl', requireLogin: false, resolve: appResolve})
-}]);
-
 angular.module('myhonorsCareer').controller('CareerCtrl', ['$scope', '$rootScope', 'FirebaseIO', function($scope, $rootScope, FirebaseIO) {
 	$scope.careers = null;
 	$scope.searchText = '';
