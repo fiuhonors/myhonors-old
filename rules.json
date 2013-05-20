@@ -30,6 +30,16 @@
 				}
 			}
 		},
+
+		"swipes": {
+			".read": true,
+			".write": true,
+		},
+
+		"events": {
+			".read": true,
+			".write": true
+		},
 		
 		"careers": {
 			".read": true,
