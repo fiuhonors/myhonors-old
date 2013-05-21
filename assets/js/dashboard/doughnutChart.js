@@ -1,18 +1,21 @@
 'use strict';
 
-angular.module('myhonorsDashboard').directive('doughnutChart', function() {
+angular.module('myhonorsDashboard').directive('doughnutChart', ['$parse', function($parse) {
 	return {
 		restrict: 'A',
 		link: function(scope, element, attrs) {
 			var parameters = attrs.doughnutChart.split(',');
-			var scopeObject = parameters[0];
+			var expression = parameters[0];
 			var total = parameters[1];
+			var model = $parse(expression);
 
-			scope.$watch(scopeObject, function() {
+			scope.$watch(expression, function() {
+				var current = model(scope);
+
 				// calculate total value (we don't want negative numbers)
 				var adjustedTotal;
-				if (total - scope[scopeObject] >= 0) {
-					adjustedTotal = total - scope[scopeObject];
+				if (total - current >= 0) {
+					adjustedTotal = total - current;
 				} else {
 					adjustedTotal = 0;
 				}
@@ -21,7 +24,7 @@ angular.module('myhonorsDashboard').directive('doughnutChart', function() {
 				// see http://www.chartjs.org/docs/
 				var data = [
 					{
-						value: scope[scopeObject],
+						value: current,
 						color: '#00baff'
 					},
 					{
@@ -37,4 +40,4 @@ angular.module('myhonorsDashboard').directive('doughnutChart', function() {
 			});
 		}
 	}
-});
+}]);
