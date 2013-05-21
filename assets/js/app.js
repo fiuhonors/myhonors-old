@@ -44,6 +44,7 @@ var appResolve = {
 
 				$rootScope.safeApply(function() {
 					$rootScope.profile = snapshot.val();
+					$rootScope.profile.id = snapshot.name();
 				});
 
 				return snapshot.val();
