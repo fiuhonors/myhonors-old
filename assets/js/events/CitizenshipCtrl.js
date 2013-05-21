@@ -1,50 +1,45 @@
 'use strict';
 
-angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$http', function CitizenshipCtrl($scope, $http) {
-	$scope.userid = '';
-	$scope.loading = false; // used to adjust display when waiting for AJAX responses
+angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$rootScope', 'FirebaseIO', function($scope, $rootScope, FirebaseIO) {
+	$scope.eventTally = {
+		// initialize the event types
+		honorshour: 0,
+		colloquia: 0,
+		excellence: 0,
 
-	var clearRequirements = function() {
-		$scope.honorshours = [];
-		$scope.colloquia = [];
-		$scope.excellence = [];
-	}
+		add: function(type, amount) {
+			// safely increment or decrement (by passing in a negative amount) an event type
+			if (angular.isNumber(this[type])) {
+				this[type] += amount;
+			}
+		},
+		processEvent: function(eid, amount) {
+			var eventRef = FirebaseIO.child('events/' + eid + '/type');
 
-	// initialize the arrays
-	clearRequirements();
+			eventRef.on('value', function(snapshot)
+			{
+				// snapshot.val() gives us the event type from Firebase
+				$rootScope.safeApply(function() {
+					$scope.eventTally.add(snapshot.val(), amount);
+				});
+			});
+		}
+	};
 
-	$scope.fetch = function() {
-		$scope.loading = true;
-		
-		$http.get('api/attendance?id=' + $scope.userid).success(function(data) {
-			// sorts the data into their separate event types
-			angular.forEach(data.events, function(e) {
-				switch (e.type)
-				{
-					case "h": $scope.honorshours.push(e); break;
-					case "c": $scope.colloquia.push(e); break;
-					case "e": $scope.excellence.push(e); break;
-				}
+	$scope.$watch('profile', function() {
+		if ($rootScope.profile) {
+			// get the user's swipes
+			var swipeRef = FirebaseIO.child('swipes/' + $rootScope.profile.pid);
+
+			swipeRef.on('child_added', function(snapshot)
+			{
+				$scope.eventTally.processEvent(snapshot.name(), 1);
 			});
 
-			$scope.loading = false;
-		});
-	};
-
-	$scope.requirementsComplete = function(type) {
-		switch (type)
-		{
-			case "h": return Boolean($scope.honorshours.length >= 3);
-			case "c": return Boolean($scope.colloquia.length >= 1);
-			case "e": return Boolean($scope.excellence.length >= 1);
+			swipeRef.on('child_removed', function(snapshot)
+			{
+				$scope.eventTally.processEvent(snapshot.name(), -1);
+			});
 		}
-	};
-
-	// checks whether we want to fetch the user's info or not, based on whether they've entered a 7-digit number
-	$scope.doFetch = function() {
-		if ($scope.userid.length === 7) {
-			clearRequirements(); // start fresh
-			$scope.fetch();
-		}
-	};
+	});
 }]);
