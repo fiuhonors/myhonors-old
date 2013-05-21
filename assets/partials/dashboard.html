@@ -37,9 +37,21 @@
 <div class="span6" ng-controller="EventBrowseCtrl">
 	<div class="box">
 		<div class="box-header">Upcoming Events</div>
-		<div class="box-content padded">
-			<ul>
-				<li ng-repeat="event in events">{{event.name}}</li>
+		<div class="box-content">
+			<ul class="upcoming-events">
+				<li ng-repeat="event in events" class="clearfix">
+					<img class="pull-left span2 img-rounded" ng-src="{{event.thumbURL}}">
+					<div class="pull-left span8">
+						<strong>{{event.name}}</strong> <span>on May 24th at 3:30pm</span>
+						<span class="muted event-subtitle">COUNTS AS ONE {{event.type}}</span>
+						<p class="event-short-desc">{{event.desc}} <a href="#">show more</a></p>
+					</div>
+					<div class="span2 text-center event-attending">
+						<h3>{{event.attending}}</h3>
+						<span>ATTENDING</span>
+						<button class="btn btn-mini">I'm Going</button>
+					</div>
+				</li>
 			</ul>
 		</div>
 	</div>

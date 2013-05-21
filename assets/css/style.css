@@ -66,6 +66,10 @@ body {
 	color: #707070;
 }
 
+b, strong {
+	font-weight: 600;
+}
+
 /* Fix for IE9 displaying #wrap as table */
 #wrap {
 	display: block !important;
@@ -209,6 +213,40 @@ a.thumbnail:hover {text-decoration: none;}
 .row-fluid .media.span3:nth-child(4n + 5) {margin-left : 0px; clear:left;}
 .row-fluid .media.span2:nth-child(6n + 7) {margin-left : 0px; clear:left;}
 .row-fluid .media.span1:nth-child(12n + 13) {margin-left : 0px; clear:left;}
+
+/* Upcoming Events */
+
+ul.upcoming-events {
+	margin: 0;
+}
+
+ul.upcoming-events li {
+	list-style-type: none;
+	padding: 10px;
+	border-bottom: 1px solid #efefef;
+}
+
+.event-subtitle {
+	display: block;
+	margin-top: -2px;
+	font-size: 10px;
+	text-transform: uppercase;
+}
+
+.event-short-desc {
+	margin: 0;
+	line-height: 15px;
+}
+
+.event-attending h3 {
+	margin: 5px 0 0;
+	line-height: 18px;
+}
+
+.event-attending span {
+	display: block;
+	font-size: 10px;
+}
 
 /* MAP OVERLAY */
 
