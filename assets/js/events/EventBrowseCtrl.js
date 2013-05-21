@@ -1,23 +1,15 @@
 'use strict';
 
-angular.module('myhonorsEvents').controller('EventBrowseCtrl', ['$scope', 'Events', function EventBrowseCtrl($scope, Events) {
+angular.module('myhonorsEvents').controller('EventBrowseCtrl', ['$scope', '$rootScope', 'FirebaseIO', function ($scope, $rootScope, FirebaseIO) {
 	$scope.searchName = '';
 	$scope.searchType = '';
+	$scope.events = [];
 	
-	Events.query(function(events) {
-		//success
-		$scope.events = events;
+	var eventsRef = FirebaseIO.child('/events');
 
-		for (var i = 0; i < $scope.events.length; i++)
-		{
-			// format event types
-			switch ($scope.events[i].type)
-			{
-				case "h": $scope.events[i].type = "Honors Hour"; break;
-				case "c": $scope.events[i].type = "Colloquia"; break;
-				case "e": $scope.events[i].type = "Excellence Lecture"; break;
-				case "a": $scope.events[i].type = "Miscellaneous"; break;
-			}
-		}
+	eventsRef.on('child_added', function(snapshot) {
+		$rootScope.safeApply(function() {
+			$scope.events.push(snapshot.val());
+		});
 	});
 }]);
