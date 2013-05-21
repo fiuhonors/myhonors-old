@@ -13,6 +13,7 @@ We use the [CodeIgniter](http://ellislab.com/codeigniter/) PHP framework to hand
 3. Rename **application/config/tank_auth.sample.php** to **tank_auth.php**. Change 'webmaster_email' and any other settings as needed.
 4. Rename **assets/js/config.sample.js** to **config.js**. Add all necessary information (see file for more details).
 5. Make sure the **captcha** folder is writable by the web server.
+6. If you haven't already, install LDAP support (e.g. *apt-get install php5-ldap*).
 6. *More instructions coming soon. Go to an install page to populate the database, setup auth settings (CAS?), etc.*
 
 ## Development
