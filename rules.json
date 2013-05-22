@@ -23,6 +23,11 @@
 					// username, we're never going to perform any numerical additions or subtractions with it
 					".validate": "newData.isString()"
 				},
+				"rsvps": {
+					"$eventID": {
+						".validate": "newData.isBoolean()"
+					}
+				},
 
 				// prevents any extra children (we only want the fields that are explicitly identified here)
 				"$other": {
