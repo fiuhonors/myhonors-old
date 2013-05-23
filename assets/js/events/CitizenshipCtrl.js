@@ -7,38 +7,44 @@ angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$root
 		colloquia: 0,
 		excellence: 0,
 
-		add: function(type, amount) {
-			// safely increment or decrement (by passing in a negative amount) an event type
-			if (angular.isNumber(this[type])) {
-				this[type] += amount;
-			}
+		add: function(type) {
+			// safely increment an event type
+			this[type] = (angular.isNumber(this[type])) ? this[type] + 1 : this[type];
 		},
-		processEvent: function(eid, amount) {
-			var eventRef = FirebaseIO.child('events/' + eid + '/type');
-
-			eventRef.on('value', function(snapshot)
-			{
-				// snapshot.val() gives us the event type from Firebase
-				$rootScope.safeApply(function() {
-					$scope.eventTally.add(snapshot.val(), amount);
-				});
-			});
+		reset: function() {
+			this.honorshour = 0;
+			this.colloquia = 0;
+			this.excellence = 0;
 		}
 	};
 
 	$scope.$watch('profile', function() {
 		if ($rootScope.profile) {
-			// get the user's swipes
 			var swipeRef = FirebaseIO.child('swipes/' + $rootScope.profile.pid);
 
-			swipeRef.on('child_added', function(snapshot)
+			// new data! get all of the user's swipes ...
+			swipeRef.on('value', function(snapshot)
 			{
-				$scope.eventTally.processEvent(snapshot.name(), 1);
-			});
+				// ... clear the current tally ...
+				$rootScope.safeApply(function() {
+					$scope.eventTally.reset();
+				});
 
-			swipeRef.on('child_removed', function(snapshot)
-			{
-				$scope.eventTally.processEvent(snapshot.name(), -1);
+				// ... and then, for each swipe ...
+				angular.forEach(snapshot.val(), function(value, key)
+				{
+					// ... grab the type of the event (key is the eventID) ...
+					var eventRef = FirebaseIO.child('events/' + key + '/type');
+
+					// ... and update our scope's tally accordingly
+					eventRef.on('value', function(snapshot) {
+						$rootScope.safeApply(function() {
+							$scope.eventTally.add(snapshot.val());
+						});
+
+						eventRef.off();
+					});
+				});
 			});
 		}
 	});
