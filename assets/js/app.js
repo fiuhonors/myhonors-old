@@ -42,12 +42,14 @@ var appResolve = {
 					return rejectIt('NO_PROFILE_FOUND');
 				}
 
+				var profile = snapshot.val();
+				profile.id = snapshot.name();
+
 				$rootScope.safeApply(function() {
-					$rootScope.profile = snapshot.val();
-					$rootScope.profile.id = snapshot.name();
+					$rootScope.profile = profile;
 				});
 
-				return snapshot.val();
+				return profile;
 			});
 
 		}, function(error) {
