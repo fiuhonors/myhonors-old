@@ -18,34 +18,37 @@ angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$root
 		}
 	};
 
-	$scope.$watch('profile', function() {
-		if ($rootScope.profile) {
-			var swipeRef = FirebaseIO.child('swipes/' + $rootScope.profile.pid);
+	$scope.$watch('profile.pid', function()
+	{
+		if ($rootScope.profile === null || $rootScope.profile.pid === null) {
+			return;
+		}
 
-			// new data! get all of the user's swipes ...
-			swipeRef.on('value', function(snapshot)
+		var swipeRef = FirebaseIO.child('swipes/' + $rootScope.profile.pid);
+
+		// new data! get all of the user's swipes ...
+		swipeRef.on('value', function(snapshot)
+		{
+			// ... clear the current tally ...
+			$rootScope.safeApply(function() {
+				$scope.eventTally.reset();
+			});
+
+			// ... and then, for each swipe ...
+			angular.forEach(snapshot.val(), function(value, key)
 			{
-				// ... clear the current tally ...
-				$rootScope.safeApply(function() {
-					$scope.eventTally.reset();
-				});
+				// ... grab the type of the event (key is the eventID) ...
+				var eventRef = FirebaseIO.child('events/' + key + '/type');
 
-				// ... and then, for each swipe ...
-				angular.forEach(snapshot.val(), function(value, key)
-				{
-					// ... grab the type of the event (key is the eventID) ...
-					var eventRef = FirebaseIO.child('events/' + key + '/type');
-
-					// ... and update our scope's tally accordingly
-					eventRef.on('value', function(snapshot) {
-						$rootScope.safeApply(function() {
-							$scope.eventTally.add(snapshot.val());
-						});
-
-						eventRef.off();
+				// ... and update our scope's tally accordingly
+				eventRef.on('value', function(snapshot) {
+					$rootScope.safeApply(function() {
+						$scope.eventTally.add(snapshot.val());
 					});
+
+					eventRef.off();
 				});
 			});
-		}
+		});
 	});
 }]);
