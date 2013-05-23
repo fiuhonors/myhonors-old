@@ -39,7 +39,7 @@
 		<div class="box-header">Upcoming Events</div>
 		<div class="box-content">
 			<ul class="upcoming-events">
-				<li ng-repeat="event in events" class="clearfix">
+				<li ng-repeat="event in events" ng-click="goToEvent(event.id)" class="clearfix">
 					<img class="pull-left span2 img-rounded" ng-src="{{event.thumbURL}}">
 					<div class="pull-left span8">
 						<strong>{{event.name}}</strong> <span>on May 24th at 3:30pm</span>

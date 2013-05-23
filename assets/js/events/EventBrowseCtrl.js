@@ -1,10 +1,14 @@
 'use strict';
 
-angular.module('myhonorsEvents').controller('EventBrowseCtrl', ['$scope', '$rootScope', 'FirebaseIO', function ($scope, $rootScope, FirebaseIO) {
+angular.module('myhonorsEvents').controller('EventBrowseCtrl', ['$scope', '$rootScope', 'FirebaseIO', '$location', function ($scope, $rootScope, FirebaseIO, $location) {
 	$scope.searchName = '';
 	$scope.searchType = '';
 
 	$scope.events = {};
+
+	$scope.goToEvent = function(eid) {
+		$location.path('/events/' + eid);
+	};
 	
 	var eventsRef = FirebaseIO.child('/events');
 

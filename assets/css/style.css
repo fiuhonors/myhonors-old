@@ -226,6 +226,11 @@ ul.upcoming-events li {
 	border-bottom: 1px solid #efefef;
 }
 
+ul.upcoming-events li:hover {
+	cursor: pointer;
+	background-color: #f4f4f4;
+}
+
 .event-subtitle {
 	display: block;
 	margin-top: -2px;
