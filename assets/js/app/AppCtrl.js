@@ -105,25 +105,6 @@ angular.module('myhonors').controller('AppCtrl', ['$scope', '$rootScope', 'Fireb
 		$location.path('/login');
 	};
 
-	$rootScope.doRegistration = function() {
-		authClient.createUser($rootScope.signup.email, $rootScope.signup.password, function(error, user) {
-			if (!error) {
-				console.log('Success! User Id: ' + user.id + ', Email: ' + user.email);
-				
-				// now we want to add the user_profile entry, but we need to be authenicated in order
-				// to write to the user_profiles location. since we still have the email/password combination
-				// in $rootScope.signup, let's just do it for the user!
-
-				// since this is an asynchronous request, we can only call the login function and place the
-				// user_profile logic in the authClient's callback
-				authClient.login('password', {
-					email: $rootScope.signup.email,
-					password: $rootScope.signup.password,
-				});
-			}
-		});
-	}
-
 	$rootScope.profile = null;
 
 	$rootScope.$on('$routeChangeError', function(event, current, previous, rejection) {
