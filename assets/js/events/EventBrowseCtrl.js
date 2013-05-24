@@ -45,7 +45,7 @@ angular.module('myhonorsEvents').controller('EventBrowseCtrl', ['$scope', '$root
 	});
 
 	$scope.hasRSVP = function(eid) {
-		return angular.isDefined($rootScope.profile.rsvps) && $rootScope.profile.rsvps[eid] === true;
+		return $rootScope.profile && $rootScope.profile.rsvps && $rootScope.profile.rsvps[eid] === true;
 	};
 
 	$scope.addRSVP = function(eid) {
