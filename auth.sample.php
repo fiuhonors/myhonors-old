@@ -5,9 +5,12 @@
 $server_address = "";
 $before_username = "";
 $after_username = "";
-$errorStatement = "";
+$error_statement = "";
+$firebase_secret = "";
 
 /* DO NOT EDIT BELOW THIS LINE */
+
+include_once "FirebaseToken.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
@@ -17,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 	// checks for empty username/password combinations to prevent LDAP from
 	// successully binding with an anonymous login
 	if (!isset($_POST['pid']) || !isset($_POST['password']) || empty($_POST['pid']) || empty($_POST['password'])) {
-		$result = array('success' => false, 'error' => $errorStatement, 'pid' => $_POST['pid']);
+		$result = array('success' => false, 'error' => $error_statement);
 		echo json_encode($result);
 		die();
 	}
@@ -40,19 +43,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 			$search = ldap_search($ldapconn, ($before_username . $_POST['pid'] . $after_username), "(objectClass=*)", array("givenName", "sn"));
 			$data = ldap_get_entries($ldapconn, $search);
 
-			$result = array('success' => true, "fname" => $data[0]["givenname"][0], "lname" => $data[0]["sn"][0]);
+			// generate firebase token
+			$tokenGen = new Services_FirebaseTokenGenerator($firebase_secret);
+			$token = $tokenGen->createToken(array("id" => $_POST['pid']));
+
+			$result = array('success' => true, 'pid' => $_POST['pid'], "fname" => $data[0]["givenname"][0], "lname" => $data[0]["sn"][0], "token" => $token);
 
 			ldap_unbind($ldapconn);
 		}
 		else
 		{
-			$result = array('success' => false, 'error' => $errorStatement);
+			$result = array('success' => false, 'error' => $error_statement);
 		}
 
 	}
 	else
 	{
-		$result = array('success' => false, 'error' => $errorStatement);
+		$result = array('success' => false, 'error' => $error_statement);
 	}
 
 	echo json_encode($result);

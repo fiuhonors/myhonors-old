@@ -2,6 +2,7 @@
 
 angular.module('myhonors', [
 	// module dependencies
+	'LocalStorageModule',
 	'myhonorsConfig',
 	'Firebase',
 	'myhonorsUser',
@@ -30,31 +31,10 @@ var appResolve = {
 	 * which the application is waiting to get resolved before displaying any
 	 * content (see http://www.youtube.com/watch?v=Kr1qZ8Ik9G8 ).
 	 */
-	auth: function ($rootScope, $route, $q, FirebaseIO)
+	auth: function ($rootScope, $route, $q, FirebaseIO, localStorageService)
 	{
 		var deferred = $q.defer();
 		var loginPromise = deferred.promise;
-
-		var finalPromise = loginPromise.then(function(user) {
-			// grab user profile
-			FirebaseIO.child('user_profiles/' + user.id).on('value', function(snapshot) {
-				if (snapshot.val() === null) {
-					return rejectIt('NO_PROFILE_FOUND');
-				}
-
-				var profile = snapshot.val();
-				profile.id = snapshot.name();
-
-				$rootScope.safeApply(function() {
-					$rootScope.profile = profile;
-				});
-
-				return profile;
-			});
-
-		}, function(error) {
-			return rejectIt(error);
-		});
 
 		// this value is determined by the requireLogin object property as defined
 		// in each module's $routeProvider.when() chain. this allows us to set the
@@ -65,28 +45,43 @@ var appResolve = {
 			// the if/else logic here allows us to conditionally render the template
 			// of the page because, if a promise is rejected, the template will not be rendered
 			if (requireLogin) {
-				return $q.reject(message);
+				deferred.reject(message);
 			}
 			else {
-				return message;
+				deferred.resolve(message);
 			}
 		};
 
-		var authClient = new FirebaseAuthClient(FirebaseIO, function(error, user) {
-			if (error) {
-				// an error occurred while attempting login
-				deferred.reject(error);
-			}
-			else if (user) {
-				// user authenticated with Firebase
-				$rootScope.safeApply(function() {deferred.resolve(user)});
-			}
-			else {
-				// user is logged out
-				deferred.reject('NOT_LOGGED_IN');
-			}
-		});
+		var token = localStorageService.get('auth_token');
 
-		return finalPromise;
+		if (token) {
+			console.log('debug2');
+			FirebaseIO.auth(token, function(error, authObject) {
+				console.log('debug3');
+				if (error) {
+					console.log('debug4');
+					// an error occurred while attempting login
+					rejectIt(error);
+				}
+				else if (authObject) {
+					console.log('debug5');
+					// user authenticated with Firebase
+					$rootScope.safeApply(function() {
+						deferred.resolve(authObject)
+					});
+				}
+				else {
+					console.log('debug6');
+					// user is logged out
+					drejectIt('NOT_LOGGED_IN');
+				}
+			});
+		}
+		else {
+			console.log('debug7');
+			rejectIt('NOT_LOGGED_IN');
+		}
+
+		return loginPromise;
 	}
 };
