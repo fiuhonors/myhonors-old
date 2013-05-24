@@ -55,30 +55,34 @@ var appResolve = {
 		var token = webStorage.get('auth_token');
 
 		if (token) {
-			console.log('debug2');
 			FirebaseIO.auth(token, function(error, authObject) {
-				console.log('debug3');
 				if (error) {
-					console.log('debug4');
 					// an error occurred while attempting login
 					rejectIt(error);
 				}
 				else if (authObject) {
-					console.log('debug5');
-					// user authenticated with Firebase
-					$rootScope.safeApply(function() {
-						deferred.resolve(authObject)
+					// user authenticated with Firebase. since they have a token, we can assume they've already made it
+					// past their first login, and a profile has already been created for them
+					var ref = FirebaseIO.child('/user_profiles/' + authObject.auth.id);
+
+					ref.on('value', function(snapshot) {
+						var profile = snapshot.val();
+						profile.id = snapshot.name();
+
+						$rootScope.safeApply(function() {
+							$rootScope.profile = profile;
+							deferred.resolve();
+						});
 					});
 				}
 				else {
-					console.log('debug6');
 					// user is logged out
-					drejectIt('NOT_LOGGED_IN');
+					rejectIt('NOT_LOGGED_IN');
 				}
 			});
 		}
 		else {
-			console.log('debug7');
+			// no auth token
 			rejectIt('NOT_LOGGED_IN');
 		}
 

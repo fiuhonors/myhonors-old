@@ -52,7 +52,7 @@ angular.module('myhonors').controller('AppCtrl', ['$scope', '$rootScope', 'Fireb
 						webStorage.add('auth_token', result.token);
 
 						// then check if the user has a profile. if not, create it
-						var ref = FirebaseIO.child(/user_profiles/ + authObject.auth.id);
+						var ref = FirebaseIO.child('/user_profiles/' + authObject.auth.id);
 
 						ref.on('value', function(snapshot) {
 							if (snapshot.val() === null) {
@@ -66,7 +66,6 @@ angular.module('myhonors').controller('AppCtrl', ['$scope', '$rootScope', 'Fireb
 								// user has profile, so save profile to scope and redirect to homepage
 								var profile = snapshot.val();
 								profile.id = snapshot.name();
-								profile.token = result.token;
 
 								$rootScope.safeApply(function() {
 									$rootScope.profile = profile;
