@@ -17,6 +17,12 @@
 		<h2>{{event.speaker}}</h2>
 		<p>{{event.desc}}</p>
 	</div>
-	<div class="span3 well">
+	<div class="span3 well text-center">
+		<button class="btn btn-large" style="margin-bottom: 10px" ng-click="addRSVP(event.id)" ng-show="!hasRSVP(event.id)">I'm Going</button>
+		<button class="btn btn-large btn-primary" style="margin-bottom: 10px" ng-click="removeRSVP(event.id)" ng-show="hasRSVP(event.id)">I'm Going</button><br />
+		<button class="btn">Invite a Friend</button> <button class="btn"><i class="icon-heart"></i></button><br />
+		<ul class="unstyled" style="margin-top: 20px;">
+			<li ng-repeat="rsvp in rsvps">{{rsvp}} is going</li>
+		</ul>
 	</div>
 </div>
