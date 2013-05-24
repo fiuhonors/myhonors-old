@@ -49,6 +49,15 @@
 		"careers": {
 			".read": true,
 			".write": true
+		},
+
+		"comments": {
+			"events": {
+				"$commentID": {
+					".read": true,
+					".write": true
+				}
+			}
 		}
 		
 	}

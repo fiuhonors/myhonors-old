@@ -30,6 +30,45 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$rootSc
 		});
 	}
 
+	$scope.comments = {};
+	var discussionRef = FirebaseIO.child('comments/events/' + $routeParams.eventId);
+
+	discussionRef.on('child_added', function(snapshot) {
+		// save the event object and add a property holding its ID so
+		// we can reference it in the scope (like in hasRSVP(eid), for example)
+		var comment = snapshot.val();
+		comment.id = snapshot.name();
+
+		$rootScope.safeApply(function() {
+			$scope.comments[comment.id] = comment;
+		});
+	});
+
+	discussionRef.on('child_changed', function(snapshot) {
+		var comment = snapshot.val();
+		comment.id = snapshot.name();
+
+		$rootScope.safeApply(function() {
+			$scope.comments[comment.id] = comment;
+		});
+	});
+
+	discussionRef.on('child_removed', function(snapshot) {
+		var comment = snapshot.val();
+		comment.id = snapshot.name();
+
+		$rootScope.safeApply(function() {
+			$scope.comments[comment.id] = undefined;
+		});
+	});
+
+	$scope.userComment = '';
+
+	$scope.addComment = function() {
+		discussionRef.push({fname: $scope.profile.fname, lname: $scope.profile.lname, content: $scope.userComment});
+		$scope.userComment = '';
+	};
+
 	$scope.rsvps = [];
 
 	var eventRef = FirebaseIO.child('events/' + $routeParams.eventId);
