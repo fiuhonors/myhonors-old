@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myhonors').controller('AppCtrl', ['$scope', '$rootScope', 'FirebaseIO', '$route', '$location', '$http', 'localStorageService', function AppCtrl($scope, $rootScope, FirebaseIO, $route, $location, $http, localStorageService) {
+angular.module('myhonors').controller('AppCtrl', ['$scope', '$rootScope', 'FirebaseIO', '$route', '$location', '$http', 'webStorage', function AppCtrl($scope, $rootScope, FirebaseIO, $route, $location, $http, webStorage) {
 	// AngularJS workaround for certain callbacks.
 	// see https://coderwall.com/p/ngisma
 	$rootScope.safeApply = function(fn) {
@@ -49,7 +49,7 @@ angular.module('myhonors').controller('AppCtrl', ['$scope', '$rootScope', 'Fireb
 						console.log('success login', authObject);
 						// user successfully logged in. save token to localStorage (or cookies if browser doesn't support it)
 						// so we can auth on every page load via appResolve
-						localStorageService.add('auth_token', result.token);
+						webStorage.add('auth_token', result.token);
 
 						// then check if the user has a profile. if not, create it
 						var ref = FirebaseIO.child(/user_profiles/ + authObject.auth.id);
@@ -100,7 +100,7 @@ angular.module('myhonors').controller('AppCtrl', ['$scope', '$rootScope', 'Fireb
 	};
 	
 	$rootScope.doLogout = function() {
-		localStorageService.remove('auth_token');
+		webStorage.remove('auth_token');
 		FirebaseIO.unauth(); 
 		$rootScope.profile = null;
 		$location.path('/login');

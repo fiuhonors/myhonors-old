@@ -2,7 +2,7 @@
 
 angular.module('myhonors', [
 	// module dependencies
-	'LocalStorageModule',
+	'webStorageModule',
 	'myhonorsConfig',
 	'Firebase',
 	'myhonorsUser',
@@ -31,7 +31,7 @@ var appResolve = {
 	 * which the application is waiting to get resolved before displaying any
 	 * content (see http://www.youtube.com/watch?v=Kr1qZ8Ik9G8 ).
 	 */
-	auth: function ($rootScope, $route, $q, FirebaseIO, localStorageService)
+	auth: function ($rootScope, $route, $q, FirebaseIO, webStorage)
 	{
 		var deferred = $q.defer();
 		var loginPromise = deferred.promise;
@@ -52,7 +52,7 @@ var appResolve = {
 			}
 		};
 
-		var token = localStorageService.get('auth_token');
+		var token = webStorage.get('auth_token');
 
 		if (token) {
 			console.log('debug2');
