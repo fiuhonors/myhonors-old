@@ -46,7 +46,6 @@ angular.module('myhonors').controller('AppCtrl', ['$scope', '$rootScope', 'Fireb
 						alert(error);
 					}
 					else if (authObject) {
-						console.log('success login', authObject);
 						// user successfully logged in. save token to localStorage (or cookies if browser doesn't support it)
 						// so we can auth on every page load via appResolve
 						webStorage.add('auth_token', result.token);
