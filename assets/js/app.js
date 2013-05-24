@@ -14,7 +14,7 @@ angular.module('myhonorsConfig', []);
 angular.module('Firebase', []);
 angular.module('myhonorsUser', []);
 angular.module('myhonorsDashboard', []);
-angular.module('myhonorsEvents', ['ngResource']);
+angular.module('myhonorsEvents', []);
 angular.module('myhonorsCareer', []);
 
 var appResolve = {
