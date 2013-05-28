@@ -32,7 +32,7 @@ angular.module('myhonors').controller('AppCtrl', ['$scope', '$rootScope', 'Fireb
 		$rootScope.loading = true;
 
 		var data = 'pid=' + $scope.login.pid + '&password=' + $scope.login.password;
-		$http.post('auth.php', data, {headers: {'Content-Type' : 'application/x-www-form-urlencoded'}}).success(function(result) {
+		$http.post('auth/auth.php', data, {headers: {'Content-Type' : 'application/x-www-form-urlencoded'}}).success(function(result) {
 			if (result.success === true && angular.isDefined(result.token))
 			{
 				FirebaseIO.auth(result.token, function(error, authObject) {

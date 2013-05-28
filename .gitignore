@@ -8,7 +8,7 @@ assets/json
 assets/js/config.js
 
 # LDAPS Authentication
-auth.php
+auth/auth.php
 
 # Code Igniter
 application/cache/*
