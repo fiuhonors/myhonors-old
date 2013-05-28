@@ -9,13 +9,3 @@ assets/js/config.js
 
 # LDAPS Authentication
 auth/auth.php
-
-# Code Igniter
-application/cache/*
-application/cache/!index.html
-application/config/config.php
-application/config/database.php
-application/config/tank_auth.php
-application/logs/*.php
-application/logs/!index.html
-assets/captcha/*.jpg
