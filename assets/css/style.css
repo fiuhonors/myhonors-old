@@ -185,6 +185,10 @@ b, strong {
 	padding: 15px;
 }
 
+.padded-small {
+	padding: 5px;
+}
+
 h1 small,
 h2 small,
 h3 small,
