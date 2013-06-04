@@ -33,6 +33,10 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$rootSc
 	$scope.comments = {};
 	var discussionRef = FirebaseIO.child('comments/events/' + $routeParams.eventId);
 
+	discussionRef.on('value', function(snapshot) {
+		FirebaseIO.child('events/' + $routeParams.eventId + '/numberOfComments').set(snapshot.numChildren());
+	});
+
 	discussionRef.on('child_added', function(snapshot) {
 		// save the event object and add a property holding its ID so
 		// we can reference it in the scope (like in hasRSVP(eid), for example)
