@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 'FirebaseIO', 'apikey_google', function ($scope, $rootScope, $routeParams, $window, FirebaseIO, apikey_google) {
+angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 'FirebaseIO', 'FirebaseCollection', 'apikey_google', function ($scope, $rootScope, $routeParams, $window, FirebaseIO, FirebaseCollection, apikey_google) {
 	var mapLoaded = false;
 
 	$window.initializeMap = function() {
@@ -30,46 +30,13 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$rootSc
 		});
 	}
 
-	$scope.comments = {};
 	var discussionRef = FirebaseIO.child('comments/events/' + $routeParams.eventId);
-
-	discussionRef.on('value', function(snapshot) {
-		FirebaseIO.child('events/' + $routeParams.eventId + '/numberOfComments').set(snapshot.numChildren());
-	});
-
-	discussionRef.on('child_added', function(snapshot) {
-		// save the event object and add a property holding its ID so
-		// we can reference it in the scope (like in hasRSVP(eid), for example)
-		var comment = snapshot.val();
-		comment.id = snapshot.name();
-
-		$rootScope.safeApply(function() {
-			$scope.comments[comment.id] = comment;
-		});
-	});
-
-	discussionRef.on('child_changed', function(snapshot) {
-		var comment = snapshot.val();
-		comment.id = snapshot.name();
-
-		$rootScope.safeApply(function() {
-			$scope.comments[comment.id] = comment;
-		});
-	});
-
-	discussionRef.on('child_removed', function(snapshot) {
-		var comment = snapshot.val();
-		comment.id = snapshot.name();
-
-		$rootScope.safeApply(function() {
-			$scope.comments[comment.id] = undefined;
-		});
-	});
+	$scope.comments = FirebaseCollection(discussionRef);
 
 	$scope.userComment = '';
 
 	$scope.addComment = function() {
-		discussionRef.push({fname: $scope.profile.fname, lname: $scope.profile.lname, content: $scope.userComment});
+		$scope.comments.add({fname: $scope.profile.fname, lname: $scope.profile.lname, content: $scope.userComment});
 		$scope.userComment = '';
 	};
 
