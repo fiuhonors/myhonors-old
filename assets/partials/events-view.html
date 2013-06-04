@@ -44,8 +44,8 @@
 				<div class="media" style="margin-top: 0; margin-bottom: 10px;" ng-repeat="comment in comments | orderBy:sortComments.current">
 					<a class="pull-left" href="#"><img class="media-object img-rounded" src="http://placehold.it/48" /></a>
 					<div class="media-body">
-						<a href="#" class="media-heading">{{comment.fname}} {{comment.lname}}</a>
-						<p style="font-size: 13px">{{comment.content}}</p>
+						<span><a href="#" class="media-heading">{{comment.fname}} {{comment.lname}}</a>
+						<p style="font-size: 13px">{{comment.content}} - <span class="muted">{{comment.date | timeAgo}}</span></p>
 					</div>
 				</div>
 			</div>
