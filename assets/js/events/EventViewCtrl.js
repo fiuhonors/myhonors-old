@@ -35,8 +35,31 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$rootSc
 
 	$scope.userComment = '';
 
+	// provides a property to set the orderBy predicate for the comments (.current)
+	// and a function to get the value as a text string for the view (.getCurrent())
+	$scope.sortComments = {
+		current: '-date',
+		getCurrent: function() {
+			switch (this.current) {
+				case 'kudos':
+					return 'Best';
+				case 'date':
+					return 'Oldest First';
+				case '-date': // a negative sign in front of the predicate will reverse the array
+				default:
+					return 'Newest First';
+			}
+		}
+	};
+
 	$scope.addComment = function() {
-		$scope.comments.add({fname: $scope.profile.fname, lname: $scope.profile.lname, content: $scope.userComment});
+		$scope.comments.add({
+			fname: $scope.profile.fname,
+			lname: $scope.profile.lname,
+			content: $scope.userComment,
+			date: new Date().getTime()
+		});
+
 		$scope.userComment = '';
 	};
 

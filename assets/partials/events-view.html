@@ -29,11 +29,19 @@
 			<div class="padded-small text-center" style="position: relative">
 				<div style="height: 2px; width: 100%; background-color: #00baff; position: absolute; top: 15px; left: 0px"></div>
 				<span style="padding: 0 10px; background-color: white; position: relative; z-index: 10">
-					{{comments.numItems()}} comments.
+					{{comments.numItems()}} comments. Sorted by&nbsp;
+					<div class="dropdown text-left" style="display: inline-block">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#">{{sortComments.getCurrent()}} <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a ng-click="sortComments.current = 'kudos'">Best</a></li>
+							<li><a ng-click="sortComments.current = '-date'">Newest First</a></li>
+							<li><a ng-click="sortComments.current = 'date'">Oldest First</a></li>
+						</ul>
+					</div>
 				</span>
 			</div>
 			<div class="padded">
-				<div class="media" style="margin-top: 0; margin-bottom: 10px;" ng-repeat="comment in comments | orderBy:reverse">
+				<div class="media" style="margin-top: 0; margin-bottom: 10px;" ng-repeat="comment in comments | orderBy:sortComments.current">
 					<a class="pull-left" href="#"><img class="media-object img-rounded" src="http://placehold.it/48" /></a>
 					<div class="media-body">
 						<a href="#" class="media-heading">{{comment.fname}} {{comment.lname}}</a>
