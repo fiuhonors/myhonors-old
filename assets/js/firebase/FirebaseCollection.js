@@ -129,10 +129,6 @@ angular.module('Firebase').factory('FirebaseCollection', ['$timeout', function($
 			item.$ref.set(copy);
 		};
 
-		collection.numItems = function() {
-			return collection.length;
-		}
-
 		return collection;
 	};
 }]);
