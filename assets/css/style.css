@@ -140,9 +140,9 @@ b, strong {
 }
 
 .box {
-	font-family: 'Open Sans', HelveticaNeue, Helvetica, Arial;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-weight: 400;
-	font-size: 12px;
+	font-size: 13px;
 	-webkit-box-shadow: 0 2px 2px -2px #cccccc;
 	-moz-box-shadow: 0 2px 2px -2px #cccccc;
 	box-shadow: 0 2px 2px -2px #cccccc;
