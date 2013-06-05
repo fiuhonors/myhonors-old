@@ -42,14 +42,16 @@ var appResolve = {
 		var requireLogin = $route.current.$$route.requireLogin;
 
 		var rejectIt = function(message) {
-			// the if/else logic here allows us to conditionally render the template
-			// of the page because, if a promise is rejected, the template will not be rendered
-			if (requireLogin) {
-				deferred.reject(message);
-			}
-			else {
-				deferred.resolve(message);
-			}
+			$rootScope.safeApply(function() {
+				// the if/else logic here allows us to conditionally render the template
+				// of the page because, if a promise is rejected, the template will not be rendered
+				if (requireLogin) {
+					deferred.reject(message);
+				}
+				else {
+					deferred.resolve(message);
+				}
+			});
 		};
 
 		var token = webStorage.get('auth_token');
@@ -58,7 +60,7 @@ var appResolve = {
 			FirebaseIO.auth(token, function(error, authObject) {
 				if (error) {
 					// an error occurred while attempting login
-					rejectIt(error);
+					rejectIt(error.code);
 				}
 				else if (authObject) {
 					// user authenticated with Firebase. since they have a token, we can assume they've already made it
