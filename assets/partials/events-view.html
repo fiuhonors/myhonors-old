@@ -17,6 +17,10 @@
 			<div class="box-header">Event Details</div>
 			<div class="box-content padded">
 				<p>{{event.desc}}</p>
+				<p>
+					<strong>Date: </strong> {{event.date.begins | date:"EEE, MMMM d 'at' h:mm a"}}<br />
+					<strong>Location: </strong> {{event.location.name}}
+				</p>
 			</div>
 		</div>
 	</div>
