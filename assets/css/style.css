@@ -182,12 +182,16 @@ h1,h2,h3,h4,h5,h6, .opensans {
 
 }
 
-.padded {
-	padding: 15px;
-}
-
 .padded-small {
 	padding: 5px;
+}
+
+.padded-medium {
+	padding: 8px;
+}
+
+.padded {
+	padding: 15px;
 }
 
 h1 small,

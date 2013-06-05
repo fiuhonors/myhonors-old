@@ -68,7 +68,15 @@
 			<div class="box-content padded text-center">
 				<button class="btn btn-large input-block-level" style="margin-bottom: 10px" ng-click="addRSVP(event.id)" ng-show="!hasRSVP(event.id)">I'm Going</button>
 				<button class="btn btn-large btn-primary input-block-level" style="margin-bottom: 10px" ng-click="removeRSVP(event.id)" ng-show="hasRSVP(event.id)">I'm Going</button> <button class="btn">Invite a Friend</button> <button class="btn"><i class="icon-heart"></i></button> <button class="btn"><i class="icon-share"></i></button><br />
-				<ul class="unstyled" style="margin-top: 20px">
+			</div>
+		</div>
+		<div class="box">
+			<div class="box-header">RSVPs</div>
+			<div class="box-content padded">
+				<div ng-show="!rsvps.length" class="alert alert-info padded-medium" style="margin-bottom: 0">
+					<strong>Be the first to RSVP!</strong> Just click the huge "I'm Going" button above and others will follow.
+				</div>
+				<ul class="unstyled">
 					<li ng-repeat="rsvp in rsvps">{{rsvp}} is going</li>
 				</ul>
 			</div>
