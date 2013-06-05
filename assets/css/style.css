@@ -70,6 +70,10 @@ b, strong {
 	font-weight: 600;
 }
 
+h1,h2,h3,h4,h5,h6, .opensans {
+	font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
 /* Fix for IE9 displaying #wrap as table */
 #wrap {
 	display: block !important;
@@ -174,7 +178,8 @@ b, strong {
 	text-shadow: 0 1px white;
 	border-bottom: 1px solid #CDCDCD;
 	color: #636363;
-	font-weight: 600;
+	font-weight: 400;
+	font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .box .box-content {
