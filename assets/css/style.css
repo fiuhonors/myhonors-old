@@ -225,19 +225,22 @@ a.thumbnail:hover {text-decoration: none;}
 
 /* Upcoming Events */
 
-ul.upcoming-events {
+ul.block-hover {
 	margin: 0;
 }
 
-ul.upcoming-events li {
+ul.block-hover li {
 	list-style-type: none;
 	padding: 10px;
 	border-bottom: 1px solid #efefef;
 }
 
-ul.upcoming-events li:hover {
-	cursor: pointer;
+ul.block-hover li:hover {
 	background-color: #f4f4f4;
+}
+
+ul.block-clickable li:hover {
+	cursor: pointer;
 }
 
 .event-subtitle {

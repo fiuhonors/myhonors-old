@@ -70,17 +70,27 @@
 		<div class="box">
 			<div class="box-content padded text-center">
 				<button class="btn btn-large input-block-level" style="margin-bottom: 10px" ng-click="addRSVP(event.id)" ng-show="!hasRSVP(event.id)">I'm Going</button>
-				<button class="btn btn-large btn-primary input-block-level" style="margin-bottom: 10px" ng-click="removeRSVP(event.id)" ng-show="hasRSVP(event.id)">I'm Going</button> <button class="btn">Invite a Friend</button> <button class="btn"><i class="icon-heart"></i></button> <button class="btn"><i class="icon-share"></i></button><br />
+				<button class="btn btn-large input-block-level btn-primary" style="margin-bottom: 10px" ng-click="removeRSVP(event.id)" ng-show="hasRSVP(event.id)">I'm Going</button>
+				<button class="btn">Invite a Friend</button>
+				<button class="btn"><i class="icon-heart"></i></button>
+				<button class="btn"><i class="icon-share"></i></button>
 			</div>
 		</div>
 		<div class="box">
 			<div class="box-header">RSVPs</div>
-			<div class="box-content padded">
-				<div ng-show="!rsvps.length" class="alert alert-info padded-medium" style="margin-bottom: 0">
-					<strong>Be the first to RSVP!</strong> Just click the huge "I'm Going" button above and others will follow.
+			<div class="box-content">
+				<div ng-show="!rsvps.length" class="padded">
+					<div class="alert alert-info padded-medium" style="margin-bottom: 0">
+						<strong>Be the first to RSVP!</strong> Just click the huge "I'm Going" button above and others will follow.
+					</div>
 				</div>
-				<ul class="unstyled">
-					<li ng-repeat="rsvp in rsvps">{{rsvp}} is going</li>
+				<ul ng-show="rsvps.length" class="unstyled block-hover">
+					<li ng-repeat="rsvp in rsvps" class="clearfix">
+						<img class="pull-left img-rounded" src="http://placehold.it/36">
+						<div class="pull-left" style="margin-left: 10px; line-height: 36px">
+							<strong>{{rsvp.fname}}</strong> is going
+						</div>
+					</li>
 				</ul>
 			</div>
 		</div>
