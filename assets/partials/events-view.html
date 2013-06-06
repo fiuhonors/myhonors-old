@@ -49,6 +49,9 @@
 				</span>
 			</div>
 			<div class="padded">
+				<div ng-show="!comments.length" class="alert alert-info padded-medium" style="margin-bottom: 0">
+					<strong>Be the first to comment!</strong> Tell us what you think.
+				</div>
 				<div class="media" style="margin-top: 0; margin-bottom: 10px;" ng-repeat="comment in comments | orderBy:sortComments.current">
 					<a class="pull-left" href="#"><img class="media-object img-rounded" src="http://placehold.it/48" /></a>
 					<div class="media-body">
