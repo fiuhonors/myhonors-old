@@ -14,7 +14,22 @@ angular.module('Firebase').factory('FirebaseCollection', ['$timeout', function($
 		angular.extend(this, ref.val());
 	}
 
-	return function(collectionUrlOrRef, initialCb) {
+	/**
+	 * Create a collection with data from Firebase
+	 *
+	 * @param	{String} collectionUrlOrRef	The firebase url where the collection lives
+	 * @param	{Object} options			An object that can contain options (listed below)
+	 *
+	 *			- initialCb: method executed immediately after initial data load
+	 *			- metaUrlOrRef: Firebase URL or reference to 'meta' data. Used when
+	 * 			  dealing with denormalized data, it uses the name of each item in
+	 *			  in collectionUrlOrRef (which is usually in the form of 'propertyName: true')
+	 *			  to fetch data from metaUrlOrRef.child('propertyName') and save that into the
+	 *			  collection instead. 
+	 * 
+	 * @return	{Array}						An array that will hold the items in the collection
+	 */
+	return function(collectionUrlOrRef, options) {
 		var collection = [];
 		var indexes = {};
 
@@ -23,6 +38,15 @@ angular.module('Firebase').factory('FirebaseCollection', ['$timeout', function($
 			collectionRef = new Firebase(collectionUrlOrRef);
 		} else {
 			collectionRef = collectionUrlOrRef;
+		}
+
+		var metaRef;
+		if (options && options.metaUrlOrRef) {
+			if (typeof options.metaUrlOrRef == "string") {
+				metaRef = new Firebase(options.metaUrlOrRef);
+			} else {
+				metaRef = options.metaUrlOrRef;
+			}
 		}
 
 		function getIndex(prevId) {
@@ -63,16 +87,28 @@ angular.module('Firebase').factory('FirebaseCollection', ['$timeout', function($
 			}
 		}
 
-		if (initialCb && typeof initialCb == 'function') {
-			collectionRef.once('value', initialCb);
+		if (options && options.initialCb && typeof options.initialCb == 'function') {
+			collectionRef.once('value', options.initialCb);
 		}
 
 		collectionRef.on('child_added', function(data, prevId) {
-			$timeout(function() {
-				var index = getIndex(prevId);
-				addChild(index, new angularFireItem(data, index));
-				updateIndexes(index);
-			});
+			// For reference on what we're doing with metaRef here, see
+			// https://www.firebase.com/blog/2013-04-12-denormalizing-is-normal.html
+			if (metaRef) {
+				metaRef.child(data.name()).once('value', function(metaData) {
+					$timeout(function() {
+						var index = getIndex(prevId);
+						addChild(index, new angularFireItem(metaData, index));
+						updateIndexes(index);
+					});
+				});
+			} else {
+				$timeout(function() {
+					var index = getIndex(prevId);
+					addChild(index, new angularFireItem(data, index));
+					updateIndexes(index);
+				});
+			}
 		});
 
 		collectionRef.on('child_removed', function(data) {
