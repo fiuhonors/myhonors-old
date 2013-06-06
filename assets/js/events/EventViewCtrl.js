@@ -63,30 +63,9 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$rootSc
 		$scope.userComment = '';
 	};
 
-	$scope.rsvps = [];
-
 	var eventRef = FirebaseIO.child('events/' + $routeParams.eventId);
 
 	eventRef.on('value', function(snapshot) {
-
-		// get the first and last names of everyone who rsvp'd
-		if (snapshot.child('rsvps') !== null) {
-			// reset
-			$scope.safeApply(function() {
-				$scope.rsvps = [];
-			});
-
-			snapshot.child('rsvps').forEach(function(childSnapshot) {
-				var fnameRef = FirebaseIO.child('user_profiles/' + childSnapshot.name() + '/fname');
-
-				fnameRef.on('value', function(nameSnapshot) {
-					$scope.safeApply(function() {
-						$scope.rsvps.push(nameSnapshot.val());
-					});
-				});
-			});
-		}
-
 		$scope.safeApply(function() {
 			$scope.event = snapshot.val();
 			$scope.event.id = snapshot.name();
@@ -105,6 +84,8 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$rootSc
 		}
 	});
 
+	$scope.rsvps = FirebaseCollection(eventRef.child('rsvps'), {metaUrlOrRef: FirebaseIO.child('user_profiles')});
+	
 	// todo: move the repeated code below into a service that's shared between EventViewCtrl and EventBrowseCtrl
 
 	$scope.hasRSVP = function(eid) {
