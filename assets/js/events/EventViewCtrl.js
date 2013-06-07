@@ -2,6 +2,11 @@
 
 angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 'FirebaseIO', 'FirebaseCollection', 'apikey_google', function ($scope, $rootScope, $routeParams, $window, FirebaseIO, FirebaseCollection, apikey_google) {
 	var mapLoaded = false;
+	var eventRef = FirebaseIO.child('events/' + $routeParams.eventId);
+	var discussionRef = eventRef.child('comments');
+	$scope.userComment = '';
+
+	/* MAP FUNCTIONALITY */
 
 	$window.initializeMap = function() {
 		var latLng = new google.maps.LatLng($scope.event.location.lat, $scope.event.location.long);
@@ -30,56 +35,11 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$rootSc
 		});
 	}
 
-	var discussionRef = FirebaseIO.child('events/' + $routeParams.eventId + '/comments');
+	$scope.renderMap = function(location) {	
+		return '<iframe width="950" height="300" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="' + location + '"></iframe>';
+	}
 
-	$scope.comments = FirebaseCollection(discussionRef, {metaFunction: function(doAdd, data) {
-		// get comment data
-		FirebaseIO.child('comments/' + data.name()).once('value', function(commentSnapshot) {
-			// get user data, based off userId property of comment
-			var userId = commentSnapshot.child('authorId').val();
-			FirebaseIO.child('user_profiles/' + userId).once('value', function(userSnapshot) {
-				// now we have everything we want, so execute doAdd() with the final combined data
-				doAdd(commentSnapshot, {author: userSnapshot.val()});
-			})
-		})
-	}});
-
-	$scope.userComment = '';
-
-	// provides a property to set the orderBy predicate for the comments (.current)
-	// and a function to get the value as a text string for the view (.getCurrent())
-	$scope.sortComments = {
-		current: '-date',
-		getCurrent: function() {
-			switch (this.current) {
-				case 'kudos':
-					return 'Best';
-				case 'date':
-					return 'Oldest First';
-				case '-date': // a negative sign in front of the predicate will reverse the array
-				default:
-					return 'Newest First';
-			}
-		}
-	};
-
-	$scope.addComment = function() {
-		// push to the main 'comments' location
-		var commentRef = FirebaseIO.child('comments').push({
-			authorId: $scope.profile.id,
-			content: $scope.userComment,
-			date: Date.now()
-		});
-
-		// add all relevant references
-		FirebaseIO.child('events/' + $routeParams.eventId + '/comments/' + commentRef.name()).set(true)
-		FirebaseIO.child('user_profiles/' + $scope.profile.id + '/comments/' + commentRef.name()).set(true)
-		
-		// reset input box
-		$scope.userComment = '';
-	};
-
-	var eventRef = FirebaseIO.child('events/' + $routeParams.eventId);
+	/* LOAD EVENT DATA AND INITIALIZE MAP */
 
 	eventRef.on('value', function(snapshot) {
 		$scope.safeApply(function() {
@@ -100,13 +60,61 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$rootSc
 		}
 	});
 
+	/* COMMENT FUNCTIONALITY */
+
+	$scope.comments = FirebaseCollection(discussionRef, {metaFunction: function(doAdd, data) {
+		// get comment data
+		FirebaseIO.child('comments/' + data.name()).once('value', function(commentSnapshot) {
+			// get user data, based off userId property of comment
+			var userId = commentSnapshot.child('authorId').val();
+			FirebaseIO.child('user_profiles/' + userId).once('value', function(userSnapshot) {
+				// now we have everything we want, so execute doAdd() with the final combined data
+				doAdd(commentSnapshot, {author: userSnapshot.val()});
+			})
+		})
+	}});
+
+	$scope.addComment = function() {
+		// push to the main 'comments' location
+		var commentRef = FirebaseIO.child('comments').push({
+			authorId: $scope.profile.id,
+			content: $scope.userComment,
+			date: Date.now()
+		});
+
+		// add all relevant references
+		FirebaseIO.child('events/' + $routeParams.eventId + '/comments/' + commentRef.name()).set(true)
+		FirebaseIO.child('user_profiles/' + $scope.profile.id + '/comments/' + commentRef.name()).set(true)
+		
+		// reset input box
+		$scope.userComment = '';
+	};
+
+	// provides a property to set the orderBy predicate for the comments (.current)
+	// and a function to get the value as a text string for the view (.getCurrent())
+	$scope.sortComments = {
+		current: '-date',
+		getCurrent: function() {
+			switch (this.current) {
+				case 'kudos':
+					return 'Best';
+				case 'date':
+					return 'Oldest First';
+				case '-date': // a negative sign in front of the predicate will reverse the array
+				default:
+					return 'Newest First';
+			}
+		}
+	};
+
+	/* RSVP FUNCTIONALITY */
+	// todo: move the repeated code below into a service that's shared between EventViewCtrl and EventBrowseCtrl
+
 	$scope.rsvps = FirebaseCollection(eventRef.child('rsvps'), {metaFunction: function(doAdd, data) {
 		FirebaseIO.child('user_profiles/' + data.name()).once('value', function(userSnapshot) {
 			doAdd(userSnapshot);
 		});
 	}});
-	
-	// todo: move the repeated code below into a service that's shared between EventViewCtrl and EventBrowseCtrl
 
 	$scope.hasRSVP = function(eid) {
 		return $rootScope.profile && $rootScope.profile.rsvps && $rootScope.profile.rsvps[eid] === true;
@@ -131,8 +139,4 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$rootSc
 		var userRef = FirebaseIO.child('/user_profiles/' + $rootScope.profile.id + '/rsvps/' + eid);
 		userRef.remove();
 	};
-
-	$scope.renderMap = function(location) {	
-		return '<iframe width="950" height="300" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="' + location + '"></iframe>';
-	}
 }]);
