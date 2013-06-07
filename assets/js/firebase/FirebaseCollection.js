@@ -7,11 +7,14 @@
  */
 
 angular.module('Firebase').factory('FirebaseCollection', ['$timeout', function($timeout) {
-	function angularFireItem(ref, index) {
+	// sometimes we grab extra data (usually via metaFunction()) when navigating through Firebase.
+	// since we can't directly attach this extra data to the immutable Firebase reference, we just
+	// pass it into here and attach it alongside the actual ref.val()
+	function angularFireItem(ref, index, extraData) {
 		this.$ref = ref.ref();
 		this.$id = ref.name();
 		this.$index = index;
-		angular.extend(this, ref.val());
+		angular.extend(this, ref.val(), extraData);
 	}
 
 	/**
@@ -21,11 +24,10 @@ angular.module('Firebase').factory('FirebaseCollection', ['$timeout', function($
 	 * @param	{Object} options			An object that can contain options (listed below)
 	 *
 	 *			- initialCb: method executed immediately after initial data load
-	 *			- metaUrlOrRef: Firebase URL or reference to 'meta' data. Used when
-	 * 			  dealing with denormalized data, it uses the name of each item in
-	 *			  in collectionUrlOrRef (which is usually in the form of 'propertyName: true')
-	 *			  to fetch data from metaUrlOrRef.child('propertyName') and save that into the
-	 *			  collection instead. 
+	 *			- metaFunction(doAdd, data): method to help us customize our traversals through
+	 *			  Firebase, in order to grab different sets of data and link them together. This
+	 *			  method MUST call doAdd(ref [, extraData]) somewhere in order to properly add
+	 *			  the item to the FirebaseCollection
 	 * 
 	 * @return	{Array}						An array that will hold the items in the collection
 	 */
@@ -40,13 +42,9 @@ angular.module('Firebase').factory('FirebaseCollection', ['$timeout', function($
 			collectionRef = collectionUrlOrRef;
 		}
 
-		var metaRef;
-		if (options && options.metaUrlOrRef) {
-			if (typeof options.metaUrlOrRef == "string") {
-				metaRef = new Firebase(options.metaUrlOrRef);
-			} else {
-				metaRef = options.metaUrlOrRef;
-			}
+		var metaFunction;
+		if (options && options.metaFunction) {
+			metaFunction = options.metaFunction;
 		}
 
 		function getIndex(prevId) {
@@ -94,20 +92,18 @@ angular.module('Firebase').factory('FirebaseCollection', ['$timeout', function($
 		collectionRef.on('child_added', function(data, prevId) {
 			// For reference on what we're doing with metaRef here, see
 			// https://www.firebase.com/blog/2013-04-12-denormalizing-is-normal.html
-			if (metaRef) {
-				metaRef.child(data.name()).once('value', function(metaData) {
-					$timeout(function() {
-						var index = getIndex(prevId);
-						addChild(index, new angularFireItem(metaData, index));
-						updateIndexes(index);
-					});
-				});
-			} else {
+			var doAdd = function(ref, extraData) {
 				$timeout(function() {
 					var index = getIndex(prevId);
-					addChild(index, new angularFireItem(data, index));
+					addChild(index, new angularFireItem(ref, index, extraData));
 					updateIndexes(index);
 				});
+			};
+
+			if(metaFunction) {
+				metaFunction(doAdd, data);
+			} else {
+				doAdd(data);
 			}
 		});
 
