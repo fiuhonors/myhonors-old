@@ -29,8 +29,8 @@
 					}
 				},
 				"comments": {
-					"$commentID": {							 // ensure comment exists						// ensure $userId is author of comment
-						".validate": "newData.isBoolean() && root.child('comments').hasChild($commentID) && root.child('comments').child($commentID).child('authorId').val() == $userId"
+					"$commentID": {
+						".validate": "newData.isBoolean()"
 					}
 				},
 
@@ -63,8 +63,8 @@
 				".validate": "newData.hasChildren(['authorId', 'date', 'content'])",
 
 				// validate specific properties
-				"authorId": {							// ensure user has a profile
-					".validate": "newData.isString() && root.child('user_profiles').hasChild(newData.val())",
+				"authorId": {
+					".validate": "newData.isString()",
 				},
 				"date": {
 					".validate": "newData.isNumber()"
