@@ -28,6 +28,11 @@
 						".validate": "newData.isBoolean()"
 					}
 				},
+				"comments": {
+					"$commentID": {							 // ensure comment exists						// ensure $userId is author of comment
+						".validate": "newData.isBoolean() && root.child('comments').hasChild($commentID) && root.child('comments').child($commentID).child('authorId').val() == $userId"
+					}
+				},
 
 				// prevents any extra children (we only want the fields that are explicitly identified here)
 				"$other": {
@@ -52,10 +57,25 @@
 		},
 
 		"comments": {
-			"events": {
-				"$commentID": {
-					".read": true,
-					".write": true
+			"$commentID": {
+				".read": true,
+				".write": "auth.id == newData.child('authorId').val()", // ensure author of comment is current user
+				".validate": "newData.hasChildren(['authorId', 'date', 'content'])",
+
+				// validate specific properties
+				"authorId": {							// ensure user has a profile
+					".validate": "newData.isString() && root.child('user_profiles').hasChild(newData.val())",
+				},
+				"date": {
+					".validate": "newData.isNumber()"
+				},
+				"content": {
+					".validate": "newData.isString()"
+				},
+
+				// prevents any extra children (we only want the fields that are explicitly identified here)
+				"$other": {
+					".validate": false
 				}
 			}
 		}
