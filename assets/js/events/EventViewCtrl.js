@@ -30,8 +30,19 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$rootSc
 		});
 	}
 
-	var discussionRef = FirebaseIO.child('comments/events/' + $routeParams.eventId);
-	$scope.comments = FirebaseCollection(discussionRef);
+	var discussionRef = FirebaseIO.child('events/' + $routeParams.eventId + '/comments');
+
+	$scope.comments = FirebaseCollection(discussionRef, {metaFunction: function(doAdd, data) {
+		// get comment data
+		FirebaseIO.child('comments/' + data.name()).once('value', function(commentSnapshot) {
+			// get user data, based off userId property of comment
+			var userId = commentSnapshot.child('authorId').val();
+			FirebaseIO.child('user_profiles/' + userId).once('value', function(userSnapshot) {
+				// now we have everything we want, so execute doAdd() with the final combined data
+				doAdd(commentSnapshot, {author: userSnapshot.val()});
+			})
+		})
+	}});
 
 	$scope.userComment = '';
 
@@ -53,13 +64,18 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$rootSc
 	};
 
 	$scope.addComment = function() {
-		$scope.comments.add({
-			fname: $scope.profile.fname,
-			lname: $scope.profile.lname,
+		// push to the main 'comments' location
+		var commentRef = FirebaseIO.child('comments').push({
+			authorId: $scope.profile.id,
 			content: $scope.userComment,
-			date: new Date().getTime()
+			date: Date.now()
 		});
 
+		// add all relevant references
+		FirebaseIO.child('events/' + $routeParams.eventId + '/comments/' + commentRef.name()).set(true)
+		FirebaseIO.child('user_profiles/' + $scope.profile.id + '/comments/' + commentRef.name()).set(true)
+		
+		// reset input box
 		$scope.userComment = '';
 	};
 
