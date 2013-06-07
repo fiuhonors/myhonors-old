@@ -100,7 +100,11 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$rootSc
 		}
 	});
 
-	$scope.rsvps = FirebaseCollection(eventRef.child('rsvps'), {metaUrlOrRef: FirebaseIO.child('user_profiles')});
+	$scope.rsvps = FirebaseCollection(eventRef.child('rsvps'), {metaFunction: function(doAdd, data) {
+		FirebaseIO.child('user_profiles/' + data.name()).once('value', function(userSnapshot) {
+			doAdd(userSnapshot);
+		});
+	}});
 	
 	// todo: move the repeated code below into a service that's shared between EventViewCtrl and EventBrowseCtrl
 
