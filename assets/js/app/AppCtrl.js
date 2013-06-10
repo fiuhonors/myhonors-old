@@ -88,10 +88,8 @@ angular.module('myhonors').controller('AppCtrl', ['$scope', '$rootScope', 'Fireb
 				$scope.authResponse.error = result.error;
 			}
 
-			// clear the password and loading message after we get a response and evaluate it
-			// (it looks best on the UI to wait until this point)
+			// clear the password after we get a response and evaluate it
 			$rootScope.safeApply(function() {
-				$rootScope.loading = false;
 				$rootScope.login.password = '';
 			});
 		});
@@ -105,6 +103,11 @@ angular.module('myhonors').controller('AppCtrl', ['$scope', '$rootScope', 'Fireb
 	};
 
 	$rootScope.profile = null;
+
+	$rootScope.$on('$routeChangeSuccess', function() {
+		// clear any loading messages after the route has successfully changed
+		$rootScope.loading = false;
+	});
 
 	$rootScope.$on('$routeChangeError', function(event, current, previous, rejection) {
 		switch (rejection)
