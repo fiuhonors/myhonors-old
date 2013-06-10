@@ -8,7 +8,8 @@ angular.module('myhonors', [
 	'myhonorsUser',
 	'myhonorsDashboard',
 	'myhonorsEvents',
-	'myhonorsCareer'
+	'myhonorsCareer',
+	'myhonorsArch'
 ]);
 
 angular.module('myhonorsConfig', []);
@@ -17,6 +18,7 @@ angular.module('myhonorsUser', []);
 angular.module('myhonorsDashboard', []);
 angular.module('myhonorsEvents', []);
 angular.module('myhonorsCareer', []);
+angular.module('myhonorsArch', []);
 
 var appResolve = {
 	/**
