@@ -33,6 +33,11 @@
 						".validate": "newData.isBoolean()"
 					}
 				},
+				"archProjects": {
+					"$projectId": {
+						".validate": "newData.isBoolean()"
+					}
+				},
 
 				// prevents any extra children (we only want the fields that are explicitly identified here)
 				"$other": {
@@ -78,6 +83,11 @@
 					".validate": false
 				}
 			}
+		},
+
+		"arch": {
+			".read": true,
+			".write": true
 		}
 		
 	}
