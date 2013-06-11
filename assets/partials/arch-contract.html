@@ -2,7 +2,7 @@
 	<div class="span12">
 		<div class="box">
 			<div class="box-header">ARCH Agreement</div>
-			<div class="box-content padded">I agree that during the ARCH 2012-2013 term <strong>Advisor Name</strong> and <strong>Student Name</strong> will serve together as 'advisor' and 'student' (respectively) as outlined below.</div>
+			<div class="box-content padded">I agree that during the ARCH 2012-2013 term <strong>{{advisor.fname + ' ' + advisor.lname}}</strong> and <strong>{{student.fname + ' ' + student.lname}}</strong> will serve together as 'advisor' and 'student' (respectively) as outlined below.</div>
 		</div>
 	</div>
 </div>
@@ -81,13 +81,25 @@
 		<div class="box">
 			<div class="box-header">Student Signature</div>
 			<div class="box-content padded">
-				<form>
+				<form ng-show="isStudent() && !project.contract.signedByStudent" ng-submit="signContract()">
 					<p>To accept the agreement, please enter your name in the box below, then click the "Accept Agreement" button.</p>
 					<label for="studentName">Your Name</label>
 					<input type="text" id="studentName" /><br />
 					<p><strong>Today's Date</strong>: {{now | date:'fullDate'}}</p>
 					<button class="btn btn-primary btn-large">Accept Agreement</button>
 				</form>
+				<div ng-show="isStudent() && project.contract.signedByStudent" class="alert alert-block alert-success">
+					<h4>Success!</h4>
+					Thank you for signing the ARCH Agreement.
+				</div>
+				<div ng-show="isAdvisor() && !project.contract.signedByStudent" class="alert alert-block alert-info">
+					<h4>Pending Signature</h4>
+					We are still waiting for your student, {{student.fname + ' ' + student.lname}}, to sign the agreement. Feel free to send him or her a friendly reminder!
+				</div>
+				<div ng-show="isAdvisor() && project.contract.signedByStudent" class="alert alert-block alert-success">
+					<h4>Success!</h4>
+					Your student, {{student.fname + ' ' + student.lname}}, successfully signed the agreement on {{project.contract.signedByStudent | date:'fullDate'}}.
+				</div>
 			</div>
 		</div>
 	</div>
@@ -179,13 +191,25 @@
 		<div class="box">
 			<div class="box-header">Advisor Signature</div>
 			<div class="box-content padded">
-				<form>
+				<form ng-show="isAdvisor() && !project.contract.signedByAdvisor" ng-submit="signContract()">
 					<p>To accept the agreement, please enter your name in the box below, then click the "Accept Agreement" button.</p>
 					<label for="advisorName">Your Name</label>
 					<input type="text" id="advisorName" /><br />
 					<p><strong>Today's Date</strong>: {{now | date:'fullDate'}}</p>
 					<button class="btn btn-primary btn-large">Accept Agreement</button>
 				</form>
+				<div ng-show="isAdvisor() && project.contract.signedByAdvisor" class="alert alert-block alert-success">
+					<h4>Success!</h4>
+					Thank you for signing the ARCH Agreement.
+				</div>
+				<div ng-show="isStudent() && !project.contract.signedByAdvisor" class="alert alert-block alert-info">
+					<h4>Pending Signature</h4>
+					We are still waiting for your advisor, {{advisor.fname + ' ' + advisor.lname}}, to sign the agreement. Feel free to send him or her a friendly reminder!
+				</div>
+				<div ng-show="isStudent() && project.contract.signedByAdvisor" class="alert alert-block alert-success">
+					<h4>Success!</h4>
+					Your advisor, {{advisor.fname + ' ' + advisor.lname}}, successfully signed the agreement on {{project.contract.signedByAdvisor | date:'fullDate'}}.
+				</div>
 			</div>
 		</div>
 	</div>

@@ -1,0 +1,16 @@
+<div class="span12">
+	<div class="box">
+		<div class="box-header">Your ARCH Projects</div>
+		<div class="box-content">
+			<ul ng-show="projects.length" class="unstyled block-hover block-clickable">
+				<li ng-repeat="project in projects" ng-click="goToProject(project.id)" style="padding: 20px">
+					{{project.name}}
+					<span ng-show="!project.contract.signedByStudent" class="label label-warning" style="margin-left: 10px">Pending Student Signature</span>
+					<span ng-show="project.contract.signedByStudent" class="label label-success" style="margin-left: 10px">Signed By Student</span>
+					<span ng-show="!project.contract.signedByAdvisor" class="label label-warning" style="margin-left: 10px">Pending Advisor Signature</span>
+					<span ng-show="project.contract.signedByAdvisor" class="label label-success" style="margin-left: 10px">Signed By Advisor</span>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
