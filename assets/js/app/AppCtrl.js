@@ -54,7 +54,7 @@ angular.module('myhonors').controller('AppCtrl', ['$scope', '$rootScope', 'Fireb
 						var ref = FirebaseIO.child('/user_profiles/' + authObject.auth.id);
 
 						ref.on('value', function(snapshot) {
-							if (snapshot.val() === null) {
+							if (snapshot.val() === null || snapshot.child('pid').val() === null) {
 								// new user, create profile for them
 								ref.set({
 									fname: result.fname,
