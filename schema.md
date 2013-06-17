@@ -102,3 +102,10 @@ events
 				in: [int]
 				out: [int]
 				override: [boolean]
+
+system_settings
+	accessLevels
+		isArchMod
+			[userId]: true
+		isAdmin
+			[userId]: true

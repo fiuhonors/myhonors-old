@@ -65,6 +65,7 @@ angular.module('myhonors').controller('AppCtrl', ['$scope', '$rootScope', 'Fireb
 								// user has profile, so save profile to scope and redirect to homepage
 								var profile = snapshot.val();
 								profile.id = snapshot.name();
+								profile.auth = authObject.auth;
 
 								$rootScope.safeApply(function() {
 									$rootScope.profile = profile;

@@ -72,6 +72,7 @@ var appResolve = {
 					ref.on('value', function(snapshot) {
 						var profile = snapshot.val();
 						profile.id = snapshot.name();
+						profile.auth = authObject.auth;
 
 						$rootScope.safeApply(function() {
 							$rootScope.profile = profile;
