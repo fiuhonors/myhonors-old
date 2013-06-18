@@ -39,6 +39,9 @@
 	<script src="assets/js/user/config.js"></script>
 	<script src="assets/js/user/LoginCtrl.js"></script>
 	<script src="assets/js/user/ProfileEditCtrl.js"></script>
+	
+	<script src="assets/js/admin/config.js"></script>
+	<script src="assets/js/admin/AdminCtrl.js"></script>
 
 	<script src="assets/js/dashboard/config.js"></script>
 	<script src="assets/js/dashboard/DashboardCtrl.js"></script>
@@ -71,7 +74,8 @@
 					<li><a href="#/events"><i class="icon-calendar icon-white"></i> Events</a></li>
 					<li><a href="#/citizenship"><i class="icon-ok icon-white"></i> Citizenship</a></li>
 					<li><a href="#/career"><i class="icon-briefcase icon-white"></i> Internships</a></li>
-					<li><a href="#/arch"><i class="icon-cog icon-white"></i> ARCH</a></li>
+					<li><a href="#/arch"><i class="icon-file icon-white"></i> ARCH Projects</a></li>
+					<li ng-show="profile.auth.isAdmin"><a href="#/admin"><i class="icon-cog icon-white"></i> Administration</a></li>
 				</ul>
 				<div class="dropdown pull-right" data-ng-cloak data-ng-show="profile">
 					<span class="dropdown-text">Logged in as</span> <button class="btn btn-link dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> {{profile.fname}} {{profile.lname}}</button>
