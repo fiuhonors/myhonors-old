@@ -1,15 +1,18 @@
 {
   "rules": {
-		// set defaults to no reads and no writes
-		".read": false,
-		".write": false,
+		// set defaults to no reads and no writes unless you're an Administrator
+		".read": "auth.isAdmin === true",
+		".write": "auth.isAdmin === true",
 		
 		"user_profiles": {
 			".read": true,
 			"$userId": {
 				".read": "auth.id == $userId",
-				".write": "auth.id == $userId",
-				".validate": "newData.hasChildren(['fname', 'lname', 'pid'])",
+				// we need to temporarily allow Arch mods to edit users since we don't have a full list of faculty,
+				// staff, and students in the system yet. Once we have that data in place, we can move the isArchMod
+				// half of this .write rule down into the archProjects child
+				".write": "auth.id == $userId || auth.isArchMod === true",
+				//".validate": "newData.hasChildren(['fname', 'lname'])", // we can add this back after we settle the above situation with Arch
 
 				// validate specific entries
 				"fname": {
