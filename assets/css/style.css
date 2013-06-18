@@ -194,6 +194,10 @@ h1,h2,h3,h4,h5,h6, .opensans {
 	padding: 15px;
 }
 
+.clickable:hover {
+	cursor: pointer;
+}
+
 h1 small,
 h2 small,
 h3 small,
