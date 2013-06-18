@@ -3,7 +3,16 @@
 		<div class="box">
 			<div class="box-header">Your ARCH Projects</div>
 			<div class="box-content">
-				<table class="table table-hover" style="margin-bottom: 0px">
+				<ul ng-show="projects.length && !profile.auth.isArchMod" class="unstyled block-hover block-clickable">
+					<li ng-repeat="project in projects | filter:searchText" ng-click="goToProject(project.$id)" style="padding: 20px">
+						<strong>Project Title:</strong> {{project.name}}
+						<span ng-show="!project.contract.signedByStudent" class="label label-warning" style="margin-left: 10px">Pending Student Signature</span>
+						<span ng-show="project.contract.signedByStudent" class="label label-success" style="margin-left: 10px">Signed By Student</span>
+						<span ng-show="!project.contract.signedByAdvisor" class="label label-warning" style="margin-left: 10px">Pending Advisor Signature</span>
+						<span ng-show="project.contract.signedByAdvisor" class="label label-success" style="margin-left: 10px">Signed By Advisor</span>
+					</li>
+				</ul>
+				<table class="table table-hover" style="margin-bottom: 0px" ng-show="profile.auth.isArchMod">
 					<thead>
 						<tr>
 							<th>Student Name</th>
