@@ -1,0 +1,73 @@
+<div class="{span9: profile.auth.isArchMod, span12: !profile.auth.isArchMod}">
+	<div class="box">
+		<div class="box-header">Add New ARCH Project</div>
+		<div class="box-content padded">
+			<form class="form-inline" ng-submit="doAdd()">
+				<label for="name">Project Name</label><br />
+				<input type="text" id="name" ng-model="newProject.name" class="input-xxlarge" /><br />
+
+				<hr />
+
+				<h4>Student Information</h4>
+				<div class="row-fluid" style="margin-bottom: 20px">
+					<div class="span3">
+						<label for="studentId">Panther ID</label><br />
+						<input type="text" id="studentId" ng-model="newProject.studentId" />
+					</div>
+					<div class="span3">
+						<label for="studentFname">First Name</label><br />
+						<input type="text" id="studentFname" ng-model="newProject.studentFname" />
+					</div>
+					<div class="span3">
+						<label for="studentLname">Last Name</label><br />
+						<input type="text" id="studentLname" ng-model="newProject.studentLname" />
+					</div>
+					<div class="span3">
+						<label for="studentEmail">Email Address</label><br />
+						<input type="text" id="studentEmail" ng-model="newProject.studentEmail" />
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3">
+						<label for="studentPhone">Phone Number</label><br />
+						<input type="text" id="studentPhone" ng-model="newProject.studentPhone" />
+					</div>
+					<div class="span3">
+						<label for="studentMajor1">Major 1</label><br />
+						<input type="text" id="studentMajor1" ng-model="newProject.studentMajor1" />
+					</div>
+					<div class="span3">
+						<label for="studentMajor2">Major 2</label><br />
+						<input type="text" id="studentMajor2" ng-model="newProject.studentMajor2" />
+					</div>
+				</div>
+
+				<hr />
+
+				<h4>Advisor Information</h4>
+				<div class="row-fluid">
+					<div class="span3">
+						<label for="advisorId">Panther ID</label><br />
+						<input type="text" id="advisorId" ng-model="newProject.advisorId" />
+					</div>
+					<div class="span3">
+						<label for="advisorFname">First Name</label><br />
+						<input type="text" id="advisorFname" ng-model="newProject.advisorFname" />
+					</div>
+					<div class="span3">
+						<label for="advisorLname">Last Name</label><br />
+						<input type="text" id="advisorLname" ng-model="newProject.advisorLname" />
+					</div>
+					<div class="span3">
+						<label for="advisorEmail">Email Address</label><br />
+						<input type="text" id="advisorEmail" ng-model="newProject.advisorEmail" />
+					</div>
+				</div>
+
+				<hr />
+
+				<button class="btn btn-primary">Add New Project</button>
+			</form>
+		</div>
+	</div>
+</div>
