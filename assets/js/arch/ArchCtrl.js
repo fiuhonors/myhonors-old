@@ -2,6 +2,7 @@
 
 angular.module('myhonorsArch').controller('ArchCtrl', ['$scope', '$rootScope', 'FirebaseIO', 'FirebaseCollection', '$timeout', '$location', function($scope, $rootScope, FirebaseIO, FirebaseCollection, $timeout, $location) {
 	$scope.projects = [];
+	$scope.searchText = '';
 
 	if ($rootScope.profile.auth.isArchMod) {
 		var projectsRef = FirebaseIO.child('arch');

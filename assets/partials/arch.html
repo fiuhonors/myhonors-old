@@ -4,7 +4,7 @@
 			<div class="box-header">Your ARCH Projects</div>
 			<div class="box-content">
 				<ul ng-show="projects.length" class="unstyled block-hover block-clickable">
-					<li ng-repeat="project in projects" ng-click="goToProject(project.$id)" style="padding: 20px">
+					<li ng-repeat="project in projects | filter:searchText" ng-click="goToProject(project.$id)" style="padding: 20px">
 						{{project.name}}
 						<span ng-show="!project.contract.signedByStudent" class="label label-warning" style="margin-left: 10px">Pending Student Signature</span>
 						<span ng-show="project.contract.signedByStudent" class="label label-success" style="margin-left: 10px">Signed By Student</span>
@@ -12,7 +12,7 @@
 						<span ng-show="project.contract.signedByAdvisor" class="label label-success" style="margin-left: 10px">Signed By Advisor</span>
 					</li>
 				</ul>
-				<div class="padded" ng-show="!projects.length">
+				<div class="padded" ng-show="!(projects | filter:searchText).length">
 					<div class="alert alert-info">
 						None
 					</div>
@@ -23,38 +23,12 @@
 
 	<div class="span3" ng-show="profile.auth.isArchMod">
 		<div class="box">
-			<div class="box-header">Add New Arch Project</div>
+			<div class="box-header">ARCH Administration Panel</div>
 			<div class="box-content padded">
-				<form ng-submit="doAdd()">
-					<label for="studentId">Project Name</label>
-					<input type="text" id="name" ng-model="newProject.name" />
-
-					<hr />
-
-					<label for="studentId">Student Panther ID</label>
-					<input type="text" id="studentId" ng-model="newProject.studentId" />
-
-					<label for="studentFname">Student First Name</label>
-					<input type="text" id="studentFname" ng-model="newProject.studentFname" />
-
-					<label for="studentLname">Student Last Name</label>
-					<input type="text" id="studentLname" ng-model="newProject.studentLname" />
-
-					<hr />
-
-					<label for="advisorId">Advisor Panther ID</label>
-					<input type="text" id="advisorId" ng-model="newProject.advisorId" />
-
-					<label for="advisorFname">Advisor First Name</label>
-					<input type="text" id="advisorFname" ng-model="newProject.advisorFname" />
-
-					<label for="advisorLname">Advisor Last Name</label>
-					<input type="text" id="advisorLname" ng-model="newProject.advisorLname" />
-
-					<hr />
-
-					<button class="btn btn-primary">Add New Project</button>
-				</form>
+				<input id="search" type="text" ng-model="searchText" placeholder="Search for..." />
+				<span class="help-block">You can search by PID, name, major, email address, etc.</span>
+				<hr>
+				<button class="btn btn-primary input-block-level">Add New Project</button>
 			</div>
 		</div>
 	</div>
