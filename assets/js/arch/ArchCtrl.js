@@ -3,6 +3,7 @@
 angular.module('myhonorsArch').controller('ArchCtrl', ['$scope', '$rootScope', 'FirebaseIO', 'FirebaseCollection', '$timeout', '$location', function($scope, $rootScope, FirebaseIO, FirebaseCollection, $timeout, $location) {
 	$scope.projects = [];
 	$scope.searchText = '';
+	$scope.orderBy = '';
 
 	if ($rootScope.profile.auth.isArchMod) {
 		var projectsRef = FirebaseIO.child('arch');
@@ -32,6 +33,12 @@ angular.module('myhonorsArch').controller('ArchCtrl', ['$scope', '$rootScope', '
 				});
 			})
 		});
+	}
+
+	// this is just used to flip between ordering by fname or lname. when we update
+	// to AngularJS 1.15+, we can replace this with a ternary operator in the ng-click expression
+	$scope.rotateOrderBy = function(studentOrAdvisor) {
+		$scope.orderBy = ($scope.orderBy === studentOrAdvisor + '.fname') ? studentOrAdvisor + '.lname' : studentOrAdvisor + '.fname';
 	}
 
 	$scope.goToProject = function(projectId) {
