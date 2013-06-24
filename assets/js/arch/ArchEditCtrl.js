@@ -21,7 +21,12 @@ angular.module('myhonorsArch').controller('ArchEditCtrl', ['$scope', '$rootScope
 		});
 	});
 
-	$scope.doSaveChanges = function() {
+	$scope.doSaveChanges = function(theForm) {
+		if (theForm.$invalid) {
+			// do nothing
+			return;
+		}
+
 		projectRef.set({
 			name: $scope.project.name,
 			student: $scope.project.student.id,

@@ -1,7 +1,12 @@
 'use strict';
 
 angular.module('myhonorsArch').controller('ArchAddCtrl', ['$scope', '$rootScope', 'FirebaseIO', '$location', function($scope, $rootScope, FirebaseIO, $location) {
-	$scope.doAdd = function() {
+	$scope.doAdd = function(theForm) {
+		if (theForm.$invalid) {
+			// do nothing
+			return;
+		}
+
 		var projectRef = FirebaseIO.child('arch').push({
 			name: $scope.newProject.name,
 			student: $scope.newProject.studentId,
@@ -26,9 +31,14 @@ angular.module('myhonorsArch').controller('ArchAddCtrl', ['$scope', '$rootScope'
 		FirebaseIO.child('user_profiles/' + $scope.newProject.advisorId + '/fname').set($scope.newProject.advisorFname);
 		FirebaseIO.child('user_profiles/' + $scope.newProject.advisorId + '/lname').set($scope.newProject.advisorLname);
 
-		// reset all inputs
-		$scope.newProject = {name: '', studentId: '', studentFname: '', studentLname: '', studentEmail: '', studentPhone: '', studentMajor1: '', studentMajor2: '', advisorId: '', advisorFname: '', advisorLname: '', advisorEmail: ''};
+		$scope.resetForm();
 
-		$location.path('/arch');
+		$location.path('#/arch');
+	};
+
+	$scope.resetForm = function() {
+		$scope.newProject = {name: '', studentId: '', studentFname: '', studentLname: '', studentEmail: '', studentPhone: '', studentMajor1: '', studentMajor2: '', advisorId: '', advisorFname: '', advisorLname: '', advisorEmail: ''};
 	}
+
+	$scope.resetForm();
 }]);
