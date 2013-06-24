@@ -1,0 +1,73 @@
+<div class="span12">
+	<div class="box">
+		<div class="box-header">View ARCH Project</div>
+		<div class="box-content padded">
+			<form class="form-inline">
+				<label for="name">Project Name</label><br />
+				<strong>{{project.name || 'N/A'}}</strong>
+
+				<hr />
+
+				<h4>Student Information</h4>
+				<div class="row-fluid" style="margin-bottom: 20px">
+					<div class="span3">
+						<label for="studentId">Panther ID</label><br />
+						<strong>{{project.student.id || 'N/A'}}</strong>
+					</div>
+					<div class="span3">
+						<label for="studentFname">First Name</label><br />
+						<strong>{{project.student.fname || 'N/A'}}</strong>
+					</div>
+					<div class="span3">
+						<label for="studentLname">Last Name</label><br />
+						<strong>{{project.student.lname || 'N/A'}}</strong>
+					</div>
+					<div class="span3">
+						<label for="studentEmail">Email Address</label><br />
+						<strong>{{project.otherInfo.studentEmail || 'N/A'}}</strong>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3">
+						<label for="studentPhone">Phone Number</label><br />
+						<strong>{{project.otherInfo.studentPhone || 'N/A'}}</strong>
+					</div>
+					<div class="span3">
+						<label for="studentMajor1">Major 1</label><br />
+						<strong>{{project.otherInfo.studentMajor1 || 'N/A'}}</strong>
+					</div>
+					<div class="span3">
+						<label for="studentMajor2">Major 2</label><br />
+						<strong>{{project.otherInfo.studentMajor2 || 'N/A'}}</strong>
+					</div>
+				</div>
+
+				<hr />
+
+				<h4>Advisor Information</h4>
+				<div class="row-fluid">
+					<div class="span3">
+						<label for="advisorId">Panther ID</label><br />
+						<strong>{{project.advisor.id || 'N/A'}}</strong>
+					</div>
+					<div class="span3">
+						<label for="advisorFname">First Name</label><br />
+						<strong>{{project.advisor.fname || 'N/A'}}</strong>
+					</div>
+					<div class="span3">
+						<label for="advisorLname">Last Name</label><br />
+						<strong>{{project.advisor.lname || 'N/A'}}</strong>
+					</div>
+					<div class="span3">
+						<label for="advisorEmail">Email Address</label><br />
+						<strong>{{project.otherInfo.advisorEmail || 'N/A'}}</strong>
+					</div>
+				</div>
+
+				<hr />
+
+				<a href="#/arch/{{project.$id}}/edit" class="btn btn-primary">Edit Project Info</a>
+			</form>
+		</div>
+	</div>
+</div>

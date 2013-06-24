@@ -42,6 +42,10 @@ angular.module('myhonorsArch').controller('ArchCtrl', ['$scope', '$rootScope', '
 	}
 
 	$scope.goToProject = function(projectId) {
+		$location.path('/arch/' + projectId);
+	};
+
+	$scope.goToContract = function(projectId) {
 		$location.path('/arch/' + projectId + '/contract');
 	};
 
