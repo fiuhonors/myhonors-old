@@ -11,7 +11,8 @@ angular.module('myhonorsArch').controller('ArchAddCtrl', ['$scope', '$rootScope'
 				studentMajor1: $scope.newProject.studentMajor1,
 				studentMajor2: $scope.newProject.studentMajor2,
 				studentPhone: $scope.newProject.studentPhone,
-				studentEmail: $scope.newProject.studentEmail
+				studentEmail: $scope.newProject.studentEmail,
+				advisorEmail: $scope.newProject.advisorEmail
 			}
 		});
 
@@ -26,8 +27,8 @@ angular.module('myhonorsArch').controller('ArchAddCtrl', ['$scope', '$rootScope'
 		FirebaseIO.child('user_profiles/' + $scope.newProject.advisorId + '/lname').set($scope.newProject.advisorLname);
 
 		// reset all inputs
-		$scope.newProject = {name: '', studentId: '', studentFname: '', studentLname: '', studentEmail: '', studentPhone: '', studentMajor1: '', studentMajor2: '', advisorId: '', advisorFname: '', advisorLname: ''}
+		$scope.newProject = {name: '', studentId: '', studentFname: '', studentLname: '', studentEmail: '', studentPhone: '', studentMajor1: '', studentMajor2: '', advisorId: '', advisorFname: '', advisorLname: '', advisorEmail: ''};
 
-		$location.path('/arch')
+		$location.path('/arch');
 	}
 }]);
