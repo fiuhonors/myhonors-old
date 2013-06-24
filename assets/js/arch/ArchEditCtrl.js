@@ -16,6 +16,9 @@ angular.module('myhonorsArch').controller('ArchEditCtrl', ['$scope', '$rootScope
 					$scope.project.advisor = advisorSnapshot.val();
 					$scope.project.advisor.id = snapshot.child('advisor').val();
 					$scope.project.$id = snapshot.name();
+
+					// store a copy of the original
+					$scope.originalProject = angular.copy($scope.project);
 				});
 			});
 		});
@@ -56,5 +59,9 @@ angular.module('myhonorsArch').controller('ArchEditCtrl', ['$scope', '$rootScope
 		FirebaseIO.child('user_profiles/' + $scope.project.advisor.id + '/lname').set($scope.project.advisor.lname);
 
 		$location.path('#/arch/' + $routeParams.projectId);
+	};
+
+	$scope.undoChanges = function() {
+		$scope.project = angular.copy($scope.originalProject);
 	};
 }]);
