@@ -8,6 +8,14 @@
 
 				<hr />
 
+				<label for="name">Contract Status: </label>
+				<span ng-show="!project.contract.signedByStudent" class="label label-warning" style="margin-left: 10px">Pending Student Signature</span>
+				<span ng-show="project.contract.signedByStudent" class="label label-success" style="margin-left: 10px">Signed By Student</span>
+				<span ng-show="!project.contract.signedByAdvisor" class="label label-warning" style="margin-left: 10px">Pending Advisor Signature</span>
+				<span ng-show="project.contract.signedByAdvisor" class="label label-success" style="margin-left: 10px">Signed By Advisor</span>
+
+				<hr />
+
 				<h4>Student Information</h4>
 				<div class="row-fluid" style="margin-bottom: 20px">
 					<div class="span3">
