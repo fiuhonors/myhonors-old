@@ -8,16 +8,16 @@ angular.module('myhonorsArch').controller('ArchAddCtrl', ['$scope', '$rootScope'
 		}
 
 		var projectRef = FirebaseIO.child('arch').push({
-			name: $scope.newProject.name,
+			name: ($scope.newProject.name || ''),
 			student: $scope.newProject.studentId,
 			advisor: $scope.newProject.advisorId,
 			// otherInfo is data that's only needed for ARCH right now
 			otherInfo: {
-				studentMajor1: $scope.newProject.studentMajor1,
-				studentMajor2: $scope.newProject.studentMajor2,
-				studentPhone: $scope.newProject.studentPhone,
-				studentEmail: $scope.newProject.studentEmail,
-				advisorEmail: $scope.newProject.advisorEmail
+				studentMajor1: ($scope.newProject.studentMajor1 || ''),
+				studentMajor2: ($scope.newProject.studentMajor2 || ''),
+				studentPhone: ($scope.newProject.studentPhone || ''),
+				studentEmail: ($scope.newProject.studentEmail || ''),
+				advisorEmail: ($scope.newProject.advisorEmail || '')
 			}
 		});
 

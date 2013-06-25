@@ -31,16 +31,16 @@ angular.module('myhonorsArch').controller('ArchEditCtrl', ['$scope', '$rootScope
 		}
 
 		projectRef.set({
-			name: $scope.project.name,
+			name: ($scope.project.name || ''),
 			student: $scope.project.student.id,
 			advisor: $scope.project.advisor.id,
 			// otherInfo is data that's only needed for ARCH right now
 			otherInfo: {
-				studentMajor1: $scope.project.otherInfo.studentMajor1,
-				studentMajor2: $scope.project.otherInfo.studentMajor2,
-				studentPhone: $scope.project.otherInfo.studentPhone,
-				studentEmail: $scope.project.otherInfo.studentEmail,
-				advisorEmail: $scope.project.otherInfo.advisorEmail
+				studentMajor1: ($scope.project.otherInfo.studentMajor1 || ''),
+				studentMajor2: ($scope.project.otherInfo.studentMajor2 || ''),
+				studentPhone: ($scope.project.otherInfo.studentPhone || ''),
+				studentEmail: ($scope.project.otherInfo.studentEmail || ''),
+				advisorEmail: ($scope.project.otherInfo.advisorEmail || '')
 			}
 		});
 
