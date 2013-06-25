@@ -90,7 +90,8 @@
 				</form>
 				<div ng-show="isStudent() && project.contract.signedByStudent" class="alert alert-block alert-success">
 					<h4>Success!</h4>
-					Thank you for signing the ARCH Agreement.
+					<p style="margin: 1px 0 10px">Thank you for signing the ARCH Agreement.</p>
+					<a href="#/arch" class="btn btn-success">Go Back to Main Page</a>
 				</div>
 				<div ng-show="isAdvisor() && !project.contract.signedByStudent" class="alert alert-block alert-info">
 					<h4>Pending Signature</h4>
@@ -200,7 +201,8 @@
 				</form>
 				<div ng-show="isAdvisor() && project.contract.signedByAdvisor" class="alert alert-block alert-success">
 					<h4>Success!</h4>
-					Thank you for signing the ARCH Agreement.
+					<p style="margin: 1px 0 10px">Thank you for signing the ARCH Agreement.</p>
+					<a href="#/arch" class="btn btn-success">Go Back to Main Page</a>
 				</div>
 				<div ng-show="isStudent() && !project.contract.signedByAdvisor" class="alert alert-block alert-info">
 					<h4>Pending Signature</h4>
