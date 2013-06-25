@@ -74,7 +74,7 @@ var appResolve = {
 					// update lastActivity
 					ref.child('lastActivity').set(Date.now());
 
-					ref.on('value', function(snapshot) {
+					ref.once('value', function(snapshot) {
 						var profile = snapshot.val();
 						profile.id = snapshot.name();
 						profile.auth = authObject.auth;

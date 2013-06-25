@@ -53,7 +53,7 @@ angular.module('myhonors').controller('AppCtrl', ['$scope', '$rootScope', 'Fireb
 						// then check if the user has a profile. if not, create it
 						var ref = FirebaseIO.child('/user_profiles/' + authObject.auth.id);
 
-						ref.on('value', function(snapshot) {
+						ref.once('value', function(snapshot) {
 							if (snapshot.val() === null || snapshot.child('lastActivity').val() === null) {
 								// new user, create profile for them
 								ref.set({
