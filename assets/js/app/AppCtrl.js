@@ -54,19 +54,23 @@ angular.module('myhonors').controller('AppCtrl', ['$scope', '$rootScope', 'Fireb
 						var ref = FirebaseIO.child('/user_profiles/' + authObject.auth.id);
 
 						ref.on('value', function(snapshot) {
-							if (snapshot.val() === null || snapshot.child('pid').val() === null) {
+							if (snapshot.val() === null || snapshot.child('lastActivity').val() === null) {
 								// new user, create profile for them
 								ref.set({
 									fname: result.fname,
 									lname: result.lname,
-									pid: result.pid
+									pid: result.pid,
+									lastActivity: Date.now()
 								});
 							} else {
-								// user has profile, so save profile to scope and redirect to homepage
+								// user has profile. update lastActivity
+								ref.child('lastActivity').set(Date.now());
+
 								var profile = snapshot.val();
 								profile.id = snapshot.name();
 								profile.auth = authObject.auth;
 
+								// save profile info to rootScope and redirect to homepage
 								$rootScope.safeApply(function() {
 									$rootScope.profile = profile;
 									$location.path('');

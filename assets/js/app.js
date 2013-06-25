@@ -71,6 +71,9 @@ var appResolve = {
 					// past their first login, and a profile has already been created for them
 					var ref = FirebaseIO.child('/user_profiles/' + authObject.auth.id);
 
+					// update lastActivity
+					ref.child('lastActivity').set(Date.now());
+
 					ref.on('value', function(snapshot) {
 						var profile = snapshot.val();
 						profile.id = snapshot.name();

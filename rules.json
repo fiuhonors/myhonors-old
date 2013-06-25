@@ -26,6 +26,12 @@
 					// username, we're never going to perform any numerical additions or subtractions with it
 					".validate": "newData.isString()"
 				},
+				"lastActivity": {
+					// timestamp in milliseconds, used to check if the user has ever logged in before (if not, we create a profile for them)
+					// and can also be used for one-time code executions or announcement broadcasts (if the user hasn't logged on since
+					// [date/time when something important happened], execute some code or show the user an announcement about it)
+					".validate": "newData.isNumber()"
+				},
 				"rsvps": {
 					"$eventID": {
 						".validate": "newData.isBoolean()"
