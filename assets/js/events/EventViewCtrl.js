@@ -117,7 +117,7 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 	}});
 
 	$scope.hasRSVP = function(eid) {
-		return $scope.user.profile.rsvps && $scope.user.profile.rsvps[eid] === true;
+		return $scope.user.profile && $scope.user.profile.rsvps && $scope.user.profile.rsvps[eid] === true;
 	};
 
 	$scope.addRSVP = function(eid) {
