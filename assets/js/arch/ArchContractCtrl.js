@@ -18,6 +18,7 @@ angular.module('myhonorsArch').controller('ArchContractCtrl', ['$scope', '$route
 		FirebaseIO.child('user_profiles/' + snapshot.child('student').val()).once('value', function(studentSnapshot) {
 			$timeout(function() {
 				$scope.student = studentSnapshot.val();
+				$scope.id = studentSnapshot.name();
 			})
 		});
 
@@ -25,6 +26,7 @@ angular.module('myhonorsArch').controller('ArchContractCtrl', ['$scope', '$route
 		FirebaseIO.child('user_profiles/' + snapshot.child('advisor').val()).once('value', function(advisorSnapshot) {
 			$timeout(function() {
 				$scope.advisor = advisorSnapshot.val();
+				$scope.id = advisorSnapshot.name();
 			});
 		});
 
@@ -35,11 +37,11 @@ angular.module('myhonorsArch').controller('ArchContractCtrl', ['$scope', '$route
 	});
 
 	$scope.isStudent = function() {
-		return $scope.student && $scope.student.pid === $scope.user.profile.id;
+		return $scope.student && $scope.student.id === $scope.user.profile.id;
 	};
 
 	$scope.isAdvisor = function() {
-		return $scope.advisor && $scope.advisor.pid === $scope.user.profile.id;
+		return $scope.advisor && $scope.advisor.id === $scope.user.profile.id;
 	};
 
 	$scope.signContract = function() {
