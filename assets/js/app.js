@@ -35,7 +35,7 @@ var appResolve = {
 	 * which the application is waiting to get resolved before displaying any
 	 * content (see http://www.youtube.com/watch?v=Kr1qZ8Ik9G8 ).
 	 */
-	auth: function ($rootScope, $route, $q, FirebaseIO, webStorage, UserService)
+	auth: function ($timeout, $route, $q, FirebaseIO, webStorage, UserService)
 	{
 		var deferred = $q.defer();
 		var loginPromise = deferred.promise;
@@ -46,7 +46,7 @@ var appResolve = {
 		var requireLogin = $route.current.$$route.requireLogin;
 
 		var rejectIt = function(message) {
-			$rootScope.safeApply(function() {
+			$timeout(function() {
 				// the if/else logic here allows us to conditionally render the template
 				// of the page because, if a promise is rejected, the template will not be rendered
 				if (requireLogin) {
@@ -78,7 +78,7 @@ var appResolve = {
 						var profile = snapshot.val();
 						profile.id = snapshot.name();
 
-						$rootScope.safeApply(function() {
+						$timeout(function() {
 							UserService.profile = profile;
 							UserService.auth = authObject.auth;;
 							deferred.resolve();

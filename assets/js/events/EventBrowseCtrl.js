@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myhonorsEvents').controller('EventBrowseCtrl', ['$scope', '$rootScope', 'FirebaseIO', '$location', 'RSVPService', function ($scope, $rootScope, FirebaseIO, $location, RSVPService) {
+angular.module('myhonorsEvents').controller('EventBrowseCtrl', ['$scope', '$timeout', 'FirebaseIO', '$location', 'RSVPService', function ($scope, $timeout, FirebaseIO, $location, RSVPService) {
 	$scope.searchName = '';
 	$scope.searchType = '';
 	$scope.events = {};
@@ -19,7 +19,7 @@ angular.module('myhonorsEvents').controller('EventBrowseCtrl', ['$scope', '$root
 		e.id = snapshot.name();
 		e.rsvps = snapshot.child('rsvps').numChildren();
 
-		$rootScope.safeApply(function() {
+		$timeout(function() {
 			$scope.events[e.id] = e;
 		});
 	});
@@ -29,7 +29,7 @@ angular.module('myhonorsEvents').controller('EventBrowseCtrl', ['$scope', '$root
 		e.id = snapshot.name();
 		e.rsvps = snapshot.child('rsvps').numChildren();
 
-		$rootScope.safeApply(function() {
+		$timeout(function() {
 			$scope.events[e.id] = e;
 		});
 	});
@@ -39,7 +39,7 @@ angular.module('myhonorsEvents').controller('EventBrowseCtrl', ['$scope', '$root
 		e.id = snapshot.name();
 		e.rsvps = snapshot.child('rsvps').numChildren();
 
-		$rootScope.safeApply(function() {
+		$timeout(function() {
 			$scope.events[e.id] = undefined;
 		});
 	});

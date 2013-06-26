@@ -1,12 +1,12 @@
 'use strict';
 
-angular.module('myhonorsCareer').controller('CareerCtrl', ['$scope', '$rootScope', 'FirebaseIO', function($scope, $rootScope, FirebaseIO) {
+angular.module('myhonorsCareer').controller('CareerCtrl', ['$scope', '$timeout', 'FirebaseIO', function($scope, $timeout, FirebaseIO) {
 	$scope.careers = null;
 	$scope.searchText = '';
 	$scope.newPosition = {companyName: '', contactName: '', contactEmail: '', description: '', paid: false};
 
 	FirebaseIO.child('careers').on('value', function(snapshot) {
-		$rootScope.safeApply(function() {
+		$timeout(function() {
 			$scope.careers = snapshot.val();
 			$scope.newPosition = {companyName: '', contactName: '', contactEmail: '', description: '', paid: false};
 		});

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$rootScope', 'FirebaseIO', function($scope, $rootScope, FirebaseIO) {
+angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$timeout', 'FirebaseIO', function($scope, $timeout, FirebaseIO) {
 	$scope.eventTally = {
 		// initialize the event types
 		honorshour: 0,
@@ -24,7 +24,7 @@ angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$root
 	swipeRef.on('value', function(snapshot)
 	{
 		// ... clear the current tally ...
-		$rootScope.safeApply(function() {
+		$timeout(function() {
 			$scope.eventTally.reset();
 		});
 
@@ -36,7 +36,7 @@ angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$root
 
 			// ... and update our scope's tally accordingly
 			eventRef.on('value', function(snapshot) {
-				$rootScope.safeApply(function() {
+				$timeout(function() {
 					$scope.eventTally.add(snapshot.val());
 				});
 

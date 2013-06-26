@@ -1,19 +1,6 @@
 'use strict';
 
 angular.module('myhonors').controller('AppCtrl', function ($scope, $rootScope, $route, $location, UserService) {
-	// AngularJS workaround for certain callbacks.
-	// see https://coderwall.com/p/ngisma
-	$rootScope.safeApply = function(fn) {
-		var phase = this.$root.$$phase;
-		if(phase == '$apply' || phase == '$digest') {
-			if(fn && (typeof(fn) === 'function')) {
-				fn();
-			}
-		} else {
-			this.$apply(fn);
-		}
-	};
-
 	$scope.user = UserService;
 
 	// used to show spinners and "Loading..." messages
