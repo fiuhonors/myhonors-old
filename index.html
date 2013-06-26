@@ -37,6 +37,7 @@
 	<script src="assets/js/firebase/FirebaseCollection.js"></script>
 
 	<script src="assets/js/user/config.js"></script>
+	<script src="assets/js/user/UserService.js"></script>
 	<script src="assets/js/user/LoginCtrl.js"></script>
 	<script src="assets/js/user/ProfileEditCtrl.js"></script>
 	
@@ -69,27 +70,27 @@
 <div id="wrap">
 
 	<!-- header -->
-	<div class="navbar navbar-static-top navbar-inverse" data-ng-show="profile">
+	<div class="navbar navbar-static-top navbar-inverse" data-ng-show="user.profile">
 		<div class="navbar-inner">
 			<div class="container-fluid">
 				<a class="brand" href="#/">&nbsp;</a>
-				<ul class="nav" data-ng-show="profile">
-					<li ng-show="profile.auth.isAdmin"><a href="#/events"><i class="icon-calendar icon-white"></i> Events</a></li>
-					<li ng-show="profile.auth.isAdmin"><a href="#/citizenship"><i class="icon-ok icon-white"></i> Citizenship</a></li>
-					<li ng-show="profile.auth.isAdmin"><a href="#/career"><i class="icon-briefcase icon-white"></i> Internships</a></li>
+				<ul class="nav" data-ng-show="user.profile">
+					<li ng-show="user.auth.isAdmin"><a href="#/events"><i class="icon-calendar icon-white"></i> Events</a></li>
+					<li ng-show="user.auth.isAdmin"><a href="#/citizenship"><i class="icon-ok icon-white"></i> Citizenship</a></li>
+					<li ng-show="user.auth.isAdmin"><a href="#/career"><i class="icon-briefcase icon-white"></i> Internships</a></li>
 					<li><a href="#/arch"><i class="icon-file icon-white"></i> ARCH Projects</a></li>
-					<li ng-show="profile.auth.isAdmin"><a href="#/admin"><i class="icon-cog icon-white"></i> Administration</a></li>
+					<li ng-show="user.auth.isAdmin"><a href="#/admin"><i class="icon-cog icon-white"></i> Administration</a></li>
 				</ul>
-				<div class="dropdown pull-right" data-ng-cloak data-ng-show="profile">
-					<span class="dropdown-text">Logged in as</span> <button class="btn btn-link dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> {{profile.fname}} {{profile.lname}}</button>
+				<div class="dropdown pull-right" data-ng-cloak>
+					<span class="dropdown-text">Logged in as</span> <button class="btn btn-link dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> {{user.profile.fname}} {{user.profile.lname}}</button>
 					<ul class="dropdown-menu pull-right" role="menu">
-						<li ng-show="profile.auth.isAdmin"><a href="#/profile/{{profile.user_id}}">View Profile</a></li>
-						<li ng-show="profile.auth.isAdmin"><a href="#/profile/{{profile.user_id}}/edit">Update Profile</a></li>
-						<li ng-show="profile.auth.isAdmin" class="divider"></li>
-						<li><a href="#/login" ng-click="doLogout()">Logout</a></li>
+						<li ng-show="user.auth.isAdmin"><a href="#/profile/{{user.profile.user_id}}">View Profile</a></li>
+						<li ng-show="user.auth.isAdmin"><a href="#/profile/{{user.profile.user_id}}/edit">Update Profile</a></li>
+						<li ng-show="user.auth.isAdmin" class="divider"></li>
+						<li><a href="#/login" ng-click="user.logout()">Logout</a></li>
 					</ul>
 				</div>
-				<ul class="unstyled inline pull-right" data-ng-show="!profile">
+				<ul class="unstyled inline pull-right" data-ng-show="!user.profile">
 					<li><a href="#/login" class="btn btn-primary">Login</a></li>
 				</ul>
 			</div>

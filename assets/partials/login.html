@@ -18,13 +18,13 @@
 					<form ng-submit="doLogin()">
 						
 						<label for="email">Panther ID</label>
-						<input type="text" id="email" placeholder="1234567" ng-model="login.pid" />
+						<input type="text" id="email" placeholder="1234567" ng-model="loginForm.pid" />
 						
 						<label for="password">MyAccounts Password</label>
-						<input type="password" id="password" name="password" ng-model="login.password" />
+						<input type="password" id="password" name="password" ng-model="loginForm.password" />
 						
-						<button ng-show="!loading" class="btn btn-primary" type="submit" >Login</button>
-						<button ng-show="loading" class="btn btn-primary disabled">Loading...</button>
+						<button ng-show="!status.loading" class="btn btn-primary" type="submit" >Login</button>
+						<button ng-show="status.loading" class="btn btn-primary disabled">Loading...</button>
 
 						<button class="btn btn-link" ng-click="$parent.currentPage = 'forgotPass'">Forgot Password?</button>
 						

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myhonorsArch').controller('ArchViewCtrl', ['$scope', '$rootScope', '$routeParams', 'FirebaseIO', '$timeout', '$location', function($scope, $rootScope, $routeParams, FirebaseIO, $timeout, $location) {
+angular.module('myhonorsArch').controller('ArchViewCtrl', ['$scope', '$routeParams', 'FirebaseIO', '$timeout', '$location', function($scope, $routeParams, FirebaseIO, $timeout, $location) {
 	var projectRef = FirebaseIO.child('arch/' + $routeParams.projectId);
 
 	projectRef.on('value', function(snapshot) {

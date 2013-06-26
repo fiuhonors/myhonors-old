@@ -35,7 +35,7 @@ var appResolve = {
 	 * which the application is waiting to get resolved before displaying any
 	 * content (see http://www.youtube.com/watch?v=Kr1qZ8Ik9G8 ).
 	 */
-	auth: function ($rootScope, $route, $q, FirebaseIO, webStorage)
+	auth: function ($rootScope, $route, $q, FirebaseIO, webStorage, UserService)
 	{
 		var deferred = $q.defer();
 		var loginPromise = deferred.promise;
@@ -74,13 +74,13 @@ var appResolve = {
 					// update lastActivity
 					ref.child('lastActivity').set(Date.now());
 
-					ref.once('value', function(snapshot) {
+					ref.on('value', function(snapshot) {
 						var profile = snapshot.val();
 						profile.id = snapshot.name();
-						profile.auth = authObject.auth;
 
 						$rootScope.safeApply(function() {
-							$rootScope.profile = profile;
+							UserService.profile = profile;
+							UserService.auth = authObject.auth;;
 							deferred.resolve();
 						});
 					});

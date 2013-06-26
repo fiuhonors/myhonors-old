@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myhonorsArch').controller('ArchContractCtrl', ['$scope', '$rootScope', '$routeParams', 'FirebaseIO', '$timeout', function($scope, $rootScope, $routeParams, FirebaseIO, $timeout) {
+angular.module('myhonorsArch').controller('ArchContractCtrl', ['$scope', '$routeParams', 'FirebaseIO', '$timeout', function($scope, $routeParams, FirebaseIO, $timeout) {
 	$scope.now = Date.now();
 	$scope.student = null;
 	$scope.advisor = null;
@@ -35,11 +35,11 @@ angular.module('myhonorsArch').controller('ArchContractCtrl', ['$scope', '$rootS
 	});
 
 	$scope.isStudent = function() {
-		return $scope.student && $scope.student.pid === $rootScope.profile.pid;
+		return $scope.student && $scope.student.pid === $scope.user.profile.id;
 	};
 
 	$scope.isAdvisor = function() {
-		return $scope.advisor && $scope.advisor.pid === $rootScope.profile.pid;
+		return $scope.advisor && $scope.advisor.pid === $scope.user.profile.id;
 	};
 
 	$scope.signContract = function() {

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$rootScope', '$routeParams', '$window', 'FirebaseIO', 'FirebaseCollection', 'apikey_google', function ($scope, $rootScope, $routeParams, $window, FirebaseIO, FirebaseCollection, apikey_google) {
+angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeParams', '$window', 'FirebaseIO', 'FirebaseCollection', 'apikey_google', function ($scope, $routeParams, $window, FirebaseIO, FirebaseCollection, apikey_google) {
 	var mapLoaded = false;
 	var eventRef = FirebaseIO.child('events/' + $routeParams.eventId);
 	var discussionRef = eventRef.child('comments');
@@ -77,14 +77,14 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$rootSc
 	$scope.addComment = function() {
 		// push to the main 'comments' location
 		var commentRef = FirebaseIO.child('comments').push({
-			authorId: $scope.profile.id,
+			authorId: $scope.user.profile.id,
 			content: $scope.userComment,
 			date: Date.now()
 		});
 
 		// add all relevant references
 		FirebaseIO.child('events/' + $routeParams.eventId + '/comments/' + commentRef.name()).set(true)
-		FirebaseIO.child('user_profiles/' + $scope.profile.id + '/comments/' + commentRef.name()).set(true)
+		FirebaseIO.child('user_profiles/' + $scope.user.profile.id + '/comments/' + commentRef.name()).set(true)
 		
 		// reset input box
 		$scope.userComment = '';
@@ -117,26 +117,26 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$rootSc
 	}});
 
 	$scope.hasRSVP = function(eid) {
-		return $rootScope.profile && $rootScope.profile.rsvps && $rootScope.profile.rsvps[eid] === true;
+		return $scope.user.profile.rsvps && $scope.user.profile.rsvps[eid] === true;
 	};
 
 	$scope.addRSVP = function(eid) {
 		// add attendance info to event (so we can pull it from event page)
-		var eventRef = FirebaseIO.child('/events/' + eid + '/rsvps/' + $rootScope.profile.id);
+		var eventRef = FirebaseIO.child('/events/' + eid + '/rsvps/' + $scope.user.profile.id);
 		eventRef.set(true);
 
 		// and add it to the user's profile (so we can see it on the user's page)
-		var userRef = FirebaseIO.child('/user_profiles/' + $rootScope.profile.id + '/rsvps/' + eid);
+		var userRef = FirebaseIO.child('/user_profiles/' + $scope.user.profile.id + '/rsvps/' + eid);
 		userRef.set(true);
 	};
 
 	$scope.removeRSVP = function(eid) {
 		// add attendance info to event (so we can pull it from event page)
-		var eventRef = FirebaseIO.child('/events/' + eid + '/rsvps/' + $rootScope.profile.id);
+		var eventRef = FirebaseIO.child('/events/' + eid + '/rsvps/' + $scope.user.profile.id);
 		eventRef.remove();
 
 		// and add it to the user's profile (so we can see it on the user's page)
-		var userRef = FirebaseIO.child('/user_profiles/' + $rootScope.profile.id + '/rsvps/' + eid);
+		var userRef = FirebaseIO.child('/user_profiles/' + $scope.user.profile.id + '/rsvps/' + eid);
 		userRef.remove();
 	};
 }]);

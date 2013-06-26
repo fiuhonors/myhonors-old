@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myhonorsArch').controller('ArchAddCtrl', ['$scope', '$rootScope', 'FirebaseIO', '$location', function($scope, $rootScope, FirebaseIO, $location) {
+angular.module('myhonorsArch').controller('ArchAddCtrl', ['$scope', 'FirebaseIO', '$location', function($scope, FirebaseIO, $location) {
 	$scope.doAdd = function(theForm) {
 		if (theForm.$invalid) {
 			// do nothing

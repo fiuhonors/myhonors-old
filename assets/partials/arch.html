@@ -1,9 +1,9 @@
 <div class="row-fluid">
-	<div ng-class="{span9: profile.auth.isArchMod, span12: !profile.auth.isArchMod}">
+	<div ng-class="{span9: user.auth.isArchMod, span12: !user.auth.isArchMod}">
 		<div class="box">
 			<div class="box-header">Your ARCH Projects</div>
 			<div class="box-content">
-				<ul ng-show="projects.length && !profile.auth.isArchMod" class="unstyled block-hover block-clickable">
+				<ul ng-show="projects.length && !user.auth.isArchMod" class="unstyled block-hover block-clickable">
 					<li ng-repeat="project in projects | filter:searchText" ng-click="goToContract(project.$id)" style="padding: 20px">
 						<strong>Project Title:</strong> {{project.name}}
 						<span ng-show="!project.contract.signedByStudent" class="label label-warning" style="margin-left: 10px">Pending Student Signature</span>
@@ -12,7 +12,7 @@
 						<span ng-show="project.contract.signedByAdvisor" class="label label-success" style="margin-left: 10px">Signed By Advisor</span>
 					</li>
 				</ul>
-				<table class="table table-hover" style="margin-bottom: 0px" ng-show="profile.auth.isArchMod">
+				<table class="table table-hover" style="margin-bottom: 0px" ng-show="user.auth.isArchMod">
 					<thead>
 						<tr class="clickable">
 							<th ng-click="rotateOrderBy('student')">Student Name</th>
@@ -54,7 +54,7 @@
 		</div>
 	</div>
 
-	<div class="span3" ng-show="profile.auth.isArchMod">
+	<div class="span3" ng-show="user.auth.isArchMod">
 		<div class="box">
 			<div class="box-header">ARCH Administration Panel</div>
 			<div class="box-content padded">

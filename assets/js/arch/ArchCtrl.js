@@ -1,11 +1,11 @@
 'use strict';
 
-angular.module('myhonorsArch').controller('ArchCtrl', ['$scope', '$rootScope', 'FirebaseIO', 'FirebaseCollection', '$timeout', '$location', function($scope, $rootScope, FirebaseIO, FirebaseCollection, $timeout, $location) {
+angular.module('myhonorsArch').controller('ArchCtrl', ['$scope', '$timeout', '$location', 'FirebaseIO', 'FirebaseCollection', function($scope, $timeout, $location, FirebaseIO, FirebaseCollection) {
 	$scope.projects = [];
 	$scope.searchText = '';
 	$scope.orderBy = '';
 
-	if ($rootScope.profile.auth.isArchMod) {
+	if ($scope.user.auth.isArchMod) {
 		var projectsRef = FirebaseIO.child('arch');
 		$scope.projects = FirebaseCollection(projectsRef, {metaFunction: function(doAdd, data) {
 			// get student data
@@ -22,8 +22,8 @@ angular.module('myhonorsArch').controller('ArchCtrl', ['$scope', '$rootScope', '
 				});
 			});
 		}});
-	} else if ($rootScope.profile.archProjects) {
-		angular.forEach($rootScope.profile.archProjects, function(value, key) {
+	} else if ($scope.user.profile.archProjects) {
+		angular.forEach($scope.user.profile.archProjects, function(value, key) {
 			FirebaseIO.child('arch/' + key).once('value', function(snapshot) {
 				$timeout(function() {
 					var project = snapshot.val();
