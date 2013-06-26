@@ -54,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 			$auth_payload = array(
 				'id' => $_POST['pid'],
 				'isArchMod' => (array_key_exists($_POST['pid'], $access_levels['isArchMod'])) ? true : false,
+				'isEventMod' => (array_key_exists($_POST['pid'], $access_levels['isEventMod'])) ? true : false,
 				'isAdmin' => (array_key_exists($_POST['pid'], $access_levels['isAdmin'])) ? true : false
 			);
 
