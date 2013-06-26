@@ -1,9 +1,10 @@
 'use strict';
 
-angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeParams', '$window', 'FirebaseIO', 'FirebaseCollection', 'apikey_google', function ($scope, $routeParams, $window, FirebaseIO, FirebaseCollection, apikey_google) {
+angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeParams', '$window', 'FirebaseIO', 'FirebaseCollection', 'RSVPService', 'apikey_google', function ($scope, $routeParams, $window, FirebaseIO, FirebaseCollection, RSVPService, apikey_google) {
 	var mapLoaded = false;
 	var eventRef = FirebaseIO.child('events/' + $routeParams.eventId);
 	var discussionRef = eventRef.child('comments');
+	$scope.rsvp = RSVPService;
 	$scope.userComment = '';
 
 	/* MAP FUNCTIONALITY */
@@ -108,35 +109,11 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 	};
 
 	/* RSVP FUNCTIONALITY */
-	// todo: move the repeated code below into a service that's shared between EventViewCtrl and EventBrowseCtrl
 
-	$scope.rsvps = FirebaseCollection(eventRef.child('rsvps'), {metaFunction: function(doAdd, data) {
+	$scope.eventRSVPs = FirebaseCollection(eventRef.child('rsvps'), {metaFunction: function(doAdd, data) {
 		FirebaseIO.child('user_profiles/' + data.name()).once('value', function(userSnapshot) {
 			doAdd(userSnapshot);
 		});
 	}});
 
-	$scope.hasRSVP = function(eid) {
-		return $scope.user.profile && $scope.user.profile.rsvps && $scope.user.profile.rsvps[eid] === true;
-	};
-
-	$scope.addRSVP = function(eid) {
-		// add attendance info to event (so we can pull it from event page)
-		var eventRef = FirebaseIO.child('/events/' + eid + '/rsvps/' + $scope.user.profile.id);
-		eventRef.set(true);
-
-		// and add it to the user's profile (so we can see it on the user's page)
-		var userRef = FirebaseIO.child('/user_profiles/' + $scope.user.profile.id + '/rsvps/' + eid);
-		userRef.set(true);
-	};
-
-	$scope.removeRSVP = function(eid) {
-		// add attendance info to event (so we can pull it from event page)
-		var eventRef = FirebaseIO.child('/events/' + eid + '/rsvps/' + $scope.user.profile.id);
-		eventRef.remove();
-
-		// and add it to the user's profile (so we can see it on the user's page)
-		var userRef = FirebaseIO.child('/user_profiles/' + $scope.user.profile.id + '/rsvps/' + eid);
-		userRef.remove();
-	};
 }]);

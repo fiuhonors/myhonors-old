@@ -1,10 +1,10 @@
 'use strict';
 
-angular.module('myhonorsEvents').controller('EventBrowseCtrl', ['$scope', '$rootScope', 'FirebaseIO', '$location', function ($scope, $rootScope, FirebaseIO, $location) {
+angular.module('myhonorsEvents').controller('EventBrowseCtrl', ['$scope', '$rootScope', 'FirebaseIO', '$location', 'RSVPService', function ($scope, $rootScope, FirebaseIO, $location, RSVPService) {
 	$scope.searchName = '';
 	$scope.searchType = '';
-
 	$scope.events = {};
+	$scope.rsvp = RSVPService;
 
 	$scope.goToEvent = function(eid) {
 		$location.path('/events/' + eid);
@@ -43,28 +43,4 @@ angular.module('myhonorsEvents').controller('EventBrowseCtrl', ['$scope', '$root
 			$scope.events[e.id] = undefined;
 		});
 	});
-
-	$scope.hasRSVP = function(eid) {
-		return $scope.user.profile && $scope.user.profile.rsvps && $scope.user.profile.rsvps[eid] === true;
-	};
-
-	$scope.addRSVP = function(eid) {
-		// add attendance info to event (so we can pull it from event page)
-		var eventRef = FirebaseIO.child('/events/' + eid + '/rsvps/' + $scope.user.profile.id);
-		eventRef.set(true);
-
-		// and add it to the user's profile (so we can see it on the user's page)
-		var userRef = FirebaseIO.child('/user_profiles/' + $scope.user.profile.id + '/rsvps/' + eid);
-		userRef.set(true);
-	};
-
-	$scope.removeRSVP = function(eid) {
-		// add attendance info to event (so we can pull it from event page)
-		var eventRef = FirebaseIO.child('/events/' + eid + '/rsvps/' + $scope.user.profile.id);
-		eventRef.remove();
-
-		// and add it to the user's profile (so we can see it on the user's page)
-		var userRef = FirebaseIO.child('/user_profiles/' + $scope.user.profile.id + '/rsvps/' + eid);
-		userRef.remove();
-	};
 }]);
