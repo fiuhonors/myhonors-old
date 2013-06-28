@@ -65,54 +65,55 @@
 			// any of the details
 			".read": true,
 			".write": "auth.isEventMod === true",
-
-			"name": {
-				".validate": "newData.isString()"
-			},
-			"desc": {
-				".validate": "newData.isString()"
-			},
-			"type": {
-				".validate": "newData.isString()"
-			},
-			"date": {
-				// events must have a start & end date, and start date must come before its end date
-				".validate": "newData.hasChildren(['begins', 'ends']) && newData.child('begins').val() < newData.child('ends').val()",
-
-				"begins": {
-					// events can only be created in the future
-					".validate": "newData.isNumber() && newData.val() > now"
-				},
-				"ends": {
-					// events can only be created in the future
-					".validate": "newData.isNumber() && newData.val() > now"
-				}
-			},
-			"location": {
-				".validate": "newData.hasChild('name')",
-
-				"long": {
-					".validate": "newData.isNumber()"
-				},
-				"lat": {
-					".validate": "newData.isNumber()"
-				},
+			"$eventId": {
 				"name": {
 					".validate": "newData.isString()"
-				}
-			},
-			"comments": {
-				// anyone can comment on an event
-				".write": true,
-				"$commentId": {
-					".validate": "newData.isBoolean()"
-				}
-			},
-			"rsvps": {
-				// anyone can RSVP to an event
-				".write": true,
-				"$rsvpId": {
-					".validate": "newData.isBoolean()"
+				},
+				"desc": {
+					".validate": "newData.isString()"
+				},
+				"type": {
+					".validate": "newData.isString()"
+				},
+				"date": {
+					// events must have a start & end date, and start date must come before its end date
+					".validate": "newData.hasChildren(['begins', 'ends']) && newData.child('begins').val() < newData.child('ends').val()",
+
+					"begins": {
+						// events can only be created in the future
+						".validate": "newData.isNumber() && newData.val() > now"
+					},
+					"ends": {
+						// events can only be created in the future
+						".validate": "newData.isNumber() && newData.val() > now"
+					}
+				},
+				"location": {
+					".validate": "newData.hasChild('name')",
+
+					"long": {
+						".validate": "newData.isNumber()"
+					},
+					"lat": {
+						".validate": "newData.isNumber()"
+					},
+					"name": {
+						".validate": "newData.isString()"
+					}
+				},
+				"comments": {
+					// anyone can comment on an event
+					".write": true,
+					"$commentId": {
+						".validate": "newData.isBoolean()"
+					}
+				},
+				"rsvps": {
+					// anyone can RSVP to an event
+					".write": true,
+					"$rsvpId": {
+						".validate": "newData.isBoolean()"
+					}
 				}
 			}
 		},
