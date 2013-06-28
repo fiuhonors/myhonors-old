@@ -7,6 +7,7 @@ angular.module('myhonors', [
 	'Firebase',
 	'myhonorsUser',
 	'myhonorsAdmin',
+	'myhonorsComments',
 	'myhonorsDashboard',
 	'myhonorsEvents',
 	'myhonorsCareer',
@@ -17,6 +18,7 @@ angular.module('myhonorsConfig', []);
 angular.module('Firebase', []);
 angular.module('myhonorsUser', []);
 angular.module('myhonorsAdmin', []);
+angular.module('myhonorsComments', []);
 angular.module('myhonorsDashboard', []);
 angular.module('myhonorsEvents', []);
 angular.module('myhonorsCareer', []);

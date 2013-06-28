@@ -126,11 +126,11 @@
 		"comments": {
 			"$commentID": {
 				".read": true,
-				".write": "auth.id == newData.child('authorId').val()", // ensure author of comment is current user
-				".validate": "newData.hasChildren(['authorId', 'date', 'content'])",
+				".write": "auth.id == newData.child('author').val()", // ensure author of comment is current user
+				".validate": "newData.hasChildren(['author', 'date', 'content'])",
 
 				// validate specific properties
-				"authorId": {
+				"author": {
 					".validate": "newData.isString()",
 				},
 				"date": {
