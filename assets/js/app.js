@@ -80,7 +80,8 @@ var appResolve = {
 
 						$timeout(function() {
 							UserService.profile = profile;
-							UserService.auth = authObject.auth;;
+							UserService.auth = authObject.auth;
+							UserService.ref = ref.ref();
 							deferred.resolve();
 						});
 					});

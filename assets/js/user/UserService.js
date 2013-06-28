@@ -51,6 +51,7 @@ angular.module('myhonorsUser').factory('UserService', function($http, $location,
 								$timeout(function() {
 									self.profile = profile;
 									self.auth = authObject.auth;
+									self.ref = ref.ref();
 								})
 
 								// redirect to homepage
@@ -87,6 +88,7 @@ angular.module('myhonorsUser').factory('UserService', function($http, $location,
 	return {
 		profile: null,
 		auth: null,
+		ref: null,
 		status: {loading: false}, // used to show "Loading..." status after clicking Login button
 		login: login,
 		logout: logout
