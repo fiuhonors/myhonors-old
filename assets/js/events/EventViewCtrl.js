@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeParams', '$window', 'FirebaseIO', 'FirebaseCollection', 'RSVPService', 'apikey_google', function ($scope, $routeParams, $window, FirebaseIO, FirebaseCollection, RSVPService, apikey_google) {
+angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeParams', '$timeout', '$location', '$window', 'FirebaseIO', 'FirebaseCollection', 'RSVPService', 'CommentService', 'apikey_google', function ($scope, $routeParams, $timeout, $location, $window, FirebaseIO, FirebaseCollection, RSVPService, CommentService, apikey_google) {
 	var mapLoaded = false;
 	var eventRef = FirebaseIO.child('events/' + $routeParams.eventId);
 	var discussionRef = eventRef.child('comments');
@@ -43,7 +43,12 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 	/* LOAD EVENT DATA AND INITIALIZE MAP */
 
 	eventRef.on('value', function(snapshot) {
-		$scope.safeApply(function() {
+		if (snapshot.val() === null) {
+			// event was deleted, do nothing
+			return;
+		}
+
+		$timeout(function() {
 			$scope.event = snapshot.val();
 			$scope.event.id = snapshot.name();
 			$scope.event.rsvps = snapshot.child('rsvps').numChildren();
@@ -66,28 +71,29 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 	$scope.comments = FirebaseCollection(discussionRef, {metaFunction: function(doAdd, data) {
 		// get comment data
 		FirebaseIO.child('comments/' + data.name()).once('value', function(commentSnapshot) {
+			if (commentSnapshot.val() === null) {
+				// comment was deleted, do nothing
+				return;
+			}
+
 			// get user data, based off userId property of comment
-			var userId = commentSnapshot.child('authorId').val();
+			var userId = commentSnapshot.child('author').val();
 			FirebaseIO.child('user_profiles/' + userId).once('value', function(userSnapshot) {
-				// now we have everything we want, so execute doAdd() with the final combined data
-				doAdd(commentSnapshot, {author: userSnapshot.val()});
+				if (userSnapshot.val() === null) {
+					// user was deleted
+					doAdd(commentSnapshot, {author: {fname: '[deleted]'}});
+				} else {
+					// now we have everything we want, so execute doAdd() with the final combined data
+					doAdd(commentSnapshot, {author: userSnapshot.val()});
+				}
 			})
 		})
 	}});
 
 	$scope.addComment = function() {
-		// push to the main 'comments' location
-		var commentRef = FirebaseIO.child('comments').push({
-			authorId: $scope.user.profile.id,
-			content: $scope.userComment,
-			date: Date.now()
+		CommentService.create($scope.userComment, discussionRef, function(error) {
+			if (error) {} // TODO: broadcast message to user
 		});
-
-		// add all relevant references
-		FirebaseIO.child('events/' + $routeParams.eventId + '/comments/' + commentRef.name()).set(true)
-		FirebaseIO.child('user_profiles/' + $scope.user.profile.id + '/comments/' + commentRef.name()).set(true)
-		
-		// reset input box
 		$scope.userComment = '';
 	};
 
@@ -115,5 +121,35 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 			doAdd(userSnapshot);
 		});
 	}});
+
+	/ * ADMIN FUNCTIONALITY */
+
+	if ($scope.user.auth.isEventMod) {
+		$scope.doDelete = function() {
+			// remove event reference from all RSVPs, Comments, Swipes, etc.
+			eventRef.child('comments').once('value', function(snapshot) {
+				snapshot.forEach(function(childSnapshot) {
+					// get the comment
+					var commentId = childSnapshot.name();
+					FirebaseIO.child('comments/' + commentId).once('value', function(commentSnapshot) {
+						// get the user who posted the comment and delete it from their history
+						// then delete the comment itself
+						FirebaseIO.child('user_profiles/' + commentSnapshot.child('author').val() + '/comments/' + commentId).remove();
+						commentSnapshot.ref().remove();
+					});
+				});
+			});
+			
+
+			// finally, remove the event itself
+			FirebaseIO.child('events/' + $scope.event.id).remove();
+
+			// close the modal
+			$('#deleteEventModal').modal('hide');
+
+			// redirect to main page
+			$location.path('#/dashboard');
+		};
+	}
 
 }]);
