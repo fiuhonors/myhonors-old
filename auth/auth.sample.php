@@ -9,9 +9,34 @@ define("ERROR_STATEMENT", "");
 define("FIREBASE_SECRET", "");
 define("FIREBASE_SETTINGS_URL", ""); // must use https
 
+// Warning: only disable LDAP for development. this is useful when you're developing
+// off-site and can't access the LDAP server due to security restrictions
+define("DISABLE_LDAP", false);
+
 /* DO NOT EDIT BELOW THIS LINE */
 
 include_once "FirebaseToken.php";
+
+function getData($username) {
+	// create token generator
+	$tokenGen = new Services_FirebaseTokenGenerator(FIREBASE_SECRET);
+
+	// create a temporary admin token to access the admin users/roles in the 'settings' area of our Firebase
+	$temp_token = $tokenGen->createToken(array(), array('admin' => true));
+	$access_levels = json_decode(file_get_contents(FIREBASE_SETTINGS_URL . '/accessLevels/.json?auth=' . $temp_token), true);
+
+	$auth_payload = array(
+		'id' => $username,
+		'isArchMod' => (array_key_exists($username, $access_levels['isArchMod'])) ? true : false,
+		'isEventMod' => (array_key_exists($username, $access_levels['isEventMod'])) ? true : false,
+		'isAdmin' => (array_key_exists($username, $access_levels['isAdmin'])) ? true : false
+	);
+
+	// create firebase token for user and include additional security info
+	$user_token = $tokenGen->createToken($auth_payload);
+
+	return array('success' => true, 'pid' => $username, "fname" => $data[0]["givenname"][0], "lname" => $data[0]["sn"][0], "auth" => $auth_payload, "token" => $user_token);
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
@@ -22,6 +47,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 	// successully binding with an anonymous login
 	if (!isset($_POST['pid']) || !isset($_POST['password']) || empty($_POST['pid']) || empty($_POST['password'])) {
 		$result = array('success' => false, 'error' => ERROR_STATEMENT);
+		echo json_encode($result);
+		die();
+	}
+
+	if (DISABLE_LDAP == true) {
+		// just get user's data from Firebase without checking their LDAP password
+		$result = getData($_POST['pid']);
 		echo json_encode($result);
 		die();
 	}
@@ -44,24 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 			$search = ldap_search($ldapconn, (BEFORE_USERNAME . $_POST['pid'] . AFTER_USERNAME), "(objectClass=*)", array("givenName", "sn"));
 			$data = ldap_get_entries($ldapconn, $search);
 
-			// create token generator
-			$tokenGen = new Services_FirebaseTokenGenerator(FIREBASE_SECRET);
-
-			// create a temporary admin token to access the admin users/roles in the 'settings' area of our Firebase
-			$temp_token = $tokenGen->createToken(array(), array('admin' => true));
-			$access_levels = json_decode(file_get_contents(FIREBASE_SETTINGS_URL . '/accessLevels/.json?auth=' . $temp_token), true);
-
-			$auth_payload = array(
-				'id' => $_POST['pid'],
-				'isArchMod' => (array_key_exists($_POST['pid'], $access_levels['isArchMod'])) ? true : false,
-				'isEventMod' => (array_key_exists($_POST['pid'], $access_levels['isEventMod'])) ? true : false,
-				'isAdmin' => (array_key_exists($_POST['pid'], $access_levels['isAdmin'])) ? true : false
-			);
-
-			// create firebase token for user and include additional security info
-			$user_token = $tokenGen->createToken($auth_payload);
-
-			$result = array('success' => true, 'pid' => $_POST['pid'], "fname" => $data[0]["givenname"][0], "lname" => $data[0]["sn"][0], "auth" => $auth_payload, "token" => $user_token);
+			$result = getData($_POST['pid']);
 
 			ldap_unbind($ldapconn);
 		}
