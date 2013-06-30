@@ -63,17 +63,7 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 
 	/* COMMENT FUNCTIONALITY */
 
-	$scope.comments = FirebaseCollection(discussionRef, {metaFunction: function(doAdd, data) {
-		// get comment data
-		FirebaseIO.child('comments/' + data.name()).once('value', function(commentSnapshot) {
-			// get user data, based off userId property of comment
-			var userId = commentSnapshot.child('author').val();
-			FirebaseIO.child('user_profiles/' + userId).once('value', function(userSnapshot) {
-				// now we have everything we want, so execute doAdd() with the final combined data
-				doAdd(commentSnapshot, {author: userSnapshot.val()});
-			})
-		})
-	}});
+	$scope.comments = CommentService.list(discussionRef);
 
 	$scope.addComment = function() {
 		CommentService.create($scope.userComment, discussionRef);

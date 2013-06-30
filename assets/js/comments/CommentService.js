@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('myhonorsComments').factory('CommentService', function($q, FirebaseIO, UserService) {
+angular.module('myhonorsComments').factory('CommentService', function($q, FirebaseIO, FirebaseCollection, UserService) {
 	return {
 		/**
 		 * Create a comment
@@ -50,15 +50,21 @@ angular.module('myhonorsComments').factory('CommentService', function($q, Fireba
 				var authorId = snapshot.child('author').val();
 				FirebaseIO.child('user_profiles/' + authorId).once('value', function(userSnapshot) {
 					data.author = (userSnapshot.val() === null) ? {fname: '[deleted]'} : userSnapshot.val();
-					if (angular.isFunction(onComplete)) onComplete(data);
+					if (angular.isFunction(onComplete)) onComplete(data, snapshot);
 				});
 			});
 		},
 		/**
-		 * Lists a series of comments
+		 * Returns a collection of comments
 		 */
 		list: function(commentListRef) {
-			// ...
+			var self = this;
+			return new FirebaseCollection(commentListRef, {metaFunction: function(doAdd, data) {
+				// read each comment in the list
+				self.read(data.name(), function(data, snapshot) {
+					doAdd(snapshot, data);
+				});
+			}});
 		},
 		update: function(commentId) {
 			// ...
