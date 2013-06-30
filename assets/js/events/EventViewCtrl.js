@@ -70,6 +70,11 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 		$scope.userComment = '';
 	};
 
+	$scope.deleteComment = function(commentId) {
+		// todo: show inline "Are you sure?" confirmation before deleting
+		CommentService.delete(commentId, discussionRef);
+	};
+
 	// provides a property to set the orderBy predicate for the comments (.current)
 	// and a function to get the value as a text string for the view (.getCurrent())
 	$scope.sortComments = {

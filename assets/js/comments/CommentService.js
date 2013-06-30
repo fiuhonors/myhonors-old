@@ -69,8 +69,15 @@ angular.module('myhonorsComments').factory('CommentService', function($q, Fireba
 		update: function(commentId) {
 			// ...
 		},
-		delete: function(commentId) {
-			// ...
+		delete: function(commentId, secondaryLocationRef) {
+			var self = this;
+			self.read(commentId, function(data, snapshot) {
+				if (UserService.auth.isCommentMod || self.isAuthor(commentId)) {
+					snapshot.ref().remove();
+					UserService.ref.child('comments/' + commentId).remove();
+					if (secondaryLocationRef) secondaryLocationRef.child(commentId).remove();
+				}
+			});
 		},
 		isAuthor: function(commentId) {
 			return UserService.profile && UserService.profile.comments && UserService.profile.comments[commentId] === true;
