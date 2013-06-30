@@ -2,12 +2,12 @@
 
 /* Config settings */
 
-$server_address = "";
-$before_username = "";
-$after_username = "";
-$error_statement = "";
-$firebase_secret = "";
-$firebase_settings_url = ""; // must use https
+define("SERVER_ADDRESS", "");
+define("BEFORE_USERNAME", "");
+define("AFTER_USERNAME", "");
+define("ERROR_STATEMENT", "");
+define("FIREBASE_SECRET", "");
+define("FIREBASE_SETTINGS_URL", ""); // must use https
 
 /* DO NOT EDIT BELOW THIS LINE */
 
@@ -21,16 +21,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 	// checks for empty username/password combinations to prevent LDAP from
 	// successully binding with an anonymous login
 	if (!isset($_POST['pid']) || !isset($_POST['password']) || empty($_POST['pid']) || empty($_POST['password'])) {
-		$result = array('success' => false, 'error' => $error_statement);
+		$result = array('success' => false, 'error' => ERROR_STATEMENT);
 		echo json_encode($result);
 		die();
 	}
 
-	$ldaprdn  = $before_username . $_POST['pid'] . $after_username; // ldap rdn or dn
+	$ldaprdn  = BEFORE_USERNAME . $_POST['pid'] . AFTER_USERNAME; // ldap rdn or dn
 	$ldappass = $_POST['password']; // associated password
 
 	// connect to ldap server
-	$ldapconn = ldap_connect($server_address);
+	$ldapconn = ldap_connect(SERVER_ADDRESS);
 
 	if ($ldapconn)
 	{
@@ -41,15 +41,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 		// verify binding
 		if ($ldapbind)
 		{
-			$search = ldap_search($ldapconn, ($before_username . $_POST['pid'] . $after_username), "(objectClass=*)", array("givenName", "sn"));
+			$search = ldap_search($ldapconn, (BEFORE_USERNAME . $_POST['pid'] . AFTER_USERNAME), "(objectClass=*)", array("givenName", "sn"));
 			$data = ldap_get_entries($ldapconn, $search);
 
 			// create token generator
-			$tokenGen = new Services_FirebaseTokenGenerator($firebase_secret);
+			$tokenGen = new Services_FirebaseTokenGenerator(FIREBASE_SECRET);
 
 			// create a temporary admin token to access the admin users/roles in the 'settings' area of our Firebase
 			$temp_token = $tokenGen->createToken(array(), array('admin' => true));
-			$access_levels = json_decode(file_get_contents($firebase_settings_url . '/accessLevels/.json?auth=' . $temp_token), true);
+			$access_levels = json_decode(file_get_contents(FIREBASE_SETTINGS_URL . '/accessLevels/.json?auth=' . $temp_token), true);
 
 			$auth_payload = array(
 				'id' => $_POST['pid'],
@@ -67,13 +67,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 		}
 		else
 		{
-			$result = array('success' => false, 'error' => $error_statement);
+			$result = array('success' => false, 'error' => ERROR_STATEMENT);
 		}
 
 	}
 	else
 	{
-		$result = array('success' => false, 'error' => $error_statement);
+		$result = array('success' => false, 'error' => ERROR_STATEMENT);
 	}
 
 	echo json_encode($result);
