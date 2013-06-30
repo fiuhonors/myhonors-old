@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeParams', '$timeout', '$window', 'FirebaseIO', 'FirebaseCollection', 'RSVPService', 'apikey_google', function ($scope, $routeParams, $timeout, $window, FirebaseIO, FirebaseCollection, RSVPService, apikey_google) {
+angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeParams', '$timeout', '$window', 'FirebaseIO', 'FirebaseCollection', 'CommentService', 'RSVPService', 'apikey_google', function ($scope, $routeParams, $timeout, $window, FirebaseIO, FirebaseCollection, CommentService, RSVPService, apikey_google) {
 	var mapLoaded = false;
 	var eventRef = FirebaseIO.child('events/' + $routeParams.eventId);
 	var discussionRef = eventRef.child('comments');
@@ -67,7 +67,7 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 		// get comment data
 		FirebaseIO.child('comments/' + data.name()).once('value', function(commentSnapshot) {
 			// get user data, based off userId property of comment
-			var userId = commentSnapshot.child('authorId').val();
+			var userId = commentSnapshot.child('author').val();
 			FirebaseIO.child('user_profiles/' + userId).once('value', function(userSnapshot) {
 				// now we have everything we want, so execute doAdd() with the final combined data
 				doAdd(commentSnapshot, {author: userSnapshot.val()});
@@ -76,18 +76,7 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 	}});
 
 	$scope.addComment = function() {
-		// push to the main 'comments' location
-		var commentRef = FirebaseIO.child('comments').push({
-			authorId: $scope.user.profile.id,
-			content: $scope.userComment,
-			date: Date.now()
-		});
-
-		// add all relevant references
-		FirebaseIO.child('events/' + $routeParams.eventId + '/comments/' + commentRef.name()).set(true)
-		FirebaseIO.child('user_profiles/' + $scope.user.profile.id + '/comments/' + commentRef.name()).set(true)
-		
-		// reset input box
+		CommentService.create($scope.userComment, discussionRef);
 		$scope.userComment = '';
 	};
 
