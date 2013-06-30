@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeParams', '$window', 'FirebaseIO', 'FirebaseCollection', 'RSVPService', 'apikey_google', function ($scope, $routeParams, $window, FirebaseIO, FirebaseCollection, RSVPService, apikey_google) {
+angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeParams', '$timeout', '$window', 'FirebaseIO', 'FirebaseCollection', 'RSVPService', 'apikey_google', function ($scope, $routeParams, $timeout, $window, FirebaseIO, FirebaseCollection, RSVPService, apikey_google) {
 	var mapLoaded = false;
 	var eventRef = FirebaseIO.child('events/' + $routeParams.eventId);
 	var discussionRef = eventRef.child('comments');
@@ -43,7 +43,7 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 	/* LOAD EVENT DATA AND INITIALIZE MAP */
 
 	eventRef.on('value', function(snapshot) {
-		$scope.safeApply(function() {
+		$timeout(function() {
 			$scope.event = snapshot.val();
 			$scope.event.id = snapshot.name();
 			$scope.event.rsvps = snapshot.child('rsvps').numChildren();
