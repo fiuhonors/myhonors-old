@@ -49,7 +49,7 @@ angular.module('myhonorsComments').factory('CommentService', function($q, Fireba
 				// attach author's profile info to the comment
 				var authorId = snapshot.child('author').val();
 				FirebaseIO.child('user_profiles/' + authorId).once('value', function(userSnapshot) {
-					data.author = (userSnapshot.val() === null) ? {fname: '[deleted]'} : userSnapshot.val();
+					data.author = (userSnapshot.val() === null) ? {fname: '[deleted]'} : angular.extend(userSnapshot.val(), {id: userSnapshot.name()});
 					if (angular.isFunction(onComplete)) onComplete(data, snapshot);
 				});
 			});
