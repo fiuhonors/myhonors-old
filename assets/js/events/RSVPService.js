@@ -11,8 +11,9 @@ angular.module('myhonorsEvents').factory('RSVPService', function(FirebaseIO, Fir
 		read: function(rsvpId) {
 			// todo: this can be implemented when we add the "+ guests", phone #, and cover charge features
 		},
-		list: function(rsvpListRef) {
-			return FirebaseCollection(rsvpListRef, {metaFunction: function(doAdd, data) {
+		list: function(eventId) {
+			var rsvpsRef = FirebaseIO.child('events/' + eventId + '/rsvps');
+			return FirebaseCollection(rsvpsRef, {metaFunction: function(doAdd, data) {
 				FirebaseIO.child('user_profiles/' + data.name()).once('value', function(userSnapshot) {
 					doAdd(userSnapshot);
 				});

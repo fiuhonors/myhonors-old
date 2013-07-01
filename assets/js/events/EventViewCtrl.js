@@ -4,7 +4,7 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 	var mapLoaded = false;
 	var discussionRef = FirebaseIO.child('events/' + $routeParams.eventId + '/comments');
 	$scope.rsvp = RSVPService;
-	$scope.eventRSVPs = RSVPService.list(FirebaseIO.child('events/' + $routeParams.eventId + '/rsvps'));
+	$scope.eventRSVPs = RSVPService.list($routeParams.eventId);
 	$scope.userComment = '';
 
 	/* MAP FUNCTIONALITY */

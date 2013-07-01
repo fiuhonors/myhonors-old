@@ -42,10 +42,13 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
 		list: function() {
 			var eventsRef = FirebaseIO.child('events');
 			var self = this;
-			return FirebaseCollection(eventsRef, {metaFunction: function(doAdd, data) {
-				self.read(data.name(), function(snapshot) {
-					doAdd(data, snapshot);
-				});
+			return FirebaseCollection(eventsRef, {metaFunction: function(doAdd, snapshot) {
+				var extraData = {
+					id: snapshot.name(),
+					rsvps: snapshot.child('rsvps').numChildren(),
+					comments: snapshot.child('comments').numChildren()
+				};
+				doAdd(snapshot, extraData);
 			}});
 		},
 		update: function() {
