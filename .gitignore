@@ -5,7 +5,7 @@ assets/img/honorshours
 assets/json
 
 # AngularJS
-assets/js/config.js
+application/config.js
 
 # LDAPS Authentication
 auth/auth.php
