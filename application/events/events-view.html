@@ -81,7 +81,7 @@
 			<div class="box-content padded text-center">
 				<a href="#/events/{{event.id}}/swipe" class="btn btn-success">Swipe</a>
 				<a href="#/events/{{event.id}}/edit" class="btn btn-primary">Edit</a>
-				<a href="#deleteEventModal" role="button" data-toggle="modal" class="btn btn-danger">Delete</a>
+				<button class="btn btn-danger" ng-click="confirmDelete()">Delete</a>
 			</div>
 		</div>
 		<div class="box">
@@ -106,16 +106,16 @@
 </div>
 
 <!-- Modal -->
-<div id="deleteEventModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-show="user.auth.isEventMod">
+<div modal="showDeleteConfirmation" close="cancelDelete()" options="modalOpts">
 	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		<h3 id="myModalLabel">Are you sure you want to DELETE?</h3>
+		<button type="button" class="close" ng-click="cancelDelete()">×</button>
+		<h3>Are you sure you want to DELETE?</h3>
 	</div>
 	<div class="modal-body">
 		<p>This will <strong>permanently</strong> erase all data related to this event. Are you sure you want to do this?</p>
 	</div>
 	<div class="modal-footer">
 		<button class="btn btn-danger" ng-click="doDelete()">Yes, DELETE the Event</button>
-		<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+		<button class="btn cancel" ng-click="cancelDelete()">Cancel</button>
 	</div>
 </div>

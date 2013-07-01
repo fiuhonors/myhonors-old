@@ -26,18 +26,24 @@ angular.module('myhonorsArch').controller('ArchViewCtrl', ['$scope', '$routePara
 		});
 	});
 
+	$scope.modalOpts = {
+		backdropFade: true,
+		dialogFade: true
+	};
+
+	$scope.confirmDelete = function() {
+		$scope.showDeleteConfirmation = true;
+	};
+
+	$scope.cancelDelete = function() {
+		$scope.showDeleteConfirmation = false;
+	};
+
 	$scope.doDelete = function() {
-		// remove references from student & advisor profiles
 		FirebaseIO.child('user_profiles/' + $scope.project.student.id + '/archProjects/' + projectRef.name()).remove();
 		FirebaseIO.child('user_profiles/' + $scope.project.advisor.id + '/archProjects/' + projectRef.name()).remove();
-
-		// remove project data
-		projectRef.remove();
-
-		// close the modal
-		$('#deleteProjectModal').modal('hide');
-
-		// redirect to main page
-		$location.path('#/arch');
+		projectRef.remove(); // delete project
+		$scope.showDeleteConfirmation = false; // close deletion confirmation modal
+		$location.path('#/arch'); // redirect to main page
 	};
 }]);

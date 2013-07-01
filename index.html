@@ -15,7 +15,6 @@
 
 	<!-- load our libraries! these make all the real magic happen -->
 	<script src="assets/lib/jquery.min.js"></script>
-	<script src="assets/lib/bootstrap.js"></script>
 	<script src="assets/lib/angular.js"></script>
 	<script src='https://cdn.firebase.com/v0/firebase.js'></script>
 	<script src='https://cdn.firebase.com/v0/firebase-auth-client.js'></script>
@@ -25,6 +24,8 @@
 	<!-- begin loading our app files -->
 	<script src="application/app.js"></script>
 	<script src="application/config.js"></script>
+
+	<script src="application/ui-bootstrap/ui-bootstrap-0.4.0.js"></script>
 
 	<script src="application/app/config.js"></script>
 	<script src="application/app/AppCtrl.js"></script>
@@ -86,7 +87,7 @@
 					<li ng-show="user.auth.isAdmin"><a href="#/admin"><i class="icon-cog icon-white"></i> Administration</a></li>
 				</ul>
 				<div class="dropdown pull-right" data-ng-cloak>
-					<span class="dropdown-text">Logged in as</span> <button class="btn btn-link dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> {{user.profile.fname}} {{user.profile.lname}}</button>
+					<span class="dropdown-text">Logged in as</span> <button class="btn btn-link dropdown-toggle"><i class="icon-user icon-white"></i> {{user.profile.fname}} {{user.profile.lname}}</button>
 					<ul class="dropdown-menu pull-right" role="menu">
 						<li ng-show="user.auth.isAdmin"><a href="#/profile/{{user.profile.user_id}}">View Profile</a></li>
 						<li ng-show="user.auth.isAdmin"><a href="#/profile/{{user.profile.user_id}}/edit">Update Profile</a></li>

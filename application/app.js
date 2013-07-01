@@ -3,6 +3,7 @@
 angular.module('myhonors', [
 	// module dependencies
 	'webStorageModule',
+	'ui.bootstrap',
 	'myhonorsConfig',
 	'Firebase',
 	'myhonorsUser',

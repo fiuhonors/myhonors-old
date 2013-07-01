@@ -75,7 +75,7 @@
 				<hr />
 
 				<a href="#/arch/{{project.$id}}/edit" class="btn btn-primary">Edit Project Info</a>
-				<a href="#deleteProjectModal" role="button" data-toggle="modal" class="btn btn-danger">Delete Project</a>
+				<button class="btn btn-danger" ng-click="confirmDelete()">Delete Project</button>
 				<a href="#/arch" class="btn btn-link">Go Back</a>
 			</form>
 		</div>
@@ -83,16 +83,16 @@
 </div>
 
 <!-- Modal -->
-<div id="deleteProjectModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div modal="showDeleteConfirmation" close="cancelDelete()" options="modalOpts">
 	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		<h3 id="myModalLabel">Are you sure you want to DELETE?</h3>
+		<button type="button" class="close" ng-click="cancelDelete()">×</button>
+		<h3>Are you sure you want to DELETE?</h3>
 	</div>
 	<div class="modal-body">
-		<p>This will <strong>permanently</strong> erase all data related to this ARCH project. Are you sure you want to do this?</p>
+		<p>This will <strong>permanently</strong> erase all data related to this ARCH Project. Are you sure you want to do this?</p>
 	</div>
 	<div class="modal-footer">
 		<button class="btn btn-danger" ng-click="doDelete()">Yes, DELETE the Project</button>
-		<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+		<button class="btn cancel" ng-click="cancelDelete()">Cancel</button>
 	</div>
 </div>

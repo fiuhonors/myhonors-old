@@ -93,9 +93,22 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 	/* ADMIN FUNCTIONALITY */
 
 	if ($scope.user.auth.isEventMod) {
+		$scope.modalOpts = {
+			backdropFade: true,
+			dialogFade: true
+		};
+
+		$scope.confirmDelete = function() {
+			$scope.showDeleteConfirmation = true;
+		};
+
+		$scope.cancelDelete = function() {
+			$scope.showDeleteConfirmation = false;
+		};
+
 		$scope.doDelete = function() {
 			EventService.delete($routeParams.eventId); // delete event
-			$('#deleteEventModal').modal('hide'); // close the modal
+			$scope.showDeleteConfirmation = false; // close deletion confirmation modal
 			$location.path('dashboard'); // redirect to main page
 		};
 	}	
