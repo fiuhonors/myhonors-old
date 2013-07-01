@@ -28,12 +28,20 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
 			FirebaseIO.child('events/' + eventId).on('value', function(snapshot) {
 				var data = snapshot.val();
 				data.id = snapshot.name();
+				data.rsvps = snapshot.child('rsvps').numChildren();
+				data.comments = snapshot.child('comments').numChildren();
+
 				onComplete(data);
 			});
 		},
 		list: function() {
 			var eventsRef = FirebaseIO.child('events');
-			return FirebaseCollection(eventsRef);
+			var self = this;
+			return FirebaseCollection(eventsRef, {metaFunction: function(doAdd, data) {
+				self.read(data.name(), function(snapshot) {
+					doAdd(data, snapshot);
+				});
+			}});
 		},
 		update: function() {
 			// ...
