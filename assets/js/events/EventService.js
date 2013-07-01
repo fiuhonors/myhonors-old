@@ -26,6 +26,11 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
 		},
 		read: function(eventId, onComplete) {
 			FirebaseIO.child('events/' + eventId).on('value', function(snapshot) {
+				if (snapshot.val() === null) {
+					// event was deleted, do nothing
+					return;
+				}
+
 				var data = snapshot.val();
 				data.id = snapshot.name();
 				data.rsvps = snapshot.child('rsvps').numChildren();

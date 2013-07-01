@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeParams', '$timeout', '$window', 'FirebaseIO', 'FirebaseCollection', 'EventService', 'CommentService', 'RSVPService', 'apikey_google', function ($scope, $routeParams, $timeout, $window, FirebaseIO, FirebaseCollection, EventService, CommentService, RSVPService, apikey_google) {
+angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeParams', '$timeout', '$location', '$window', 'FirebaseIO', 'FirebaseCollection', 'EventService', 'CommentService', 'RSVPService', 'apikey_google', function ($scope, $routeParams, $timeout, $location, $window, FirebaseIO, FirebaseCollection, EventService, CommentService, RSVPService, apikey_google) {
 	var mapLoaded = false;
 	var discussionRef = FirebaseIO.child('events/' + $routeParams.eventId + '/comments');
 	$scope.rsvp = RSVPService;
@@ -89,4 +89,14 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 			}
 		}
 	};
+
+	/* ADMIN FUNCTIONALITY */
+
+	if ($scope.user.auth.isEventMod) {
+		$scope.doDelete = function() {
+			EventService.delete($routeParams.eventId); // delete event
+			$('#deleteEventModal').modal('hide'); // close the modal
+			$location.path('dashboard'); // redirect to main page
+		};
+	}	
 }]);
