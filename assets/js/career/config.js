@@ -2,5 +2,5 @@
 
 angular.module('myhonorsCareer').config(['$routeProvider', function($routeProvider) {
 	$routeProvider.
-		when('/career', {templateUrl: 'assets/partials/career.html', controller: 'CareerCtrl', requireLogin: false, resolve: appResolve})
+		when('/career', {templateUrl: 'assets/js/career/career.html', controller: 'CareerCtrl', requireLogin: false, resolve: appResolve})
 }]);
