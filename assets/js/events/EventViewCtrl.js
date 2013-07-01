@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeParams', '$timeout', '$window', 'FirebaseIO', 'FirebaseCollection', 'CommentService', 'RSVPService', 'apikey_google', function ($scope, $routeParams, $timeout, $window, FirebaseIO, FirebaseCollection, CommentService, RSVPService, apikey_google) {
+angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeParams', '$timeout', '$window', 'FirebaseIO', 'FirebaseCollection', 'EventService', 'CommentService', 'RSVPService', 'apikey_google', function ($scope, $routeParams, $timeout, $window, FirebaseIO, FirebaseCollection, EventService, CommentService, RSVPService, apikey_google) {
 	var mapLoaded = false;
 	var eventRef = FirebaseIO.child('events/' + $routeParams.eventId);
 	var discussionRef = eventRef.child('comments');
@@ -42,11 +42,9 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 
 	/* LOAD EVENT DATA AND INITIALIZE MAP */
 
-	eventRef.on('value', function(snapshot) {
+	EventService.read($routeParams.eventId, function(data) {
 		$timeout(function() {
-			$scope.event = snapshot.val();
-			$scope.event.id = snapshot.name();
-			$scope.event.rsvps = snapshot.child('rsvps').numChildren();
+			$scope.event = data;
 		});
 
 		// this way we don't reload the script everytime the event changes
