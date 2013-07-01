@@ -91,7 +91,7 @@
 				"location": {
 					".validate": "newData.hasChild('name')",
 
-					"long": {
+					"lng": {
 						".validate": "newData.isNumber()"
 					},
 					"lat": {

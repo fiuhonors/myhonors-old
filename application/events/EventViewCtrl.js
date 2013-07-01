@@ -1,7 +1,6 @@
 'use strict';
 
 angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeParams', '$timeout', '$location', '$window', 'FirebaseIO', 'FirebaseCollection', 'EventService', 'CommentService', 'RSVPService', 'apikey_google', function ($scope, $routeParams, $timeout, $location, $window, FirebaseIO, FirebaseCollection, EventService, CommentService, RSVPService, apikey_google) {
-	var mapLoaded = false;
 	var discussionRef = FirebaseIO.child('events/' + $routeParams.eventId + '/comments');
 	$scope.rsvp = RSVPService;
 	$scope.eventRSVPs = RSVPService.list($routeParams.eventId);
@@ -9,35 +8,14 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 
 	/* MAP FUNCTIONALITY */
 
-	$window.initializeMap = function() {
-		var latLng = new google.maps.LatLng($scope.event.location.lat, $scope.event.location.long);
-		// we use parseFloat() here so we can add the offset (otherwise the offset concatenates since the object is a string)
-		var latLngOffset = new google.maps.LatLng($scope.event.location.lat, parseFloat($scope.event.location.long) + 0.0015);
-
-		var mapOptions = {
-			zoom: 18,
-			center: latLngOffset,
-			mapTypeId: google.maps.MapTypeId.SATELLITE
-		};
-
-		var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-
-		// use the FIU map overlays
-		var buildingsLayer = new google.maps.KmlLayer('http://sites.fiu.edu/emap/layers/Buildings.kmz', 
-			{suppressInfoWindows: true, preserveViewport: true}
-		);
-
-		buildingsLayer.setMap(map);
-
-		var marker = new google.maps.Marker({
-			position: latLng,
-			map: map,
-			title: $scope.event.location.name
-		});
-	}
-
-	$scope.renderMap = function(location) {	
-		return '<iframe width="950" height="300" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="' + location + '"></iframe>';
+	$scope.markers = [];
+	$scope.center = {
+		lat: 51,
+		lng: 1,
+		zoom: 14
+	};
+	$scope.defaults = {
+		maxZoom: 20
 	}
 
 	/* LOAD EVENT DATA AND INITIALIZE MAP */
@@ -45,18 +23,13 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 	EventService.read($routeParams.eventId, function(data) {
 		$timeout(function() {
 			$scope.event = data;
+			$scope.center = {
+				lat: data.location.lat,
+				lng: parseFloat(data.location.lng) + 0.003,
+				zoom: 17
+			};
+			$scope.markers.push(angular.extend(data.location, {message: data.location.name}));
 		});
-
-		// this way we don't reload the script everytime the event changes
-		if (!mapLoaded) {
-			// asynchronously load the Google Maps API script
-			var script = document.createElement("script");
-			script.type = "text/javascript";
-			script.src = "https://maps.googleapis.com/maps/api/js?key=" + apikey_google + "&sensor=false&callback=initializeMap";
-			document.body.appendChild(script);
-
-			mapLoaded = true;
-		}
 	});
 
 	/* COMMENT FUNCTIONALITY */

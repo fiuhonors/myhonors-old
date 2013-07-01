@@ -92,7 +92,7 @@ events
 			location
 				name: [string]
 				lat: [float]
-				long: [float]
+				lng: [float]
 		comments
 			[commentId]: true
 		rsvps
