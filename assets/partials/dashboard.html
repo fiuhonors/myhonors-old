@@ -39,7 +39,7 @@
 		<div class="box-header">Upcoming Events</div>
 		<div class="box-content">
 			<ul class="block-hover block-clickable">
-				<li ng-repeat="event in events" ng-click="goToEvent(event.id)" class="clearfix">
+				<li ng-repeat="event in events" ng-click="goToEvent(event.$id)" class="clearfix">
 					<img class="pull-left span2 img-rounded" ng-src="{{event.thumbURL}}">
 					<div class="pull-left span8">
 						<strong>{{event.name}}</strong> <span>on May 24th at 3:30pm</span>
@@ -49,8 +49,8 @@
 					<div class="span2 text-center event-attending">
 						<h3>{{event.rsvps}}</h3>
 						<span class="opensans">ATTENDING</span>
-						<button class="btn btn-mini" ng-click="rsvp.addRSVP(event.id)" ng-show="!rsvp.hasRSVP(event.id)">I'm Going</button>
-						<button class="btn btn-mini btn-primary" ng-click="rsvp.removeRSVP(event.id)" ng-show="rsvp.hasRSVP(event.id)">I'm Going</button>
+						<button class="btn btn-mini" ng-click="rsvp.addRSVP(event.$id)" ng-show="!rsvp.hasRSVP(event.$id)">I'm Going</button>
+						<button class="btn btn-mini btn-primary" ng-click="rsvp.removeRSVP(event.$id)" ng-show="rsvp.hasRSVP(event.$id)">I'm Going</button>
 					</div>
 				</li>
 			</ul>

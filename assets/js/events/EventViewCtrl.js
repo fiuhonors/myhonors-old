@@ -2,9 +2,9 @@
 
 angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeParams', '$timeout', '$window', 'FirebaseIO', 'FirebaseCollection', 'EventService', 'CommentService', 'RSVPService', 'apikey_google', function ($scope, $routeParams, $timeout, $window, FirebaseIO, FirebaseCollection, EventService, CommentService, RSVPService, apikey_google) {
 	var mapLoaded = false;
-	var eventRef = FirebaseIO.child('events/' + $routeParams.eventId);
-	var discussionRef = eventRef.child('comments');
+	var discussionRef = FirebaseIO.child('events/' + $routeParams.eventId + '/comments');
 	$scope.rsvp = RSVPService;
+	$scope.eventRSVPs = RSVPService.list(FirebaseIO.child('events/' + $routeParams.eventId + '/rsvps'));
 	$scope.userComment = '';
 
 	/* MAP FUNCTIONALITY */
@@ -89,13 +89,4 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 			}
 		}
 	};
-
-	/* RSVP FUNCTIONALITY */
-
-	$scope.eventRSVPs = FirebaseCollection(eventRef.child('rsvps'), {metaFunction: function(doAdd, data) {
-		FirebaseIO.child('user_profiles/' + data.name()).once('value', function(userSnapshot) {
-			doAdd(userSnapshot);
-		});
-	}});
-
 }]);
