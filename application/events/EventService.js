@@ -2,26 +2,20 @@
 
 angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO, FirebaseCollection, UserService) {
 	return {
-		create: function(name, date, location, type, desc) {
-			if (!angular.isString(name) &&
-				!angular.isObject(date) &&
-				!angular.isNumeric(date.starts) &&
-				!angular.isNumeric(date.ends) &&
-				!angular.isObject(location) &&
-				!angular.isString(location.name) &&
-				!angular.isString(type)
+		create: function(eventObject) {
+			if (!angular.isString(eventObject.name) &&
+				!angular.isObject(eventObject.date) &&
+				!angular.isNumeric(eventObject.date.starts) &&
+				!angular.isNumeric(eventObject.date.ends) &&
+				!angular.isObject(eventObject.location) &&
+				!angular.isString(eventObject.location.name) &&
+				!angular.isObject(eventObject.type)
 			) {
 				// invalid input, do nothing
 				return;
 			}
 
-			FirebaseIO.child('events').push({
-				name: name,
-				date: date,
-				location: location,
-				type: type,
-				desc: desc
-			});
+			FirebaseIO.child('events').push(eventObject);
 
 		},
 		read: function(eventId, onComplete) {
