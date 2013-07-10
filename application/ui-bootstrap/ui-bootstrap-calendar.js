@@ -18,7 +18,7 @@ angular.module('ui.bootstrap.calendar', [])
     replace: true,
     scope: {
       model: '=ngModel',
-      events: '=',
+      events: '&',
       dateDisabled: '&'
     },
     templateUrl: 'application/ui-bootstrap/calendar/calendar.html',
@@ -102,7 +102,7 @@ angular.module('ui.bootstrap.calendar', [])
 
           function addDays( dt, n, isCurrentMonth ) {
             for (var i =0; i < n; i ++) {
-              days.push( {date: new Date(dt), isCurrent: isCurrentMonth, isSelected: isSelected(dt), label: dateFilter(dt, format.day), disabled: isDisabled(dt), events: [1, 2, 3] } );
+              days.push( {date: new Date(dt), isCurrent: isCurrentMonth, isSelected: isSelected(dt), label: dateFilter(dt, format.day), disabled: isDisabled(dt) } );
               dt.setDate( dt.getDate() + 1 );
             }
             lastDate = dt;
@@ -211,7 +211,7 @@ angular.module('ui.bootstrap.calendar', [])
         return Math.ceil((((d - new Date(d.getFullYear(), 0, 1)) / 86400000) + 1) / 7); // 86400000 = 1000*60*60*24;
       };
       scope.getEvents = function(date) {
-        return filterFilter(scope.events, function(value) {
+        return filterFilter(scope.events(), function(value) {
           return (value.date && value.date.starts) ? date.toDateString() === new Date(value.date.starts).toDateString() : false;
         });
       };
