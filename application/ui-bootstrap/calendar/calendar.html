@@ -1,0 +1,22 @@
+<table class="table table-bordered" style="margin-bottom: 0">
+  <thead>
+    <tr class="text-center">
+      <th><button class="btn btn-primary btn-block pull-left" ng-click="move(-1)"><i class="icon-chevron-left icon-white"></i> Prev Month</button></th>
+      <th colspan="{{rows[0].length - 2 + showWeekNumbers}}"><button class="btn btn-primary btn-block" ng-click="toggleMode()"><strong>{{title}}</strong></button></th>
+      <th><button class="btn btn-primary btn-block pull-right" ng-click="move(1)">Next Month<i class="icon-chevron-right icon-white"></i></button></th>
+    </tr>
+    <tr class="text-center" ng-show="labels.length > 0">
+      <th ng-show="showWeekNumbers">#</th>
+      <th ng-repeat="label in labels" style="text-align: center">{{label}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="row in rows" style="height: 100px">
+      <td ng-show="showWeekNumbers" class="text-center"><em>{{ getWeekNumber(row) }}</em></td>
+      <td ng-repeat="dt in row" ng-click="select(dt.date)" style="text-align: center">
+        <h3 style="margin-top: -10px; margin-bottom: 0"><span ng-class="{muted: ! dt.isCurrent}">{{dt.label}}</span></h3>
+        <span class="label label-info clickable" style="display: block; margin-bottom: 1px" ng-repeat="event in getEvents(dt.date)">{{event.name}}</span>
+      </td>
+    </tr>
+  </tbody>
+</table>

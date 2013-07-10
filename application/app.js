@@ -4,6 +4,7 @@ angular.module('myhonors', [
 	// module dependencies
 	'webStorageModule',
 	'ui.bootstrap',
+	'ui.bootstrap.calendar',
 	'leaflet-directive',
 	'myhonorsConfig',
 	'Firebase',
