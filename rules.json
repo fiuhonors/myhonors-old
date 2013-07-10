@@ -73,19 +73,17 @@
 					".validate": "newData.isString()"
 				},
 				"type": {
-					".validate": "newData.isString()"
+					// no rules
 				},
 				"date": {
 					// events must have a start & end date, and start date must come before its end date
-					".validate": "newData.hasChildren(['begins', 'ends']) && newData.child('begins').val() < newData.child('ends').val()",
+					".validate": "newData.hasChildren(['starts', 'ends']) && newData.child('starts').val() < newData.child('ends').val()",
 
-					"begins": {
-						// events can only be created in the future
-						".validate": "newData.isNumber() && newData.val() > now"
+					"starts": {
+						".validate": "newData.isNumber()"
 					},
 					"ends": {
-						// events can only be created in the future
-						".validate": "newData.isNumber() && newData.val() > now"
+						".validate": "newData.isNumber()"
 					}
 				},
 				"location": {
