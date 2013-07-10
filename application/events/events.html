@@ -1,15 +1,29 @@
 <div class="row-fluid">
 	<div class="span3">
-		<div class="box">
-			<div class="box-content padded">
-				<input class="span12" type="text" placeholder="Search Events" ng-model="searchName" />
-				<ul class="nav nav-list">
-					<li class="nav-header">View Events by Type</li>
-					<li><a ng-click="searchType = ''">All Events</a></li>
-					<li><a ng-click="searchType = 'honorshour'">Honors Hours</a></li>
-					<li><a ng-click="searchType = 'excellence'">Excellence Lectures</a></li>
-					<li><a ng-click="searchType = 'colloquia'">Colloquia</a></li>
-				</ul>
+		<div class="row-fluid">
+			<div class="span12">
+				<div class="box">
+					<div class="box-content padded">
+						<input class="span12" type="text" placeholder="Search Events" ng-model="searchName" />
+						<ul class="nav nav-list">
+							<li class="nav-header">View Events by Type</li>
+							<li><a ng-click="searchType = ''">All Events</a></li>
+							<li><a ng-click="searchType = 'honorshour'">Honors Hours</a></li>
+							<li><a ng-click="searchType = 'excellence'">Excellence Lectures</a></li>
+							<li><a ng-click="searchType = 'colloquia'">Colloquia</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row-fluid" ng-show="user.auth.isEventMod">
+			<div class="span12">
+				<div class="box">
+					<div class="box-header">Events Administration Panel</div>
+					<div class="box-content padded">
+						<a href="#/events/add" class="btn btn-primary input-block-level">Add New Event</a>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
