@@ -148,7 +148,11 @@
 		"arch": {
 			".read": true,
 			".write": true
+		},
+
+		"furc": {
+			".read": true,
+			".write": true
 		}
-		
 	}
 }
