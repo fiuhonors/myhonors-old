@@ -4,7 +4,7 @@
 		<div class="mapoverlay">
 			<div>
 				<h1>{{event.name}}</h1>
-				<p class="smalltext">{{event.date.begins*1000 | date:"EEEE, MMMM d 'at' h:mma"}} at {{event.location.name}}. Counts as 1 {{event.type}}.</p>
+				<p class="smalltext">{{event.date.starts*1000 | date:"EEEE, MMMM d 'at' h:mma"}} at {{event.location.name}}. Counts as 1 {{event.type}}.</p>
 				<p>{{event.desc}}</p>
 			</div>
 		</div>
