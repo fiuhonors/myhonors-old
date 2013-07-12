@@ -1,0 +1,19 @@
+<div class="row">
+	<div class="span12 text-center">
+		<form ng-submit="doAdd()">
+			<div class="input-append">
+				<input type="text" ng-model="data.userId" placeholder="Swipe your FIU card..." />
+				<button class="btn btn-primary"><i class="icon-play-circle icon-white"></i></button>
+		</form>
+	</div>
+</div>
+
+<div class="row" ng-repeat="swipe in swipes">
+	<div class="offset3 span6">
+		<div class="box" style="margin-bottom: 5px">
+			<div class="box-content padded">
+				{{swipe.fname}} has signed in
+			</div>
+		</div>
+	</div>
+</div>
