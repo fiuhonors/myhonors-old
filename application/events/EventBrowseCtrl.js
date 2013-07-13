@@ -3,6 +3,7 @@
 angular.module('myhonorsEvents').controller('EventBrowseCtrl', ['$scope', '$timeout', 'FirebaseIO', '$location', '$filter', 'EventService', 'RSVPService', function ($scope, $timeout, FirebaseIO, $location, $filter, EventService, RSVPService) {
 	$scope.searchName = '';
 	$scope.searchType = '';
+	$scope.nothing = null; // needed for the calendar directive
 	$scope.events = EventService.list();
 
 	$scope.getEvents = function() {
