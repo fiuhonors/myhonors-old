@@ -138,12 +138,20 @@ angular.module('Firebase').factory('FirebaseCollection', ['$timeout', function($
 		});
 
 		collectionRef.on('child_moved', function(ref, prevId) {
-			$timeout(function() {
-				var oldIndex = indexes[ref.name()];
-				var newIndex = getIndex(prevId);
-				var item = collection[oldIndex];
-				moveChild(oldIndex, newIndex, item);
-			});
+			var doAdd = function(ref, extraData) {
+				$timeout(function() {
+					var oldIndex = indexes[ref.name()];
+					var newIndex = getIndex(prevId);
+					var item = collection[oldIndex];
+					moveChild(oldIndex, newIndex, item);
+				});
+			};
+
+			if(metaFunction) {
+				metaFunction(doAdd, ref);
+			} else {
+				doAdd(ref);
+			}
 		});
 
 		collection.add = function(item, cb) {
