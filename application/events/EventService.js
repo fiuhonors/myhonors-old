@@ -19,6 +19,8 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
 
 		},
 		read: function(eventId, onComplete) {
+			var deferred = $q.defer();
+
 			FirebaseIO.child('events/' + eventId).on('value', function(snapshot) {
 				if (snapshot.val() === null) {
 					// event was deleted, do nothing
@@ -30,8 +32,14 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
 				data.rsvps = snapshot.child('rsvps').numChildren();
 				data.comments = snapshot.child('comments').numChildren();
 
-				onComplete(data);
+				if (angular.isFunction(onComplete)) {
+					onComplete(data);
+				}
+
+				deferred.resolve(data);	
 			});
+
+			return deferred.promise;
 		},
 		list: function() {
 			var eventsRef = FirebaseIO.child('events');
