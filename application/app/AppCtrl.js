@@ -2,13 +2,14 @@
 
 angular.module('myhonors').controller('AppCtrl', function ($scope, $rootScope, $route, $location, UserService) {
 	$scope.user = UserService;
+	$scope.showPanels = false;
 
 	// used to show spinners and "Loading..." messages
 	$rootScope.loading = false;
 
 	$rootScope.$on('$routeChangeSuccess', function() {
-		// clear any loading messages after the route has successfully changed
-		$rootScope.loading = false;
+		$rootScope.loading = false; // clear any loading messages after the route has successfully changed
+		$scope.showPanels = angular.isDefined($route.current.$$route.showPanels) ? $route.current.$$route.showPanels : true;
 	});
 
 	$rootScope.$on('$routeChangeError', function(event, current, previous, rejection) {
