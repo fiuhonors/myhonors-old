@@ -85,12 +85,26 @@ angular.module('myhonorsUser').factory('UserService', function($http, $location,
 		$location.path('/login');
 	};
 
+	/**
+	 * Check if a certain userId already exists and executes a callback with the boolean result
+	 */
+	var exists = function(userId, callback) {
+		FirebaseIO.child('user_profiles/' + userId).once('value', function(snapshot) {
+			if (snapshot.val() === null) {
+				callback(false);
+			} else {
+				callback(true);
+			}
+		});
+	};
+
 	return {
 		profile: null,
 		auth: null,
 		ref: null,
 		status: {loading: false}, // used to show "Loading..." status after clicking Login button
 		login: login,
-		logout: logout
+		logout: logout,
+		exists: exists
 	};
 });
