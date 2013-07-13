@@ -9,7 +9,9 @@ angular.module('myhonors').controller('AppCtrl', function ($scope, $rootScope, $
 
 	$rootScope.$on('$routeChangeSuccess', function() {
 		$rootScope.loading = false; // clear any loading messages after the route has successfully changed
-		$scope.showPanels = angular.isDefined($route.current.$$route.showPanels) ? $route.current.$$route.showPanels : true;
+		$scope.showPanels = ($route.current.$$route && angular.isDefined($route.current.$$route.showPanels))
+							? $route.current.$$route.showPanels
+							: true;
 	});
 
 	$rootScope.$on('$routeChangeError', function(event, current, previous, rejection) {
