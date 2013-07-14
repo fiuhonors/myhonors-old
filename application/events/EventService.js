@@ -1,6 +1,11 @@
 'use strict'
 
 angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO, FirebaseCollection, UserService) {
+ 	// since we don't need to execute this every time getTypes() is called, we can
+ 	// create a single collection (that lives with the singleton service) here
+ 	var typesRef = FirebaseIO.child('system_settings/eventTypes');
+ 	var eventTypes = FirebaseCollection(typesRef);
+
 	return {
 		create: function(eventObject) {
 			if (!angular.isString(eventObject.name) ||
@@ -58,6 +63,13 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
 		},
 		delete: function(eventId) {
 			FirebaseIO.child('events/' + eventId).remove();
-		}
+		},
+
+		/**
+		 * Get a list of different event types
+		 */
+		 getTypes: function() {
+			return eventTypes;
+		 }
 	}
 });

@@ -7,10 +7,8 @@
 						<input class="span12" type="text" placeholder="Search Events" ng-model="searchName" />
 						<ul class="nav nav-list">
 							<li class="nav-header">View Events by Type</li>
-							<li><a ng-click="searchType = ''">All Events</a></li>
-							<li><a ng-click="searchType = 'honorshour'">Honors Hours</a></li>
-							<li><a ng-click="searchType = 'excellence'">Excellence Lectures</a></li>
-							<li><a ng-click="searchType = 'colloquia'">Colloquia</a></li>
+							<li class="clickable" ng-click="searchBy('')"><a>All Events</a></li>
+							<li class="clickable" ng-click="searchBy(type.name)" ng-repeat="type in eventTypes"><a ng-class="{'nav-list-active': searchType == type.name}">{{type.name}}</a></li>
 						</ul>
 					</div>
 				</div>

@@ -1,6 +1,8 @@
 'use strict';
 
 angular.module('myhonorsEvents').controller('EventAddCtrl', ['$scope', '$location', 'EventService', function($scope, $location, EventService) {
+	$scope.eventTypes = EventService.getTypes();
+	
 	$scope.doAdd = function(theForm) {
 		if (theForm.$invalid) { return; }
 
