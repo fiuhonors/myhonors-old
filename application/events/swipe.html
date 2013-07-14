@@ -1,10 +1,11 @@
-<div class="row">
-	<div class="span12 text-center">
-		<form ng-submit="doAdd()">
-			<div class="input-append">
-				<input type="text" ng-model="data.userId" placeholder="Swipe your FIU card..." />
-				<button class="btn btn-primary"><i class="icon-play-circle icon-white"></i></button>
-		</form>
+<div class="row" style="margin-top: 40px">
+	<div class="offset3 span6">
+		<div class="box" style="margin-bottom: 30px">
+			<div class="box-header">{{event.name}}</div>
+			<div class="box-content padded-small">
+				<input type="text" class="input-block-level" style="padding: 40px 20px; line-height: 60px; font-size: 40px; margin-bottom: 0" placeholder="Swipe your FIU card..." ng-model="data.userId" ng-enter="doAdd()" />
+			</div>
+		</div>
 	</div>
 </div>
 
@@ -12,7 +13,7 @@
 	<div class="offset3 span6">
 		<div class="box" style="margin-bottom: 5px">
 			<div class="box-content padded">
-				{{swipe.greeting}}
+				<strong>{{swipe.fname}}</strong> swiped in
 			</div>
 		</div>
 	</div>
