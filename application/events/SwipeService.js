@@ -32,7 +32,14 @@ angular.module('myhonorsEvents').factory('SwipeService', function($q, FirebaseIO
 				return;
 			}
 
-			FirebaseIO.child('events/' + eventId + '/attendance/' + userId).push(Date.now());
+			var now = Date.now();
+			var userRef = FirebaseIO.child('events/' + eventId + '/attendance/' + userId);
+
+			userRef.push(now, function() {
+				// we can't set the priority of an empty location, so push the data first and
+				// then set the priority in this onComplete callback
+				userRef.setPriority(now);
+			});
 		},
 		list: function(eventId) {
 			var swipeRef = FirebaseIO.child('events/' + eventId + '/attendance');

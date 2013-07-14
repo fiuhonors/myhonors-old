@@ -19,7 +19,7 @@
 	</div>
 </div>
 
-<div class="row" ng-repeat="swipe in swipes">
+<div class="row" ng-repeat="swipe in swipes | orderBy:nothing:reverse">
 	<div class="offset3 span6">
 		<div class="box" style="margin-bottom: 5px">
 			<div class="box-content padded">

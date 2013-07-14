@@ -4,6 +4,11 @@ angular.module('myhonorsEvents').controller('SwipeCtrl', ['$scope', '$timeout', 
 	$scope.data = {userId: ''};
 	$scope.event = EventService.read($routeParams.eventId);
 	$scope.swipes = SwipeService.list($routeParams.eventId);
+
+	// used in ng-repeat's orderBy to reverse the array
+	$scope.nothing = function(val) {return val};
+	$scope.reverse = true;
+
 	$scope.doAdd = function() {
 		var userId = $scope.data.userId;
 		UserService.exists(userId, function(result) {
