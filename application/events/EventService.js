@@ -3,12 +3,12 @@
 angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO, FirebaseCollection, UserService) {
 	return {
 		create: function(eventObject) {
-			if (!angular.isString(eventObject.name) &&
-				!angular.isObject(eventObject.date) &&
-				!angular.isNumeric(eventObject.date.starts) &&
-				!angular.isNumeric(eventObject.date.ends) &&
-				!angular.isObject(eventObject.location) &&
-				!angular.isString(eventObject.location.name) &&
+			if (!angular.isString(eventObject.name) ||
+				!angular.isObject(eventObject.date) ||
+				!angular.isNumber(eventObject.date.starts) ||
+				!angular.isNumber(eventObject.date.ends) ||
+				!angular.isObject(eventObject.location) ||
+				!angular.isString(eventObject.location.name) ||
 				!angular.isObject(eventObject.type)
 			) {
 				// invalid input, do nothing
