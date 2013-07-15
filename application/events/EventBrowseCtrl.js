@@ -14,22 +14,4 @@ angular.module('myhonorsEvents').controller('EventBrowseCtrl', ['$scope', '$time
 	$scope.getEvents = function() {
 		return $filter('filter')($scope.events, {name: $scope.searchName, type: $scope.searchType});
 	}
-
-	$scope.goToEvent = function(eid) {
-		$location.path('/events/' + eid);
-	};
-
-	$scope.addRSVP = function(eventId, $event) {
-		$event.stopPropagation();
-		RSVPService.create(eventId);
-	}
-
-	$scope.removeRSVP = function(eventId, $event) {
-		$event.stopPropagation();
-		RSVPService.delete(eventId);
-	}
-
-	$scope.hasRSVP = function(eventId) {
-		return RSVPService.hasRSVP(eventId);
-	}
 }]);
