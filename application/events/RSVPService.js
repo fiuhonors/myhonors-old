@@ -11,14 +11,28 @@ angular.module('myhonorsEvents').factory('RSVPService', function(FirebaseIO, Fir
 		read: function(rsvpId) {
 			// todo: this can be implemented when we add the "+ guests", phone #, and cover charge features
 		},
-		list: function(eventId) {
+
+		/**
+		 * Returns a FirebaseCollection of RSVPs
+		 *
+		 * @param eventId String	The event ID
+		 * @param options Object	Can have limit, startAt, and endAt properties
+		 */
+		list: function(eventId, options) {
 			var rsvpsRef = FirebaseIO.child('events/' + eventId + '/rsvps');
+
+			var options = options || {};
+			if (options.startAt) rsvpsRef = rsvpsRef.startAt(options.startAt);
+			if (options.endAt)   rsvpsRef = rsvpsRef.endAt(options.endAt);
+			if (options.limit)   rsvpsRef = rsvpsRef.limit(options.limit);
+
 			return FirebaseCollection(rsvpsRef, {metaFunction: function(doAdd, data) {
 				FirebaseIO.child('user_profiles/' + data.name()).once('value', function(userSnapshot) {
 					doAdd(userSnapshot);
 				});
 			}});
 		},
+		
 		update: function(rsvpId) {
 			// todo: this can be implemented when we add the "+ guests", phone #, and cover charge features
 		},

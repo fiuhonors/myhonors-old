@@ -54,11 +54,21 @@ angular.module('myhonorsComments').factory('CommentService', function($q, Fireba
 				});
 			});
 		},
+
 		/**
 		 * Returns a collection of comments
+		 *
+		 * @param commentListRef FirebaseRef A Firebase reference to the list of comments
+		 * @param options        Object      Can have limit, startAt, and endAt properties
 		 */
-		list: function(commentListRef) {
+		list: function(commentListRef, options) {
 			var self = this;
+			
+			var options = options || {};
+			if (options.startAt) commentListRef = commentListRef.startAt(options.startAt);
+			if (options.endAt)   commentListRef = commentListRef.endAt(options.endAt);
+			if (options.limit)   commentListRef = commentListRef.limit(options.limit);
+			
 			return new FirebaseCollection(commentListRef, {metaFunction: function(doAdd, data) {
 				// read each comment in the list
 				self.read(data.name(), function(data, snapshot) {
@@ -66,6 +76,7 @@ angular.module('myhonorsComments').factory('CommentService', function($q, Fireba
 				});
 			}});
 		},
+		
 		update: function(commentId) {
 			// ...
 		},

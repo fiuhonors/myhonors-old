@@ -41,8 +41,21 @@ angular.module('myhonorsEvents').factory('SwipeService', function($q, FirebaseIO
 				userRef.setPriority(now);
 			});
 		},
-		list: function(eventId) {
+
+		/**
+		 * Returns a FirebaseCollection of swipes
+		 *
+		 * @param eventId String	The event ID
+		 * @param options Object	Can have limit, startAt, and endAt properties
+		 */
+		list: function(eventId, options) {
 			var swipeRef = FirebaseIO.child('events/' + eventId + '/attendance');
+
+			var options = options || {};
+			if (options.startAt) swipeRef = swipeRef.startAt(options.startAt);
+			if (options.endAt)   swipeRef = swipeRef.endAt(options.endAt);
+			if (options.limit)   swipeRef = swipeRef.limit(options.limit);
+
 			return FirebaseCollection(swipeRef, {metaFunction: function(doAdd, swipeSnapshot) {
 				FirebaseIO.child('user_profiles/' + swipeSnapshot.name()).once('value', function(userSnapshot) {
 					var extraData = {

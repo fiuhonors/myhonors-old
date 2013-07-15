@@ -46,8 +46,20 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
 
 			return deferred.promise;
 		},
-		list: function() {
+
+		/**
+		 * Returns a FirebaseCollection of events
+		 *
+		 * @param options Object	Can have limit, startAt, and endAt properties
+		 */
+		list: function(options) {
 			var eventsRef = FirebaseIO.child('events');
+
+			var options = options || {};
+			if (options.startAt) eventsRef = eventsRef.startAt(options.startAt);
+			if (options.endAt)   eventsRef = eventsRef.endAt(options.endAt);
+			if (options.limit)   eventsRef = eventsRef.limit(options.limit);
+
 			var self = this;
 			return FirebaseCollection(eventsRef, {metaFunction: function(doAdd, snapshot) {
 				var extraData = {
@@ -58,6 +70,7 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
 				doAdd(snapshot, extraData);
 			}});
 		},
+
 		update: function() {
 			// ...
 		},
