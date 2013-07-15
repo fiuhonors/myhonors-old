@@ -16,11 +16,11 @@ angular.module('myhonorsEvents').controller('EventAddCtrl', ['$scope', '$locatio
 
 		var startHour = parseInt($scope.newItem.date.starts.time.substring(0, 2)) + (($scope.newItem.date.starts.time.substring(6, 8) === 'PM') ? 12 : 0);
 		var startMin = parseInt($scope.newItem.date.starts.time.substring(3, 5));
-		newItem.date.starts = moment($scope.newItem.date.starts.date).hour(startHour).minute(startMin).valueOf();
+		newItem.date.starts = moment($scope.newItem.date.starts.date, "MM-DD-YYYY").hour(startHour).minute(startMin).valueOf();
 
 		var endHour = parseInt($scope.newItem.date.ends.time.substring(0, 2)) + (($scope.newItem.date.ends.time.substring(6, 8) === 'PM') ? 12 : 0);
 		var endMin = parseInt($scope.newItem.date.ends.time.substring(3, 5));
-		newItem.date.ends = moment($scope.newItem.date.ends.date).hour(endHour).minute(endMin).valueOf();
+		newItem.date.ends = moment($scope.newItem.date.ends.date, "MM-DD-YYYY").hour(endHour).minute(endMin).valueOf();
 
 		newItem.type = {};
 		angular.forEach($scope.newItem.type, function(value) {
@@ -37,11 +37,11 @@ angular.module('myhonorsEvents').controller('EventAddCtrl', ['$scope', '$locatio
 			desc: '',
 			date: {
 				starts: {
-					date: new Date(),
+					date: moment().format('MM/DD/YYYY'),
 					time: moment().format('hh:mm A')
 				},
 				ends: {
-					date: new Date(),
+					date: moment().format('MM/DD/YYYY'),
 					time: moment().add('hours', 1).format('hh:mm A')
 				}
 			},
