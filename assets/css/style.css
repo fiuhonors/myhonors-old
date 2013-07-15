@@ -110,12 +110,6 @@ h1,h2,h3,h4,h5,h6, .opensans {
 	padding: 4px;
 }
 
-.dropdown-text {
-	display: inline-block;
-	margin-top: 27px;
-	color: silver;
-}
-
 .dropdown.open .btn-link.dropdown-toggle {
 	color: #00baff;
 	background-color: transparent;

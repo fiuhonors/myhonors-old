@@ -102,23 +102,26 @@
 			<div class="container-fluid">
 				<a class="brand" href="#/">&nbsp;</a>
 				<ul class="nav" data-ng-show="user.profile">
-					<li ng-show="user.auth.isAdmin"><a href="#/events"><i class="icon-calendar icon-white"></i> Events</a></li>
-					<li ng-show="user.auth.isAdmin"><a href="#/citizenship"><i class="icon-ok icon-white"></i> Citizenship</a></li>
-					<li ng-show="user.auth.isAdmin"><a href="#/career"><i class="icon-briefcase icon-white"></i> Internships</a></li>
-					<li><a href="#/arch"><i class="icon-file icon-white"></i> ARCH Projects</a></li>
-					<li ng-show="user.auth.isAdmin"><a href="#/admin"><i class="icon-cog icon-white"></i> Administration</a></li>
+					<li ng-show="user.auth.isAdmin"><a href="#/events">Events</a></li>
+					<li ng-show="user.auth.isAdmin"><a href="#/citizenship">Citizenship</a></li>
+					<li ng-show="user.auth.isAdmin"><a href="#/career">Internships</a></li>
+					<li><a href="#/arch">ARCH</a></li>
 				</ul>
-				<div class="dropdown pull-right" data-ng-cloak>
-					<span class="dropdown-text">Logged in as</span> <button class="btn btn-link dropdown-toggle"><i class="icon-user icon-white"></i> {{user.profile.fname}} {{user.profile.lname}}</button>
-					<ul class="dropdown-menu pull-right" role="menu">
-						<li ng-show="user.auth.isAdmin"><a href="#/profile/{{user.profile.user_id}}">View Profile</a></li>
-						<li ng-show="user.auth.isAdmin"><a href="#/profile/{{user.profile.user_id}}/edit">Update Profile</a></li>
-						<li ng-show="user.auth.isAdmin" class="divider"></li>
-						<li><a href="#/login" ng-click="user.logout()">Logout</a></li>
-					</ul>
-				</div>
-				<ul class="unstyled inline pull-right" data-ng-show="!user.profile">
-					<li><a href="#/login" class="btn btn-primary">Login</a></li>
+				<ul class="nav pull-right">
+					<li class="dropdown" data-ng-show="user.profile">
+						<a href="#" class="dropdown-toggle"><i class="icon-user icon-white"></i> {{user.profile.fname}} {{user.profile.lname}}</a>
+						<ul class="dropdown-menu" role="menu">
+							<li ng-show="user.auth.isAdmin"><a href="#/profile/{{user.profile.user_id}}">View Profile</a></li>
+							<li ng-show="user.auth.isAdmin"><a href="#/profile/{{user.profile.user_id}}/edit">Update Profile</a></li>
+							<li ng-show="user.auth.isAdmin" class="divider"></li>
+							<li ng-show="user.auth.isAdmin"><a href="#/admin">Admin Panel</a></li>
+							<li ng-show="user.auth.isAdmin" class="divider"></li>
+							<li><a href="#/login" ng-click="user.logout()">Logout</a></li>
+						</ul>
+					</li>
+					<li data-ng-show="!user.profile">
+						<a href="#/login" class="btn btn-primary">Login</a>
+					</li>
 				</ul>
 			</div>
 		</div>
