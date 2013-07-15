@@ -40,11 +40,11 @@
 		<div class="box-content">
 			<ul class="block-hover block-clickable">
 				<li ng-repeat="event in events" ng-click="goToEvent(event.$id)" class="clearfix">
-					<img class="pull-left span2 img-rounded" ng-src="{{event.thumbURL}}">
+					<img class="pull-left span2 img-rounded" ng-src="{{event.thumbURL || 'http://placehold.it/75'}}">
 					<div class="pull-left span8">
-						<strong>{{event.name}}</strong> <span>on May 24th at 3:30pm</span>
-						<span class="muted event-subtitle">COUNTS AS ONE {{event.type}}</span>
-						<p class="event-short-desc">{{event.desc}} <a href="#">show more</a></p>
+						<strong>{{event.name}}</strong> <span>on {{event.date.starts | date:"MMMM d 'at' h:mm a"}}</span>
+						<span class="muted event-subtitle">{{event.type || 'General Event'}}</span>
+						<p class="event-short-desc">{{event.desc || 'No description.'}}</p>
 					</div>
 					<div class="span2 text-center event-attending">
 						<h3>{{event.rsvps}}</h3>
