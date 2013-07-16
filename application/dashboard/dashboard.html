@@ -37,7 +37,7 @@
 <div class="span6">
 	<div class="box">
 		<div class="box-header">Upcoming Events</div>
-		<div class="box-content">
+		<div class="box-content" ng-show="events.length">
 			<ul class="block-hover block-clickable">
 				<li ng-repeat="event in events" ng-click="goToEvent(event.$id)" class="clearfix">
 					<img class="pull-left span2 img-rounded" ng-src="{{event.thumbURL || 'http://placehold.it/75'}}">
@@ -54,6 +54,11 @@
 					</div>
 				</li>
 			</ul>
+		</div>
+		<div class="box-content padded" ng-show="!events.length">
+			<div class="alert alert-info padded-medium" style="margin-bottom: 0">
+				<strong>No upcoming events.</strong> Check back again soon!
+			</div>
 		</div>
 	</div>
 </div>
