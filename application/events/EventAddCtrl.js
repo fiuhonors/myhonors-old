@@ -2,6 +2,15 @@
 
 angular.module('myhonorsEvents').controller('EventAddCtrl', ['$scope', '$location', 'EventService', function($scope, $location, EventService) {
 	$scope.eventTypes = EventService.getTypes();
+
+	// auto updates the date and time
+	$scope.updateEnds = function(timeOrDate) {
+		if (timeOrDate === 'time') {
+			$scope.newItem.date.ends.time = moment($scope.newItem.date.starts.time, 'hh:mm A').add('hours', 1).format('hh:mm A');
+		} else if (timeOrDate === 'date') {
+			$scope.newItem.date.ends.date = moment($scope.newItem.date.starts.date, 'MM-DD-YYYY').format('MM/DD/YYYY');
+		}
+	};
 	
 	$scope.doAdd = function(theForm) {
 		if (theForm.$invalid) { return; }
@@ -32,17 +41,20 @@ angular.module('myhonorsEvents').controller('EventAddCtrl', ['$scope', '$locatio
 	};
 
 	$scope.resetForm = function() {
+		var now = moment();
+		now.minute(now.minute() + (15 - (now.minute() % 15))).second(0).millisecond(0);
+
 		$scope.newItem = {
 			name: '',
 			desc: '',
 			date: {
 				starts: {
-					date: moment().format('MM/DD/YYYY'),
-					time: moment().format('hh:mm A')
+					date: now.format('MM/DD/YYYY'),
+					time: now.format('hh:mm A')
 				},
 				ends: {
-					date: moment().format('MM/DD/YYYY'),
-					time: moment().add('hours', 1).format('hh:mm A')
+					date: now.format('MM/DD/YYYY'),
+					time: now.add('hours', 1).format('hh:mm A')
 				}
 			},
 			type: [],
