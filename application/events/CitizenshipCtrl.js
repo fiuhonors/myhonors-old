@@ -1,46 +1,38 @@
 'use strict';
 
-angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$timeout', 'FirebaseIO', function($scope, $timeout, FirebaseIO) {
+angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$timeout', 'FirebaseIO', 'SwipeService', 'UserService', function($scope, $timeout, FirebaseIO, SwipeService, UserService) {
 	$scope.eventTally = {
 		// initialize the event types
-		honorshour: 0,
-		colloquia: 0,
-		excellence: 0,
+		'Honors Hour': 0,
+		'Colloquium': 0,
+		'Excellence Lecture': 0,
 
 		add: function(type) {
 			// safely increment an event type
 			this[type] = (angular.isNumber(this[type])) ? this[type] + 1 : this[type];
 		},
 		reset: function() {
-			this.honorshour = 0;
-			this.colloquia = 0;
-			this.excellence = 0;
+			this['Honors Hour'] = 0;
+			this['Colloquium'] = 0;
+			this['Excellence Lecture'] = 0;
 		}
 	};
 
-	var swipeRef = FirebaseIO.child('swipes/' + $scope.user.profile.id);
-
-	// new data! get all of the user's swipes ...
-	swipeRef.on('value', function(snapshot)
-	{
-		// ... clear the current tally ...
+	UserService.ref.child('attendance').on('value', function(snapshot) {
+		// clear the current tally ...
 		$timeout(function() {
 			$scope.eventTally.reset();
 		});
 
-		// ... and then, for each swipe ...
 		angular.forEach(snapshot.val(), function(value, key)
 		{
-			// ... grab the type of the event (key is the eventID) ...
-			var eventRef = FirebaseIO.child('events/' + key + '/type');
-
-			// ... and update our scope's tally accordingly
-			eventRef.on('value', function(snapshot) {
+			// grab the type of the event (key is the eventID) and update the tally
+			FirebaseIO.child('events/' + key + '/types').once('value', function(snapshot) {
 				$timeout(function() {
-					$scope.eventTally.add(snapshot.val());
+					snapshot.forEach(function(child) {
+						$scope.eventTally.add(child.val());
+					});
 				});
-
-				eventRef.off();
 			});
 		});
 	});

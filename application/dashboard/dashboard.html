@@ -7,30 +7,32 @@
 	</div>
 </div>
 
-<div class="span2" ng-controller="CitizenshipCtrl">
-	<div class="box">
-		<div class="box-header">Honors Hours</div>
-		<div class="box-content padded clearfix">
-			<canvas class="pull-left" width="60" height="60" doughnut-chart="eventTally.honorshour,3"></canvas>
-			<div class="pull-right"><h2>{{eventTally.honorshour}}/3</h2></div>
+<div class="span6" ng-controller="CitizenshipCtrl">
+	<div class="span4">
+		<div class="box">
+			<div class="box-header">Honors Hours</div>
+			<div class="box-content padded clearfix">
+				<canvas class="pull-left" width="60" height="60" doughnut-chart="eventTally['Honors Hour'],3"></canvas>
+				<div class="pull-right"><h2>{{eventTally['Honors Hour']}}/3</h2></div>
+			</div>
 		</div>
 	</div>
-</div>
-<div class="span2" ng-controller="CitizenshipCtrl">
-	<div class="box">
-		<div class="box-header">Colloquia</div>
-		<div class="box-content padded clearfix">
-			<canvas class="pull-left" width="60" height="60" doughnut-chart="eventTally.colloquia,1"></canvas>
-			<div class="pull-right"><h2>{{eventTally.colloquia}}/1</h2></div>
+	<div class="span4">
+		<div class="box">
+			<div class="box-header">Colloquia</div>
+			<div class="box-content padded clearfix">
+				<canvas class="pull-left" width="60" height="60" doughnut-chart="eventTally['Colloquium'],1"></canvas>
+				<div class="pull-right"><h2>{{eventTally['Colloquium']}}/1</h2></div>
+			</div>
 		</div>
 	</div>
-</div>
-<div class="span2" ng-controller="CitizenshipCtrl">
-	<div class="box">
-		<div class="box-header">Excellence Lectures</div>
-		<div class="box-content padded clearfix">
-			<canvas class="pull-left" width="60" height="60" doughnut-chart="eventTally.excellence,1"></canvas>
-			<div class="pull-right"><h2>{{eventTally.excellence}}/1</h2></div>
+	<div class="span4">
+		<div class="box">
+			<div class="box-header">Excellence Lectures</div>
+			<div class="box-content padded clearfix">
+				<canvas class="pull-left" width="60" height="60" doughnut-chart="eventTally['Excellence Lecture'],1"></canvas>
+				<div class="pull-right"><h2>{{eventTally['Excellence Lecture']}}/1</h2></div>
+			</div>
 		</div>
 	</div>
 </div>
