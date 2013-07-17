@@ -1,5 +1,5 @@
 {
-  "rules": {
+	"rules": {
 		// set defaults to no reads and no writes unless you're an Administrator
 		".read": "auth.isAdmin === true",
 		".write": "auth.isAdmin === true",
@@ -37,6 +37,14 @@
 						".validate": "newData.isBoolean()"
 					}
 				},
+				"attendance": {
+					".write": "auth.isEventMod === true",
+					"$eventID": {
+						"$swipeId": {
+							".validate": "newData.isNumber()"
+						}
+					}
+				},
 				"comments": {
 					"$commentID": {
 						".validate": "newData.isBoolean()"
@@ -55,11 +63,6 @@
 			}
 		},
 
-		"swipes": {
-			".read": true,
-			".write": true,
-		},
-
 		"events": {
 			// anyone can read event info, but only Event moderators can add new events and edit
 			// any of the details
@@ -72,7 +75,7 @@
 				"desc": {
 					".validate": "newData.isString()"
 				},
-				"type": {
+				"types": {
 					// no rules
 				},
 				"date": {
@@ -112,6 +115,19 @@
 					"$rsvpId": {
 						".validate": "newData.isBoolean()"
 					}
+				},
+				"attendance": {
+					".write": "auth.isEventMod === true",
+					"$userId": {
+						"$swipeId": {
+							".validate": "newData.isNumber()"
+						}
+					}
+				},
+
+				// prevents any extra children (we only want the fields that are explicitly identified here)
+				"$other": {
+					".validate": false
 				}
 			}
 		},
