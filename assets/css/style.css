@@ -245,11 +245,14 @@ ul.block-clickable li:hover {
 	cursor: pointer;
 }
 
-.event-subtitle {
-	display: block;
+.event-types {
 	margin-top: -2px;
 	font-size: 10px;
 	text-transform: uppercase;
+}
+
+.event-types span {
+	display: inline-block;
 }
 
 .event-short-desc {

@@ -31,11 +31,6 @@ angular.module('myhonorsEvents').controller('EventAddCtrl', ['$scope', '$locatio
 		var endMin = parseInt($scope.newItem.date.ends.time.substring(3, 5));
 		newItem.date.ends = moment($scope.newItem.date.ends.date, "MM-DD-YYYY").hour(endHour).minute(endMin).valueOf();
 
-		newItem.type = {};
-		angular.forEach($scope.newItem.type, function(value) {
-			newItem.type[value] = true;
-		});
-
 		EventService.create(newItem);
 		$location.path('events');
 	};

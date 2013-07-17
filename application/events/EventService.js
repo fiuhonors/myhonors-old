@@ -14,7 +14,7 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
 				!angular.isNumber(eventObject.date.ends) ||
 				!angular.isObject(eventObject.location) ||
 				!angular.isString(eventObject.location.name) ||
-				!angular.isObject(eventObject.type)
+				!angular.isArray(eventObject.types)
 			) {
 				// invalid input, do nothing
 				return;
@@ -60,7 +60,6 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
 			if (options.endAt)   eventsRef = eventsRef.endAt(options.endAt);
 			if (options.limit)   eventsRef = eventsRef.limit(options.limit);
 
-			var self = this;
 			return FirebaseCollection(eventsRef, {metaFunction: function(doAdd, snapshot) {
 				var extraData = {
 					id: snapshot.name(),

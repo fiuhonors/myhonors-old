@@ -42,8 +42,14 @@
 				<li ng-repeat="event in events" ng-click="goToEvent(event.$id)" class="clearfix">
 					<img class="pull-left span2 img-rounded" ng-src="{{event.thumbURL || 'http://placehold.it/75'}}">
 					<div class="pull-left span8">
-						<strong>{{event.name}}</strong> <span>on {{event.date.starts | date:"MMMM d 'at' h:mm a"}}</span>
-						<span class="muted event-subtitle">{{event.type || 'General Event'}}</span>
+						<div>
+							<strong>{{event.name}}</strong>
+							<span>on {{event.date.starts | date:"MMMM d 'at' h:mm a"}}</span>
+						</div>
+						<div class="event-types">
+							<span class="muted" ng-repeat="type in event.types" ng-show="event.types">{{type}}<span ng-show="!$last">,&nbsp;</span></span>
+							<span class="muted" ng-show="!event.types">GENERAL EVENT</span>
+						</div>
 						<p class="event-short-desc">{{event.desc || 'No description.'}}</p>
 					</div>
 					<div class="span2 text-center event-attending">
