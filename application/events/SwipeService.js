@@ -45,26 +45,47 @@ angular.module('myhonorsEvents').factory('SwipeService', function($q, FirebaseIO
 		},
 
 		/**
-		 * Returns a FirebaseCollection of swipes
+		 * Returns a FirebaseCollection of an event's attendance record
 		 *
-		 * @param eventId String	The event ID
-		 * @param options Object	Can have limit, startAt, and endAt properties
+		 * @param eventId String    The event ID
+		 * @param options Object    Can have limit, startAt, and endAt properties
 		 */
-		list: function(eventId, options) {
-			var swipeRef = FirebaseIO.child('events/' + eventId + '/attendance');
+		listByEvent: function(eventId, options) {
+			var eventAttendanceRef = FirebaseIO.child('events/' + eventId + '/attendance');
 
 			var options = options || {};
-			if (options.startAt) swipeRef = swipeRef.startAt(options.startAt);
-			if (options.endAt)   swipeRef = swipeRef.endAt(options.endAt);
-			if (options.limit)   swipeRef = swipeRef.limit(options.limit);
+			if (options.startAt) eventAttendanceRef = eventAttendanceRef.startAt(options.startAt);
+			if (options.endAt)   eventAttendanceRef = eventAttendanceRef.endAt(options.endAt);
+			if (options.limit)   eventAttendanceRef = eventAttendanceRef.limit(options.limit);
 
-			return FirebaseCollection(swipeRef, {metaFunction: function(doAdd, swipeSnapshot) {
+			return FirebaseCollection(eventAttendanceRef, {metaFunction: function(doAdd, swipeSnapshot) {
 				FirebaseIO.child('user_profiles/' + swipeSnapshot.name()).once('value', function(userSnapshot) {
 					var extraData = {
 						fname: userSnapshot.child('fname').val(),
 						greeting: getRandomGreeting(userSnapshot.child('fname').val())
 					};
 					doAdd(swipeSnapshot, extraData);
+				});
+			}});
+		},
+
+		/**
+		 * Returns a FirebaseCollection of a user's attendance record
+		 *
+		 * @param userId String     The user ID
+		 * @param options Object    Can have limit, startAt, and endAt properties
+		 */
+		listByUser: function(userId, options) {
+			var userAttendanceRef = FirebaseIO.child('user_profiles/' + userId + '/attendance');
+
+			var options = options || {};
+			if (options.startAt) userAttendanceRef = userAttendanceRef.startAt(options.startAt);
+			if (options.endAt)   userAttendanceRef = userAttendanceRef.endAt(options.endAt);
+			if (options.limit)   userAttendanceRef = userAttendanceRef.limit(options.limit);
+
+			return FirebaseCollection(userAttendanceRef, {metaFunction: function(doAdd, swipeSnapshot) {
+				FirebaseIO.child('events/' + swipeSnapshot.name()).once('value', function(eventSnapshot) {
+					doAdd(eventSnapshot);
 				});
 			}});
 		}

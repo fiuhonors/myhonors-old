@@ -3,7 +3,7 @@
 angular.module('myhonorsEvents').controller('SwipeCtrl', ['$scope', '$timeout', '$routeParams', 'UserService', 'EventService', 'SwipeService', function ($scope, $timeout, $routeParams, UserService, EventService, SwipeService) {
 	$scope.data = {userId: ''};
 	$scope.event = EventService.read($routeParams.eventId);
-	$scope.swipes = SwipeService.list($routeParams.eventId);
+	$scope.swipes = SwipeService.listByEvent($routeParams.eventId);
 
 	// used in ng-repeat's orderBy to reverse the array
 	$scope.nothing = function(val) {return val};
