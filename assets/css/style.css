@@ -275,7 +275,7 @@ ul.block-clickable li:hover {
 .mapoverlay {
 	position: absolute;
 	background: rgba(0, 0, 0, 0.85);
-	min-height: 150px;
+	height: 90px;
 	width: 450px;
 	bottom: 40px;
 	right: 0;

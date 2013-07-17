@@ -1,11 +1,10 @@
 <div class="row-fluid">
 	<div class="span12 box padded-small" style="position: relative">
-		<leaflet center="center" markers="markers" defaults="defaults" height="250px"></leaflet>
+		<leaflet center="center" markers="markers" defaults="defaults" height="150px"></leaflet>
 		<div class="mapoverlay">
 			<div>
-				<h1>{{event.name}}</h1>
-				<p class="smalltext">{{event.date.starts*1000 | date:"EEEE, MMMM d 'at' h:mma"}} at {{event.location.name}}. Counts as 1 {{event.type}}.</p>
-				<p>{{event.desc}}</p>
+				<h1 style="margin-bottom: 0">{{event.name}}</h1>
+				<p class="smalltext">{{event.date.starts | date:"EEEE, MMMM d 'at' h:mma"}}. {{event.location.name}}</p>
 			</div>
 		</div>
 	</div>
@@ -18,7 +17,7 @@
 			<div class="box-content padded">
 				<p>{{event.desc}}</p>
 				<p>
-					<strong>Date: </strong> {{event.date.begins | date:"EEE, MMMM d 'at' h:mm a"}}<br />
+					<strong>Date: </strong> {{event.date.starts | date:"EEE, MMMM d 'at' h:mm a"}}<br />
 					<strong>Location: </strong> {{event.location.name}}
 				</p>
 			</div>
