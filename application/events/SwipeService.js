@@ -40,6 +40,8 @@ angular.module('myhonorsEvents').factory('SwipeService', function($q, FirebaseIO
 				// then set the priority in this onComplete callback
 				userRef.setPriority(now);
 			});
+
+			FirebaseIO.child('user_profiles/' + userId + '/attendance/' + eventId).push(now);
 		},
 
 		/**
