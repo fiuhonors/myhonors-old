@@ -70,9 +70,30 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
 			}});
 		},
 
-		update: function() {
-			// ...
+		/**
+		 * Updates an event
+		 */
+		update: function(eventId, eventObject) {
+			if (!angular.isString(eventObject.name) ||
+				!angular.isObject(eventObject.date) ||
+				!angular.isNumber(eventObject.date.starts) ||
+				!angular.isNumber(eventObject.date.ends) ||
+				!angular.isObject(eventObject.location) ||
+				!angular.isString(eventObject.location.name) ||
+				!angular.isArray(eventObject.types)
+			) {
+				// invalid input, do nothing
+				return;
+			}
+
+			// go through each property in the object and add that specifically, this prevents
+			// us from overwriting the entire /events/eventId location (which prevents us from
+			// deleting the RSVPs, attendance, comments, etc.)
+			angular.forEach(eventObject, function(value, key) {
+				FirebaseIO.child('events/' + eventId + '/' + key).set(value);
+			});
 		},
+
 		delete: function(eventId) {
 			FirebaseIO.child('events/' + eventId).remove();
 		},
