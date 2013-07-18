@@ -15,7 +15,7 @@
       <td ng-show="showWeekNumbers" class="text-center"><em>{{ getWeekNumber(row) }}</em></td>
       <td ng-repeat="dt in row" ng-click="select(dt.date)" style="text-align: center">
         <h3 style="margin-top: -10px; margin-bottom: 0"><span ng-class="{muted: ! dt.isCurrent}">{{dt.label}}</span></h3>
-        <a href="#/events/{{event.id}}" ng-repeat="event in getEvents(dt.date)"><span class="label label-info" style="display: block; margin-bottom: 1px" >{{event.name}}</span></a>
+        <a href="#/events/{{event.id}}" ng-repeat="event in getEvents(dt.date)"><span class="label label-info" style="display: block; margin-bottom: 1px" >{{event.name | truncate:20}}</span></a>
       </td>
     </tr>
   </tbody>

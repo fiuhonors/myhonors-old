@@ -3,7 +3,7 @@
 		<leaflet center="center" markers="markers" defaults="defaults" height="150px"></leaflet>
 		<div class="mapoverlay">
 			<div>
-				<h1 style="margin-bottom: 0">{{event.name}}</h1>
+				<h1 style="margin-bottom: 0">{{event.name | truncate:25}}</h1>
 				<p class="smalltext">{{event.date.starts | date:"EEEE, MMMM d 'at' h:mma"}}. {{event.location.name}}</p>
 			</div>
 		</div>
@@ -15,7 +15,7 @@
 		<div class="box">
 			<div class="box-header">Event Details</div>
 			<div class="box-content padded">
-				<p>{{event.desc}}</p>
+				<p><strong>{{event.name}}</strong>. {{event.desc}}</p>
 				<p>
 					<strong>Date: </strong> {{event.date.starts | date:"EEE, MMMM d 'at' h:mm a"}}<br />
 					<strong>Location: </strong> {{event.location.name}}

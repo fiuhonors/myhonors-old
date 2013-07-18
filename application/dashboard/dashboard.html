@@ -52,7 +52,7 @@
 							<span class="muted" ng-repeat="type in event.types" ng-show="event.types">{{type}}<span ng-show="!$last">,&nbsp;</span></span>
 							<span class="muted" ng-show="!event.types">GENERAL EVENT</span>
 						</div>
-						<p class="event-short-desc">{{event.desc || 'No description.'}}</p>
+						<p class="event-short-desc">{{(event.desc || 'No description.') | truncate:75}}</p>
 					</div>
 					<div class="span2 text-center event-attending">
 						<h3>{{event.rsvps}}</h3>
