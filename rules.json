@@ -78,6 +78,9 @@
 				"types": {
 					// no rules
 				},
+				"options": {
+					// no rules
+				},
 				"date": {
 					// events must have a start & end date, and start date must come before its end date
 					".validate": "newData.hasChildren(['starts', 'ends']) && newData.child('starts').val() < newData.child('ends').val()",

@@ -52,7 +52,7 @@ angular.module('myhonorsEvents').controller('EventAddCtrl', ['$scope', '$locatio
 					time: now.add('hours', 1).format('hh:mm A')
 				}
 			},
-			type: [],
+			types: [],
 			location: {
 				name: '',
 				lat: 25.756237234313733,
