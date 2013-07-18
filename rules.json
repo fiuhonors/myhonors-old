@@ -34,7 +34,7 @@
 				},
 				"rsvps": {
 					"$eventID": {
-						".validate": "newData.isBoolean()"
+						// no rules
 					}
 				},
 				"attendance": {
@@ -115,8 +115,8 @@
 				"rsvps": {
 					// anyone can RSVP to an event
 					".write": true,
-					"$rsvpId": {
-						".validate": "newData.isBoolean()"
+					"$userId": {
+						// no rules
 					}
 				},
 				"attendance": {

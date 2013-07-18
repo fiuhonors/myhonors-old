@@ -2,7 +2,7 @@
 
 angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeParams', '$timeout', '$location', '$window', 'FirebaseIO', 'FirebaseCollection', 'EventService', 'CommentService', 'RSVPService', 'apikey_google', function ($scope, $routeParams, $timeout, $location, $window, FirebaseIO, FirebaseCollection, EventService, CommentService, RSVPService, apikey_google) {
 	var discussionRef = FirebaseIO.child('events/' + $routeParams.eventId + '/comments');
-	$scope.rsvp = RSVPService;
+	$scope.rsvp = RSVPService.read($routeParams.eventId) || {guests: 0};
 	$scope.eventRSVPs = RSVPService.list($routeParams.eventId);
 	$scope.userComment = '';
 
@@ -31,6 +31,21 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 			$scope.markers.push(angular.extend(data.location, {message: data.location.name}));
 		});
 	});
+
+	/* RSVP FUNCTIONALITY */
+
+	$scope.addRSVP = function() {
+		var data = {guests: $scope.rsvp.guests};
+		RSVPService.create($routeParams.eventId, data);
+	};
+
+	$scope.removeRSVP = function() {
+		RSVPService.delete($routeParams.eventId);
+	};
+
+	$scope.hasRSVP = function() {
+		return RSVPService.hasRSVP($routeParams.eventId);
+	};
 
 	/* COMMENT FUNCTIONALITY */
 

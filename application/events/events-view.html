@@ -67,16 +67,19 @@
 	</div>
 	<div class="span3">
 		<div class="box">
-			<div class="box-content padded text-center">
-				<button class="btn btn-large input-block-level" style="margin-bottom: 10px" ng-click="rsvp.create(event.id)" ng-show="!rsvp.hasRSVP(event.id)">I'm Going</button>
-				<button class="btn btn-large input-block-level btn-primary" style="margin-bottom: 10px" ng-click="rsvp.delete(event.id)" ng-show="rsvp.hasRSVP(event.id)">I'm Going</button>
-				<button class="btn">Invite a Friend</button>
-				<button class="btn"><i class="icon-heart"></i></button>
-				<button class="btn"><i class="icon-share"></i></button>
+			<div class="box-header text-center">RSVP <span class="muted">(répondez s'il vous plaît)</span></div>
+			<div class="box-content padded">
+				<button class="btn btn-large input-block-level" style="margin-bottom: 10px" ng-click="addRSVP()" ng-show="!hasRSVP()">I'm Going</button>
+				<button class="btn btn-large input-block-level btn-primary" style="margin-bottom: 10px" ng-click="removeRSVP()" ng-show="hasRSVP()">I'm Going</button>
+				<div class="input-prepend input-append input-block-level">
+					<span class="add-on">+</span>
+					<input type="number" min="0" placeholder="0" ng-model="rsvp.guests" ng-change="addRSVP()">
+					<span class="add-on">Guests</span>
+				</div>
 			</div>
 		</div>
 		<div class="box" ng-show="user.auth.isEventMod">
-			<div class="box-header">Event Administration</div>
+			<div class="box-header text-center">Event Administration</div>
 			<div class="box-content padded text-center">
 				<a href="#/events/{{event.id}}/swipe" class="btn btn-success">Swipe</a>
 				<a href="#/events/{{event.id}}/edit" class="btn btn-primary">Edit</a>
@@ -84,7 +87,7 @@
 			</div>
 		</div>
 		<div class="box">
-			<div class="box-header">RSVPs</div>
+			<div class="box-header text-center">{{event.rsvps}} <span ng-show="event.rsvps === 1">person</span><span ng-show="event.rsvps !== 1">people</span> attending</div>
 			<div class="box-content">
 				<div ng-show="!eventRSVPs.length" class="padded">
 					<div class="alert alert-info padded-medium" style="margin-bottom: 0">
@@ -95,7 +98,7 @@
 					<li ng-repeat="rsvp in eventRSVPs" class="clearfix">
 						<img class="pull-left img-rounded" src="http://placehold.it/36">
 						<div class="pull-left" style="margin-left: 10px; line-height: 36px">
-							<strong>{{rsvp.fname}}</strong> is going
+							<strong>{{rsvp.fname}}</strong> is going <span class="muted" ng-show="rsvp.guests > 0">[+{{rsvp.guests}}]</span>
 						</div>
 					</li>
 				</ul>

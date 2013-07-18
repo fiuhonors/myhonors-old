@@ -2,14 +2,15 @@
 
 angular.module('myhonorsEvents').factory('RSVPService', function(FirebaseIO, FirebaseCollection, UserService) {
 	return {
-		create: function(eid) {
-			// add attendance info to event (so we can pull it from event page)
-			// and add it to the user's profile (so we can see it on the user's page)
-			FirebaseIO.child('/events/' + eid + '/rsvps/' + UserService.profile.id).set(true);
-			UserService.ref.child('rsvps/' + eid).set(true);
+		create: function(eventId, options) {
+			this.update(eventId, options);
 		},
-		read: function(rsvpId) {
-			// todo: this can be implemented when we add the "+ guests", phone #, and cover charge features
+
+		/**
+		 * Reads the RSVP data of the current user
+		 */
+		read: function(eventId) {
+			return this.hasRSVP(eventId) ? UserService.profile.rsvps[eventId] : null;
 		},
 
 		/**
@@ -28,21 +29,32 @@ angular.module('myhonorsEvents').factory('RSVPService', function(FirebaseIO, Fir
 
 			return FirebaseCollection(rsvpsRef, {metaFunction: function(doAdd, data) {
 				FirebaseIO.child('user_profiles/' + data.name()).once('value', function(userSnapshot) {
-					doAdd(userSnapshot);
+					doAdd(data, userSnapshot.val());
 				});
 			}});
 		},
 		
-		update: function(rsvpId) {
-			// todo: this can be implemented when we add the "+ guests", phone #, and cover charge features
+		/**
+		 * Updates an RSVP. The information gets saved on the event reference (so we can pull the info from
+		 * the event page) and also on the user's reference (so we can pull it from a user profile page).
+		 *
+		 * @param eventId    The event ID
+		 * @param options    An object with the options you want to update
+		 */
+		update: function(eventId, options) {
+			angular.forEach(options, function(value, key) {
+				FirebaseIO.child('events/' + eventId + '/rsvps/' + UserService.profile.id + '/' + key).set(value);
+				UserService.ref.child('rsvps/' + eventId + '/' + key).set(value);
+			});
 		},
+
 		delete: function(eid) {
 			// remove attendance info from event and user's profile
 			FirebaseIO.child('/events/' + eid + '/rsvps/' + UserService.profile.id).remove();
 			UserService.ref.child('rsvps/' + eid).remove();
 		},
 		hasRSVP: function(eid) {
-			return UserService.profile && UserService.profile.rsvps && UserService.profile.rsvps[eid] === true;
+			return UserService.profile && UserService.profile.rsvps && UserService.profile.rsvps[eid];
 		}
 	}
 });

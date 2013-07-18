@@ -34,8 +34,13 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
 
 				var data = snapshot.val();
 				data.id = snapshot.name();
-				data.rsvps = snapshot.child('rsvps').numChildren();
 				data.comments = snapshot.child('comments').numChildren();
+				
+				// calculate the total number of RSVPs
+				data.rsvps = snapshot.child('rsvps').numChildren();
+				snapshot.child('rsvps').forEach(function(snapshot) {
+					data.rsvps += snapshot.child('guests').val();
+				});
 
 				if (angular.isFunction(onComplete)) {
 					onComplete(data);
@@ -66,6 +71,12 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
 					rsvps: snapshot.child('rsvps').numChildren(),
 					comments: snapshot.child('comments').numChildren()
 				};
+
+				// add all the guests to the total number of RSVPs
+				snapshot.child('rsvps').forEach(function(childSnapshot) {
+					extraData.rsvps += childSnapshot.child('guests').val();
+				});
+
 				doAdd(snapshot, extraData);
 			}});
 		},

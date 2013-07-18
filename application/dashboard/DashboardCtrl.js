@@ -9,7 +9,7 @@ angular.module('myhonorsDashboard').controller('DashboardCtrl', ['$scope', '$loc
 
 	$scope.addRSVP = function(eventId, $event) {
 		$event.stopPropagation();
-		RSVPService.create(eventId);
+		RSVPService.create(eventId, {guests: 0});
 	};
 
 	$scope.removeRSVP = function(eventId, $event) {
@@ -19,5 +19,9 @@ angular.module('myhonorsDashboard').controller('DashboardCtrl', ['$scope', '$loc
 
 	$scope.hasRSVP = function(eventId) {
 		return RSVPService.hasRSVP(eventId);
+	};
+
+	$scope.numGuests = function(eventId) {
+		return RSVPService.read(eventId).guests;
 	};
 }]);
