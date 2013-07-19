@@ -2,8 +2,8 @@
 
 angular.module('myhonorsEvents').factory('RSVPService', function(FirebaseIO, FirebaseCollection, UserService) {
 	return {
-		create: function(eventId, options) {
-			this.update(eventId, options);
+		create: function(eventId, options, callback) {
+			this.update(eventId, options, callback);
 		},
 
 		/**
@@ -41,11 +41,12 @@ angular.module('myhonorsEvents').factory('RSVPService', function(FirebaseIO, Fir
 		 * @param eventId    The event ID
 		 * @param options    An object with the options you want to update
 		 */
-		update: function(eventId, options) {
+		update: function(eventId, options, callback) {
 			angular.forEach(options, function(value, key) {
 				FirebaseIO.child('events/' + eventId + '/rsvps/' + UserService.profile.id + '/' + key).set(value);
 				UserService.ref.child('rsvps/' + eventId + '/' + key).set(value);
 			});
+			callback();
 		},
 
 		delete: function(eid) {

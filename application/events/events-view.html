@@ -68,13 +68,27 @@
 	<div class="span3">
 		<div class="box">
 			<div class="box-header text-center">RSVP <span class="muted">(répondez s'il vous plaît)</span></div>
-			<div class="box-content padded">
-				<button class="btn btn-large input-block-level" style="margin-bottom: 10px" ng-click="addRSVP()" ng-show="!hasRSVP()">I'm Going</button>
-				<button class="btn btn-large input-block-level btn-primary" style="margin-bottom: 10px" ng-click="removeRSVP()" ng-show="hasRSVP()">I'm Going</button>
-				<div class="input-prepend input-append input-block-level">
-					<span class="add-on">+</span>
-					<input type="number" min="0" placeholder="0" ng-model="rsvp.guests" ng-change="addRSVP()">
-					<span class="add-on">Guests</span>
+			<div class="box-content padded" style="position: relative">
+				<button class="btn btn-large input-block-level" ng-click="preRSVP = true" ng-show="!hasRSVP()" ng-disabled="preRSVP" >I'm Going</button>
+				<button class="btn btn-large input-block-level btn-primary" ng-click="removeRSVP()" ng-show="hasRSVP()">I'm Going</button>
+				<div ng-show="hasRSVP() || preRSVP" ng-animate="{hide: 'slide-hide'}">
+					<div class="input-prepend input-append input-block-level" style="margin-top: 10px">
+						<span class="add-on">+</span>
+						<input type="number" min="0" placeholder="0" ng-model="rsvp.guests">
+						<span class="add-on">Guests</span>
+					</div>
+					<div class="input-prepend input-block-level" ng-show="event.options.requirePhone">
+						<span class="add-on">Phone Number</span>
+						<input type="tel" placeholder="305-999-9999" ng-model="rsvp.phone">
+					</div>
+					<div class="alert alert-info" style="margin-bottom: 10px" ng-show="rsvp.error" ng-bind-html-unsafe="rsvp.error"></div>
+					<div class="text-center" ng-show="hasRSVPChanges()" ng-animate="{show: 'slide-show', hide: 'slide-hide'}">
+						<button class="btn btn-mini btn-success" ng-click="addRSVP()">Save Changes</button>
+					</div>
+				</div>
+				<div class="text-center" ng-show="preRSVP" ng-animate="{hide: 'slide-hide'}">
+					<button class="btn btn-mini btn-primary" ng-click="addRSVP()">Save RSVP</button>
+					<button class="btn btn-mini btn-link" ng-click="preRSVP = false; rsvp.error = false">Cancel</button>
 				</div>
 			</div>
 		</div>

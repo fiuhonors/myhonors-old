@@ -2,7 +2,8 @@
 
 angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeParams', '$timeout', '$location', '$window', 'FirebaseIO', 'FirebaseCollection', 'EventService', 'CommentService', 'RSVPService', 'apikey_google', function ($scope, $routeParams, $timeout, $location, $window, FirebaseIO, FirebaseCollection, EventService, CommentService, RSVPService, apikey_google) {
 	var discussionRef = FirebaseIO.child('events/' + $routeParams.eventId + '/comments');
-	$scope.rsvp = RSVPService.read($routeParams.eventId) || {guests: 0};
+	$scope.rsvp = RSVPService.read($routeParams.eventId) || {guests: 0, error: false};
+	$scope.originalRSVP = angular.copy($scope.rsvp); // save an original to compare changes with hasRSVPChanges()
 	$scope.eventRSVPs = RSVPService.list($routeParams.eventId);
 	$scope.userComment = '';
 
@@ -36,15 +37,36 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 
 	$scope.addRSVP = function() {
 		var data = {guests: $scope.rsvp.guests};
-		RSVPService.create($routeParams.eventId, data);
+		if ($scope.event && $scope.event.options && $scope.event.options.requirePhone) {
+			if (!$scope.rsvp.phone) {
+				$scope.rsvp.error = '<strong>Woops!</strong> Please add a phone number to RSVP.';
+				return;
+			} else {
+				$scope.rsvp.error = null;
+				data.phone = $scope.rsvp.phone;
+			}
+		}
+
+		RSVPService.create($routeParams.eventId, data, function() {
+			$timeout(function() {
+				$scope.preRSVP = false;
+				$scope.rsvp = data;
+				$scope.originalRSVP = angular.copy(data);
+			});
+		});
 	};
 
 	$scope.removeRSVP = function() {
+		$scope.rsvp = $scope.originalRSVP = {guests: 0, error: false};
 		RSVPService.delete($routeParams.eventId);
 	};
 
 	$scope.hasRSVP = function() {
 		return RSVPService.hasRSVP($routeParams.eventId);
+	};
+
+	$scope.hasRSVPChanges = function() {
+		return !angular.equals($scope.rsvp, $scope.originalRSVP);
 	};
 
 	/* COMMENT FUNCTIONALITY */
