@@ -35,12 +35,6 @@ angular.module('myhonorsArch').controller('ArchCtrl', ['$scope', '$timeout', '$l
 		});
 	}
 
-	// this is just used to flip between ordering by fname or lname. when we update
-	// to AngularJS 1.15+, we can replace this with a ternary operator in the ng-click expression
-	$scope.rotateOrderBy = function(studentOrAdvisor) {
-		$scope.orderBy = ($scope.orderBy === studentOrAdvisor + '.fname') ? studentOrAdvisor + '.lname' : studentOrAdvisor + '.fname';
-	}
-
 	$scope.goToProject = function(projectId) {
 		$location.path('/arch/' + projectId);
 	};

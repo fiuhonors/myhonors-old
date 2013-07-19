@@ -15,9 +15,9 @@
 				<table class="table table-hover" style="margin-bottom: 0px" ng-show="user.auth.isArchMod">
 					<thead>
 						<tr class="clickable">
-							<th ng-click="rotateOrderBy('student')">Student Name</th>
+							<th ng-click="orderBy = (orderBy === 'student.fname') ? 'student.lname' : 'student.fname'">Student Name</th>
 							<th ng-click="orderBy = 'student.pid'">Student PID</th>
-							<th ng-click="rotateOrderBy('advisor')">Advisor Name</th>
+							<th ng-click="orderBy = (orderBy === 'advisor.fname') ? 'advisor.lname' : 'advisor.fname'">Advisor Name</th>
 							<th ng-click="orderBy = 'advisor.pid'">Advisor PID</th>
 							<th>Project Progress</th>
 						</tr>
