@@ -67,7 +67,12 @@
 	</div>
 	<div class="span3">
 		<div class="box">
-			<div class="box-header text-center">RSVP <span class="muted">(répondez s'il vous plaît)</span></div>
+			<div class="box-header text-center">RSVP
+				<span class="muted">
+					<span ng-show="getRemainingSeats() == 1">({{getRemainingSeats()}}/{{event.options.maxRSVPs}} seat available)</span>
+					<span ng-show="event.options.maxRSVPs && getRemainingSeats() !== 1">({{getRemainingSeats()}}/{{event.options.maxRSVPs}} seats available)</span>
+				</span>
+			</div>
 			<div class="box-content padded" style="position: relative">
 				<button class="btn btn-large input-block-level" ng-click="preRSVP = true" ng-show="!hasRSVP()" ng-disabled="preRSVP" >I'm Going</button>
 				<button class="btn btn-large input-block-level btn-primary" ng-click="removeRSVP()" ng-show="hasRSVP()">I'm Going</button>
@@ -82,7 +87,7 @@
 						<input type="tel" placeholder="305-999-9999" ng-model="rsvp.phone">
 					</div>
 					<div class="alert alert-info" style="margin-bottom: 10px" ng-show="rsvp.error" ng-bind-html-unsafe="rsvp.error"></div>
-					<div class="text-center" ng-show="hasRSVPChanges()" ng-animate="{show: 'slide-show', hide: 'slide-hide'}">
+					<div class="text-center" ng-show="!preRSVP && hasRSVPChanges()" ng-animate="{show: 'slide-show', hide: 'slide-hide'}">
 						<button class="btn btn-mini btn-success" ng-click="addRSVP()">Save Changes</button>
 					</div>
 				</div>

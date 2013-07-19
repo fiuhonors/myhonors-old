@@ -17,7 +17,7 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 	};
 	$scope.defaults = {
 		maxZoom: 20
-	}
+	};
 
 	/* LOAD EVENT DATA AND INITIALIZE MAP */
 
@@ -68,6 +68,13 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 	$scope.hasRSVPChanges = function() {
 		return !angular.equals($scope.rsvp, $scope.originalRSVP);
 	};
+
+	$scope.getRemainingSeats = function() {
+		if ($scope.event && $scope.event.options && $scope.event.options.maxRSVPs) {
+			var value = $scope.event.options.maxRSVPs - $scope.event.rsvps;
+			return (value > 0) ? value : 0;
+		}
+	}
 
 	/* COMMENT FUNCTIONALITY */
 
