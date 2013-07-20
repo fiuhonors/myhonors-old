@@ -6,6 +6,7 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 	$scope.originalRSVP = angular.copy($scope.rsvp); // save an original to compare changes with hasRSVPChanges()
 	$scope.eventRSVPs = RSVPService.list($routeParams.eventId);
 	$scope.userComment = '';
+	$scope.truncateDesc = 200;
 
 	/* MAP FUNCTIONALITY */
 

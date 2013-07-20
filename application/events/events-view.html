@@ -15,11 +15,24 @@
 		<div class="box">
 			<div class="box-header">Event Details</div>
 			<div class="box-content padded">
-				<p><strong>{{event.name}}</strong>. {{event.desc}}</p>
+				<div class=""><strong>{{event.name}}</strong></div>
+				<hr style="margin-top: 10px; margin-bottom: 10px" />
+				<p>
+					{{event.desc | truncate: truncateDesc}}
+					<a class="clickable" ng-show="event.desc.length >= truncateDesc && truncateDesc !== 0" ng-click="truncateDesc = 0">read more</a>
+					<a class="clickable" ng-show="truncateDesc === 0" ng-click="truncateDesc = 200">read less</a>
+				</p>
+				<hr style="margin-top: 10px; margin-bottom: 10px" />
 				<p>
 					<strong>Date: </strong> {{event.date.starts | date:"EEE, MMMM d 'at' h:mm a"}}<br />
 					<strong>Location: </strong> {{event.location.name}}
 				</p>
+				<hr style="margin-top: 10px; margin-bottom: 10px" ng-show="user.auth.isEventMod" />
+				<div class="row-fluid" ng-show="user.auth.isEventMod">
+					<a href="#/events/{{event.id}}/swipe" class="btn span4">Swipe</a>
+					<a href="#/events/{{event.id}}/edit" class="btn span4">Edit</a>
+					<button class="btn span4" ng-click="confirmDelete()">Delete</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -58,7 +71,9 @@
 						<span style="color: rgba(30,55,70,0.4)">
 							<span style="font-size: 85%; padding: 3px">&#8226;</span> {{comment.date | timeAgo}}
 						</span>
-						<div class="pull-right"><button class="btn btn-mini btn-danger" ng-show="user.auth.isCommentMod || comment.author.id === user.profile.id" ng-click="deleteComment(comment.id)"><i class="icon-trash icon-white"></i></button></div>
+						<div class="pull-right">
+							<button class="btn btn-small btn-link" ng-show="user.auth.isCommentMod || comment.author.id === user.profile.id" ng-click="deleteComment(comment.id)"><i class="icon-trash icon-white"></i></button>
+						</div>
 						<p style="font-size: 15px; color: #42474a; font-weight: 300">{{comment.content}}</p>
 					</div>
 				</div>
@@ -95,14 +110,6 @@
 					<button class="btn btn-mini btn-primary" ng-click="addRSVP()">Save RSVP</button>
 					<button class="btn btn-mini btn-link" ng-click="preRSVP = false; rsvp.error = false">Cancel</button>
 				</div>
-			</div>
-		</div>
-		<div class="box" ng-show="user.auth.isEventMod">
-			<div class="box-header text-center">Event Administration</div>
-			<div class="box-content padded text-center">
-				<a href="#/events/{{event.id}}/swipe" class="btn btn-success">Swipe</a>
-				<a href="#/events/{{event.id}}/edit" class="btn btn-primary">Edit</a>
-				<button class="btn btn-danger" ng-click="confirmDelete()">Delete</a>
 			</div>
 		</div>
 		<div class="box">

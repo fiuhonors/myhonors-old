@@ -12,10 +12,14 @@ angular.module('myhonors').filter('truncate', function () {
 		if (!text) {
 			return;
 		}
-		
+
 		if (isNaN(length))
 			length = 10;
 
+		if (length === 0) {
+			return text;	
+		}
+		
 		if (end === undefined)
 			end = "...";
 
