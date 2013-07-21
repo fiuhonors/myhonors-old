@@ -41,7 +41,7 @@
 		<div class="box-header">Upcoming Events</div>
 		<div class="box-content" ng-show="events.length">
 			<ul class="block-hover block-clickable">
-				<li ng-repeat="event in events" ng-click="goToEvent(event.$id)" class="clearfix">
+				<li ng-repeat="event in events | orderBy:'date.starts'" ng-click="goToEvent(event.$id)" class="clearfix">
 					<img class="pull-left span2 img-rounded" ng-src="{{event.thumbURL || 'http://placehold.it/75'}}">
 					<div class="pull-left span8">
 						<div>

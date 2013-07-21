@@ -20,8 +20,9 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
 				return;
 			}
 
-			FirebaseIO.child('events').push(eventObject);
-
+			// setting the priority to the date.ends value allows us to show an event that is currently
+			// taking place in any 'Upcoming Events' section
+			FirebaseIO.child('events').push(eventObject).setPriority(eventObject.date.ends);
 		},
 		read: function(eventId, onComplete) {
 			var deferred = $q.defer();
@@ -103,6 +104,10 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
 			angular.forEach(eventObject, function(value, key) {
 				FirebaseIO.child('events/' + eventId + '/' + key).set(value);
 			});
+
+			// setting the priority to the date.ends value allows us to show an event that is currently
+			// taking place in any 'Upcoming Events' section
+			FirebaseIO.child('events/' + eventId).setPriority(eventObject.date.ends);
 		},
 
 		delete: function(eventId) {
