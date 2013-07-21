@@ -12,6 +12,6 @@ angular.module('myhonorsEvents').controller('EventBrowseCtrl', ['$scope', '$time
 	$scope.nothing = null; // empty model needed for the calendar directive
 
 	$scope.getEvents = function() {
-		return $filter('filter')($scope.events, {name: $scope.searchName, type: $scope.searchType});
+		return $filter('filter')($scope.events, {name: $scope.searchName, types: $scope.searchType});
 	}
 }]);
