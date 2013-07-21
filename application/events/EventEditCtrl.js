@@ -50,14 +50,31 @@ angular.module('myhonorsEvents').controller('EventEditCtrl', ['$scope', '$locati
 		});
 	});
 	$scope.eventTypes = EventService.getTypes();
+
+	/**
+	 * @param   string    time in the format of 'hh:mm A'
+	 * @returns int       the hour of string as an integer from 0 to 23
+	 */
+	function getHour(string) {
+		var hour = parseInt(string.substring(0, 2));
+		return ((string.substring(6, 8) === 'PM') && hour !== 12) ? hour + 12 : hour;
+	}
+
+	/**
+	 * @param   string    time in the format of 'hh:mm A'
+	 * @returns int       the minute of string as an integer
+	 */
+	function getMinute(string) {
+		return parseInt(string.substring(3, 5));
+	}
 	
 	$scope.doSaveChanges = function(theForm) {
 		if (theForm.$invalid) { return; }
 
-		var startHour = parseInt($scope.event.date.starts.time.substring(0, 2)) + (($scope.event.date.starts.time.substring(6, 8) === 'PM') ? 12 : 0);
-		var endHour = parseInt($scope.event.date.ends.time.substring(0, 2)) + (($scope.event.date.ends.time.substring(6, 8) === 'PM') ? 12 : 0);
-		var startMin = parseInt($scope.event.date.starts.time.substring(3, 5));
-		var endMin = parseInt($scope.event.date.ends.time.substring(3, 5));
+		var startHour = getHour($scope.event.date.starts.time),
+			startMin = getMinute($scope.event.date.starts.time),
+			endHour = getHour($scope.event.date.ends.time),
+			endMin = getMinute($scope.event.date.ends.time);
 
 		var event = angular.extend({}, {
 			name: $scope.event.name,
@@ -71,7 +88,7 @@ angular.module('myhonorsEvents').controller('EventEditCtrl', ['$scope', '$locati
 				lat: $scope.event.location.lat,
 				lng: $scope.event.location.lng
 			},
-			types: $scope.event.types,
+			types: $scope.event.types || [],
 			options: $scope.event.options
 		});
 

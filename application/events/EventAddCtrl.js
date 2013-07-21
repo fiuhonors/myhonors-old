@@ -3,12 +3,36 @@
 angular.module('myhonorsEvents').controller('EventAddCtrl', ['$scope', '$location', 'EventService', function($scope, $location, EventService) {
 	$scope.eventTypes = EventService.getTypes();
 
+	/**
+	 * @param   string    time in the format of 'hh:mm A'
+	 * @returns int       the hour of string as an integer from 0 to 23
+	 */
+	function getHour(string) {
+		var hour = parseInt(string.substring(0, 2));
+		return ((string.substring(6, 8) === 'PM') && hour !== 12) ? hour + 12 : hour;
+	}
+
+	/**
+	 * @param   string    time in the format of 'hh:mm A'
+	 * @returns int       the minute of string as an integer
+	 */
+	function getMinute(string) {
+		return parseInt(string.substring(3, 5));
+	}
+
 	// auto updates the date and time
 	$scope.updateEnds = function(timeOrDate) {
-		if (timeOrDate === 'time') {
+		if (timeOrDate === 'time')
+		{
 			$scope.newItem.date.ends.time = moment($scope.newItem.date.starts.time, 'hh:mm A').add('hours', 1).format('hh:mm A');
-		} else if (timeOrDate === 'date') {
-			$scope.newItem.date.ends.date = moment($scope.newItem.date.starts.date, 'MM-DD-YYYY').format('MM/DD/YYYY');
+		}
+		else if (timeOrDate === 'date')
+		{
+			var startHour = getHour($scope.newItem.date.starts.time);
+			var startMin = getMinute($scope.newItem.date.starts.time);
+			var newDate = moment($scope.newItem.date.starts.date, 'MM-DD-YYYY').add('hours', startHour + 1).add('minutes', startMin);
+
+			$scope.newItem.date.ends.date = newDate.format('MM/DD/YYYY');
 		}
 	};
 	
@@ -23,12 +47,12 @@ angular.module('myhonorsEvents').controller('EventAddCtrl', ['$scope', '$locatio
 			lng: $scope.newItem.location.lng
 		};
 
-		var startHour = parseInt($scope.newItem.date.starts.time.substring(0, 2)) + (($scope.newItem.date.starts.time.substring(6, 8) === 'PM') ? 12 : 0);
-		var startMin = parseInt($scope.newItem.date.starts.time.substring(3, 5));
+		var startHour = getHour($scope.newItem.date.starts.time);
+		var startMin = getMinute($scope.newItem.date.starts.time);
 		newItem.date.starts = moment($scope.newItem.date.starts.date, "MM-DD-YYYY").hour(startHour).minute(startMin).valueOf();
 
-		var endHour = parseInt($scope.newItem.date.ends.time.substring(0, 2)) + (($scope.newItem.date.ends.time.substring(6, 8) === 'PM') ? 12 : 0);
-		var endMin = parseInt($scope.newItem.date.ends.time.substring(3, 5));
+		var endHour = getHour($scope.newItem.date.ends.time);
+		var endMin = getMinute($scope.newItem.date.ends.time);
 		newItem.date.ends = moment($scope.newItem.date.ends.date, "MM-DD-YYYY").hour(endHour).minute(endMin).valueOf();
 
 		EventService.create(newItem);
@@ -48,8 +72,8 @@ angular.module('myhonorsEvents').controller('EventAddCtrl', ['$scope', '$locatio
 					time: now.format('hh:mm A')
 				},
 				ends: {
-					date: now.format('MM/DD/YYYY'),
-					time: now.add('hours', 1).format('hh:mm A')
+					date: now.add('hours', 1).format('MM/DD/YYYY'),
+					time: now.format('hh:mm A')
 				}
 			},
 			types: [],
@@ -67,7 +91,7 @@ angular.module('myhonorsEvents').controller('EventAddCtrl', ['$scope', '$locatio
 				waitingList: false,
 				requirePhone: false
 			}
-		}
+		};
 	};
 
 	$scope.resetForm();
