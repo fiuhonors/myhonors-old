@@ -78,6 +78,17 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
 					extraData.rsvps += childSnapshot.child('guests').val();
 				});
 
+				snapshot.child('types').forEach(function(childSnapshot) {
+					switch (childSnapshot.val()) {
+						case 'Honors Hour':
+						case 'Excellence Lecture':
+						case 'Colloquium':
+							extraData.color = 'gold';
+							break;
+						default: break;
+					}
+				});
+
 				doAdd(snapshot, extraData);
 			}});
 		},

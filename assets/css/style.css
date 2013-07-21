@@ -301,6 +301,48 @@ ul.block-clickable li:hover {
 	font-size: 10px;
 }
 
+/* COLOR CODED EVENT LABELS */
+
+.event-green {
+	color: #468847;
+}
+.label.event-green {
+	color: white;
+	background-color: #468847;
+}
+
+.event-blue {
+	color: #3a87ad;
+}
+.label.event-blue {
+	color: white;
+	background-color: #3a87ad;
+}
+
+.event-gold {
+	color: #f89406;
+}
+.label.event-gold {
+	color: white;
+	background-color: #f89406;
+}
+
+.event-red {
+	color: #b94a48;
+}
+.label.event-red {
+	color: white;
+	background-color: #b94a48;
+}
+
+.event-black {
+	color: #333333;
+}
+.label.event-black {
+	color: white;
+	background-color: #333333;
+}
+
 /* MAP OVERLAY */
 
 .mapoverlay {

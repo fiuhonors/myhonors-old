@@ -8,7 +8,7 @@
 						<ul class="nav nav-list">
 							<li class="nav-header">View Events by Type</li>
 							<li class="clickable" ng-click="searchBy('')"><a>All Events</a></li>
-							<li class="clickable" ng-click="searchBy(type.name)" ng-repeat="type in eventTypes"><a ng-class="{'nav-list-active': searchType == type.name}">{{type.name}}</a></li>
+							<li class="clickable" ng-click="searchBy(type.name)" ng-repeat="type in eventTypes"><a ng-class="{'nav-list-active': searchType == type.name}">{{type.name}} <span class="pull-right event-{{type.color || 'blue'}}">&bull;</span></a></li>
 						</ul>
 					</div>
 				</div>
