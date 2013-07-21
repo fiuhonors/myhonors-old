@@ -12,6 +12,7 @@ angular.module('myhonors', [
 	'myhonorsAdmin',
 	'myhonorsComments',
 	'myhonorsDashboard',
+	'myhonorsCitizenship',
 	'myhonorsEvents',
 	'myhonorsCareer',
 	'myhonorsArch'
@@ -23,6 +24,7 @@ angular.module('myhonorsUser', []);
 angular.module('myhonorsAdmin', []);
 angular.module('myhonorsComments', []);
 angular.module('myhonorsDashboard', []);
+angular.module('myhonorsCitizenship', []);
 angular.module('myhonorsEvents', []);
 angular.module('myhonorsCareer', []);
 angular.module('myhonorsArch', []);

@@ -15,6 +15,5 @@ angular.module('myhonorsEvents').config(['$routeProvider', function($routeProvid
 			controller: 'SwipeCtrl',
 			requireLogin: true,
 			resolve: appResolve,
-			showPanels: false }).
-		when('/citizenship', {templateUrl: 'application/events/citizenship.html', controller: 'CitizenshipCtrl', requireLogin: true, resolve: appResolve});
+			showPanels: false });
 }]);
