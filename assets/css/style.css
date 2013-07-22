@@ -343,6 +343,28 @@ ul.block-clickable li:hover {
 	background-color: #333333;
 }
 
+/* CALENDAR */
+
+th.no-border-left, td.no-border-left {
+	border-left: 0px;
+}
+
+td.month {
+	width: 33%;
+	padding-top: 45px;
+	height: 70px;
+}
+
+td.year {
+	padding-top: 45px;
+	height: 70px;
+}
+
+td.month:hover, td.year:hover {
+	cursor: pointer;
+	background-color: #efefef;
+}
+
 /* MAP OVERLAY */
 
 .mapoverlay {
