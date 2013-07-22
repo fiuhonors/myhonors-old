@@ -2,19 +2,18 @@
 
 Developed for [The Honors College at Florida International University](http://honors.fiu.edu/).
 
-MyHonors currently features an Events Calendar, Attendance Tracker, Citizenship Tracker, and an Honors College Application. It's **fast**. It's **modern**. And it's designed to be **100% responsive for use on phones, tablets, and other mobile devices**. To get a taste of what we're planning, see our Roadmap in the Development section below.
+MyHonors currently features an Events Calendar, Attendance Tracker, Citizenship Tracker, and a complete interface for [ARCH](http://honors.fiu.edu/research/conference/). It's **fast**. It's **modern**. And it's designed to be **100% responsive for use on phones, tablets, and other mobile devices**. To get a taste of what we're planning, see our Roadmap in the Development section below.
+
+We use [Firebase](https://www.firebase.com/) to handle real-time data from the backend and [AngularJS](http://angularjs.org/)--an amazing Javascript framework from Google--to power the frontend. Our HTML & CSS code is based on [Twitter Bootstrap](twitter.github.com/bootstrap/).
 
 ## Installation
-We use the [CodeIgniter](http://ellislab.com/codeigniter/) PHP framework to handle data from the backend and [AngularJS](http://angularjs.org/)--an amazing Javascript framework from Google--to power the frontend. Our HTML & CSS code is based on [Twitter Bootstrap](twitter.github.com/bootstrap/).  All necessary files are already included in the repository, so you can get started with just a few steps:
+All necessary files are already included in the repository, so you can get started with just a few steps. Note that we are assuming you use LDAP for authentication and already have an account with Firebase.
 
-1. [Download](https://github.com/sergiopantoja/MyHonors/archive/master.zip) or [clone](https://github.com/sergiopantoja/MyHonors) the MyHonors repository and upload the files to your webserver.
-2. Rename **application/config/config.sample.php** to **config.php**. Set your base URL and create a random encryption key.
-3. Rename **application/config/database.sample.php** to **database.php**. Add your database information.
-3. Rename **application/config/tank_auth.sample.php** to **tank_auth.php**. Change 'webmaster_email' and any other settings as needed.
-4. Rename **assets/js/config.sample.js** to **config.js**. Add all necessary information (see file for more details).
-5. Make sure the **captcha** folder is writable by the web server.
-6. If you haven't already, install LDAP support (e.g. *apt-get install php5-ldap*).
-6. *More instructions coming soon. Go to an install page to populate the database, setup auth settings (CAS?), etc.*
+1. [Download](https://github.com/sergiopantoja/myhonors/archive/master.zip) or [clone](https://github.com/sergiopantoja/myhonors) the MyHonors repository and upload the files to your webserver.
+2. Rename `auth/auth.sample.php` to `auth/auth.php`. Edit the file with the appropriate config settings.
+3. Rename `application/config.sample.php` to `application/config.php`.
+4. If you haven't already, install LDAP support for your server (e.g. *apt-get install php5-ldap*).
+5. That's it! Login with your LDAP username/password and have fun.
 
 ## Development
 
@@ -22,18 +21,23 @@ We use the [CodeIgniter](http://ellislab.com/codeigniter/) PHP framework to hand
 | Version |     | Description |
 |---------|-----|-------------|
 | **0.x** |     | Adding existing features into repo |
-|         | 0.1 | Attendance and Events |
-|         | 0.2 | User Profiles under Tank\_Auth |
-|         | 0.3 | Linked Authentication with phpCAS and LDAP |
-|         | 0.4 | Application |
-|         | 0.5 | ARCH Registration |
-| **1.x** |     | Adding Social features |
+|         | 0.1 | Linked Authentication with LDAP **[DONE]** |
+|         | 0.2 | Attendance and Events **[DONE]** |
+|         | 0.3 | ARCH Registration |
+|         | 0.4 | User Profiles |
+| **1.x** |     | Adding Social Features |
 |         | 1.1 | Text posts and comments |
-|         | 1.2 | Photo posts, comments, and captions |
+|         | 1.2 | Media posts (photos, videos, etc.) |
 |         | 1.3 | Private Messages |
-|         | 1.4 | Automated Messages |
-| **2.x** |     | Groups |
-|         | 2.1 | Creating and joining groups |
-|         | 2.2 | Browsing Groups |
-|         | 2.3 | Managing Groups |
-|         | 2.4 | Using Group filters |
+| **X.x** |     | Features not assigned to any particular release |
+|         | X.x | Automated system messages |
+|         | X.x | Email users with updates |
+|         | X.x | Add cover charge for events |
+|         | X.x | Student portfolios |
+|         | X.x | Internship system |
+|         | X.x | Course integration |
+|         | X.x | User-created groups |
+|         | X.x | Integration with main Honors College website |
+|         | X.x | Tagging events, posts, profiles, etc. |
+|         | X.x | Gamification |
+|         | X.x | Analytics system for attendance, activity, etc. |
