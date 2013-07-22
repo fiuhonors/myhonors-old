@@ -1,10 +1,12 @@
 'use strict';
 
-angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeParams', '$timeout', '$location', '$window', 'FirebaseIO', 'FirebaseCollection', 'EventService', 'CommentService', 'RSVPService', 'apikey_google', function ($scope, $routeParams, $timeout, $location, $window, FirebaseIO, FirebaseCollection, EventService, CommentService, RSVPService, apikey_google) {
+angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeParams', '$timeout', '$location', '$window', 'FirebaseIO', 'FirebaseCollection', 'EventService', 'CommentService', 'RSVPService', 'SwipeService', 'apikey_google', function ($scope, $routeParams, $timeout, $location, $window, FirebaseIO, FirebaseCollection, EventService, CommentService, RSVPService, SwipeService, apikey_google) {
 	var discussionRef = FirebaseIO.child('events/' + $routeParams.eventId + '/comments');
 	$scope.rsvp = RSVPService.read($routeParams.eventId) || {guests: 0, error: false};
 	$scope.originalRSVP = angular.copy($scope.rsvp); // save an original to compare changes with hasRSVPChanges()
 	$scope.eventRSVPs = RSVPService.list($routeParams.eventId);
+	$scope.attendance = SwipeService.listByEvent($routeParams.eventId);
+	$scope.userAttended = SwipeService.hasAttended($routeParams.eventId);
 	$scope.userComment = '';
 	$scope.truncateDesc = 200;
 

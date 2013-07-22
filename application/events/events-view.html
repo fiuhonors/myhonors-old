@@ -80,7 +80,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="span3">
+	<div class="span3" ng-show="!attendance.length">
 		<div class="box">
 			<div class="box-header text-center">RSVP
 				<span class="muted">
@@ -125,6 +125,28 @@
 						<img class="pull-left img-rounded" src="http://placehold.it/36">
 						<div class="pull-left" style="margin-left: 10px; line-height: 36px">
 							<strong>{{rsvp.fname}}</strong> is going <span class="muted" ng-show="rsvp.guests > 0">[+{{rsvp.guests}}]</span>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="span3" ng-show="attendance.length">
+		<div class="box" ng-show="userAttended">
+			<div class="box-content padded-medium">
+				<div class="alert alert-success padded-medium" style="margin-bottom: 0">
+					<strong>Thanks for coming!</strong> You have officially received credit for this event. We hope to see you at the next one.
+				</div>
+			</div>
+		</div>
+		<div class="box">
+			<div class="box-header text-center">{{event.attendance}} <span ng-show="event.attendance === 1">person</span><span ng-show="event.attendance !== 1">people</span> attended</div>
+			<div class="box-content">
+				<ul class="unstyled block-hover">
+					<li ng-repeat="person in attendance" class="clearfix">
+						<img class="pull-left img-rounded" src="http://placehold.it/36">
+						<div class="pull-left" style="margin-left: 10px; line-height: 36px">
+							<strong>{{person.fname}}</strong> attended
 						</div>
 					</li>
 				</ul>

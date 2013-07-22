@@ -88,6 +88,16 @@ angular.module('myhonorsEvents').factory('SwipeService', function($q, FirebaseIO
 					doAdd(eventSnapshot);
 				});
 			}});
+		},
+
+		/**
+		 * Check to see if the currently logged-in user has attended an event
+		 * 
+		 * @param eventId String    The event ID
+		 * @returns boolean         Whether the user has attended the specified event
+		 */
+		hasAttended: function(eventId) {
+			return UserService.profile && UserService.profile.attendance && UserService.profile.attendance[eventId];
 		}
 	};
 });

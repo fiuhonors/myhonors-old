@@ -36,6 +36,7 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
 				var data = snapshot.val();
 				data.id = snapshot.name();
 				data.comments = snapshot.child('comments').numChildren();
+				data.attendance = snapshot.child('attendance').numChildren();
 				
 				// calculate the total number of RSVPs
 				data.rsvps = snapshot.child('rsvps').numChildren();
