@@ -13,6 +13,7 @@ angular.module('myhonors', [
 	'myhonorsComments',
 	'myhonorsDashboard',
 	'myhonorsCitizenship',
+	'myhonorsCourses',
 	'myhonorsEvents',
 	'myhonorsCareer',
 	'myhonorsArch'
@@ -23,6 +24,7 @@ angular.module('Firebase', []);
 angular.module('myhonorsUser', []);
 angular.module('myhonorsAdmin', []);
 angular.module('myhonorsComments', []);
+angular.module('myhonorsCourses', []);
 angular.module('myhonorsDashboard', []);
 angular.module('myhonorsCitizenship', []);
 angular.module('myhonorsEvents', []);
