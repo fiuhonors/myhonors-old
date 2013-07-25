@@ -12,8 +12,17 @@ angular.module('myhonorsCourses').factory('CourseService', function($q, Firebase
 		/**
 		 * Gets all relevant information about a single course
 		 */
-		read: function() {
-			// ...
+		read: function(courseId, callback) {
+			var deferred = $q.defer();
+
+			FirebaseIO.child('courses/' + courseId).once('value', function(snapshot) {
+				var data = snapshot.child('info').val();
+				data.members = snapshot.child('members').numChildren();
+				deferred.resolve(data);
+				if (callback) callback(data);
+			});
+
+			return deferred.promise;
 		},
 
 		/**

@@ -134,6 +134,11 @@
 				}
 			}
 		},
+
+		"courses": {
+			".read": true,
+			".write": true
+		},
 		
 		"careers": {
 			".read": true,

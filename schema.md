@@ -103,6 +103,16 @@ events
 				out: [int]
 				override: [boolean]
 
+courses
+	[courseId]
+		info
+			name: [string]
+			subtitle: [string]
+			desc: [string]
+			syllabus: [fileId]
+		members
+			[userId]: true
+
 system_settings
 	accessLevels
 		isArchMod
