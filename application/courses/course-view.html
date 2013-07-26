@@ -41,10 +41,23 @@
 	<div class="row-fluid">
 		<div class="span12">
 			<div class="box">
-				<div class="box-header">Announcements</div>
+				<div class="box-header">
+					Announcements
+					<div class="pull-right"><button class="btn btn-mini" ng-click="showAddAnnouncement = true"><i class="icon-plus"></i></button></div>
+				</div>
 				<div class="box-content padded-medium">
 
+					<div style="max-height: 200px; overflow-y: auto;">
+						<div class="alert alert-{{announce.color}}" style="margin-bottom: 5px" ng-repeat="announce in course.announcements">
+							<strong>{{announce.title}}</strong> <span style="font-size: 85%; padding: 3px">&#8226;</span> <em>{{announce.date | timeAgo}}</em>
+							<p style="margin-bottom: 0px">{{announce.content}}</p>
+						</div>
+
+						<div class="text-center" ng-show="!course.announcements.length">There are no announcements.</div>
+					</div>
+
 				</div>
+				<!-- <div class="overflow-gradient" style="height: 15px; bottom: 8px"></div> -->
 			</div>
 		</div>
 	</div>
@@ -75,4 +88,43 @@
 		</div>
 	</div>
 
+</div>
+
+<!-- Modal -->
+<div modal="showAddAnnouncement" close="showAddAnnouncement = false" options="modalOpts">
+	<div class="modal-header">
+		<button type="button" class="close" ng-click="showAddAnnouncement = false">×</button>
+		<h3>New Announcement</h3>
+	</div>
+	<div class="modal-body">
+		<form class="form-inline">
+			<div class="row-fluid">
+				<div class="span6">
+					<label for="title">Title</label><br />
+					<input type="text" id="title" ng-model="newAnnounce.title" /><br />
+				</div>
+				<div class="span6">
+					<label for="color">Color</label><br />
+					<span class="clickable" style="inline-block; float: left; height: 30px; width: 20%; background-color: #3a87ad; border-right: 1px solid white" ng-click="newAnnounce.color = 'info'"></span>
+					<span class="clickable" style="inline-block; float: left; height: 30px; width: 20%; background-color: #b94a48; border-right: 1px solid white" ng-click="newAnnounce.color = 'error'"></span>
+					<span class="clickable" style="inline-block; float: left; height: 30px; width: 20%; background-color: #468847; border-right: 1px solid white" ng-click="newAnnounce.color = 'success'"></span>
+					<span class="clickable" style="inline-block; float: left; height: 30px; width: 20%; background-color: gold; border-right: 1px solid white" ng-click="newAnnounce.color = ''"></span>
+				</div>
+			</div>
+			<label for="content" style="margin-top: 15px">Content</label><br />
+			<textarea class="input-block-level" id="content" ng-model="newAnnounce.content"></textarea><br />
+		</form>
+
+		<hr />
+
+		<p>Preview:</p>
+		<div class="alert alert-{{newAnnounce.color}}" style="margin-bottom: 0px">
+			<strong>{{newAnnounce.title}}</strong> <span style="font-size: 85%; padding: 3px">&#8226;</span> <em>a few seconds ago</em>
+			<p style="margin-bottom: 0px">{{newAnnounce.content}}</p>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary" ng-click="doAddAnnouncement()">Add Announcement</button>
+		<button class="btn cancel" ng-click="showAddAnnouncement = false">Cancel</button>
+	</div>
 </div>

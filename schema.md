@@ -112,6 +112,14 @@ courses
 			syllabus: [fileId]
 		members
 			[userId]: true
+		announcements
+			[announceId]
+				title: [string]
+				content: [string]
+				authorId: [userId]
+				date: [int]
+				color: [string]
+
 
 system_settings
 	accessLevels
