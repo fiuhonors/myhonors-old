@@ -1,0 +1,42 @@
+<div>
+	<div class="media padded" style="margin-top: 0; padding-bottom: 10px;">
+		<a class="pull-left" href="#"><img class="media-object img-rounded" src="http://placehold.it/64" /></a>
+		<div class="media-body">
+			<a href="#" class="media-heading" style="font-size: 16px">{{source.author.fname}} {{source.author.lname}}</a>
+			<span style="color: rgba(30,55,70,0.4); font-size: 13px; margin-left: 4px">{{source.date | timeAgo}}</span><br />
+			{{source.content}}
+			<div class="muted" style="font-size: 13px; margin-bottom: 0px">
+				<a class="clickable" style="color: rgba(30,55,70,0.4); font-size: 11px; margin-left: 4px"><i class="icon-star-empty"></i> 0</a>
+				<a class="clickable" ng-click="mainReply.showReply = true" style="margin-left: 4px; color: rgba(30,55,70,0.4)">reply</a>
+				<a href="{{mainReply.getPermalink()}}" style="color: rgba(30,55,70,0.4); margin-left: 4px">permalink</a>
+			</div>
+			<div class="media" style="margin-top: 10px;" ng-show="mainReply.showReply">
+				<a class="pull-left" href="#"><img class="media-object img-rounded" src="http://placehold.it/48" /></a>
+				<div class="media-body">
+					<textarea class="input-block-level" style="height: 72px; font-size: 13px; line-height: 1.38em; color: #42474a; font-weight: 300" ng-model="mainReply.replyContent"></textarea>
+					<button class="btn btn-mini" ng-click="mainReply.addReply()">Post</button> <button class="btn btn-mini" ng-click="mainReply.showReply = false">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="padded-small text-center" style="position: relative">
+		<div style="height: 2px; width: 100%; background-color: #00baff; position: absolute; top: 15px; left: 0px"></div>
+		<span style="padding: 0 10px; background-color: white; position: relative; z-index: 10">
+			{{source.children.length}} responses. Sorted by
+			<div class="dropdown text-left" style="display: inline-block">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#">{{sortComments.getCurrent()}} <span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a ng-click="sortComments.current = 'kudos'">Best</a></li>
+					<li><a ng-click="sortComments.current = '-date'">Newest First</a></li>
+					<li><a ng-click="sortComments.current = 'date'">Oldest First</a></li>
+				</ul>
+			</div>
+		</span>
+	</div>
+	<div class="box-content" style="padding: 5px 15px 20px 15px;">
+		<div ng-show="!source.children.length" class="alert alert-info padded-medium" style="margin-top: 5px; margin-bottom: 0">
+			<strong>Have something interesting to add?</strong> Be the first to add a response!
+		</div>
+		<comment ng-repeat="comment in source.children | orderBy:sortComments.current" comment="comment" depth="1" max-depth="10"></comment>
+	</div>
+</div>

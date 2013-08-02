@@ -1,9 +1,8 @@
 <div class="media comment" ng-class="{'depth-0': depth == 0}">
-	<a ng-show="depth == 0" class="pull-left" href="#"><img class="media-object img-rounded" src="http://placehold.it/48" /></a>
+	<a class="pull-left" href="#"><img class="media-object img-rounded" src="http://placehold.it/48" /></a>
 	<div class="media-body">
 
 		<a href="#" class="media-heading">{{comment.author.fname}} {{comment.author.lname}}</a>
-		<a class="clickable" style="color: rgba(30,55,70,0.4); font-size: 11px; margin-left: 4px" ng-if="depth != 0"><i class="icon-thumbs-up-alt"></i> 0</a>
 		<span style="color: rgba(30,55,70,0.4); font-size: 11px; margin-left: 4px">{{comment.date | timeAgo}}</span>
 
 		<div class="pull-right">
@@ -16,6 +15,7 @@
 		</div>
 
 		<div class="muted" style="font-size: 11px; margin-bottom: 0px" ng-if="depth != 0">
+			<a class="clickable" style="color: rgba(30,55,70,0.4); font-size: 11px; margin-left: 4px"><i class="icon-star-empty"></i> 0</a>
 			<a class="clickable" ng-click="reply.showReply = true" style="margin-left: 4px; color: rgba(30,55,70,0.4)">reply</a>
 			<a href="{{reply.getPermalink()}}" style="color: rgba(30,55,70,0.4); margin-left: 4px">permalink</a>
 		</div>

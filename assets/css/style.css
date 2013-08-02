@@ -447,11 +447,11 @@ td.month:hover, td.year:hover {
 	margin: 10px 0 0 0;
 }
 
-.comment-childwrap {
+/*.comment-childwrap {
 	padding-left: 14px;
 	margin-left: 14px;
 	border-left: 1px dotted #ccc
-}
+}*/
 
 .comment .alert {
 	margin-bottom: 0;
