@@ -29,6 +29,21 @@
 			<div class="box">
 				<div class="box-content padded">
 
+					<input class="span12" type="text" placeholder="Search for anything..." ng-model="searchName" />
+					<ul class="nav nav-list">
+						<li class="nav-header">View by Small Group</li>
+						<li class="clickable" ng-click="searchBySubgroup('')"><a>All Small Groups</a></li>
+						<li class="clickable" ng-click="searchBySubgroup(subgroup.name)" ng-repeat="subgroup in group.subgroups"><a ng-class="{'nav-list-active': searchType == subgroup.name}">{{subgroup.name}} <span class="pull-right event-{{type.color || 'blue'}}">&bull;</span></a></li>
+					</ul>
+					<ul class="nav nav-list">
+						<li class="nav-header">View by Type</li>
+						<li class="clickable" ng-click="searchByType('')"><a>All Types</a></li>
+						<li class="clickable" ng-click="searchByType('Announcements')"><a ng-class="{'nav-list-active': searchType == 'Announcements'}">Announcements <span class="pull-right event-{{type.color || 'blue'}}">&bull;</span></a></li>
+						<li class="clickable" ng-click="searchByType('Assignments')"><a ng-class="{'nav-list-active': searchType == 'Assignments'}">Assignments <span class="pull-right event-{{type.color || 'blue'}}">&bull;</span></a></li>
+						<li class="clickable" ng-click="searchByType('Discussions')"><a ng-class="{'nav-list-active': searchType == 'Discussions'}">Discussions <span class="pull-right event-{{type.color || 'blue'}}">&bull;</span></a></li>
+						<li class="clickable" ng-click="searchByType('Group Events')"><a ng-class="{'nav-list-active': searchType == 'Group Events'}">Group Events <span class="pull-right event-{{type.color || 'blue'}}">&bull;</span></a></li>
+					</ul>
+
 				</div>
 			</div>
 		</div>
