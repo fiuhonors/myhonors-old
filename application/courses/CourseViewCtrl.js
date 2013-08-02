@@ -1,7 +1,10 @@
 'use strict';
 
-angular.module('myhonorsCourses').controller('CourseViewCtrl', ['$scope', '$routeParams', 'CourseService', function($scope, $routeParams, CourseService) {
+angular.module('myhonorsCourses').controller('CourseViewCtrl', ['$scope', '$routeParams', 'FirebaseIO', 'CourseService', 'CommentService', function($scope, $routeParams, FirebaseIO, CourseService, CommentService) {
 	$scope.course = CourseService.read($routeParams.courseId);
+
+	var discussionRef = FirebaseIO.child('courses/' + $routeParams.courseId + '/comments');
+	$scope.comments = CommentService.list(discussionRef);
 
 	/* ANNOUNCEMENTS */
 
@@ -12,6 +15,7 @@ angular.module('myhonorsCourses').controller('CourseViewCtrl', ['$scope', '$rout
 			color: 'info'
 		};
 	};
+	
 	$scope.resetAnnouncement();
 
 	$scope.modalOpts = {
@@ -27,5 +31,4 @@ angular.module('myhonorsCourses').controller('CourseViewCtrl', ['$scope', '$rout
 		$scope.showAddAnnouncement = false; // close deletion confirmation modal
 		$scope.resetAnnouncement();
 	};
-
 }]);

@@ -1,0 +1,30 @@
+<div>
+	<div class="media padded" style="margin-top: 0">
+		<a class="pull-left" href="#"><img class="media-object img-rounded" src="http://placehold.it/48" /></a>
+		<div class="media-body">
+			<form class="form-inline" style="margin: 0" ng-submit="createNewPost()">
+				<input type="text" ng-model="newPostContent" class="input-block-level" style="height: 48px; padding: 0px 10px" placeholder="Start a new discussion..." />
+			</form>
+		</div>
+	</div>
+	<div class="padded-small text-center" style="position: relative">
+		<div style="height: 2px; width: 100%; background-color: #00baff; position: absolute; top: 15px; left: 0px"></div>
+		<span style="padding: 0 10px; background-color: white; position: relative; z-index: 10">
+			{{collection.length}} discussions. Sort by 
+			<div class="dropdown text-left" style="display: inline-block">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#">{{sortComments.getCurrent()}} <span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a ng-click="sortComments.current = 'kudos'">Best</a></li>
+					<li><a ng-click="sortComments.current = '-date'">Newest First</a></li>
+					<li><a ng-click="sortComments.current = 'date'">Oldest First</a></li>
+				</ul>
+			</div>
+		</span>
+	</div>
+	<div class="box-content" style="padding: 5px 15px 20px 15px;">
+		<div ng-show="!collection.length" class="alert alert-info padded-medium" style="margin-top: 5px; margin-bottom: 0">
+			<strong>Have something interesting to share?</strong> Be the first to start a discussion!
+		</div>
+		<comment ng-repeat="comment in collection | orderBy:sortComments.current" comment="comment" depth="0" max-depth="{{maxDepth}}"></comment>
+	</div>
+</div>

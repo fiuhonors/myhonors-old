@@ -1,0 +1,50 @@
+<div class="media comment" ng-class="{'depth-0': depth == 0}">
+	<a ng-show="depth == 0" class="pull-left" href="#"><img class="media-object img-rounded" src="http://placehold.it/48" /></a>
+	<div class="media-body">
+
+		<a href="#" class="media-heading">{{comment.author.fname}} {{comment.author.lname}}</a>
+		<a class="clickable" style="color: rgba(30,55,70,0.4); font-size: 11px; margin-left: 4px" ng-if="depth != 0"><i class="icon-thumbs-up-alt"></i> 0</a>
+		<span style="color: rgba(30,55,70,0.4); font-size: 11px; margin-left: 4px">{{comment.date | timeAgo}}</span>
+
+		<div class="pull-right">
+			<button class="btn btn-small btn-link" ng-show="user.auth.isCommentMod || comment.author.id === user.profile.id" ng-click="deleteComment()"><i class="icon-trash icon-white"></i></button>
+		</div>
+
+		<div style="font-size: 13px; line-height: 1.38em; color: #42474a; font-weight: 300">
+			{{comment.content | truncate:500}}
+			<a href="{{reply.getPermalink()}}" ng-show="comment.content.length >= 500">read more</a>
+		</div>
+
+		<div class="muted" style="font-size: 11px; margin-bottom: 0px" ng-if="depth != 0">
+			<a class="clickable" ng-click="reply.showReply = true" style="margin-left: 4px; color: rgba(30,55,70,0.4)">reply</a>
+			<a href="{{reply.getPermalink()}}" style="color: rgba(30,55,70,0.4); margin-left: 4px">permalink</a>
+		</div>
+
+		<div class="muted" style="font-size: 11px; margin-bottom: 0px" ng-if="depth == 0">
+			<a class="clickable" style="color: rgba(30,55,70,0.4); font-size: 11px; margin-left: 4px"><i class="icon-star-empty"></i> 0</a>
+			<a href="{{reply.getPermalink()}}" style="margin-left: 4px; color: rgba(30,55,70,0.4)">
+				<i class="icon-signout"></i>
+				<span ng-pluralize count="comment.children.length" when="{
+					'0': '0 comments',
+					'one': '1 comment',
+					'other': '{} comments'
+				}"></span></a>
+		</div>
+
+		<div class="media" style="margin-top: 10px; margin-bottom: 15px;" ng-show="reply.showReply">
+			<a class="pull-left" href="#"><img class="media-object img-rounded" src="http://placehold.it/48" /></a>
+			<div class="media-body">
+				<textarea class="input-block-level" style="height: 72px; font-size: 13px; line-height: 1.38em; color: #42474a; font-weight: 300" ng-model="reply.replyContent"></textarea>
+				<button class="btn btn-mini" ng-click="reply.addReply()">Post</button> <button class="btn btn-mini" ng-click="reply.showReply = false">Cancel</button>
+			</div>
+		</div>
+
+		<div class="comment-childwrap" ng-class="{'depth-0': depth == 0}" ng-show="comment.children.length">
+			<!-- directive will automatically place children here -->
+			<div class="alert alert-info text-center clickable" style="padding: 2px 10px" ng-show="depth != 0 && depth == maxDepth">
+				<small>load {{comment.children.length}} more comments</small>
+			</div>
+		</div>
+	</div>
+
+</div>

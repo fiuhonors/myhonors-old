@@ -17,6 +17,7 @@ angular.module('myhonorsCourses').factory('CourseService', function($q, Firebase
 
 			FirebaseIO.child('courses/' + courseId).once('value', function(snapshot) {
 				var data = snapshot.child('info').val();
+				data.id = snapshot.name();
 				data.members = snapshot.child('members').numChildren();
 				data.announcements = FirebaseCollection(snapshot.child('announcements').ref());
 				deferred.resolve(data);
