@@ -161,6 +161,14 @@
 				"content": {
 					".validate": "newData.isString()"
 				},
+				"parent": {
+					".validate": "newData.isString() && root.child('comments').hasChild(newData.val())"
+				},
+				"children": {
+					"$childId": {
+						".validate": "newData.isBoolean() && root.child('comments').hasChild($childId)"
+					}
+				},
 
 				// prevents any extra children (we only want the fields that are explicitly identified here)
 				"$other": {
