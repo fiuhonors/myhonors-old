@@ -71,7 +71,7 @@ angular.module('myhonorsComments').factory('CommentService', function($q, Fireba
 			var self = this,
 			    deferred = $q.defer();
 
-			FirebaseIO.child('comments/' + commentId).once('value', function(snapshot) {
+			FirebaseIO.child('comments/' + commentId).on('value', function(snapshot) {
 				if (snapshot.val() === null) return;
 
 				var data = snapshot.val();
@@ -79,6 +79,7 @@ angular.module('myhonorsComments').factory('CommentService', function($q, Fireba
 
 				// recursively create a list (i.e. FirebaseCollection) for the children as well
 				data.children = self.list(snapshot.child('children').ref());
+        data.points = snapshot.child('points').numChildren();
 
 				// attach author's profile info to the comment
 				var authorId = snapshot.child('author').val();
@@ -134,10 +135,27 @@ angular.module('myhonorsComments').factory('CommentService', function($q, Fireba
 				}
 			});
 		},
+    
+    points: function(commentId, up) {
+      // user's can't upvote their own comments
+      if (this.isAuthor(commentId)) return;
+      
+      if (up) {
+        FirebaseIO.child('comments/' + commentId + '/points/' + UserService.profile.id).set(true);
+        UserService.ref.child('points/' + commentId).set(true);
+      } else {
+        FirebaseIO.child('comments/' + commentId + '/points/' + UserService.profile.id).remove();
+        UserService.ref.child('points/' + commentId).remove();
+      }
+    },
 
 		isAuthor: function(commentId) {
 			return UserService.profile && UserService.profile.comments && UserService.profile.comments[commentId] === true;
-		}
+		},
+    
+    hasVoted: function(commentId) {
+      return UserService.profile && UserService.profile.points && UserService.profile.points[commentId] === true;
+    }
 
 	}
 });

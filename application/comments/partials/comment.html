@@ -21,8 +21,17 @@
 		</div>
 
 		<div class="muted" style="font-size: 11px; margin-bottom: 0px" ng-if="depth == 0">
-			<a class="clickable" style="color: rgba(30,55,70,0.4); font-size: 11px; margin-left: 4px"><i class="icon-star-empty"></i> 0</a>
-			<a href="{{reply.getPermalink()}}" style="margin-left: 4px; color: rgba(30,55,70,0.4)">
+			<span class="clickable"
+            style="color: rgba(30,55,70,0.4); font-size: 11px; margin-left: 4px"
+            ng-if="!hasVoted() && isAuthor()"
+            popover-placement="bottom"
+            popover-trigger="mouseenter"
+            popover="Sorry! You can't upvote your own comments.">
+         <i class="icon-star-empty"></i> {{comment.points || 0}}
+      </span>
+      <a class="clickable" style="color: rgba(30,55,70,0.4); font-size: 11px; margin-left: 4px" ng-click="addPoint()" ng-if="!isAuthor() && !hasVoted()"><i class="icon-star-empty"></i> {{comment.points || 0}}</a>
+      <a class="clickable" style="color: rgba(30,55,70,0.4); font-size: 11px; margin-left: 4px" ng-click="removePoint()" ng-if="!isAuthor() && hasVoted()"><i class="icon-star"></i> {{comment.points || 0}}</a>
+      <a href="{{reply.getPermalink()}}" style="margin-left: 4px; color: rgba(30,55,70,0.4)">
 				<i class="icon-signout"></i>
 				<span ng-pluralize count="comment.children.length" when="{
 					'0': '0 comments',

@@ -31,6 +31,24 @@ angular.module('myhonorsComments').directive('comment', function($compile, $loca
 					return '#' + $location.path() + '/discuss/' + scope.comment.id;
 				}
 			};
+      
+      scope.addPoint = function() {
+        // users can't upvote their own comments
+        if (CommentService.isAuthor(scope.comment.id)) return;
+        CommentService.points(scope.comment.id, true);
+      };
+      
+      scope.removePoint = function() {
+        CommentService.points(scope.comment.id, false);
+      };
+      
+      scope.isAuthor = function() {
+        return CommentService.isAuthor(scope.comment.id);
+      }
+      
+      scope.hasVoted = function() {
+        return CommentService.hasVoted(scope.comment.id);
+      };
 
 			// focus the textarea when the reply button is clicked
 			scope.$watch('reply.showReply', function(newVal) {
