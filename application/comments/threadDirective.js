@@ -6,6 +6,8 @@ angular.module('myhonorsComments').directive('thread', function($compile, $locat
 		replace: true,
 		scope: {
 			source: '=',
+			comments: '=',
+			maxDepth: '@'
 		},
 		templateUrl: 'application/comments/partials/thread.html',
 		link: function(scope, element, attrs) {
@@ -26,6 +28,20 @@ angular.module('myhonorsComments').directive('thread', function($compile, $locat
 				},
 				getPermalink: function() {
 					return (scope.source && scope.source.id) ? '#' + $location.path() + '/discuss/' + scope.source.id : null;
+				},
+				addPoint: function() {
+					// users can't upvote their own comments
+					if (CommentService.isAuthor(scope.source.id)) return;
+					CommentService.points(scope.source.id, true);
+				},
+				removePoint: function() {
+					CommentService.points(scope.source.id, false);
+				},
+				isAuthor: function() {
+					return (scope.source && scope.source.id) ? CommentService.isAuthor(scope.source.id) : false;
+				},
+				hasVoted: function() {
+					return (scope.source && scope.source.id) ? CommentService.hasVoted(scope.source.id) : false;
 				}
 			};
 

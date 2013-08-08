@@ -1,0 +1,95 @@
+<html ng-app="myhonors">
+<head>
+	<title>Test</title>
+	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="assets/css/font-awesome.css" />
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+</head>
+<body ng-controller="MainCtrl">
+
+<comment comment="comment" ng-repeat="comment in comments"></comment>
+
+<script src="https://cdn.firebase.com/v0/firebase.js"></script>
+<script src="http://underscorejs.org/underscore-min.js"></script>
+<script src="assets/lib/moment.min.js"></script>
+<script src="assets/lib/angular.js"></script>
+<script>
+'use strict'
+
+var FirebaseIO = new Firebase('https://myhonors.firebaseio.com');
+
+angular.module('myhonors', []);
+angular.module('myhonors').controller('MainCtrl', function($scope, SomeService) {
+	$scope.comments = SomeService.getData('courses/middlecircle/comments', 'comments', true);
+
+	// function(pointerRef, dataRef, fetchChildren) {
+	// 	FirebaseIO.child(pointerRef).on('child_added', function(pointerSnap) {
+
+	// 		var dataDeferred = $q.defer();
+
+	// 		FirebaseIO.child(dataRef + '/' + pointerSnap.name()).on('value', function(dataSnap) {
+	// 			if (fetchChildren) {
+
+	// 			} else {
+	// 				dataDeferred.resolve(data.val());
+	// 			}
+	// 		});
+
+			
+	// 	};
+	// }
+});
+
+angular.module('myhonors').factory('SomeService', function($q, $timeout) {
+	return {
+		getData: function(pointerListRef, dataRef, fetchChildren) {
+			var self = this,
+			    list = {};
+
+			if (typeof pointerListRef == 'string') pointerListRef = FirebaseIO.child(pointerListRef);
+			if (typeof dataRef == 'string') dataRef = FirebaseIO.child(dataRef);
+
+			pointerListRef.on('child_added', function(pointer) {
+				console.log('child_added', pointer.name());
+				dataRef.child(pointer.name()).on('value', function(dataSnapshot) {
+					var result = dataSnapshot.val();
+
+					if (fetchChildren && dataSnapshot.child('children').numChildren() > 0) {
+						result.children = self.getData(dataSnapshot.child('children').ref(), dataRef, true);
+					}
+
+					$timeout(function() {
+						list[dataSnapshot.name()] = result;
+					});
+				});
+			});
+
+			return list;
+		}
+	}
+});
+
+angular.module('myhonors').directive('comment', function($compile) {
+	return {
+		restrict: 'E',
+		replace: true,
+		scope: {
+			comment: '='
+		},
+		templateUrl: 'application/comments/partials/comment.html',
+		link: function(scope, element, attr) {
+			// recursively generate child comments up to a certain depth
+			var subElement = element.children().eq(1).children().eq(-1);
+			console.log(subElement);
+			// subElement.html('<div ng-repeat="comment in comment.children">CHILD</div>');
+			subElement.html('<comment comment="comment" ng-repeat="comment in comment.children"></comment>');
+			$compile(subElement.contents())(scope);
+		}
+	}
+});
+
+</script>
+<script src="application/app/timeAgoFilter.js"></script>
+<script src="application/app/truncateFilter.js"></script>
+</body>
+</html>

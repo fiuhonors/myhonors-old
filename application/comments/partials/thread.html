@@ -6,7 +6,16 @@
 			<span style="color: rgba(30,55,70,0.4); font-size: 13px; margin-left: 4px">{{source.date | timeAgo}}</span><br />
 			{{source.content}}
 			<div class="muted" style="font-size: 13px; margin-bottom: 0px">
-				<a class="clickable" style="color: rgba(30,55,70,0.4); font-size: 11px; margin-left: 4px"><i class="icon-star-empty"></i> 0</a>
+				<span class="clickable"
+				      style="color: rgba(30,55,70,0.4)"
+				      ng-if="!mainReply.hasVoted() && mainReply.isAuthor()"
+				      popover-placement="bottom"
+				      popover-trigger="mouseenter"
+				      popover="Sorry! You can't upvote your own comments.">
+					<i class="icon-star-empty"></i> {{source.points || 0}}
+				</span>
+				<a class="clickable" style="color: rgba(30,55,70,0.4); font-size: 11px" ng-click="mainReply.addPoint()" ng-if="!mainReply.isAuthor() && !mainReply.hasVoted()"><i class="icon-star-empty"></i> {{source.points || 0}}</a>
+				<a class="clickable" style="color: rgba(30,55,70,0.4); font-size: 11px" ng-click="mainReply.removePoint()" ng-if="!mainReply.isAuthor() && mainReply.hasVoted()"><i class="icon-star"></i> {{source.points || 0}}</a>
 				<a class="clickable" ng-click="mainReply.showReply = true" style="margin-left: 4px; color: rgba(30,55,70,0.4)">reply</a>
 				<a href="{{mainReply.getPermalink()}}" style="color: rgba(30,55,70,0.4); margin-left: 4px">permalink</a>
 			</div>
@@ -22,7 +31,7 @@
 	<div class="padded-small text-center" style="position: relative">
 		<div style="height: 2px; width: 100%; background-color: #00baff; position: absolute; top: 15px; left: 0px"></div>
 		<span style="padding: 0 10px; background-color: white; position: relative; z-index: 10">
-			{{source.children.length}} responses. Sorted by
+			Sorted by
 			<div class="dropdown text-left" style="display: inline-block">
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#">{{sortComments.getCurrent()}} <span class="caret"></span></a>
 				<ul class="dropdown-menu">
@@ -37,6 +46,6 @@
 		<div ng-show="!source.children.length" class="alert alert-info padded-medium" style="margin-top: 5px; margin-bottom: 0">
 			<strong>Have something interesting to add?</strong> Be the first to add a response!
 		</div>
-		<comment ng-repeat="comment in source.children | orderBy:sortComments.current" comment="comment" depth="1" max-depth="10"></comment>
+		<comment ng-repeat="comment in comments | orderBy:sortComments.current" comment="comment" depth="1" max-depth="10"></comment>
 	</div>
 </div>

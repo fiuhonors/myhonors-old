@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('myhonorsComments').factory('CommentService', function($q, FirebaseIO, FirebaseCollection, UserService) {
+angular.module('myhonorsComments').factory('CommentService', function($q, $timeout, FirebaseIO, FirebaseCollection, UserService) {
 	return {
 		/**
 		 * Create a comment
@@ -20,13 +20,15 @@ angular.module('myhonorsComments').factory('CommentService', function($q, Fireba
 			if (angular.isString(locationRef)) locationRef = FirebaseIO.child(locationRef);
 
 			var now = Date.now();
-
-			var commentRef = FirebaseIO.child('comments').push({
+			var commentRef;
+			var newCommentData = {
 				author: UserService.profile.id,
 				content: data.content,
 				parent: data.parent || null,
 				date: now
-			});
+			};
+
+			commentRef = FirebaseIO.child('comments').push(newCommentData);
 			
 			var commentId = commentRef.name(),
 				q1 = $q.defer(), q2 = $q.defer(), q3 = $q.defer(), q4 = $q.defer();
@@ -79,10 +81,11 @@ angular.module('myhonorsComments').factory('CommentService', function($q, Fireba
 
 				// recursively create a list (i.e. FirebaseCollection) for the children as well
 				data.children = self.list(snapshot.child('children').ref());
+				data.points = snapshot.child('points').numChildren();
 
 				// attach author's profile info to the comment
 				var authorId = snapshot.child('author').val();
-				FirebaseIO.child('user_profiles/' + authorId).once('value', function(userSnapshot) {
+				FirebaseIO.child('user_profiles/' + authorId).on('value', function(userSnapshot) {
 					data.author = (userSnapshot.val() === null)
 						? {fname: '[deleted]'}
 						: angular.extend(userSnapshot.val(), {id: userSnapshot.name()})
@@ -111,10 +114,71 @@ angular.module('myhonorsComments').factory('CommentService', function($q, Fireba
 			if (options.endAt)   commentListRef = commentListRef.endAt(options.endAt);
 			if (options.limit)   commentListRef = commentListRef.limit(options.limit);
 			
-			return FirebaseCollection(commentListRef, {metaFunction: function(doAdd, data) {
-				// read each comment in the list
-				self.read(data.name(), function(data, snapshot) {
-					doAdd(snapshot, data);
+			return new FirebaseCollection(commentListRef, 'comments', function(extraData, snapshot) {
+				if (snapshot.val() === null) return;
+
+				extraData.points = snapshot.child('points').numChildren();
+
+				// attach author's profile info to the comment
+				var authorId = snapshot.child('author').val();
+				FirebaseIO.child('user_profiles/' + authorId).on('value', function(userSnapshot) {
+					extraData.author = (userSnapshot.val() === null)
+						? {fname: '[deleted]'}
+						: angular.extend(userSnapshot.val(), {id: userSnapshot.name()});
+				});
+			}, true);
+		},
+
+		listClutch: function(pointerListRef) {
+			var collection = [];
+
+			if (angular.isString(pointerListRef)) pointerListRef = FirebaseIO.child(pointerListRef);
+
+			pointerListRef.on('value', function(snapshot) {
+				collection.splice(0, 0);
+				snapshot.forEach(function(mainPost) {
+					FirebaseIO.child('comments/' + mainPost.name()).on('value', function(dataSnap) {
+						var extraData = dataSnap.val();
+						// get extra data
+						extraData.points = dataSnap.child('points').numChildren();
+						extraData.children = dataSnap.child('children').numChildren();
+
+						// attach author's profile info to the comment
+						var authorId = dataSnap.child('author').val();
+						FirebaseIO.child('user_profiles/' + authorId).on('value', function(userSnapshot) {
+							extraData.author = (userSnapshot.val() === null)
+								? {fname: '[deleted]'}
+								: angular.extend(userSnapshot.val(), {id: userSnapshot.name()});
+							collection.push(extraData);
+						});
+					});
+				});
+			});
+
+			return collection;
+		},
+
+		listClutch2: function(pointerListRef) {
+			if (angular.isString(pointerListRef)) pointerListRef = FirebaseIO.child(pointerListRef);
+			var index = new FirebaseIndex(pointerListRef, FirebaseIO.child('comments'));
+			return new FirebaseCollection(index, {metaFunction: function(doAdd, data) {
+				var extraData = {
+					id: data.name(),
+					children: data.child('children').numChildren(),
+					points: data.child('points').numChildren()
+				};
+
+				// attach author's profile info to the comment
+				var authorId = data.child('author').val();
+				var flag = true;
+				FirebaseIO.child('user_profiles/' + authorId).on('value', function(userSnapshot) {
+					extraData.author = (userSnapshot.val() === null)
+						? {fname: '[deleted]'}
+						: angular.extend(userSnapshot.val(), {id: userSnapshot.name()});
+					if (flag) {
+						doAdd(data, extraData);
+						flag = false;
+					}
 				});
 			}});
 		},
@@ -135,8 +199,54 @@ angular.module('myhonorsComments').factory('CommentService', function($q, Fireba
 			});
 		},
 
+		listWithChildren: function(pointerListRef, dataRef, fetchChildren) {
+			var self = this;
+
+			var list = {
+				list: {}, // holds the actual list
+				total: 0 // holds the number of objects in the list
+			};
+
+			if (typeof pointerListRef == 'string') pointerListRef = FirebaseIO.child(pointerListRef);
+			if (typeof dataRef == 'string') dataRef = FirebaseIO.child(dataRef);
+
+			pointerListRef.on('child_added', function(pointer) {
+				console.log('child_added', pointer.name());
+				dataRef.child(pointer.name()).on('value', function(dataSnapshot) {
+					var result = dataSnapshot.val();
+
+					if (fetchChildren && dataSnapshot.child('children').numChildren() > 0) {
+						result.children = self.listWithChildren(dataSnapshot.child('children').ref(), dataRef, true);
+					}
+
+					$timeout(function() {
+						list[dataSnapshot.name()] = result;
+					});
+				});
+			});
+
+			return ;
+		},
+    
+		points: function(commentId, up) {
+			// user's can't upvote their own comments
+			if (this.isAuthor(commentId)) return;
+
+			if (up) {
+				FirebaseIO.child('comments/' + commentId + '/points/' + UserService.profile.id).set(true);
+				UserService.ref.child('points/' + commentId).set(true);
+			} else {
+				FirebaseIO.child('comments/' + commentId + '/points/' + UserService.profile.id).remove();
+				UserService.ref.child('points/' + commentId).remove();
+			}
+		},
+
 		isAuthor: function(commentId) {
 			return UserService.profile && UserService.profile.comments && UserService.profile.comments[commentId] === true;
+		},
+    
+		hasVoted: function(commentId) {
+			return UserService.profile && UserService.profile.points && UserService.profile.points[commentId] === true;
 		}
 
 	}

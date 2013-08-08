@@ -2,9 +2,7 @@
 
 angular.module('myhonorsCourses').controller('CourseViewCtrl', ['$scope', '$routeParams', 'FirebaseIO', 'CourseService', 'CommentService', function($scope, $routeParams, FirebaseIO, CourseService, CommentService) {
 	$scope.course = CourseService.read($routeParams.courseId);
-
-	var discussionRef = FirebaseIO.child('courses/' + $routeParams.courseId + '/comments');
-	$scope.comments = CommentService.list(discussionRef);
+	$scope.comments = CommentService.listClutch2('courses/' + $routeParams.courseId + '/comments');
 
 	/* ANNOUNCEMENTS */
 
