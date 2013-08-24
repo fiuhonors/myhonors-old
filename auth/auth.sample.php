@@ -29,7 +29,9 @@ function getData($username) {
 		'id' => $username,
 		'isArchMod' => (array_key_exists($username, $access_levels['isArchMod'])) ? true : false,
 		'isEventMod' => (array_key_exists($username, $access_levels['isEventMod'])) ? true : false,
-		'isAdmin' => (array_key_exists($username, $access_levels['isAdmin'])) ? true : false
+		'isAdmin' => (array_key_exists($username, $access_levels['isAdmin'])) ? true : false,
+		'isMiddleCircle' => (array_key_exists($username, $access_levels['isMiddleCircle'])) ? true : false,
+		'isMiddleCircleAdmin' => (array_key_exists($username, $access_levels['isMiddleCircleAdmin'])) ? true : false
 	);
 
 	// create firebase token for user and include additional security info
