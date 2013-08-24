@@ -21,12 +21,14 @@ angular.module('myhonorsComments').factory('CommentService', function($q, Fireba
 
 			var now = Date.now();
 
-			var commentRef = FirebaseIO.child('comments').push({
+			var newCommentData = {
 				author: UserService.profile.id,
 				content: data.content,
 				parent: data.parent || null,
 				date: now
-			});
+			};
+
+			var commentRef = FirebaseIO.child('comments').push(newCommentData);
 			
 			var commentId = commentRef.name(),
 				q1 = $q.defer(), q2 = $q.defer(), q3 = $q.defer(), q4 = $q.defer();
@@ -79,10 +81,11 @@ angular.module('myhonorsComments').factory('CommentService', function($q, Fireba
 
 				// recursively create a list (i.e. FirebaseCollection) for the children as well
 				data.children = self.list(snapshot.child('children').ref());
+				data.points = snapshot.child('points').numChildren();
 
 				// attach author's profile info to the comment
 				var authorId = snapshot.child('author').val();
-				FirebaseIO.child('user_profiles/' + authorId).once('value', function(userSnapshot) {
+				FirebaseIO.child('user_profiles/' + authorId).on('value', function(userSnapshot) {
 					data.author = (userSnapshot.val() === null)
 						? {fname: '[deleted]'}
 						: angular.extend(userSnapshot.val(), {id: userSnapshot.name()})
@@ -111,10 +114,42 @@ angular.module('myhonorsComments').factory('CommentService', function($q, Fireba
 			if (options.endAt)   commentListRef = commentListRef.endAt(options.endAt);
 			if (options.limit)   commentListRef = commentListRef.limit(options.limit);
 			
-			return FirebaseCollection(commentListRef, {metaFunction: function(doAdd, data) {
-				// read each comment in the list
-				self.read(data.name(), function(data, snapshot) {
-					doAdd(snapshot, data);
+			return new FirebaseCollection(commentListRef, 'comments', function(extraData, snapshot) {
+				if (snapshot.val() === null) return;
+
+				extraData.points = snapshot.child('points').numChildren();
+
+				// attach author's profile info to the comment
+				var authorId = snapshot.child('author').val();
+				FirebaseIO.child('user_profiles/' + authorId).on('value', function(userSnapshot) {
+					extraData.author = (userSnapshot.val() === null)
+						? {fname: '[deleted]'}
+						: angular.extend(userSnapshot.val(), {id: userSnapshot.name()});
+				});
+			}, true);
+		},
+
+		listClutch2: function(pointerListRef) {
+			if (angular.isString(pointerListRef)) pointerListRef = FirebaseIO.child(pointerListRef);
+			var index = new FirebaseIndex(pointerListRef, FirebaseIO.child('comments'));
+			return new FirebaseCollection(index, {metaFunction: function(doAdd, data) {
+				var extraData = {
+					id: data.name(),
+					children: data.child('children').numChildren(),
+					points: data.child('points').numChildren()
+				};
+
+				// attach author's profile info to the comment
+				var authorId = data.child('author').val();
+				var flag = true;
+				FirebaseIO.child('user_profiles/' + authorId).on('value', function(userSnapshot) {
+					extraData.author = (userSnapshot.val() === null)
+						? {fname: '[deleted]'}
+						: angular.extend(userSnapshot.val(), {id: userSnapshot.name()});
+					if (flag) {
+						doAdd(data, extraData);
+						flag = false;
+					}
 				});
 			}});
 		},
@@ -137,7 +172,10 @@ angular.module('myhonorsComments').factory('CommentService', function($q, Fireba
 
 		isAuthor: function(commentId) {
 			return UserService.profile && UserService.profile.comments && UserService.profile.comments[commentId] === true;
-		}
+		},
 
+		hasVoted: function(commentId) {
+			return UserService.profile && UserService.profile.points && UserService.profile.points[commentId] === true;
+		}
 	}
 });
