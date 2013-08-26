@@ -9,7 +9,6 @@
 				<li>If you encounter any bugs, if you have any recommendations, or if you want to ask a question about MyHonors, you can email us at <a href="mailto:honors@fiu.edu">honors@fiu.edu</a></li>
 			</ol>
 			<p>Good luck with your classes!</p>
-			<p>Sincerely,<br /><em>The Honors College</em></p>
 		</div>
 	</div>
 </div>
@@ -53,13 +52,13 @@
 					<div class="pull-left span8">
 						<div>
 							<strong>{{event.name}}</strong>
-							<span>on {{event.date.starts | date:"MMMM d 'at' h:mm a"}}</span>
+							<span>on {{event.date.starts | date:"MMM d 'at' h:mm a"}}</span>
 						</div>
 						<div class="event-types">
 							<span class="muted" ng-repeat="type in event.types" ng-show="event.types">{{type}}<span ng-show="!$last">,&nbsp;</span></span>
 							<span class="muted" ng-show="!event.types">GENERAL EVENT</span>
 						</div>
-						<p class="event-short-desc">{{(event.desc || 'No description.') | truncate:75}}</p>
+						<p class="event-short-desc">{{(event.desc || 'No description.') | truncate:75}} <a href="#/events/{{event.id}}" ng-show="event.desc.length > 75">read more</a></p>
 					</div>
 					<div class="span2 text-center event-attending">
 						<h3>{{event.rsvps}}</h3>
