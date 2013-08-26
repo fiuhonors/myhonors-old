@@ -72,7 +72,7 @@
 							<span style="font-size: 85%; padding: 3px">&#8226;</span> {{comment.date | timeAgo}}
 						</span>
 						<div class="pull-right">
-							<button class="btn btn-small btn-link" ng-show="user.auth.isCommentMod || comment.author.id === user.profile.id" ng-click="deleteComment(comment.id)"><i class="icon-trash icon-white"></i></button>
+							<button class="btn btn-small btn-link" ng-show="0 && (user.auth.isCommentMod || comment.author.id === user.profile.id)" ng-click="deleteComment(comment.id)"><i class="icon-trash icon-white"></i></button>
 						</div>
 						<p style="font-size: 15px; color: #42474a; font-weight: 300">{{comment.content}}</p>
 					</div>

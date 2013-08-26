@@ -81,7 +81,7 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 
 	/* COMMENT FUNCTIONALITY */
 
-	$scope.comments = CommentService.list(discussionRef);
+	$scope.comments = CommentService.listClutch2(discussionRef);
 
 	$scope.addComment = function() {
 		CommentService.create($scope.userComment, discussionRef);
