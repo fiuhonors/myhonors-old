@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('myhonorsDashboard').controller('DashboardCtrl', ['$scope', '$location', 'FirebaseIO', 'EventService', 'RSVPService', function($scope, $location, FirebaseIO, EventService, RSVPService) {
-	$scope.events = EventService.list({limit: 4, startAt: Date.now()});
+	$scope.events = EventService.list({limit: 3, startAt: Date.now()});
 
 	$scope.goToEvent = function(eid) {
 		$location.path('/events/' + eid);
