@@ -99,8 +99,15 @@
 		</div>
 		<div class="box">
 			<div class="box-header">Pending Submissions</div>
-			<div class="box-content padded">
-				You currently have <strong>{{submissions.length}}</strong> pending submissions.
+			<div class="box-content" ng-if="submissions.length > 0">
+				<ul class="block-hover">
+					<li ng-repeat="sub in submissions"><label class="label label-info" style="margin-right: 2px">WAITING FOR VERIFICATION</label> {{sub.agency}}</li>
+				</ul>
+			</div>
+			<div class="box-content padded" ng-if="!submissions.length">
+				<div class="alert alert-info" style="margin-bottom: 0">
+					No pending submissions.
+				</div>
 			</div>
 		</div>
 	</div>

@@ -8,7 +8,8 @@ angular.module('myhonorsCitizenship').factory('VolunteerService', function($q, F
 			UserService.ref.child('volunteerHours/' + volunteerRef.name()).set(true);
 		},
 		list: function() {
-			return FirebaseCollection(FirebaseIO.child('user_profiles/' + UserService.profile.id + '/volunteerHours'));
+			var index = new FirebaseIndex(FirebaseIO.child('user_profiles/' + UserService.profile.id + '/volunteerHours'), FirebaseIO.child('volunteerHours'));
+			return FirebaseCollection(index);
 		}
 	}
 });
