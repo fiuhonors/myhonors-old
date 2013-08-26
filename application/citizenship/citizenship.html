@@ -30,85 +30,73 @@
 	</div>
 </div>
 <div class="row">
-	<div class="span12">
+	<div class="span6">
+		<div class="box">
+			<div class="box-header">Add Volunteer Hours</div>
+			<div class="box-content padded clearfix">
+				<form class="form">
+
+					<label for="agency">Agency/Organization</label>
+					<input ng-model="newData.agency" type="text" id="agency" />
+
+					<div class="row-fluid">
+						<div class="span6">
+							<label for="activity">Activity Name</label>
+							<input ng-model="newData.activity" type="text" id="activity" />
+						</div>
+						<div class="span6">
+							<label for="hours">Total Hours</label>
+							<input ng-model="newData.hours" type="number" id="hours" placeholder="0" />
+						</div>
+					</div>
+
+					<div class="row-fluid">
+						<div class="span6">
+							<label for="startDate">Start Date</label>
+							<input ng-model="newData.startDate" type="text" id="startDate" placeholder="MM/DD/YYYY" />
+						</div>
+						<div class="span6">
+							<label for="endDate">End Date</label>
+							<input ng-model="newData.endDate" type="text" id="endDate" placeholder="MM/DD/YYYY" />
+						</div>
+					</div>
+
+					<div class="row-fluid">
+						<div class="span6">
+							<label for="referenceName">Reference Name</label>
+							<input ng-model="newData.referenceName" type="text" id="referenceName" />
+						</div>
+						<div class="span6">
+							<label for="referenceTitle">Reference Title/Position</label>
+							<input ng-model="newData.referenceTitle" type="text" id="referenceTitle" />
+						</div>
+					</div>
+
+					<div class="row-fluid">
+						<div class="span6">
+							<label for="referenceEmail">Reference Email Address</label>
+							<input ng-model="newData.referenceEmail" type="text" id="referenceEmail" />
+						</div>
+						<div class="span6">
+							<label for="referencePhone">Reference Phone Number</label>
+							<input ng-model="newData.referencePhone" type="text" id="referencePhone" />
+						</div>
+					</div>
+
+					<label></label>
+					<button type="submit" class="btn btn-primary" ng-click="submit()">Add Hours</button>
+
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="span6">
 		<div class="box">
 			<div class="box-header">Volunteer Hours (0/20)</div>
 			<div class="box-content padded clearfix">
 				<div class="mh-progress"><div class="bar" style="width: 0%;"></div></div>
 			</div>
 		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="span6">
-		<div class="box">
-			<div class="box-header">Add Volunteer Hours</div>
-			<div class="box-content padded clearfix">
-				<form class="form-horizontal">
-					<div class="control-group">
-						<label class="control-label" for="agency">Agency/Organization</label>
-						<div class="controls">
-							<input ng-model="newData.agency" type="text" id="agency" />
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="activity">Activity Name</label>
-						<div class="controls">
-							<input ng-model="newData.activity" type="text" id="activity" />
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="hours">Total Hours</label>
-						<div class="controls">
-							<input ng-model="newData.hours" type="number" id="hours" />
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="startDate">Start Date</label>
-						<div class="controls">
-							<input ng-model="newData.startDate" type="text" id="startDate" />
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="endDate">End Date</label>
-						<div class="controls">
-							<input ng-model="newData.endDate" type="text" id="endDate" />
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="referenceName">Reference Name</label>
-						<div class="controls">
-							<input ng-model="newData.referenceName" type="text" id="referenceName" />
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="referenceTitle">Reference Title/Position</label>
-						<div class="controls">
-							<input ng-model="newData.referenceTitle" type="text" id="referenceTitle" />
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="referenceEmail">Reference Email Address</label>
-						<div class="controls">
-							<input ng-model="newData.referenceEmail" type="text" id="referenceEmail" />
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="referencePhone">Reference Phone Number</label>
-						<div class="controls">
-							<input ng-model="newData.referencePhone" type="text" id="referencePhone" />
-						</div>
-					</div>
-					<div class="control-group">
-						<div class="controls">
-							<button type="submit" class="btn btn-primary" ng-click="submit()">Add Hours</button>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-	<div class="span6">
 		<div class="box">
 			<div class="box-header">Pending Submissions</div>
 			<div class="box-content padded">
