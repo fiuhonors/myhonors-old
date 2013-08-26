@@ -26,5 +26,11 @@ angular.module('myhonors').controller('AppCtrl', function ($scope, $rootScope, $
 		}
 	});
 
+	$rootScope.$on('$viewContentLoaded', function() {
+		// every time the ngView content is reloaded,
+		// track page view in Google Analytics
+		ga('send', 'pageview', {'page': $location.path()});
+	});
+
 	$rootScope.page_title = "";
 });
