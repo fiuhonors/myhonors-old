@@ -172,9 +172,8 @@
 					".validate": "newData.isString()"
 				},
 				"points": {
-					"$userId": {
-						".validate": "newData.isBoolean() && root.child('user_profiles').hasChild($userId)"
-					}
+					".read": true,
+					".write": true
 				},
 				"parent": {
 					".validate": "newData.isString() && root.child('comments').hasChild(newData.val())"

@@ -71,9 +71,9 @@ angular.module('myhonorsComments').factory('CommentService', function($q, Fireba
 		 */
 		read: function(commentId, onComplete) {
 			var self = this,
-			    deferred = $q.defer();
+				deferred = $q.defer();
 
-			FirebaseIO.child('comments/' + commentId).once('value', function(snapshot) {
+			FirebaseIO.child('comments/' + commentId).on('value', function(snapshot) {
 				if (snapshot.val() === null) return;
 
 				var data = snapshot.val();
@@ -168,6 +168,19 @@ angular.module('myhonorsComments').factory('CommentService', function($q, Fireba
 					if (data.parent) FirebaseIO.child('comments/' + data.parent + '/children/' + commentId).remove();
 				}
 			});
+		},
+
+		points: function(commentId, up) {
+			// user's can't upvote their own comments
+			if (this.isAuthor(commentId)) return;
+
+			if (up) {
+				FirebaseIO.child('comments/' + commentId + '/points/' + UserService.profile.id).set(true);
+				UserService.ref.child('points/' + commentId).set(true);
+			} else {
+				FirebaseIO.child('comments/' + commentId + '/points/' + UserService.profile.id).remove();
+				UserService.ref.child('points/' + commentId).remove();
+			}
 		},
 
 		isAuthor: function(commentId) {
