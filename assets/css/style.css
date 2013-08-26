@@ -277,6 +277,18 @@ a.thumbnail:hover {text-decoration: none;}
 .row-fluid .media.span2:nth-child(6n + 7) {margin-left : 0px; clear:left;}
 .row-fluid .media.span1:nth-child(12n + 13) {margin-left : 0px; clear:left;}
 
+/* Volunteer Hours */
+
+.mh-progress {
+	background-color: #dedede;
+	height: 15px;
+}
+
+.mh-progress .bar {
+	background-color: #00baff;
+	height: 100%;
+}
+
 /* Upcoming Events */
 
 ul.block-hover {

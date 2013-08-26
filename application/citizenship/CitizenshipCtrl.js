@@ -1,6 +1,11 @@
 'use strict';
 
-angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$timeout', 'FirebaseIO', 'SwipeService', 'UserService', function($scope, $timeout, FirebaseIO, SwipeService, UserService) {
+angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$timeout', 'FirebaseIO', 'SwipeService', 'UserService', 'VolunteerService', function($scope, $timeout, FirebaseIO, SwipeService, UserService, VolunteerService) {
+	$scope.submissions = VolunteerService.list();
+	$scope.submit = function() {
+		VolunteerService.create($scope.newData);
+		$scope.newData = {};
+	};
 	$scope.eventTally = {
 		// initialize the event types
 		'Honors Hour': 0,

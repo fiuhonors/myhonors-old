@@ -60,6 +60,11 @@
 						".validate": "newData.isBoolean()"
 					}
 				},
+				"volunteerHours": {
+					"$volunteerId": {
+						".validate": "newData.isBoolean()"
+					}
+				},
 
 				// prevents any extra children (we only want the fields that are explicitly identified here)
 				"$other": {
@@ -193,6 +198,11 @@
 		},
 
 		"furc": {
+			".read": true,
+			".write": true
+		},
+
+		"volunteerHours": {
 			".read": true,
 			".write": true
 		}
