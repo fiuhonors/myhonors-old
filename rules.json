@@ -3,6 +3,10 @@
 		// set defaults to no reads and no writes unless you're an Administrator
 		".read": "auth.isAdmin === true",
 		".write": "auth.isAdmin === true",
+
+		"system_settings": {
+			".read": true
+		},
 		
 		"user_profiles": {
 			".read": true,
