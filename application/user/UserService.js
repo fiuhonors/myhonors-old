@@ -32,14 +32,16 @@ angular.module('myhonorsUser').factory('UserService', function($http, $location,
 						ref.once('value', function(snapshot) {
 							// if user profile doesn't exist, OR if information has been pre-loaded into
 							// their user profile, but the user has never actually logged in before
-							if (snapshot.val() === null || snapshot.child('lastActivity').val() === null) {
+							if (snapshot.val() === null ||
+								snapshot.child('lastActivity').val() === null ||
+								snapshot.child('fname').val() === null ||
+								snapshot.child('lname').val() === null)
+							{
 								// new user, create profile for them
-								ref.set({
-									fname: result.fname,
-									lname: result.lname,
-									pid: result.pid,
-									lastActivity: Date.now()
-								});
+								ref.child('fname').set(result.fname);
+								ref.child('lname').set(result.lname);
+								ref.child('pid').set(result.pid);
+								ref.child('lastActivity').set(Date.now());
 							} else {
 								// user has profile. update lastActivity
 								ref.child('lastActivity').set(Date.now());

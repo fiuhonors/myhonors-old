@@ -17,7 +17,7 @@ define("DISABLE_LDAP", false);
 
 include_once "FirebaseToken.php";
 
-function getData($username) {
+function getData($username, $data) {
 	// create token generator
 	$tokenGen = new Services_FirebaseTokenGenerator(FIREBASE_SECRET);
 
@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 			$search = ldap_search($ldapconn, (BEFORE_USERNAME . $_POST['pid'] . AFTER_USERNAME), "(objectClass=*)", array("givenName", "sn"));
 			$data = ldap_get_entries($ldapconn, $search);
 
-			$result = getData($_POST['pid']);
+			$result = getData($_POST['pid'], $data);
 
 			ldap_unbind($ldapconn);
 		}
