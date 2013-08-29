@@ -9,14 +9,9 @@
 			<button class="btn btn-small btn-link" ng-show="user.auth.isCommentMod || comment.author.id === user.profile.id" ng-click="deleteComment()"><i class="icon-trash icon-white"></i></button>
 		</div>
 
-		<div ng-if="depth == 0" style="font-size: 13px; line-height: 1.38em; color: #42474a; font-weight: 300">
-			{{comment.content | truncate:500}}
-			<a href="{{reply.getPermalink()}}" ng-show="comment.content.length >= 500">read more</a>
-		</div>
+		<div ng-if="depth == 0" class="comment" style="font-size: 13px; line-height: 1.38em; color: #42474a; font-weight: 300" markdown="comment.content"></div>
 
-		<div ng-if="depth == 1" style="font-size: 13px; line-height: 1.38em; color: #42474a; font-weight: 300">
-			{{comment.content}}
-		</div>
+		<div ng-if="depth == 1" class="comment" style="font-size: 13px; line-height: 1.38em; color: #42474a; font-weight: 300" markdown="comment.content"></div>
 
 		<div class="muted" style="font-size: 11px; margin-bottom: 0px" ng-if="depth != 0">
 			<span class="clickable"

@@ -45,6 +45,8 @@ angular.module('myhonorsComments').directive('thread', function($compile, $locat
 				}
 			};
 
+			scope.showHelp = false;
+
 			// provides a property to set the orderBy predicate for the comments (.current)
 			// and a function to get the value as a text string for the view (.getCurrent())
 			scope.sortComments = {

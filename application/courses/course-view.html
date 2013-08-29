@@ -66,7 +66,7 @@
 					<div style="max-height: 200px; overflow-y: auto;">
 						<div class="alert alert-{{announce.color}}" style="margin-bottom: 5px" ng-repeat="announce in course.announcements">
 							<strong>{{announce.title}}</strong> <span style="font-size: 85%; padding: 3px">&#8226;</span> <em>{{announce.date | timeAgo}}</em>
-							<p style="margin-bottom: 0px">{{announce.content}}</p>
+							<div class="comment" markdown="announce.content"></div>
 						</div>
 
 						<div class="text-center" ng-show="!course.announcements.length">There are no announcements.</div>
@@ -139,7 +139,7 @@
 		<p>Preview:</p>
 		<div class="alert alert-{{newAnnounce.color}}" style="margin-bottom: 0px">
 			<strong>{{newAnnounce.title}}</strong> <span style="font-size: 85%; padding: 3px">&#8226;</span> <em>a few seconds ago</em>
-			<p style="margin-bottom: 0px">{{newAnnounce.content}}</p>
+			<div class="comment" markdown="newAnnounce.content"></div>
 		</div>
 	</div>
 	<div class="modal-footer">

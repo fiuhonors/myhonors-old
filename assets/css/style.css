@@ -289,6 +289,12 @@ a.thumbnail:hover {text-decoration: none;}
 	height: 100%;
 }
 
+/* Comments */
+
+.comment p:last-child {
+	margin-bottom: 0;
+}
+
 /* Upcoming Events */
 
 ul.block-hover {
