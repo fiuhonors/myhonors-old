@@ -167,7 +167,7 @@
 
 				// validate specific properties
 				"author": {
-					".validate": "newData.isString()",
+					".validate": "newData.isString()"
 				},
 				"date": {
 					".validate": "newData.isNumber()"
@@ -183,8 +183,9 @@
 					".validate": "newData.isString() && root.child('comments').hasChild(newData.val())"
 				},
 				"children": {
+					".write": true,
 					"$childId": {
-						".validate": "newData.isBoolean() && root.child('comments').hasChild($childId)"
+						".validate": "newData.isBoolean()"
 					}
 				},
 
