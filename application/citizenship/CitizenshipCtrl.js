@@ -3,7 +3,8 @@
 angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$timeout', 'FirebaseIO', 'SwipeService', 'UserService', 'VolunteerService', function($scope, $timeout, FirebaseIO, SwipeService, UserService, VolunteerService) {
 	$scope.submissions = VolunteerService.list();
 	$scope.submit = function() {
-		VolunteerService.create($scope.newData);
+		var data = angular.extend($scope.newData, {userId: UserService.profile.id});
+		VolunteerService.create(data);
 		$scope.newData = {};
 	};
 	$scope.eventTally = {
