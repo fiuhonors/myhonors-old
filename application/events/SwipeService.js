@@ -26,7 +26,7 @@ angular.module('myhonorsEvents').factory('SwipeService', function($q, FirebaseIO
 	};
 
 	return {
-		create: function(eventId, userId) {
+		create: function(eventId, userId, callback) {
 			if (!angular.isString(eventId) || !angular.isString(userId)) {
 				throw new Error('Invalid input when creating swipe');
 				return;
@@ -42,6 +42,8 @@ angular.module('myhonorsEvents').factory('SwipeService', function($q, FirebaseIO
 			});
 
 			FirebaseIO.child('user_profiles/' + userId + '/attendance/' + eventId).push(now);
+
+			if (angular.isFunction(callback)) callback();
 		},
 
 		/**

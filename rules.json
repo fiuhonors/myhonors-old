@@ -10,6 +10,8 @@
 		
 		"user_profiles": {
 			".read": true,
+			".write": "auth.isStaff === true",
+
 			"$userId": {
 				".read": "auth.id == $userId",
 				// we need to temporarily allow Arch mods to edit users since we don't have a full list of faculty,
@@ -68,6 +70,10 @@
 					"$volunteerId": {
 						".validate": "newData.isBoolean()"
 					}
+				},
+				"shirtSize": {
+					".read": true,
+					".write": true
 				},
 
 				// prevents any extra children (we only want the fields that are explicitly identified here)

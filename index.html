@@ -93,6 +93,9 @@
 	<script src="application/events/SwipeCtrl.js"></script>
 	<script src="application/events/SwipeService.js"></script>
 
+	<script src="application/internal/config.js"></script>
+	<script src="application/internal/ShirtSwipeCtrl.js"></script>
+
 	<script src="application/career/config.js"></script>
 	<script src="application/career/CareerCtrl.js"></script>
 
@@ -139,7 +142,8 @@
 							<li ng-show="user.auth.isAdmin"><a href="#/profile/{{user.profile.user_id}}/edit">Update Profile</a></li>
 							<li ng-show="user.auth.isAdmin" class="divider"></li>
 							<li ng-show="user.auth.isAdmin"><a href="#/admin">Admin Panel</a></li>
-							<li ng-show="user.auth.isAdmin" class="divider"></li>
+							<li ng-show="user.auth.isStaff"><a href="#/internal">Staff Panel</a></li>
+							<li ng-show="user.auth.isAdmin || user.auth.isStaff" class="divider"></li>
 							<li><a href="#/login" ng-click="user.logout()">Logout</a></li>
 						</ul>
 					</li>

@@ -1,0 +1,33 @@
+<div class="row" style="margin-top: 40px">
+	<div class="offset3 span6">
+		<div class="box" style="margin-bottom: 30px">
+			<div class="box-header">Shirt Swipe</div>
+			<div class="box-content padded-small">
+				<input type="text" class="input-block-level" style="padding: 40px 20px; line-height: 60px; font-size: 40px; margin-bottom: 0" placeholder="Swipe your FIU card..." ng-model="data.userId" ng-enter="swipe()" />
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row" ng-show="showButtons">
+	<div class="offset3 span6">
+		<div class="box" style="margin-bottom: 30px">
+			<div class="box-header">What's your shirt size?</div>
+			<div class="box-content padded text-center">
+				<div class="btn-group">
+					<button ng-repeat="button in buttons" class="btn" ng-click="save(button)">{{button}}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row" ng-show="error">
+	<div class="offset3 span6">
+		<div class="box">
+			<div class="box-content padded-small">
+				<div class="alert alert-error" style="margin-bottom: 0; padding: 20px"><strong>Sorry!</strong> {{error}}</div>
+			</div>
+		</div>
+	</div>
+</div>
