@@ -3,6 +3,8 @@
 angular.module('myhonorsInternal').controller('ShirtSwipeCtrl', function($scope, $timeout, FirebaseIO, UserService) {
 	$scope.buttons = ['Small', 'Medium', 'Large', 'X-Large', 'XX-Large'];
 	$scope.showButtons = false;
+	$scope.pageTitle = 'Shirt Swipe';
+	$scope.question = "What's your shirt size?";
 
 	var newStudentPIDs = {
 		'3117665': true,

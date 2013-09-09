@@ -7,8 +7,14 @@ angular.module('myhonorsInternal').config(['$routeProvider', function($routeProv
 			requireLogin: true,
 			resolve: appResolve }).
 		when('/internal/shirtswipe', {
-			templateUrl: 'application/internal/shirt-swipe.html',
+			templateUrl: 'application/internal/swipe.html',
 			controller: 'ShirtSwipeCtrl',
+			requireLogin: true,
+			resolve: appResolve,
+			showPanels: false }).
+		when('/internal/bbclabswipe', {
+			templateUrl: 'application/internal/swipe.html',
+			controller: 'BBCLabSwipeCtrl',
 			requireLogin: true,
 			resolve: appResolve,
 			showPanels: false });

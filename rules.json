@@ -44,12 +44,7 @@
 					}
 				},
 				"attendance": {
-					".write": "auth.isEventMod === true",
-					"$eventID": {
-						"$swipeId": {
-							".validate": "newData.isNumber()"
-						}
-					}
+					".write": "auth.isEventMod === true || auth.isStaff === true",
 				},
 				"comments": {
 					"$commentID": {
@@ -140,12 +135,7 @@
 					}
 				},
 				"attendance": {
-					".write": "auth.isEventMod === true",
-					"$userId": {
-						"$swipeId": {
-							".validate": "newData.isNumber()"
-						}
-					}
+					".write": "auth.isEventMod === true || auth.isStaff === true",
 				},
 
 				// prevents any extra children (we only want the fields that are explicitly identified here)

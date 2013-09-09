@@ -35,7 +35,7 @@ angular.module('myhonorsEvents').factory('SwipeService', function($q, FirebaseIO
 			var now = Date.now();
 			var userRef = FirebaseIO.child('events/' + eventId + '/attendance/' + userId);
 
-			userRef.push(now, function() {
+			var swipeRef = userRef.push(now, function() {
 				// we can't set the priority of an empty location, so push the data first and
 				// then set the priority in this onComplete callback
 				userRef.setPriority(now);
@@ -43,7 +43,7 @@ angular.module('myhonorsEvents').factory('SwipeService', function($q, FirebaseIO
 
 			FirebaseIO.child('user_profiles/' + userId + '/attendance/' + eventId).push(now);
 
-			if (angular.isFunction(callback)) callback();
+			if (angular.isFunction(callback)) callback(swipeRef);
 		},
 
 		/**

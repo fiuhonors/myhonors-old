@@ -1,7 +1,7 @@
 <div class="row" style="margin-top: 40px">
 	<div class="offset3 span6">
 		<div class="box" style="margin-bottom: 30px">
-			<div class="box-header">Shirt Swipe</div>
+			<div class="box-header">{{pageTitle}}</div>
 			<div class="box-content padded-small">
 				<input type="text" class="input-block-level" style="height: 100%; line-height: 60px; font-size: 40px; margin-bottom: 0" placeholder="Swipe your FIU card..." ng-model="data.userId" ng-enter="swipe()" />
 			</div>
@@ -12,7 +12,7 @@
 <div class="row" ng-show="showButtons">
 	<div class="offset3 span6">
 		<div class="box" style="margin-bottom: 30px">
-			<div class="box-header">What's your shirt size?</div>
+			<div class="box-header">{{question}}</div>
 			<div class="box-content padded text-center">
 				<div class="btn-group">
 					<button ng-repeat="button in buttons" class="btn" ng-click="save(button)">{{button}}</button>
