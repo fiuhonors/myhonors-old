@@ -26,27 +26,26 @@ $fb = new fireBase(FIREBASE_URL, $token);
 $ldapconn = ldap_connect(SERVER_ADDRESS);
 if ($ldapconn)
 {
-
 	// binding to ldap server
 	$ldapbind = ldap_bind($ldapconn, $ldaprdn, $ldappass);
 
 	// verify binding
 	if ($ldapbind)
 	{
-		foreach($users as $u)
+		foreach($users as $pid => $u)
 		{
-			$search = ldap_search($ldapconn, (BEFORE_USERNAME . $u["pid"] . AFTER_USERNAME), "(objectClass=*)", array("givenName", "sn"));
+			$search = ldap_search($ldapconn, (BEFORE_USERNAME . $pid . AFTER_USERNAME), "(objectClass=*)", array("givenName", "sn"));
 			$data = ldap_get_entries($ldapconn, $search);
 
 			if ($u["fname"] == null || $u["lname"] == null) {
-				$path = "/user_profiles/" . $u["pid"];
+				$path = "/user_profiles/" . $pid;
 				$fb->set($path . "/fname", $data[0]["givenname"][0]);
 				$fb->set($path . "/lname", $data[0]["sn"][0]);
-				echo "fixed " . $u["pid"] . "<br />";
+				echo "fixed " . $pid . "<br />";
 				usleep(250000);
 			}
 			else {
-				echo "skipped " . $u["pid"] . "<br />";
+				echo "skipped " . $pid . "<br />";
 			}
 		}
 	}
