@@ -9,3 +9,6 @@ application/config.js
 
 # LDAPS Authentication
 auth/auth.php
+
+# DevOps
+devops/updateNameData.php
