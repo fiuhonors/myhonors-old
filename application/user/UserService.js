@@ -91,6 +91,11 @@ angular.module('myhonorsUser').factory('UserService', function($http, $location,
 	 * Check if a certain userId already exists and executes a callback with the boolean result
 	 */
 	var exists = function(userId, callback) {
+		if (!angular.isString(userId) || userId.length === 0) {
+			callback(false);
+			return;
+		}
+
 		FirebaseIO.child('user_profiles/' + userId).once('value', function(snapshot) {
 			if (snapshot.val() === null) {
 				callback(false);
