@@ -34,15 +34,19 @@ if ($ldapconn)
 	{
 		foreach($users as $pid => $u)
 		{
-			$search = ldap_search($ldapconn, (BEFORE_USERNAME . $pid . AFTER_USERNAME), "(objectClass=*)", array("givenName", "sn"));
-			$data = ldap_get_entries($ldapconn, $search);
+			if (!array_key_exists("fname", $u) || !array_key_exists("lname", $u) || $u["fname"] == null || $u["lname"] == null) {
+				// get the data from LDAP
+				$search = ldap_search($ldapconn, (BEFORE_USERNAME . $pid . AFTER_USERNAME), "(objectClass=*)", array("givenName", "sn"));
+				$data = ldap_get_entries($ldapconn, $search);
 
-			if ($u["fname"] == null || $u["lname"] == null) {
+				// save the data to Firebase
 				$path = "/user_profiles/" . $pid;
 				$fb->set($path . "/fname", $data[0]["givenname"][0]);
 				$fb->set($path . "/lname", $data[0]["sn"][0]);
 				echo "fixed " . $pid . "<br />";
-				usleep(250000);
+
+				// delay so we don't overload the server
+				usleep(25000);
 			}
 			else {
 				echo "skipped " . $pid . "<br />";
