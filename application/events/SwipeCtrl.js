@@ -11,14 +11,16 @@ angular.module('myhonorsEvents').controller('SwipeCtrl', ['$scope', '$timeout', 
 
 	$scope.doAdd = function() {
 		var userId = $scope.data.userId;
-		UserService.exists(userId, function(result) {
+		UserService.exists(userId, function(result, userData) {
 			if (result === true) {
 				SwipeService.create($routeParams.eventId, userId);
 				$timeout(function() {
+					$scope.lastSwipe = userData;
 					$scope.error = false;
 				});
 			} else {
 				$timeout(function() {
+					$scope.lastSwipe = false;
 					$scope.error = true;
 				});
 			}
