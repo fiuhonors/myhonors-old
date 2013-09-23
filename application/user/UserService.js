@@ -100,7 +100,7 @@ angular.module('myhonorsUser').factory('UserService', function($http, $location,
 			if (snapshot.val() === null) {
 				callback(false);
 			} else {
-				callback(true);
+				callback(true, snapshot.val());
 			}
 		});
 	};
