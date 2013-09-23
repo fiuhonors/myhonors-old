@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module('myhonorsInternal').controller('BBCLabSwipeCtrl', function($scope, $timeout, FirebaseIO, SwipeService, UserService) {
-	$scope.buttons = ['Use the Computers', 'Study Area', 'Both (computers & study)'];
+	$scope.buttons = ['Advising', 'Honors Meeting', 'Use the Computers', 'Study Area', 'Both (computers & study)'];
 	$scope.showButtons = false;
 	$scope.pageTitle = 'BBC Lab Swipe-In';
 	$scope.question = 'What is the PRIMARY reason for your visit?';
