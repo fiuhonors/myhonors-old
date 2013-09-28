@@ -23,19 +23,19 @@ All necessary files are already included in the repository, so you can get start
 | **0.x** |     | Adding existing features into repo |
 |         | 0.1 | Linked Authentication with LDAP **[DONE]** |
 |         | 0.2 | Attendance and Events **[DONE]** |
-|         | 0.3 | ARCH Registration |
-|         | 0.4 | User Profiles |
+|         | 0.3 | ARCH Registration | **[IN PROGRESS]**
+|         | 0.4 | User Profiles | **[IN PROGRESS]**
 | **1.x** |     | Adding Social Features |
-|         | 1.1 | Text posts and comments |
+|         | 1.1 | Text posts and comments | **[DONE]**
 |         | 1.2 | Media posts (photos, videos, etc.) |
 |         | 1.3 | Private Messages |
 | **X.x** |     | Features not assigned to any particular release |
 |         | X.x | Automated system messages |
 |         | X.x | Email users with updates |
 |         | X.x | Add cover charge for events |
-|         | X.x | Student portfolios |
-|         | X.x | Internship system |
-|         | X.x | Course integration |
+|         | X.x | Student portfolios | **[IN PROGRESS]**
+|         | X.x | Internship system | **[IN PROGRESS]**
+|         | X.x | Course integration | **[IN PROGRESS]**
 |         | X.x | User-created groups |
 |         | X.x | Integration with main Honors College website |
 |         | X.x | Tagging events, posts, profiles, etc. |
