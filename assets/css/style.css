@@ -404,6 +404,14 @@ td.month:hover, td.year:hover {
 	background-color: #efefef;
 }
 
+td.day {
+	width: 14.2857142857%
+}
+
+.label, .badge {
+	white-space: normal;
+}
+
 /* MAP OVERLAY */
 
 .mapoverlay {
