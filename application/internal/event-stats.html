@@ -1,0 +1,27 @@
+<div class="box">
+	<div class="box-header">Event Stats</div>
+	<div class="box-content padded text-center">
+		<table class="table table-bordered table-hover">
+			<thead>
+				<tr>
+					<td>Event Name</td>
+					<td>Date</td>
+					<td>RSVPs</td>
+					<td>MMC Attendance</td>
+					<td>BBC Attendance</td>
+					<td>Total Attendance</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="event in events">
+					<td>{{event.name}}</td>
+					<td>{{event.date.starts | date:"EEE, MMMM d"}}</td>
+					<td>{{event.rsvps}}</td>
+					<td>{{event.attendanceMMC}}</td>
+					<td>{{event.attendanceBBC}}</td>
+					<td>{{event.attendance}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

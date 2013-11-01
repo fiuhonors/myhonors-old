@@ -6,6 +6,11 @@ angular.module('myhonorsInternal').config(['$routeProvider', function($routeProv
 			templateUrl: 'application/internal/internal.html',
 			requireLogin: true,
 			resolve: appResolve }).
+		when('/internal/eventstats', {
+			templateUrl: 'application/internal/event-stats.html',
+			controller: 'EventStatsCtrl',
+			requireLogin: true,
+			resolve: appResolve }).
 		when('/internal/shirtswipe', {
 			templateUrl: 'application/internal/swipe.html',
 			controller: 'ShirtSwipeCtrl',
