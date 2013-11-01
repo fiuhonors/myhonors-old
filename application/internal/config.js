@@ -20,7 +20,7 @@ angular.module('myhonorsInternal').config(['$routeProvider', function($routeProv
 		when('/internal/bbclabswipe', {
 			templateUrl: 'application/internal/swipe.html',
 			controller: 'BBCLabSwipeCtrl',
-			requireLogin: true,
+			requireLogin: false,
 			resolve: appResolve,
 			showPanels: false });
 }]);
