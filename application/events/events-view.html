@@ -114,20 +114,24 @@
 		</div>
 		<div class="box">
 			<div class="box-header text-center">{{event.rsvps}} <span ng-show="event.rsvps === 1">person</span><span ng-show="event.rsvps !== 1">people</span> attending</div>
-			<div class="box-content">
+			<div class="box-content clearfix">
 				<div ng-show="!eventRSVPs.length" class="padded">
 					<div class="alert alert-info padded-medium" style="margin-bottom: 0">
 						<strong>Be the first to RSVP!</strong> Just click the huge "I'm Going" button above and others will follow.
 					</div>
 				</div>
 				<ul ng-show="eventRSVPs.length" class="unstyled block-hover">
-					<li ng-repeat="rsvp in eventRSVPs" class="clearfix">
+					<li ng-repeat="rsvp in eventRSVPs | limitTo:showAttendanceLimit" class="clearfix">
 						<img class="pull-left img-rounded" src="http://placehold.it/36">
 						<div class="pull-left" style="margin-left: 10px; line-height: 36px">
 							<strong>{{rsvp.fname}}</strong> is going <span class="muted" ng-show="rsvp.guests > 0">[+{{rsvp.guests}}]</span>
 						</div>
 					</li>
 				</ul>
+				<div class="pull-right" style="padding: 5px;" ng-show="eventRSVPs.length > 6">
+					<a href="" ng-show="showAttendanceLimit == 6" ng-click="showRSVPs()">Show all</a>
+					<a href="" ng-show="showAttendanceLimit > 6"  ng-click="showRSVPs()">Show less</a>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -141,15 +145,19 @@
 		</div>
 		<div class="box">
 			<div class="box-header text-center">{{event.attendance}} <span ng-show="event.attendance === 1">person</span><span ng-show="event.attendance !== 1">people</span> attended</div>
-			<div class="box-content">
+			<div class="box-content clearfix">
 				<ul class="unstyled block-hover">
-					<li ng-repeat="person in attendance" class="clearfix">
+					<li ng-repeat="person in attendance | limitTo:showAttendanceLimit" class="clearfix">
 						<img class="pull-left img-rounded" src="http://placehold.it/36">
 						<div class="pull-left" style="margin-left: 10px; line-height: 36px">
 							<strong>{{person.fname}}</strong> attended
 						</div>
 					</li>
 				</ul>
+				<div class="pull-right" style="padding: 5px;" ng-show="event.attendance > 6">
+					<a href="" ng-show="showAttendanceLimit == 6" ng-click="showAttendants()">Show all</a>
+					<a href="" ng-show="showAttendanceLimit > 6"  ng-click="showAttendants()">Show less</a>
+				</div>
 			</div>
 		</div>
 	</div>

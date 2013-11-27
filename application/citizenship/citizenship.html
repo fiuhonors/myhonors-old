@@ -5,7 +5,14 @@
 				<div class="box-header">Honors Hours</div>
 				<div class="box-content padded clearfix">
 					<p class="pull-left">Honors Hours provide seminars, enriching lectures, and workshops to expand your undergraduate experience. These are on Tuesdays and Thursdays from 3:30 PM to 4:45 PM during Fall and Spring.</p>
-					<p><strong>You currently have {{eventTally['Honors Hour']}}/2 Honors Hours.</strong></p>
+					<p><strong>You currently have {{honorsHours.length}}/2 Honors Hours.</strong></p>
+					
+					<ul>
+						<li ng-repeat="honorsHour in honorsHours">
+							{{honorsHour}}
+						</li>
+					</ul>
+					
 				</div>
 			</div>
 		</div>
@@ -14,7 +21,14 @@
 				<div class="box-header">Colloquia</div>
 				<div class="box-content padded clearfix">
 					<p class="pull-left">Three times a semester we invite Honors College faculty fellow to give a presentation on a topic of interest.  Colloquia occur at the same time as Honors Hours, Tuesday or Thursday at 3:30 PM</p>
-					<p><strong>You currently have {{eventTally['Colloquium']}}/1 Colloquia.</strong></p>
+					<p><strong>You currently have {{colloquiums.length}}/1 Colloquia.</strong></p>
+					
+					<ul>
+						<li ng-repeat="colloquium in colloquiums">
+							{{colloquium}}
+						</li>
+					</ul>
+					
 				</div>
 			</div>
 		</div>
@@ -23,7 +37,14 @@
 				<div class="box-header">Excellence Lectures</div>
 				<div class="box-content padded clearfix">
 					<p class="pull-left">Twice a year we invite guests from outside FIU to come address the student body.  Our excellence lectures have brought such noted guests as Senator Bob Graham and noted author Anya Kamenetz.</p>
-					<p><strong>You currently have {{eventTally['Excellence Lecture']}}/1 Excellence Lecture.</strong></p>
+					<p><strong>You currently have {{excellenceLectures.length}}/1 Excellence Lecture.</strong></p>
+					
+					<ul>
+						<li ng-repeat="excellenceLecture in excellenceLectures">
+							{{excellenceLecture}}
+						</li>
+					</ul>
+					
 				</div>
 			</div>
 		</div>
