@@ -15,7 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	header('Content-Type: application/json');
 	
 	
-	if (!isset($_POST['referenceEmail']) || 
+	if (!isset($_POST['agency']) ||
+		!isset($_POST['referenceEmail']) || 
 		!isset($_POST['referenceName']) || 
 		!isset($_POST['userName']) ||
 		!isset($_POST['startDate']) ||
@@ -58,6 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	
 	<p>'. $date_message . ', ' . $_POST['userName'] . ' participated in the following event and specified number of hours as part of their citizen requirement for The Honors College at Florida International University:
 	
+	<p><b>Agency/Organization:</b> ' . $_POST['agency'] . '</p>
 	<p><b>Event description:</b> ' . $_POST['activity'] . '</p>
 	
 	<p><b>Hours served:</b> ' . $_POST['hours'] . ' </p>

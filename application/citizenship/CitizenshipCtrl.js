@@ -2,15 +2,25 @@
 
 angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$timeout', 'FirebaseIO', 'SwipeService', 'UserService', 'VolunteerService', function($scope, $timeout, FirebaseIO, SwipeService, UserService, VolunteerService) {
 	$scope.submissions = VolunteerService.list();
-	$scope.submit = function() {
+	$scope.submit = function(volunteerHoursForm) {
+		if (volunteerHoursForm.$valid) {
 		var data = angular.extend($scope.newData, {userId: UserService.profile.id});
 		VolunteerService.create(data);
 		$scope.newData = {};
+	}
 	};
+	
 	
 	$scope.honorsHours = [];
 	$scope.colloquiums = [];
 	$scope.excellenceLectures = [];
+	
+	$scope.hoursCompleted = 0;	
+	$scope.addVolunteerHours = function (submission) {
+		if (submission.status == "accepted" && submission.hours) {
+			$scope.hoursCompleted += submission.hours;
+		}
+	}
 	
 
 	UserService.ref.child('attendance').on('value', function(snapshot) {
