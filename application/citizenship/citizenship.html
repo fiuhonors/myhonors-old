@@ -55,37 +55,37 @@
 		<div class="box">
 			<div class="box-header">Add Volunteer Hours</div>
 			<div class="box-content padded clearfix">
-				<form class="form">
+				<form class="form" name="volunteerHoursForm">
 
 					<label for="agency">Agency/Organization</label>
-					<input ng-model="newData.agency" type="text" id="agency" />
+					<input ng-model="newData.agency" type="text" id="agency" required />
 
 					<div class="row-fluid">
 						<div class="span6">
 							<label for="activity">Activity Name</label>
-							<input ng-model="newData.activity" type="text" id="activity" />
+							<input ng-model="newData.activity" type="text" id="activity" required />
 						</div>
 						<div class="span6">
 							<label for="hours">Total Hours</label>
-							<input ng-model="newData.hours" type="number" id="hours" placeholder="0" />
+							<input ng-model="newData.hours" type="number" id="hours" placeholder="0" required />
 						</div>
 					</div>
 
 					<div class="row-fluid">
 						<div class="span6">
 							<label for="startDate">Start Date</label>
-							<input ng-model="newData.startDate" type="text" id="startDate" placeholder="MM/DD/YYYY" />
+							<input ng-model="newData.startDate" type="text" id="startDate" placeholder="MM/DD/YYYY" required />
 						</div>
 						<div class="span6">
 							<label for="endDate">End Date</label>
-							<input ng-model="newData.endDate" type="text" id="endDate" placeholder="MM/DD/YYYY" />
+							<input ng-model="newData.endDate" type="text" id="endDate" placeholder="MM/DD/YYYY" required />
 						</div>
 					</div>
 
 					<div class="row-fluid">
 						<div class="span6">
 							<label for="referenceName">Reference Name</label>
-							<input ng-model="newData.referenceName" type="text" id="referenceName" />
+							<input ng-model="newData.referenceName" type="text" id="referenceName" required />
 						</div>
 						<div class="span6">
 							<label for="referenceTitle">Reference Title/Position</label>
@@ -96,7 +96,7 @@
 					<div class="row-fluid">
 						<div class="span6">
 							<label for="referenceEmail">Reference Email Address</label>
-							<input ng-model="newData.referenceEmail" type="text" id="referenceEmail" />
+							<input ng-model="newData.referenceEmail" type="text" id="referenceEmail" required />
 						</div>
 						<div class="span6">
 							<label for="referencePhone">Reference Phone Number</label>
@@ -105,7 +105,7 @@
 					</div>
 
 					<label></label>
-					<button type="submit" class="btn btn-primary" ng-click="submit()">Add Hours</button>
+					<button type="submit" class="btn btn-primary" ng-click="submit(volunteerHoursForm)">Add Hours</button>
 
 				</form>
 			</div>
@@ -113,16 +113,24 @@
 	</div>
 	<div class="span6">
 		<div class="box">
-			<div class="box-header">Volunteer Hours (0/20)</div>
+			<div class="box-header">Volunteer Hours ({{hoursCompleted}}/20) </div>
 			<div class="box-content padded clearfix">
-				<div class="mh-progress"><div class="bar" style="width: 0%;"></div></div>
+				<div class="mh-progress">
+					<!-- We multiply: (Student's hours/20)*100 = (Student's hours * 5) -->
+					<!-- Then if the resulting percentage is less than 100%, we use the first div below. If it is bigger than 100%, we use the second div below, that has a width of 100% -->
+					<div class="bar" ng-if="hoursCompleted*5 <= 100" style="width: {{hoursCompleted*5}}%;"></div>
+					<div class="bar" ng-if="hoursCompleted*5 > 100" style="width: 100%;">
+					</div></div>
 			</div>
 		</div>
 		<div class="box">
 			<div class="box-header">Pending Submissions</div>
 			<div class="box-content" ng-if="submissions.length > 0">
 				<ul class="block-hover">
-					<li ng-repeat="sub in submissions"><label class="label label-info" style="margin-right: 2px">WAITING FOR VERIFICATION</label> {{sub.agency}}</li>
+					<li ng-repeat="sub in submissions">
+						<label class="label label-info" ng-show="sub.status != 'accepted'" style="margin-right: 2px">WAITING FOR VERIFICATION</label> 
+						<label class="label label-success" ng-show="sub.status == 'accepted'" ng-init="addVolunteerHours(sub)" style="margin-right: 2px">ACCEPTED</label> 
+						{{sub.agency}}</li>
 				</ul>
 			</div>
 			<div class="box-content padded" ng-if="!submissions.length">

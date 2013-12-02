@@ -15,3 +15,5 @@ devops/updateNameData.php
 
 # Server logs
 logs/
+access.log
+error.log
