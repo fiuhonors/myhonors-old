@@ -1,7 +1,15 @@
 'use strict';
 
-angular.module('myhonorsDashboard').controller('DashboardCtrl', ['$scope', '$location', 'FirebaseIO', 'EventService', 'RSVPService', function($scope, $location, FirebaseIO, EventService, RSVPService) {
+angular.module('myhonorsDashboard').controller('DashboardCtrl', ['$scope', '$location', 'FirebaseIO', 'EventService', 'RSVPService', 'VolunteerService', function($scope, $location, FirebaseIO, EventService, RSVPService, VolunteerService) {
 	$scope.events = EventService.list({limit: 3, startAt: Date.now()});
+	$scope.submissions = VolunteerService.list();
+
+	$scope.hoursCompleted = 0;	
+	$scope.addVolunteerHours = function (submission) {
+		if (submission.status == "accepted" && submission.hours) {
+			$scope.hoursCompleted += submission.hours;
+		}
+	}
 
 	$scope.goToEvent = function(eid) {
 		$location.path('/events/' + eid);

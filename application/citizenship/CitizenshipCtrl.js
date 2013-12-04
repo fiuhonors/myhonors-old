@@ -4,10 +4,10 @@ angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$time
 	$scope.submissions = VolunteerService.list();
 	$scope.submit = function(volunteerHoursForm) {
 		if (volunteerHoursForm.$valid) {
-		var data = angular.extend($scope.newData, {userId: UserService.profile.id});
-		VolunteerService.create(data);
-		$scope.newData = {};
-	}
+			var data = angular.extend($scope.newData, {userId: UserService.profile.id});
+			VolunteerService.create(data);
+			$scope.newData = {};
+		}
 	};
 	
 	

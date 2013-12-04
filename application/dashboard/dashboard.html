@@ -55,7 +55,7 @@
 <div class="span6">
 	<div class="box">
 		<div class="box-header">
-			Volunteer Hours (0/20)
+			Volunteer Hours ({{hoursCompleted}}/20)
 			<div class="pull-right" ng-show="user.auth.isMiddleCircleAdmin">
 				<a href="#/citizenship" class="btn btn-mini" ng-click="">
 					<i class="icon-plus"></i> Add
@@ -63,8 +63,19 @@
 			</div>
 		</div>
 		<div class="box-content padded clearfix">
-			<div class="mh-progress"><div class="bar" style="width: 0%;"></div></div>
+				<ul class="block-hover">
+					<li ng-repeat="sub in submissions" style="display: none;">
+						<label class="label label-info" ng-show="sub.status != 'accepted'"style="display: none;">WAITING FOR VERIFICATION</label> 
+						<label class="label label-success" ng-show="sub.status == 'accepted'" ng-init="addVolunteerHours(sub)" style="display: none;"ACCEPTED</label> 
+					</li>
+				</ul>
+		<div class="mh-progress">
+				<!-- We multiply: (Student's hours/20)*100 = (Student's hours * 5) -->
+				<!-- Then if the resulting percentage is less than 100%, we use the first div below. If it is bigger than 100%, we use the second div below, that has a width of 100% -->
+				<div class="bar" ng-if="hoursCompleted*5 <= 100" style="width: {{hoursCompleted*5}}%;"></div>
+				<div class="bar" ng-if="hoursCompleted*5 > 100" style="width: 100%;"></div>
 		</div>
+	</div>
 	</div>
 </div>
 <div class="span6">
