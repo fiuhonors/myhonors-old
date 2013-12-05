@@ -2,42 +2,50 @@
 
 angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$timeout', 'FirebaseIO', 'SwipeService', 'UserService', 'VolunteerService', function($scope, $timeout, FirebaseIO, SwipeService, UserService, VolunteerService) {
 	$scope.submissions = VolunteerService.list();
-	$scope.submit = function() {
-		var data = angular.extend($scope.newData, {userId: UserService.profile.id});
-		VolunteerService.create(data);
-		$scope.newData = {};
-	};
-	$scope.eventTally = {
-		// initialize the event types
-		'Honors Hour': 0,
-		'Colloquium': 0,
-		'Excellence Lecture': 0,
-
-		add: function(type) {
-			// safely increment an event type
-			this[type] = (angular.isNumber(this[type])) ? this[type] + 1 : this[type];
-		},
-		reset: function() {
-			this['Honors Hour'] = 0;
-			this['Colloquium'] = 0;
-			this['Excellence Lecture'] = 0;
+	$scope.submit = function(volunteerHoursForm) {
+		if (volunteerHoursForm.$valid) {
+			var data = angular.extend($scope.newData, {userId: UserService.profile.id});
+			VolunteerService.create(data);
+			$scope.newData = {};
 		}
 	};
+	
+	
+	$scope.honorsHours = [];
+	$scope.colloquiums = [];
+	$scope.excellenceLectures = [];
+	
+	$scope.hoursCompleted = 0;	
+	$scope.addVolunteerHours = function (submission) {
+		if (submission.status == "accepted" && submission.hours) {
+			$scope.hoursCompleted += submission.hours;
+		}
+	}
+	
 
 	UserService.ref.child('attendance').on('value', function(snapshot) {
-		// clear the current tally ...
-		$timeout(function() {
-			$scope.eventTally.reset();
-		});
 
 		angular.forEach(snapshot.val(), function(value, key)
 		{
-			// grab the type of the event (key is the eventID) and update the tally
-			FirebaseIO.child('events/' + key + '/types').once('value', function(snapshot) {
+			// grab the type of the event (key is the eventID)
+			FirebaseIO.child('events/' + key).once('value', function(snapshot) {
 				$timeout(function() {
-					snapshot.forEach(function(child) {
-						$scope.eventTally.add(child.val());
-					});
+					var eventType = snapshot.val().types.toString();
+					var eventName = snapshot.val().name;
+					
+					switch (eventType) {
+						case "Honors Hour":
+							$scope.honorsHours.push(eventName);
+							break;
+						case "Colloquium":
+							$scope.colloquiums.push(eventName);
+							break;
+						case "Excellence Lecture":
+							$scope.excellenceLectures.push(eventName);
+							break;
+						default:
+							break;
+					}
 				});
 			});
 		});

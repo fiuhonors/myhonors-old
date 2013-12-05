@@ -28,8 +28,8 @@
 		<div class="box">
 			<div class="box-header">Honors Hours</div>
 			<div class="box-content padded clearfix">
-				<canvas class="pull-left" width="60" height="60" doughnut-chart="eventTally['Honors Hour'],2"></canvas>
-				<div class="pull-right"><h2>{{eventTally['Honors Hour']}}/2</h2></div>
+				<canvas class="pull-left" width="60" height="60" doughnut-chart="honorsHours.length,2"></canvas>
+				<div class="pull-right"><h2>{{honorsHours.length}}/2</h2></div>
 			</div>
 		</div>
 	</div>
@@ -37,8 +37,8 @@
 		<div class="box">
 			<div class="box-header">Colloquia</div>
 			<div class="box-content padded clearfix">
-				<canvas class="pull-left" width="60" height="60" doughnut-chart="eventTally['Colloquium'],1"></canvas>
-				<div class="pull-right"><h2>{{eventTally['Colloquium']}}/1</h2></div>
+				<canvas class="pull-left" width="60" height="60" doughnut-chart="colloquiums.length,1"></canvas>
+				<div class="pull-right"><h2>{{colloquiums.length}}/1</h2></div>
 			</div>
 		</div>
 	</div>
@@ -46,8 +46,8 @@
 		<div class="box">
 			<div class="box-header">Excellence Lectures</div>
 			<div class="box-content padded clearfix">
-				<canvas class="pull-left" width="60" height="60" doughnut-chart="eventTally['Excellence Lecture'],1"></canvas>
-				<div class="pull-right"><h2>{{eventTally['Excellence Lecture']}}/1</h2></div>
+				<canvas class="pull-left" width="60" height="60" doughnut-chart="excellenceLectures.length,1"></canvas>
+				<div class="pull-right"><h2>{{excellenceLectures.length}}/1</h2></div>
 			</div>
 		</div>
 	</div>
@@ -55,7 +55,7 @@
 <div class="span6">
 	<div class="box">
 		<div class="box-header">
-			Volunteer Hours (0/20)
+			Volunteer Hours ({{hoursCompleted}}/20)
 			<div class="pull-right" ng-show="user.auth.isMiddleCircleAdmin">
 				<a href="#/citizenship" class="btn btn-mini" ng-click="">
 					<i class="icon-plus"></i> Add
@@ -63,8 +63,19 @@
 			</div>
 		</div>
 		<div class="box-content padded clearfix">
-			<div class="mh-progress"><div class="bar" style="width: 0%;"></div></div>
+				<ul class="block-hover">
+					<li ng-repeat="sub in submissions" style="display: none;">
+						<label class="label label-info" ng-show="sub.status != 'accepted'"style="display: none;">WAITING FOR VERIFICATION</label> 
+						<label class="label label-success" ng-show="sub.status == 'accepted'" ng-init="addVolunteerHours(sub)" style="display: none;"ACCEPTED</label> 
+					</li>
+				</ul>
+		<div class="mh-progress">
+				<!-- We multiply: (Student's hours/20)*100 = (Student's hours * 5) -->
+				<!-- Then if the resulting percentage is less than 100%, we use the first div below. If it is bigger than 100%, we use the second div below, that has a width of 100% -->
+				<div class="bar" ng-if="hoursCompleted*5 <= 100" style="width: {{hoursCompleted*5}}%;"></div>
+				<div class="bar" ng-if="hoursCompleted*5 > 100" style="width: 100%;"></div>
 		</div>
+	</div>
 	</div>
 </div>
 <div class="span6">

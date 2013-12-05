@@ -4,8 +4,9 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 	var discussionRef = FirebaseIO.child('events/' + $routeParams.eventId + '/comments');
 	$scope.rsvp = RSVPService.read($routeParams.eventId) || {guests: 0, error: false};
 	$scope.originalRSVP = angular.copy($scope.rsvp); // save an original to compare changes with hasRSVPChanges()
+	$scope.showAttendanceLimit = 6;		//Number of attendants that will be displayed
 	$scope.eventRSVPs = RSVPService.list($routeParams.eventId);
-	$scope.attendance = SwipeService.listByEvent($routeParams.eventId);
+	$scope.attendance = SwipeService.listByEvent($routeParams.eventId, {"limit": $scope.showAttendanceLimit});	//Limit the number of attendants pulled from the database according to the limit
 	$scope.userAttended = SwipeService.hasAttended($routeParams.eventId);
 	$scope.userComment = '';
 	$scope.truncateDesc = 200;
@@ -107,6 +108,37 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 				default:
 					return 'Newest First';
 			}
+		}
+	};
+	
+	/* Display all attendants of the event if the user clicks 'Show all'
+	 * or
+	 * Display a limited number of attendants if the user clicks 'Show less'
+	 */
+	$scope.showAttendants = function() {
+		if ($scope.showAttendanceLimit == 6) {	//If attendants being shown is 6, that means the user clicked 'Show all'
+			$scope.showAttendanceLimit = $scope.event.attendance;
+			$scope.attendance = SwipeService.listByEvent($routeParams.eventId);
+		}
+
+		else {
+			$scope.showAttendanceLimit = 6;
+			$scope.attendance = $scope.attendance.splice($scope.showAttendanceLimit, $scope.event.attendance);
+		}
+
+	};
+	
+	/* Display all RSVPs of the event if the user clicks 'Show all'
+	 * or
+	 * Display a limited number of RSVPs if the user clicks 'Show less'
+	 */
+	$scope.showRSVPs = function() {
+		if ($scope.showAttendanceLimit == 6) {
+			$scope.showAttendanceLimit = $scope.eventRSVPs.length;
+		}
+
+		else {
+			$scope.showAttendanceLimit = 6;
 		}
 	};
 

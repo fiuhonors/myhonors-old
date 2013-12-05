@@ -12,3 +12,8 @@ auth/auth.php
 
 # DevOps
 devops/updateNameData.php
+
+# Server logs
+logs/
+access.log
+error.log
