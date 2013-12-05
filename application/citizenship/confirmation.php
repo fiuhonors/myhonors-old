@@ -1,8 +1,11 @@
 <?php
 
+/* CONFIG SETTINGS */
 
-define("FIREBASE_SECRET", "0TCYdRD79UAKxkaWMl7d16HJqXTyHUUeJEU5q4To");
-define("FIREBASE_VOLUNTEER_URL", "https://fiuhonorstechteam.firebaseio.com/volunteerHours/");
+define("FIREBASE_SECRET", "");
+define("FIREBASE_VOLUNTEER_URL", "");
+
+/* EVERYTHING ELSE */
 
 include_once "../../auth/FirebaseToken.php";
 	
