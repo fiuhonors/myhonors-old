@@ -14,6 +14,7 @@ angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$time
 	$scope.honorsHours = [];
 	$scope.colloquiums = [];
 	$scope.excellenceLectures = [];
+
 	
 	$scope.hoursCompleted = 0;	
 	$scope.addVolunteerHours = function (submission) {
@@ -21,7 +22,7 @@ angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$time
 			$scope.hoursCompleted += submission.hours;
 		}
 	}
-	
+
 
 	UserService.ref.child('attendance').on('value', function(snapshot) {
 

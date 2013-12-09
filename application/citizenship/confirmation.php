@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	<p>Sincerely,</p>
 	
 	<p>Adam Gorelick<br />
-	Coordinator of Student Services<br />
+	Coordinator of Student Programs<br />
 	The Honors College</p>
 	</body>
 	</html>
@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	
 	// Additional headers
 	$headers .= 'To: ' . $_POST['referenceName'] . ' <' . $_POST['referenceEmail'] . '>' . "\r\n";
-	$headers .= 'From: Adam Gorelick, FIU Honors College <agorelic@fiu.edu>' . "\r\n";
+	$headers .= 'From: Adam Gorelick <agorelic@fiu.edu>' . "\r\n";
 
 	error_log($message);
 	

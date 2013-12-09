@@ -130,7 +130,8 @@
 					<li ng-repeat="sub in submissions">
 						<label class="label label-info" ng-show="sub.status != 'accepted'" style="margin-right: 2px">WAITING FOR VERIFICATION</label> 
 						<label class="label label-success" ng-show="sub.status == 'accepted'" ng-init="addVolunteerHours(sub)" style="margin-right: 2px">ACCEPTED</label> 
-						{{sub.agency}}</li>
+						{{sub.agency}}
+					</li>
 				</ul>
 			</div>
 			<div class="box-content padded" ng-if="!submissions.length">

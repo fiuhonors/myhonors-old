@@ -25,6 +25,7 @@ angular.module('myhonorsCitizenship').factory('VolunteerService', function($q, $
 			});
 			
 		},
+		
 		list: function() {
 			var index = new FirebaseIndex(FirebaseIO.child('user_profiles/' + UserService.profile.id + '/volunteerHours'), FirebaseIO.child('volunteerHours'));
 			return FirebaseCollection(index);
