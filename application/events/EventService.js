@@ -71,6 +71,7 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
 				var extraData = {
 					id: snapshot.name(),
 					rsvps: snapshot.child('rsvps').numChildren(),
+					attendance: snapshot.child('attendance').numChildren(),
 					comments: snapshot.child('comments').numChildren()
 				};
 
