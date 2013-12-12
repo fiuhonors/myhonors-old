@@ -289,6 +289,14 @@ a.thumbnail:hover {text-decoration: none;}
 	height: 100%;
 }
 
+.volunteer-hour > .icon-remove {
+	display: none;
+}
+
+.volunteer-hour:hover > .icon-remove {
+	display: inline;
+}
+
 /* Comments */
 
 .comment p:last-child {

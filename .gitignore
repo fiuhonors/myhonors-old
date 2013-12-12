@@ -10,6 +10,9 @@ application/config.js
 # LDAPS Authentication
 auth/auth.php
 
+#Volunteer Hour Confirmation
+application/citizenship/confirmation.php
+
 # DevOps
 devops/updateNameData.php
 

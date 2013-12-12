@@ -7,6 +7,7 @@ angular.module('myhonorsCitizenship').factory('VolunteerService', function($q, $
 			data['status'] = "pending";
 			var volunteerRef = FirebaseIO.child('volunteerHours').push(data);
 			UserService.ref.child('volunteerHours/' + volunteerRef.name()).set(true);
+			
 					
 			data['userName'] = UserService.profile.fname + " " + 	UserService.profile.lname;	
 			data['volunteerHoursID'] = volunteerRef.name();
@@ -29,6 +30,12 @@ angular.module('myhonorsCitizenship').factory('VolunteerService', function($q, $
 		list: function() {
 			var index = new FirebaseIndex(FirebaseIO.child('user_profiles/' + UserService.profile.id + '/volunteerHours'), FirebaseIO.child('volunteerHours'));
 			return FirebaseCollection(index);
+		},
+		
+		remove: function(volunteerHour) {
+			volunteerHour.$ref.remove();	//Delete the volunteer hours child from the volunteerHours collection
+			FirebaseIO.child('user_profiles/' + UserService.profile.id + '/volunteerHours/' + volunteerHour.$id).remove();	//Delete the volunteer hours from the user_profiles/volunteerHours child
 		}
+	
 	}
 });

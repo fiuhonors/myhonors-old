@@ -22,7 +22,25 @@ angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$time
 			$scope.hoursCompleted += submission.hours;
 		}
 	}
-
+	
+	$scope.removeVolunteerHours = function(volunteerHour) {	
+		
+		// We ask the user for a double confirmation before deleting the volunteer hours
+		var confirmation1 = confirm("Are you sure you wish to delete this volunteer hour?")	
+		var confirmation2 = false;	
+		
+		if (confirmation1) 
+			confirmation2 = confirm("All the information of this volunteer hour will be deleted. Are you sure you wish to proceed?");
+			
+			
+		if (confirmation1 && confirmation2) {
+			VolunteerService.remove(volunteerHour);	
+		
+			$scope.hoursCompleted = 0;	//Reset the total volunteer hours counter
+			$scope.submissions = VolunteerService.list();	//Reload the volunteer hours list
+		}
+		
+	}
 
 	UserService.ref.child('attendance').on('value', function(snapshot) {
 
