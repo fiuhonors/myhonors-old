@@ -86,7 +86,7 @@ angular.module('myhonorsUser').factory('UserService', function($http, $location,
 		this.profile = null;
 		$location.path('/login');
 	};
-
+	
 	/**
 	 * Check if a certain userId already exists and executes a callback with the boolean result
 	 */

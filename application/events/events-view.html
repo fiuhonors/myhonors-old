@@ -82,34 +82,47 @@
 	</div>
 	<div class="span3" ng-show="!attendance.length">
 		<div class="box">
-			<div class="box-header text-center">RSVP
+			<div class="box-header text-center" ng-show='!event.options.waitingList || event.rsvps < event.options.maxRSVPs || hasRSVP()'> RSVP
 				<span class="muted">
 					<span ng-show="getRemainingSeats() == 1">({{getRemainingSeats()}}/{{event.options.maxRSVPs}} seat available)</span>
 					<span ng-show="event.options.maxRSVPs && getRemainingSeats() !== 1">({{getRemainingSeats()}}/{{event.options.maxRSVPs}} seats available)</span>
 				</span>
 			</div>
-			<div class="box-content padded" style="position: relative">
-				<button class="btn btn-large input-block-level" ng-click="preRSVP = true" ng-show="!hasRSVP()" ng-disabled="preRSVP" >I'm Going</button>
-				<button class="btn btn-large input-block-level btn-primary" ng-click="removeRSVP()" ng-show="hasRSVP()">I'm Going</button>
-				<div ng-show="hasRSVP() || preRSVP" ng-animate="{hide: 'slide-hide'}">
-					<div class="input-prepend input-append input-block-level" style="margin-top: 10px">
-						<span class="add-on">+</span>
-						<input type="number" min="0" placeholder="0" ng-model="rsvp.guests">
-						<span class="add-on">Guests</span>
+			<div class="box-content padded" style="position: relative" ng-show='!event.options.waitingList || event.rsvps < event.options.maxRSVPs || hasRSVP()'>
+				<div class="rsvp">
+					<button class="btn btn-large input-block-level" ng-click="preRSVP = true" ng-show="!hasRSVP()" ng-disabled="preRSVP" >I'm Going</button>
+					<button class="btn btn-large input-block-level btn-primary" ng-click="removeRSVP()" ng-show="hasRSVP()">I'm Going</button>
+					<div ng-show="hasRSVP() || preRSVP" ng-animate="{hide: 'slide-hide'}">
+						<div class="input-prepend input-append input-block-level" style="margin-top: 10px">
+							<span class="add-on">+</span>
+							<input type="number" min="0" placeholder="0" ng-model="rsvp.guests">
+							<span class="add-on">Guests</span>
+						</div>
+						<div class="input-prepend input-block-level" ng-show="event.options.requirePhone">
+							<span class="add-on">Phone Number</span>
+							<input type="tel" placeholder="305-999-9999" ng-model="rsvp.phone">
+						</div>
+						<div class="alert alert-info" style="margin-bottom: 10px" ng-show="rsvp.error" ng-bind-html-unsafe="rsvp.error"></div>
+						<div class="text-center" ng-show="!preRSVP && hasRSVPChanges()" ng-animate="{show: 'slide-show', hide: 'slide-hide'}">
+							<button class="btn btn-mini btn-success" ng-click="addRSVP()">Save Changes</button>
+						</div>
 					</div>
-					<div class="input-prepend input-block-level" ng-show="event.options.requirePhone">
-						<span class="add-on">Phone Number</span>
-						<input type="tel" placeholder="305-999-9999" ng-model="rsvp.phone">
+					<div class="text-center" ng-show="preRSVP" ng-animate="{hide: 'slide-hide'}">
+						<button class="btn btn-mini btn-primary" ng-click="addRSVP()">Save RSVP</button>
+						<button class="btn btn-mini btn-link" ng-click="preRSVP = false; rsvp.error = false">Cancel</button>
 					</div>
-					<div class="alert alert-info" style="margin-bottom: 10px" ng-show="rsvp.error" ng-bind-html-unsafe="rsvp.error"></div>
-					<div class="text-center" ng-show="!preRSVP && hasRSVPChanges()" ng-animate="{show: 'slide-show', hide: 'slide-hide'}">
-						<button class="btn btn-mini btn-success" ng-click="addRSVP()">Save Changes</button>
 					</div>
 				</div>
-				<div class="text-center" ng-show="preRSVP" ng-animate="{hide: 'slide-hide'}">
-					<button class="btn btn-mini btn-primary" ng-click="addRSVP()">Save RSVP</button>
-					<button class="btn btn-mini btn-link" ng-click="preRSVP = false; rsvp.error = false">Cancel</button>
-				</div>
+				<div class="box-header text-center" ng-show='event.options.waitingList && event.rsvps >= event.options.maxRSVPs && !hasRSVP()'> Waiting List </div>
+					<div class="box-content padded" style="position: relative" ng-show='event.options.waitingList && event.rsvps >= event.options.maxRSVPs && !hasRSVP()'>
+						<div class="waiting-list">
+							<div class="alert alert-info padded-medium" style="margin-bottom: 7px;" ng-show="!isInWaitingList()">
+								The event attendance is full. You can join the waiting list and we will notify you if a spot opens up!
+							</div>
+							<button class="btn btn-large input-block-level" ng-click="addToWaitingList()" ng-show="!isInWaitingList()">Join Waiting List</button>
+							<button class="btn btn-large btn-primary input-block-level" ng-click="removeFromWaitingList()" ng-show="isInWaitingList()">Leave Waiting List</button>
+						</div>
+
 			</div>
 		</div>
 		<div class="box">
@@ -123,7 +136,7 @@
 				<ul ng-show="eventRSVPs.length" class="unstyled block-hover">
 					<li ng-repeat="rsvp in eventRSVPs | limitTo:showAttendanceLimit" class="clearfix">
 						<img class="pull-left img-rounded" src="http://placehold.it/36">
-						<div class="pull-left" style="margin-left: 10px; line-height: 36px">
+						<div class="pull-left" style="margin-left: 10px; line-height: 36px" ng-init="updateTotalRSVPs(1+rsvp.guests)">
 							<strong>{{rsvp.fname}}</strong> is going <span class="muted" ng-show="rsvp.guests > 0">[+{{rsvp.guests}}]</span>
 						</div>
 					</li>

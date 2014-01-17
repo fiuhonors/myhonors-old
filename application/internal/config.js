@@ -22,5 +22,22 @@ angular.module('myhonorsInternal').config(['$routeProvider', function($routeProv
 			controller: 'BBCLabSwipeCtrl',
 			requireLogin: false,
 			resolve: appResolve,
+			showPanels: false }).
+		when('/internal/rsvplist/:eventID', {
+			templateUrl: 'application/internal/rsvp-list.html',
+			controller: 'RSVPListCtrl',
+			requireLogin: true,
+			resolve: appResolve,
+			showPanels: false }).
+		when('/internal/studentslist', {
+			templateUrl: 'application/internal/students-list.html',
+			controller: 'StudentsListCtrl',
+			requireLogin: true,
+			resolve: appResolve }).
+		when('/internal/attendancelist/:eventID', {
+			templateUrl: 'application/internal/attendance-list.html',
+			controller: 'AttendanceListCtrl',
+			requireLogin: true,
+			resolve: appResolve,
 			showPanels: false });
 }]);

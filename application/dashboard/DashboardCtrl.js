@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myhonorsDashboard').controller('DashboardCtrl', ['$scope', '$location', 'FirebaseIO', 'EventService', 'RSVPService', 'VolunteerService', function($scope, $location, FirebaseIO, EventService, RSVPService, VolunteerService) {
+angular.module('myhonorsDashboard').controller('DashboardCtrl', ['$scope', '$location', 'FirebaseIO', 'EventService', 'RSVPService', 'VolunteerService', 'WaitingListService', function($scope, $location, FirebaseIO, EventService, RSVPService, VolunteerService, WaitingListService) {
 	$scope.events = EventService.list({limit: 3, startAt: Date.now()});
 	
 	$scope.submissions = VolunteerService.list();
@@ -22,9 +22,16 @@ angular.module('myhonorsDashboard').controller('DashboardCtrl', ['$scope', '$loc
 		RSVPService.create(eventId, {guests: 0});
 	};
 
-	$scope.removeRSVP = function(eventId, $event) {
+	$scope.removeRSVP = function(eventId, $event, event) {
 		$event.stopPropagation();
+		
+		$scope.rsvp = RSVPService.read(eventId);
+		
 		RSVPService.delete(eventId);
+		
+		if (event.options.waitingList) {
+			WaitingListService.transferFromWaitingListToRSVP(eventId, 1 + $scope.rsvp.guests);
+		}
 	};
 
 	$scope.hasRSVP = function(eventId) {
@@ -34,4 +41,22 @@ angular.module('myhonorsDashboard').controller('DashboardCtrl', ['$scope', '$loc
 	$scope.numGuests = function(eventId) {
 		return RSVPService.read(eventId).guests;
 	};
+	
+	
+	/* WAITING LIST FUNCTIONALITY */
+	
+	$scope.addToWaitingList = function(eventId, $event) {
+		$event.stopPropagation();
+		WaitingListService.create(eventId);
+	};
+	
+	$scope.isInWaitingList = function(eventId) {
+		return WaitingListService.isInWaitingList(eventId);
+	};
+	
+	$scope.removeFromWaitingList = function(eventId, $event) {
+		$event.stopPropagation();
+		return WaitingListService.delete(eventId);
+	};
+	
 }]);

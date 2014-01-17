@@ -28,8 +28,8 @@
 		<div class="box">
 			<div class="box-header">Honors Hours</div>
 			<div class="box-content padded clearfix">
-				<canvas class="pull-left" width="60" height="60" doughnut-chart="honorsHours.length,2"></canvas>
-				<div class="pull-right"><h2>{{honorsHours.length}}/2</h2></div>
+				<canvas class="pull-left" width="60" height="60" doughnut-chart="honorsHours.length,4"></canvas>
+				<div class="pull-right"><h2>{{honorsHours.length}}/4</h2></div>
 			</div>
 		</div>
 	</div>
@@ -37,8 +37,8 @@
 		<div class="box">
 			<div class="box-header">Colloquia</div>
 			<div class="box-content padded clearfix">
-				<canvas class="pull-left" width="60" height="60" doughnut-chart="colloquiums.length,1"></canvas>
-				<div class="pull-right"><h2>{{colloquiums.length}}/1</h2></div>
+				<canvas class="pull-left" width="60" height="60" doughnut-chart="colloquiums.length,2"></canvas>
+				<div class="pull-right"><h2>{{colloquiums.length}}/2</h2></div>
 			</div>
 		</div>
 	</div>
@@ -97,9 +97,16 @@
 					</div>
 					<div class="span2 text-center event-attending">
 						<h3>{{event.rsvps}}</h3>
-						<span class="opensans">ATTENDING</span>
-						<button class="btn btn-mini" ng-click="addRSVP(event.$id, $event)" ng-show="!hasRSVP(event.$id)">I'm Going</button>
-						<button class="btn btn-mini btn-primary" ng-click="removeRSVP(event.$id, $event)" ng-show="hasRSVP(event.$id)">I'm Going</button>
+						<div ng-show='!event.options.waitingList || event.rsvps < event.options.maxRSVPs || hasRSVP(event.$id)'>
+							<span class="opensans">ATTENDING</span>
+							<button class="btn btn-mini" ng-click="addRSVP(event.$id, $event)" ng-show="!hasRSVP(event.$id)">I'm Going</button>
+							<button class="btn btn-mini btn-primary" ng-click="removeRSVP(event.$id, $event, event)" ng-show="hasRSVP(event.$id)">I'm Going</button>
+						</div>
+						<div ng-show='event.options.waitingList && event.rsvps >= event.options.maxRSVPs && !hasRSVP(event.$id)'>
+							<span class="opensans">Attendance Full</span>
+							<button class="btn btn-mini" ng-click="addToWaitingList(event.$id, $event)" ng-show="!isInWaitingList(event.$id)">Waiting List</button>
+							<button class="btn btn-mini btn-primary" ng-click="removeFromWaitingList(event.$id, $event)" ng-show="isInWaitingList(event.$id)">Waiting List</button>
+						</div>
 					</div>
 				</li>
 			</ul>

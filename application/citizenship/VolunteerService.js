@@ -6,9 +6,12 @@ angular.module('myhonorsCitizenship').factory('VolunteerService', function($q, $
 		create: function(data) {
 			data['status'] = "pending";
 			var volunteerRef = FirebaseIO.child('volunteerHours').push(data);
-			UserService.ref.child('volunteerHours/' + volunteerRef.name()).set(true);
 			
-					
+			// Include the status and the hours of the volunteer hours submitted in the user's profile for quick access
+			UserService.ref.child('volunteerHours/' + volunteerRef.name() + '/status').set("pending");
+			UserService.ref.child('volunteerHours/' + volunteerRef.name() + '/hours').set(data.hours);
+			
+			data['userID'] = UserService.profile.pid;		
 			data['userName'] = UserService.profile.fname + " " + 	UserService.profile.lname;	
 			data['volunteerHoursID'] = volunteerRef.name();
 			

@@ -21,7 +21,7 @@ angular.module('myhonorsInternal').controller('BBCLabSwipeCtrl', function($scope
 	};
 
 	$scope.save = function(answer) {
-		SwipeService.create('bbclabswipe', $scope.data.userId, function(swipeRef) {
+		SwipeService.create('bbclabswipe', $scope.data.userId, "bbclabswipe", function(swipeRef) {
 			swipeRef.set({time: Date.now(), answer: answer});
 		});
 		$scope.clear();

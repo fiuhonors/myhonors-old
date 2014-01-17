@@ -16,12 +16,20 @@
 				<tr ng-repeat="event in events">
 					<td>{{event.name}}</td>
 					<td>{{event.date.starts | date:"EEE, MMMM d"}}</td>
-					<td>{{event.rsvps}}</td>
+					<td><a href="#/internal/rsvplist/{{event.$id}}" onclick="window.open(this.href, 'RSVP List',
+					'left=20,top=20,width=800,height=600,toolbar=no,resizable=yes,scrollbars=yes'); return false;">
+					{{event.rsvps}}</a>
+					</td>
 					<td>{{event.attendanceMMC}}</td>
 					<td>{{event.attendanceBBC}}</td>
-					<td>{{event.attendance}}</td>
+					<td><a href="#/internal/attendancelist/{{event.$id}}" onclick="window.open(this.href, 'Attendance List',
+					'left=20,top=20,width=800,height=600,toolbar=no,resizable=yes,scrollbars=yes'); return false;">
+					{{event.attendance}}</a>
+					</td>
 				</tr>
 			</tbody>
 		</table>
+		
+
 	</div>
 </div>

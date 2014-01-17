@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeParams', '$timeout', '$location', '$window', 'FirebaseIO', 'FirebaseCollection', 'EventService', 'CommentService', 'RSVPService', 'SwipeService', 'apikey_google', function ($scope, $routeParams, $timeout, $location, $window, FirebaseIO, FirebaseCollection, EventService, CommentService, RSVPService, SwipeService, apikey_google) {
+angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeParams', '$timeout', '$location', '$window', 'FirebaseIO', 'FirebaseCollection', 'EventService', 'WaitingListService', 'CommentService', 'RSVPService', 'SwipeService', 'apikey_google', function ($scope, $routeParams, $timeout, $location, $window, FirebaseIO, FirebaseCollection, EventService, WaitingListService, CommentService, RSVPService, SwipeService, apikey_google) {
 	var discussionRef = FirebaseIO.child('events/' + $routeParams.eventId + '/comments');
 	$scope.rsvp = RSVPService.read($routeParams.eventId) || {guests: 0, error: false};
 	$scope.originalRSVP = angular.copy($scope.rsvp); // save an original to compare changes with hasRSVPChanges()
@@ -10,7 +10,9 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 	$scope.userAttended = SwipeService.hasAttended($routeParams.eventId);
 	$scope.userComment = '';
 	$scope.truncateDesc = 200;
-
+	
+	
+	
 	/* MAP FUNCTIONALITY */
 
 	$scope.markers = [];
@@ -38,8 +40,14 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 	});
 
 	/* RSVP FUNCTIONALITY */
-
+	
 	$scope.addRSVP = function() {
+		
+		if ($scope.event.options.maxRSVPs != "" && $scope.hasLimitRSVPReached()) {
+			$scope.rsvp.error = "<strong>Woops!</strong> You can't add more guests than seats available.";
+			return;
+		}
+		
 		var data = {guests: $scope.rsvp.guests};
 		if ($scope.event && $scope.event.options && $scope.event.options.requirePhone) {
 			if (!$scope.rsvp.phone) {
@@ -61,8 +69,13 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 	};
 
 	$scope.removeRSVP = function() {
-		$scope.rsvp = $scope.originalRSVP = {guests: 0, error: false};
 		RSVPService.delete($routeParams.eventId);
+		
+		if ($scope.event.options.waitingList) {
+			WaitingListService.transferFromWaitingListToRSVP($routeParams.eventId, 1 + $scope.rsvp.guests);
+		}
+		
+		$scope.rsvp = $scope.originalRSVP = {guests: 0, error: false};
 	};
 
 	$scope.hasRSVP = function() {
@@ -77,37 +90,6 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 		if ($scope.event && $scope.event.options && $scope.event.options.maxRSVPs) {
 			var value = $scope.event.options.maxRSVPs - $scope.event.rsvps;
 			return (value > 0) ? value : 0;
-		}
-	}
-
-	/* COMMENT FUNCTIONALITY */
-
-	$scope.comments = CommentService.listClutch2(discussionRef);
-
-	$scope.addComment = function() {
-		CommentService.create($scope.userComment, discussionRef);
-		$scope.userComment = '';
-	};
-
-	$scope.deleteComment = function(commentId) {
-		// todo: show inline "Are you sure?" confirmation before deleting
-		CommentService.delete(commentId, discussionRef);
-	};
-
-	// provides a property to set the orderBy predicate for the comments (.current)
-	// and a function to get the value as a text string for the view (.getCurrent())
-	$scope.sortComments = {
-		current: '-date',
-		getCurrent: function() {
-			switch (this.current) {
-				case 'kudos':
-					return 'Best';
-				case 'date':
-					return 'Oldest First';
-				case '-date': // a negative sign in front of the predicate will reverse the array
-				default:
-					return 'Newest First';
-			}
 		}
 	};
 	
@@ -141,6 +123,74 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 			$scope.showAttendanceLimit = 6;
 		}
 	};
+
+	/*
+	 * This is executed when the student rsvp's or changes the number of guests.
+	 * It checks whether the total number of rsvp's (including all the guests) would exceed the limit if the person would rsvp
+	 * or if he would change the number og guests
+	 */
+	$scope.hasLimitRSVPReached = function() {
+		var totalRSVPs = $scope.event.rsvps;
+		
+		if (!$scope.hasRSVP()) {
+			totalRSVPs += 1 + $scope.rsvp.guests;	//If this is the student's initial rsvp, we add the student itself and his or her guests
+		} else {
+			totalRSVPs += $scope.rsvp.guests - $scope.originalRSVP.guests;	//If the user is changing the amount of guests, we substract the new number of guests minus the previous number of guests
+		}
+
+		if (totalRSVPs > $scope.event.options.maxRSVPs) { //If the limit is exceeded
+			return true;
+		}
+		
+		return false;
+	}
+		
+	
+	/* WAITING LIST FUNCTIONALITY */
+	
+	$scope.addToWaitingList = function() {
+		WaitingListService.create($routeParams.eventId);
+	};
+	
+	$scope.isInWaitingList = function() {
+		return WaitingListService.isInWaitingList($routeParams.eventId);
+	};
+	
+	$scope.removeFromWaitingList = function() {
+		return WaitingListService.delete($routeParams.eventId);
+	};
+		
+	/* COMMENT FUNCTIONALITY */
+
+	$scope.comments = CommentService.listClutch2(discussionRef);
+
+	$scope.addComment = function() {
+		CommentService.create($scope.userComment, discussionRef);
+		$scope.userComment = '';
+	};
+
+	$scope.deleteComment = function(commentId) {
+		// todo: show inline "Are you sure?" confirmation before deleting
+		CommentService.delete(commentId, discussionRef);
+	};
+
+	// provides a property to set the orderBy predicate for the comments (.current)
+	// and a function to get the value as a text string for the view (.getCurrent())
+	$scope.sortComments = {
+		current: '-date',
+		getCurrent: function() {
+			switch (this.current) {
+				case 'kudos':
+					return 'Best';
+				case 'date':
+					return 'Oldest First';
+				case '-date': // a negative sign in front of the predicate will reverse the array
+				default:
+					return 'Newest First';
+			}
+		}
+	};
+	
 
 	/* ADMIN FUNCTIONALITY */
 

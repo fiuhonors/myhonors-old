@@ -1,8 +1,9 @@
 'use strict'
 
 angular.module('myhonorsEvents').factory('RSVPService', function(FirebaseIO, FirebaseCollection, UserService) {
+	
 	return {
-		create: function(eventId, options, callback) {
+		create: function(eventId, options, callback) {		
 			this.update(eventId, options, callback);
 		},
 
@@ -46,6 +47,22 @@ angular.module('myhonorsEvents').factory('RSVPService', function(FirebaseIO, Fir
 				FirebaseIO.child('events/' + eventId + '/rsvps/' + UserService.profile.id + '/' + key).set(value);
 				UserService.ref.child('rsvps/' + eventId + '/' + key).set(value);
 			});
+			
+			/*
+			 * Below we check whether the user's rsvp has a 'time' child. Since this function is called both when the user rsvp's for 
+			 * the first time and when the user's updates the guest count, we need to do the following check.
+			 * If the user is rsvp'ing for the first time, we add the rsvp time.
+			 * If the user is updating the number of guests, there is no need to override the time of rsvp.
+			 */
+			UserService.ref.child('rsvps/' + eventId + '/time').once('value', function(snapshot) {
+				if (snapshot.val() == null) {
+					//Save the time when the student RSVP'ed and store them in the event's attendance child and in the user's profile
+					var rsvpTime = Date.now();
+					FirebaseIO.child('events/' + eventId + '/rsvps/' + UserService.profile.id + '/time').set(rsvpTime);
+					UserService.ref.child('rsvps/' + eventId + '/time').set(rsvpTime);
+				}
+			});
+			
 			callback();
 		},
 

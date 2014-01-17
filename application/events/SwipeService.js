@@ -26,7 +26,7 @@ angular.module('myhonorsEvents').factory('SwipeService', function($q, FirebaseIO
 	};
 
 	return {
-		create: function(eventId, userId, callback) {
+		create: function(eventId, userId, eventType, callback) {
 			if (!angular.isString(eventId) || !angular.isString(userId)) {
 				throw new Error('Invalid input when creating swipe');
 				return;
@@ -41,7 +41,10 @@ angular.module('myhonorsEvents').factory('SwipeService', function($q, FirebaseIO
 				userRef.setPriority(now);
 			});
 
+			
+			FirebaseIO.child('user_profiles/' + userId + '/attendance/' + eventId + "/eventType").set(eventType);	//Push the event type to the user's profile record
 			FirebaseIO.child('user_profiles/' + userId + '/attendance/' + eventId).push(now);
+			
 
 			if (angular.isFunction(callback)) callback(swipeRef);
 		},
@@ -54,6 +57,7 @@ angular.module('myhonorsEvents').factory('SwipeService', function($q, FirebaseIO
 		 */
 		listByEvent: function(eventId, options) {
 			var eventAttendanceRef = FirebaseIO.child('events/' + eventId + '/attendance');
+			
 
 			var options = options || {};
 			if (options.startAt) eventAttendanceRef = eventAttendanceRef.startAt(options.startAt);
@@ -64,6 +68,9 @@ angular.module('myhonorsEvents').factory('SwipeService', function($q, FirebaseIO
 				FirebaseIO.child('user_profiles/' + swipeSnapshot.name()).once('value', function(userSnapshot) {
 					var extraData = {
 						fname: userSnapshot.child('fname').val(),
+						lname: userSnapshot.child('lname').val(),
+						pid: userSnapshot.child('pid').val(),
+						email: userSnapshot.child('email').val(),
 						greeting: getRandomGreeting(userSnapshot.child('fname').val())
 					};
 					doAdd(swipeSnapshot, extraData);

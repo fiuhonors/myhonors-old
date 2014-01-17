@@ -1,7 +1,7 @@
 <?php
 
 include_once "../auth/FirebaseToken.php";
-require_once 'firebaseLib.php';
+require_once '../application/lib/firebaseLib/firebaseLib.php';
 
 ////////////////////////////////////////////////////////////////////////////
 

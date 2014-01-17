@@ -4,17 +4,20 @@
 assets/img/honorshours
 assets/json
 
+#Config variables
+config.php
+
 # AngularJS
 application/config.js
 
 # LDAPS Authentication
 auth/auth.php
 
-#Volunteer Hour Confirmation
-application/citizenship/confirmation.php
-
 # DevOps
 devops/updateNameData.php
+devops/*.json
+devops/*.csv
+devops/*
 
 # Server logs
 logs/
