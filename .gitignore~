@@ -10,6 +10,9 @@ config.php
 # AngularJS
 application/config.js
 
+# LDAPS Authentication
+auth/auth.php
+
 # DevOps
 devops/updateNameData.php
 devops/*.json

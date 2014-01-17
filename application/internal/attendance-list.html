@@ -1,0 +1,34 @@
+<div class="box">
+	<div class="box-header"> {{event.name}} </div>
+	<div class="box-content padded ">
+		
+		<a href="" class="btn btn-success" style="margin-bottom: 4px;" ng-click="exportExcel()" >Export to Excel</a>
+		<a href="" class="btn" style="margin-bottom: 4px;" ng-click="exportCSV()" >Export as CSV</a>
+
+		<table class="table table-bordered table-hover text-center">
+			<thead>
+				<tr>
+					<td><b>Student Name</b></td>
+					<td><b>PID</b></td>
+					<td><b>Email</b></td>
+					<td ng-if="event.name == 'BBC Lab Kiosk'"><b>BBC Lab Attendance</b></td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="user in users">
+					<td>{{user.fname + " " + user.lname}}</td>
+					<td>{{user.pid}}</td>
+					<td>{{user.email}}</td>
+					<td ng-if="event.name == 'BBC Lab Kiosk'" ng-init="getBBCLabAttendance(user.pid)">
+						<ul>
+							<li ng-repeat="attendance in bbcAttendance[user.pid]">
+								{{attendance.answer}} on {{attendance.time | date:'short'}} 
+							</li>
+						</ul>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
+	</div>
+</div>

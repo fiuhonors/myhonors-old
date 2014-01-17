@@ -1,0 +1,46 @@
+<div class="box">
+	<div class="box-header">Event Stats</div>
+	<div class="box-content padded">
+		
+		<a href="" class="btn btn-success" style="margin-bottom: 4px;" ng-click="exportExcel()" >Export to Excel</a>
+		<a href="" class="btn" style="margin-bottom: 4px;" ng-click="exportCSV()" >Export as CSV</a>
+
+		<input type="text" placeholder="Search" ng-model="student.search" class="pull-right">
+		
+		<table class="table table-bordered table-hover text-center">
+			<thead>
+				<tr>
+					<td><a href="" ng-click="columnOrder = 'name'; reverseOrder = !reverseOrder"><b>Student Name</b></a></td>
+					<td><a href="" ng-click="columnOrder = 'id'; reverseOrder = !reverseOrder"><b>PID</b></a></td>
+					<td><a href="" ng-click="columnOrder = 'email'; reverseOrder = !reverseOrder"><b>Email</b></a></td>
+					<td><a href="" ng-click="columnOrder = 'honorsHoursNum'; reverseOrder = !reverseOrder"><b>Honors Hours</b></td>
+					<td><a href="" ng-click="columnOrder = 'colloquiaNum'; reverseOrder = !reverseOrder"><b>Colloquia</b></a></td>
+					<td><a href="" ng-click="columnOrder = 'excellenceLecturesNum'; reverseOrder = !reverseOrder"><b>Excellence Lectures</b></a></td>
+					<td><a href="" ng-click="columnOrder = 'generalEventsNum'; reverseOrder = !reverseOrder"><b>General Events</b></a></td>
+					<td><a href="" ng-click="columnOrder = 'heartsEventsNum'; reverseOrder = !reverseOrder"><b>HEARTS Events</b></td>
+					<td><a href="" ng-click="columnOrder = 'volunteerHoursNum'; reverseOrder = !reverseOrder"><b>Volunteer Hours</b></a></td>
+					<td><a href="" ng-click="columnOrder = 'totalPoints'; reverseOrder = !reverseOrder"><b>Total Points</b></a></td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="student in students | orderBy:columnOrder:reverseOrder | filter:student.search | limitTo:limit " >
+					<td>{{student.name}}</td>
+					<td>{{student.id}}</td>
+					<td>{{student.email}}</td>
+					<td>{{student.honorsHoursNum}}</td>
+					<td>{{student.colloquiaNum}}</td>
+					<td>{{student.excellenceLecturesNum}}</td>
+					<td>{{student.generalEventsNum}}</td>
+					<td>{{student.heartsEventsNum}}</td>
+					<td>{{student.volunteerHoursNum}}</td>
+					<td>{{student.totalPoints}}</td>
+
+				</tr>
+				</tr>
+			</tbody>
+		</table>
+		
+		<div class="text-center"><a href ng-click="limit = limit + 15">Show more</a></div>
+
+	</div>
+</div>

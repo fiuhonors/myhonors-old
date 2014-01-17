@@ -1,0 +1,30 @@
+<div class="box">
+	<div class="box-header"> {{event.name}} </div>
+	<div class="box-content padded ">
+		
+		<a href="" class="btn btn-success" style="margin-bottom: 4px;" ng-click="exportExcel()" >Export to Excel</a>
+		<a href="" class="btn" style="margin-bottom: 4px;" ng-click="exportCSV()" >Export as CSV</a>
+
+		<table class="table table-bordered table-hover text-center">
+			<thead>
+				<tr>
+					<td><b>Student Name</b></td>
+					<td><b>PID</b></td>
+					<td><b>Email</b></td>
+					<td><b>Guests</b></td>
+					<td><b>Time of Registration</b></td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="rsvp in rsvps">
+					<td>{{rsvp.fname + " " + rsvp.lname}}</td>
+					<td>{{rsvp.pid}}</td>
+					<td>{{rsvp.email}}</td>
+					<td>{{rsvp.guests}}</td>
+					<td ng-show="rsvp.time">{{rsvp.time | date:'short'}}</td><td ng-show="!rsvp.time">N/A</td>
+				</tr>
+			</tbody>
+		</table>
+		
+	</div>
+</div>
