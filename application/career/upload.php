@@ -12,6 +12,8 @@
 require_once "../../config.php"; //Include all the necessary Firebase config variables
 include_once "../../auth/FirebaseToken.php";
 
+define("DISABLE_EMAIL", true);	//Enable for testing purposes
+
 $formInfo = $_REQUEST;
 
 if (!isset($_REQUEST["userID"]) ||
@@ -79,7 +81,7 @@ $timeAvailability .= "</tbody>
 
 	
 // email fields: to, from, subject, and so on
-$to = "fiuhonorstechteam@gmail.com";
+$to = "Adam Gorelick <agorelic@fiu.edu>";
 $from = "fiuhonorstechteam@gmail.com"; 
 $subject ="myHonors: Application to Internship/Job"; 
 $message = '
@@ -107,9 +109,6 @@ $message = '
 <p> This student has applied to the following internship/job: </p>
 
 <p><b>Company\'s Name:</b> ' . $positionInfo["companyName"] . ' <br>
-<b>Contact\'s Name:</b> ' . $positionInfo["contactName"] . '	<br>
-<b>Contact\'s Email:</b> ' . $positionInfo["contactEmail"] . ' 		<br>
-<b>Job Description:</b> ' . $positionInfo["description"] . ' </p>
 
 <p> The required documents submitted by the student can be found attached to this email.</p>
 
@@ -162,15 +161,19 @@ for($x=0;$x<count($files);$x++){
 	$message .= "--{$mime_boundary}\n";
 } */
 
-
-$email_sent = mail($to, $subject, $message, $headers); 
-
-if (!$email_sent) {
-	$result = array('success' => false, 'error' => "A problem ocurred when attemtping to submit your application.");
-	echo json_encode($result);
-	die();
-}
+if (!DISABLE_EMAIL) {
+	$email_sent = mail($to, $subject, $message, $headers); 
 	
-$result = array('success' => true);
-echo json_encode($result);
+	if (!$email_sent) {
+		$result = array('success' => false, 'error' => "A problem ocurred when attemtping to submit your application.");
+		echo json_encode($result);
+		die();
+	}
+	
+	$result = array('success' => true);
+	echo json_encode($result);
+} else {
+	$result = array('success' => false, 'error' => "Email has been disabled.");
+	echo json_encode($result);
+}
 ?>

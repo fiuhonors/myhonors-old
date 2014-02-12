@@ -2,7 +2,8 @@
 	<div class="box">
 		<div class="box-header">{{position.companyName}} Information</div>
 		<div class="box-content padded word-wrap">
-			<img class="img-rounded img-polaroid" ng-src="{{career.thumbURL || 'http://placehold.it/135'}}" style="margin-bottom:20px;margin-left:25%;">
+
+			<img class="img-rounded img-polaroid" ng-src="{{position.thumbURL || 'http://placehold.it/135'}}" style="margin-bottom:20px;margin-left:25%;">
 
 			<div class="space-below">
 				<b>Company Name: </b> {{position.companyName}}
@@ -29,6 +30,23 @@
 				<button class="btn span4" ng-show="position.status == 'active'" ng-click="toggleActivation($event,position.id,position.status)">Deactivate</button>
 				<button class="btn span4" ng-show="position.status == 'inactive'" ng-click="toggleActivation($event,position.id,position.status)">Activate</button>
 				<button class="btn span4" ng-click="confirmDelete()">Delete</button>
+			</div>
+			
+		</div>
+	</div>
+	
+	<div class="box" ng-show="user.auth.isAdmin || user.auth.isStaff">
+		<div class="box-header">Applications</div>
+		<div class="box-content padded word-wrap">
+
+			<ul ng-show="position.numApplications">
+				<li ng-repeat="application in applications">
+					{{application.name}}, {{application.pid}}
+				</li>
+			</ul>
+			
+			<div class="alert alert-info padded-medium" style="margin-bottom: 0" ng-show="!position.numApplications">
+				<strong>No applications have been submitted.</strong>
 			</div>
 			
 		</div>
@@ -62,13 +80,13 @@
 			
 			<div class="space-below">
 				<b>Requirements: </b>
-				<div ng-show="!position.requirements">None</div>
-				<ul> <li ng-repeat="requirement in position.requirements track by $index">{{requirement}}</ul>
+				<span ng-show="!position.requirements">None</span>
+				<ul> <li ng-repeat="requirement in position.requirements track by $index">{{requirement}}</li></ul>
 			</div>
 			<div class="space-below">
 				<b>Desired skills and qualities: </b>
-				<div ng-show="!position.skills">None</div>
-				<ul> <li ng-repeat="skill in position.skills track by $index">{{skill}}</ul>
+				<span ng-show="!position.skills">None</span>
+				<ul> <li ng-repeat="skill in position.skills track by $index">{{skill}}</li></ul>
 			</div>
 			
 			<hr>

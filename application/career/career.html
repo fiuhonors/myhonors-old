@@ -2,12 +2,13 @@
 	<div class="row">
 		<div class="well">
 			<h3>Jobs & Internships</h3>
-			<p>As a student of The Honors College, you have many job and internship opportunities available to you. Below is a list of companies that have contacted us directly. If you have any questions, please email <a href="mailto:luli.szeinblum@fiu.edu">luli.szeinblum@fiu.edu</a></p>
+			<p>As a student of The Honors College, you have many job and internship opportunities available to you. Below is a list of companies that have contacted us directly. If you have any questions, please email <a href="mailto:agorelic@fiu.edu">agorelic@fiu.edu</a></p>
 			<input type="text" ng-model="text.search" placeholder="Search all jobs & internships...">
 		</div>
 	</div>
 	<div class="row">
 		
+				
 		<div class="media well span6" ng-class="{'disabled': item.status == 'inactive'}" ng-repeat="item in careers | filter:text.search" ng-show="(user.auth.isAdmin || user.auth.isStaff) || item.status == 'active'" ng-animate="{enter: 'example-repeat-enter', leave: 'example-repeat-leave', move: 'example-repeat-move'}">
 			<a class="pull-left" href="#"><img class="media-object" src="http://upload.wikimedia.org/wikipedia/commons/7/7d/Xynth_logo_64x64.jpg"></a>
 			<div class="media-body" style="line-height: 15px">
@@ -23,6 +24,7 @@
 			</div>
 		</div>
 		
+		<div ng-show="careers.length == 0" class="text-center">No internships are currently available.</div>
 		<div ng-show="careers.length > 0 && (careers | filter:text.search).length == 0" class="text-center">No internship was found.</div>
 		
 	</div>

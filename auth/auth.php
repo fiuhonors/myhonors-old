@@ -11,7 +11,7 @@ define("ERROR_STATEMENT", "");
 
 // Warning: only disable LDAP for development. This is useful when you're developing
 // off-site and can't access the LDAP server due to security restrictions
-define("DISABLE_LDAP", true);
+define("DISABLE_LDAP", false);
 
 /* DO NOT EDIT BELOW THIS LINE */
 require_once "../config.php"; // Include all the necessary Firebase config variables

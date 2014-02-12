@@ -6,6 +6,7 @@ angular.module('myhonorsCareer').controller('CareersViewCtrl', ['$scope', '$time
 	CareerService.read($scope.positionID, function(data) {
 		$timeout(function() {
 			$scope.position = data;		
+			$scope.applications = data.applications;
 		});
 	});
 	

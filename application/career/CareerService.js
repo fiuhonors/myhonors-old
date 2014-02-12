@@ -16,7 +16,7 @@ angular.module('myhonorsCareer').factory('CareerService', function($q, FirebaseI
 				!angular.isString(careerObject.date.starts) ||
 				!angular.isString(careerObject.date.ends) ||
 				!angular.isObject(careerObject.time) ||
-				!angular.isNumber(careerObject.time.hoursPerWeek) ||
+				!angular.isString(careerObject.time.hoursPerWeek) ||
 				!angular.isString(careerObject.description) ||
 				!angular.isString(careerObject.status)
 			) {
@@ -48,6 +48,7 @@ angular.module('myhonorsCareer').factory('CareerService', function($q, FirebaseI
 
 				var data = snapshot.val();
 				data.id = snapshot.name();
+				data.numApplications = snapshot.child('applications').numChildren();
 
 				if (angular.isFunction(onComplete)) {
 					onComplete(data);
