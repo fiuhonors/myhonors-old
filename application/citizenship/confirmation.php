@@ -2,7 +2,7 @@
 
 require_once "../../config.php"; //Include all the necessary Firebase config variables
 include_once "../../auth/FirebaseToken.php";
-require_once '..//lib/firebaseLib/firebaseLib.php';
+require_once '../lib/firebaseLib/firebaseLib.php';
 	
 /* After the student submits the volunteer hours information, a POST request with that data is sent to this file. An email is then sent
  * to the person specified by the student in order to confirm the volunteer work
@@ -111,8 +111,6 @@ else {
 		$userID = $_GET['userID'];  //Panther ID of the student
 		
 		$tokenGen = new Services_FirebaseTokenGenerator(FIREBASE_SECRET);
-	
-		// create a temporary admin token to access the admin users/roles in the 'settings' area of our Firebase
 		$temp_token = $tokenGen->createToken(array(), array('admin' => true));
 	
 	

@@ -6,6 +6,7 @@ angular.module('myhonors', [
 	'ui.bootstrap',
 	'ui.bootstrap.calendar',
 	'leaflet-directive',
+	'angularFileUpload',
 	'myhonorsConfig',
 	'Firebase',
 	'myhonorsUser',

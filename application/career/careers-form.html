@@ -1,0 +1,133 @@
+<div class="span12">
+	<div class="box">
+		<div class="box-header">Add Company</div>
+		<div class="box-content padded">
+			<form name="form" class="form-inline" ng-submit="doAdd()" validate>
+				<div class="control-group space-below">
+					<label for="name">Company/Organization Name: </label>
+					<input type="text" ng-model="newPosition.companyName" required>
+				</div>
+				
+				<div class="control-group space-below">
+					<label for="website">Website (if applicable): </label>
+					<input type="text" ng-model="newPosition.website">
+				</div>
+				
+				<div class="control-group space-below">
+					<label for="address">Address: </label>
+					<input type="text" ng-model="newPosition.address" required>
+				</div>
+				
+				<div class="control-group space-below">
+					<label for="pointOfContant">Point of Contact: </label>
+					<input type="text" ng-model="newPosition.pointOfContact" required>
+				</div>
+				
+				<div class="row-fluid">
+					<div class="span6">
+						<div class="control-group space-below">
+							<label for="email">Email Address: </label>
+							<input type="email" ng-model="newPosition.email" required>
+						</div>
+						
+						<div class="control-group space-below">
+							<label for="amountOfInterns">Number of Interns: </label>
+							<input type="number" ng-model="newPosition.amountOfInterns" required>
+						</div>
+						
+						<div class="control-group space-below">
+							<label for="startDate" style="margin-right:5px;">Start Date:</label>
+							<input type="text" id="startDate" name="startDate" class="input-small" placeholder="Date..." ng-model="newPosition.date.starts" data-date-format="mm/dd/yyyy" date-type="string" bs-datepicker required>
+							<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+						</div>
+					</div>
+					<div class="span6">
+						<div class="control-group space-below">
+							<label for="phone">Phone Number: </label>
+							<input type="tel" ng-model="newPosition.phone" required>
+						</div>
+						
+						<div class="control-group space-below">
+							<label for="recurring">Recurring? </label>
+							<input id="recurring" type="checkbox" ng-model="newPosition.recurring" style="vertical-align: bottom;margin-bottom:7px;">
+						</div>
+						
+						
+						<div class="control-group space-below">
+							<label for="startDate" style="margin-right:5px;">End Date:</label>
+							<input type="text" id="endDate" name="endDate" class="input-small" placeholder="Date..." ng-model="newPosition.date.ends" data-date-format="mm/dd/yyyy" date-type="string" bs-datepicker required>
+							<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row-fluid">
+					<div class="span3">
+						<div class="control-group space-below" style="margin-top: 10%;">
+							<label for="paid" class="checkbox">Paid internship </label>
+							<input id="paid" type="checkbox" ng-model="newPosition.paid" ng-click="newPosition.hourlyRate = null">	
+						</div>
+					</div>
+					<div class="span3">
+						<div class="control-group space-below">
+							<label for="hourlyRate">Hourly Rate: $ </label>
+							<input type="number" ng-model="newPosition.hourlyRate" step="any" min="0" ng-disabled="!newPosition.paid">
+						</div>
+					</div>
+					<div class="span3">
+						<div class="control-group space-below">
+							<label for="hoursPerWeek">Hours per week: </label>
+							<input type="number" ng-model="newPosition.time.hoursPerWeek" min="0" required>
+						</div>
+					</div>
+				</div>
+				
+				<div class="control-group space-below">
+					<label for="description" style="margin-top: 10px;">Please provide a brief description of your company: </label> <br>
+					<textarea ng-model="newPosition.description" rows="4" style="width: 60%;" required></textarea>
+				</div>
+				
+				<div class="control-group space-below">
+					<label>Please list any specific skills or qualities that you are looking for in an applicant:</label><br>
+					<div class="row-fluid" style="width: 60%">
+						<div class="span6">
+							<input type="text" ng-model="newPosition.skills.0"> <br>
+							<input type="text" ng-model="newPosition.skills.1"> <br>
+							<input type="text" ng-model="newPosition.skills.2"> <br>
+						</div>
+						<div class="span6">
+							<input type="text" ng-model="newPosition.skills.3"> <br>
+							<input type="text" ng-model="newPosition.skills.4"> <br>
+							<input type="text" ng-model="newPosition.skills.5"> <br>
+						</div>
+					</div>
+				</div>
+				
+				<div class="control-group space-below">
+					<label for="requirements" style="margin-top: 10px;">Please list any specific requirements that you would like for the candidate to have for their role in 
+					your company or organization (Major, year in college, areas of specialization, etc.)</label> <br>
+					<div class="row-fluid" style="width: 60%">
+						<div class="span6">
+							<input type="text" ng-model="newPosition.requirements.0"> <br>
+							<input type="text" ng-model="newPosition.requirements.1"> <br>
+							<input type="text" ng-model="newPosition.requirements.2"> <br>
+						</div>
+						<div class="span6">
+							<input type="text" ng-model="newPosition.requirements.3"> <br>
+							<input type="text" ng-model="newPosition.requirements.4"> <br>
+							<input type="text" ng-model="newPosition.requirements.5"> <br>
+						</div>
+					</div>
+				</div>
+				
+				<div class="control-group space-below">
+					<label for="details" style="margin-top: 10px;">What will interns do during their internship with your company/organization?</label> <br>
+					<textarea ng-model="newPosition.details" rows="4" style="width: 60%;" required></textarea>
+				</div>
+				
+				<button type="submit" class="btn btn-primary">Submit</button>
+
+			</form>
+		</div>
+	</div>
+</div>

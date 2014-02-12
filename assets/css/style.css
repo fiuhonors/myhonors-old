@@ -123,6 +123,16 @@ h1,h2,h3,h4,h5,h6, .opensans {
 	background-color: transparent;
 }
 
+.no-decoration-link {
+	color: inherit;
+}
+
+.no-decoration-link:hover {
+	color: inherit;
+	text-decoration: none;
+}
+
+
 .well {
 	background: #fff; /* Old browsers */
 	background: -moz-linear-gradient(top,  whitesmoke 0%, #ffffff 20%, whitesmoke 100%); /* FF3.6+ */
@@ -333,7 +343,7 @@ ul.block-clickable li:hover {
 	display: inline-block;
 }
 
-.event-short-desc {
+.short-desc {
 	margin: 0;
 	line-height: 15px;
 }
@@ -546,3 +556,50 @@ td.day {
  
 .example-repeat-move-setup { }
 .example-repeat-move-setup.example-repeat-move-start { }
+
+
+/* Misc */
+
+.disabled {
+	opacity: 0.5;
+}
+
+.space-below {
+	margin-bottom: 15px;
+}
+
+.word-wrap {
+	word-wrap: break-word;
+}
+
+
+/* 
+ * File Input button styling.
+ * 
+ * Taken from: jQuery-file-Upload by blueimp at https://github.com/blueimp/jQuery-File-Upload
+ * 
+ */
+.fileinput-button {
+  position: relative;
+  overflow: hidden;
+}
+.fileinput-button input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  opacity: 0;
+  -ms-filter: 'alpha(opacity=0)';
+  font-size: 200px;
+  direction: ltr;
+  cursor: pointer;
+}
+
+/* Fixes for IE < 8 */
+@media screen\9 {
+  .fileinput-button input {
+    filter: alpha(opacity=0);
+    font-size: 100%;
+    height: 100%;
+  }
+}

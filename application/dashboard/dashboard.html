@@ -15,10 +15,26 @@
 	</div>
 	<div class="row">
 		<div class="box">
-			<div class="box-header">New Jobs & Internships</div>
-			<div class="box-content padded">
-				<div class="alert alert-info" style="margin-bottom: 0">None. Please check back soon!</div>
-			</div>
+			<div class="box-header"><a href="#/career" class="no-decoration-link">New Jobs & Internships</a></div>
+				<div class="box-content" ng-show="careers.length">
+					<ul class="block-hover block-clickable">
+						<li ng-repeat="career in careers | orderBy:'date.starts'" ng-click="goToCareer(career.$id)" class="clearfix">
+							<img class="pull-left span2 img-rounded img-polaroid" ng-src="{{career.thumbURL || 'http://placehold.it/75'}}">
+							<div class="pull-left span8">
+								<div>
+									<strong>{{career.companyName}}</strong>
+									<span>from {{career.date.starts}} to {{career.date.ends}}</span>
+								</div>
+								<p class="short-desc">{{(career.description || 'No description.') | truncate:75}} <a href="#/career/{{career.$id}}" ng-show="career.description.length > 75">read more</a></p>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="box-content padded" ng-show="!careers.length">
+					<div class="alert alert-info padded-medium" style="margin-bottom: 0">
+						<strong>No upcoming internships.</strong> Check back again soon!
+					</div>
+				</div>			
 		</div>
 	</div>
 </div>
@@ -93,7 +109,7 @@
 							<span class="muted" ng-repeat="type in event.types" ng-show="event.types">{{type}}<span ng-show="!$last">,&nbsp;</span></span>
 							<span class="muted" ng-show="!event.types">GENERAL EVENT</span>
 						</div>
-						<p class="event-short-desc">{{(event.desc || 'No description.') | truncate:75}} <a href="#/events/{{event.id}}" ng-show="event.desc.length > 75">read more</a></p>
+						<p class="short-desc">{{(event.desc || 'No description.') | truncate:75}} <a href="#/events/{{event.id}}" ng-show="event.desc.length > 75">read more</a></p>
 					</div>
 					<div class="span2 text-center event-attending">
 						<h3>{{event.rsvps}}</h3>

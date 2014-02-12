@@ -28,12 +28,12 @@ function getData($username, $data) {
 
 	$auth_payload = array(
 		'id' => $username,
-		'isArchMod' => (array_key_exists($username, $access_levels['isArchMod'])) ? true : false,
-		'isEventMod' => (array_key_exists($username, $access_levels['isEventMod'])) ? true : false,
-		'isStaff' => (array_key_exists($username, $access_levels['isStaff'])) ? true : false,
-		'isAdmin' => (array_key_exists($username, $access_levels['isAdmin'])) ? true : false,
-		'isMiddleCircle' => (array_key_exists($username, $access_levels['isMiddleCircle'])) ? true : false,
-		'isMiddleCircleAdmin' => (array_key_exists($username, $access_levels['isMiddleCircleAdmin'])) ? true : false
+		'isArchMod' => (!empty($access_levels['isArchMod']) && array_key_exists($username, $access_levels['isArchMod'])) ? true : false,
+		'isEventMod' => (!empty($access_levels['isEventMod']) && array_key_exists($username, $access_levels['isEventMod'])) ? true : false,
+		'isStaff' => (!empty($access_levels['isStaff']) && array_key_exists($username, $access_levels['isStaff'])) ? true : false,
+		'isAdmin' => (!empty($access_levels['isAdmin']) && array_key_exists($username, $access_levels['isAdmin'])) ? true : false,
+		'isMiddleCircle' => (!empty($access_levels['isMiddleCircle']) && array_key_exists($username, $access_levels['isMiddleCircle'])) ? true : false,
+		'isMiddleCircleAdmin' => (!empty($access_levels['isMiddleCircleAdmin']) && array_key_exists($username, $access_levels['isMiddleCircleAdmin'])) ? true : false
 	);
 	
 

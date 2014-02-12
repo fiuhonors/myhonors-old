@@ -1,7 +1,9 @@
 'use strict';
 
-angular.module('myhonorsDashboard').controller('DashboardCtrl', ['$scope', '$location', 'FirebaseIO', 'EventService', 'RSVPService', 'VolunteerService', 'WaitingListService', function($scope, $location, FirebaseIO, EventService, RSVPService, VolunteerService, WaitingListService) {
+angular.module('myhonorsDashboard').controller('DashboardCtrl', ['$scope', '$location', 'FirebaseIO', 'EventService', 'RSVPService', 'VolunteerService', 'WaitingListService', 'CareerService', function($scope, $location, FirebaseIO, EventService, RSVPService, VolunteerService, WaitingListService, CareerService) {
 	$scope.events = EventService.list({limit: 3, startAt: Date.now()});
+	$scope.careers = CareerService.list({limit: 3, startAt: Date.now()});
+
 	
 	$scope.submissions = VolunteerService.list();
 	// Calculate the total amount of volunteer hours completed
@@ -15,6 +17,10 @@ angular.module('myhonorsDashboard').controller('DashboardCtrl', ['$scope', '$loc
 
 	$scope.goToEvent = function(eid) {
 		$location.path('/events/' + eid);
+	};
+	
+	$scope.goToCareer = function(careerID) {
+		$location.path('/career/' + careerID);
 	};
 
 	$scope.addRSVP = function(eventId, $event) {

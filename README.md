@@ -35,7 +35,7 @@ All necessary files are already included in the repository, so you can get start
 |         | X.x | Email users with updates |
 |         | X.x | Add cover charge for events |
 |         | X.x | Student portfolios | **[IN PROGRESS]**
-|         | X.x | Internship system | **[IN PROGRESS]**
+|         | X.x | Internship system | **[DONE]**
 |         | X.x | Course integration | **[IN PROGRESS]**
 |         | X.x | User-created groups |
 |         | X.x | Integration with main Honors College website |

@@ -1,18 +1,29 @@
 'use strict';
 
-angular.module('myhonorsCareer').controller('CareerCtrl', ['$scope', '$timeout', 'FirebaseIO', function($scope, $timeout, FirebaseIO) {
-	$scope.careers = null;
-	$scope.searchText = '';
-	$scope.newPosition = {companyName: '', contactName: '', contactEmail: '', description: '', paid: false};
-
-	FirebaseIO.child('careers').on('value', function(snapshot) {
-		$timeout(function() {
-			$scope.careers = snapshot.val();
-			$scope.newPosition = {companyName: '', contactName: '', contactEmail: '', description: '', paid: false};
-		});
-	});
+angular.module('myhonorsCareer').controller('CareerCtrl', ['$scope', '$timeout', 'FirebaseIO', 'CareerService', 'UserService', function($scope, $timeout, FirebaseIO, CareerService, UserService) {
+	$scope.careers = CareerService.list();
+	//$scope.newPosition = {companyName: '', contactName: '', contactEmail: '', description: '', startDate: '', endDate: '', hoursPerWeek: '' , workDays: $scope.selectedDays, paid: false};
+	$scope.newPosition = {};
+	$scope.selectedDays = [];
+	
 
 	$scope.doAdd = function() {
-		FirebaseIO.child('careers').push($scope.newPosition);
+		$scope.newPosition.status = "active";
+		CareerService.create($scope.newPosition);
+		$scope.newPosition = {};
+
 	}
+	
+	$scope.toggleActivation = function($event, positionID, currentStatus) {
+		$event.stopPropagation();
+		CareerService.toggleActivation(positionID, currentStatus);
+	};
+	//~ $scope.deactivatePosition = function($event, positionID) {
+		//~ $event.stopPropagation();
+		//~ FirebaseIO.child('careers/' + positionID + '/status').set("inactive");
+	//~ };
+	//~ $scope.activatePosition = function($event, positionID) {
+		//~ $event.stopPropagation();
+		//~ FirebaseIO.child('careers/' + positionID + '/status').set("active");
+	//~ };
 }]);
