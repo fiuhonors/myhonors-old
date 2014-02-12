@@ -11,7 +11,7 @@ All necessary files are already included in the repository, so you can get start
 
 1. [Download](https://github.com/sergiopantoja/myhonors/archive/master.zip) or [clone](https://github.com/sergiopantoja/myhonors) the MyHonors repository and upload the files to your webserver.
 2. Rename `auth/auth.sample.php` to `auth/auth.php`. Edit the file with the appropriate config settings.
-3. Rename `application/citizenship/confirmation.sample.php` to `confirmation.php`. Edit the file with the appropriate Firebase info.
+3. Rename `config.sample.php` to `config.php`. Edit the file with the appropriate Firebase info.
 4. Rename `application/config.sample.js` to `application/config.js`.
 5. If you haven't already, install LDAP support for your server (e.g. *apt-get install php5-ldap*).
 6. That's it! Login with your LDAP username/password and have fun.
