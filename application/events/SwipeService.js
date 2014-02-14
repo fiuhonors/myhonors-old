@@ -42,7 +42,7 @@ angular.module('myhonorsEvents').factory('SwipeService', function($q, FirebaseIO
 			});
 
 			
-			FirebaseIO.child('user_profiles/' + userId + '/attendance/' + eventId + "/eventType/0").set(eventType);	//Push the event type to the user's profile record
+			FirebaseIO.child('user_profiles/' + userId + '/attendance/' + eventId + "/eventType").set(eventType);	//Push the event type to the user's profile record
 			FirebaseIO.child('user_profiles/' + userId + '/attendance/' + eventId + '/' + swipeRef.name()).set(now);
 			
 

@@ -6,14 +6,15 @@ assets/json
 
 #Config variables
 config.php
+mHconfig.php
 
 # AngularJS
 application/config.js
 
+#Auth
+auth/auth.php
+
 # DevOps
-devops/updateNameData.php
-devops/*.json
-devops/*.csv
 devops/*
 
 # Server logs
