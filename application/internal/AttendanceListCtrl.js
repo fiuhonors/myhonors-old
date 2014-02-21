@@ -20,7 +20,17 @@ angular.module('myhonorsInternal').controller('AttendanceListCtrl', function($sc
 		window.location = "application/internal/attendance-list-export.php?exportType=CSV&eventID=" + $routeParams.eventID + "&eventName=" + $scope.event.name;
 	};
 	
+	$scope.removeAttendance = function(user) {	
+		var confirmation = confirm("Are you sure you wish to delete this user's attendance from the event?")	
+
+		if (confirmation) {
+			SwipeService.removeAttendance($scope.eventID, user.pid);
+		}
+		
+	}
 	
+	
+	/* This is only used when the event chosen is BBC Lab */
 	$scope.bbcAttendance = {};
 	$scope.getBBCLabAttendance = function(pid) {
 		FirebaseIO.child('events/' + $scope.eventID + '/attendance/' + pid).on('value', function(snapshot) {

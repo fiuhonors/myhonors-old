@@ -69,6 +69,7 @@ angular.module('myhonorsEvents').factory('SwipeService', function($q, FirebaseIO
 					var extraData = {
 						fname: userSnapshot.child('fname').val(),
 						lname: userSnapshot.child('lname').val(),
+						name: userSnapshot.child('fname').val() + " " + userSnapshot.child('lname').val(),
 						pid: userSnapshot.child('pid').val(),
 						email: userSnapshot.child('email').val(),
 						greeting: getRandomGreeting(userSnapshot.child('fname').val())
@@ -107,6 +108,12 @@ angular.module('myhonorsEvents').factory('SwipeService', function($q, FirebaseIO
 		 */
 		hasAttended: function(eventId) {
 			return UserService.profile && UserService.profile.attendance && UserService.profile.attendance[eventId];
+		},
+		
+		removeAttendance: function(eventId, userId) {
+			FirebaseIO.child('events/' + eventId + '/attendance/' + userId).remove();
+			FirebaseIO.child('user_profiles/' + userId + '/attendance/' + eventId).remove();
+			
 		}
 	};
 });

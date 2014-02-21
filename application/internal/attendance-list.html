@@ -5,6 +5,8 @@
 		<a href="" class="btn btn-success" style="margin-bottom: 4px;" ng-click="exportExcel()" >Export to Excel</a>
 		<a href="" class="btn" style="margin-bottom: 4px;" ng-click="exportCSV()" >Export as CSV</a>
 
+		<input type="text" placeholder="Search" ng-model="attendance.search" class="pull-right">
+
 		<table class="table table-bordered table-hover text-center">
 			<thead>
 				<tr>
@@ -12,10 +14,11 @@
 					<td><b>PID</b></td>
 					<td><b>Email</b></td>
 					<td ng-if="event.name == 'BBC Lab Kiosk'"><b>BBC Lab Attendance</b></td>
+					<td></td>
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="user in users">
+				<tr ng-repeat="user in users | filter:attendance.search">
 					<td>{{user.fname + " " + user.lname}}</td>
 					<td>{{user.pid}}</td>
 					<td>{{user.email}}</td>
@@ -25,7 +28,8 @@
 								{{attendance.answer}} on {{attendance.time | date:'short'}} 
 							</li>
 						</ul>
-					</td>
+					</td> 					
+					<td><a href="" class="icon-remove" ng-click="removeAttendance(user)"></a></td>
 				</tr>
 			</tbody>
 		</table>
