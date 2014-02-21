@@ -9,13 +9,13 @@
 				<b>Company Name: </b> {{position.companyName}}
 			</div>
 			<div class="space-below">
-				<b>Website: </b> {{position.website}}
+				<b>Website: </b> <a href="{{position.website}}">{{position.website}}</a>
 			</div>
 			<div class="space-below">
 				<b>Address: </b> {{position.address}}
 			</div>
 			<div class="space-below">
-				<b>Email: </b> {{position.email}}
+				<b>Email: </b> <a href="mailto:{{position.email}}">{{position.email}}</a>
 			</div>
 			<div class="space-below">
 				<b>Phone Number: </b> {{position.phone}}
@@ -41,7 +41,7 @@
 
 			<ul ng-show="position.numApplications">
 				<li ng-repeat="application in applications">
-					{{application.name}}, {{application.pid}}
+					<a href="#/career/{{positionID}}/apply/{{application.pid}}">{{application.name}}, {{application.pid}}</a>
 				</li>
 			</ul>
 			
@@ -81,12 +81,20 @@
 			<div class="space-below">
 				<b>Requirements: </b>
 				<span ng-show="!position.requirements">None</span>
-				<ul> <li ng-repeat="requirement in position.requirements track by $index">{{requirement}}</li></ul>
+				<ul> 
+					<li ng-repeat="requirement in position.requirements track by $index">
+						{{requirement}}
+					</li>
+				</ul>
 			</div>
 			<div class="space-below">
 				<b>Desired skills and qualities: </b>
 				<span ng-show="!position.skills">None</span>
-				<ul> <li ng-repeat="skill in position.skills track by $index">{{skill}}</li></ul>
+				<ul> 
+					<li ng-repeat="skill in position.skills track by $index">
+						{{skill}}
+					</li>
+				</ul>
 			</div>
 			
 			<hr>
@@ -95,7 +103,9 @@
 				<b>Details: </b> {{position.details}}
 			</div>
 			
-			<a href="#/career/{{positionID}}/apply" class="btn btn-primary" style="margin-top:15px;">Apply</a>
+			<a href="#/career/{{positionID}}/apply" class="btn btn-primary" style="margin-top:15px;" ng-show="!alreadyApplied">Apply</a>
+			<a href class="btn btn-primary disabled" style="margin-top:15px;" ng-show="alreadyApplied">Already Applied</a>
+
 		</div>
 	</div>
 </div>

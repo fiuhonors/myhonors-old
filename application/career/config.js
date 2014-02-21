@@ -26,5 +26,10 @@ angular.module('myhonorsCareer').config(['$routeProvider', function($routeProvid
 			templateUrl: 'application/career/careers-apply.html',
 			controller: 'CareersApplyCtrl',
 			requireLogin: true,
+			resolve: appResolve}).
+		when('/career/:positionID/apply/:applicationID', {
+			templateUrl: 'application/career/careers-apply-view.html',
+			controller: 'CareersApplyViewCtrl',
+			requireLogin: true,
 			resolve: appResolve})
 }]);

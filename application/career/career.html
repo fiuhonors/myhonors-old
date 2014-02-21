@@ -10,7 +10,7 @@
 		
 				
 		<div class="media well span6" ng-class="{'disabled': item.status == 'inactive'}" ng-repeat="item in careers | filter:text.search" ng-show="(user.auth.isAdmin || user.auth.isStaff) || item.status == 'active'" ng-animate="{enter: 'example-repeat-enter', leave: 'example-repeat-leave', move: 'example-repeat-move'}">
-			<a class="pull-left" href="#"><img class="media-object" src="http://upload.wikimedia.org/wikipedia/commons/7/7d/Xynth_logo_64x64.jpg"></a>
+			<a class="pull-left" href="#"><img class="media-object img-rounded img-polaroid" ng-src="{{item.thumbURL || 'http://upload.wikimedia.org/wikipedia/commons/7/7d/Xynth_logo_64x64.jpg'}}" width="64px" height="64px"></a>
 			<div class="media-body" style="line-height: 15px">
 				<small><a href class="pull-right" ng-show="(user.auth.isAdmin || user.auth.isStaff) && item.status == 'active'" ng-click="toggleActivation($event,item.id,item.status)"> Deactivate </a> 
 				<a href class="pull-right" ng-show="(user.auth.isAdmin || user.auth.isStaff) && item.status == 'inactive'" ng-click="toggleActivation($event,item.id,item.status)"> Activate </a> </small>

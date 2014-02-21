@@ -96,6 +96,28 @@ angular.module('myhonorsCareer').factory('CareerService', function($q, FirebaseI
 			UserService.ref.child('positions/' + positionID).set(now);
 	
 		},
+		
+		readApplication: function(positionID, applicationID, onComplete) {
+			var deferred = $q.defer();
+
+			FirebaseIO.child('careers/' + positionID + '/applications/' + applicationID).on('value', function(snapshot) {
+				if (snapshot.val() === null) {
+					// There application was deleted, do nothing
+					return;
+				}
+
+				var data = snapshot.val();
+				data.id = snapshot.name();
+
+				if (angular.isFunction(onComplete)) {
+					onComplete(data);
+				}
+
+				deferred.resolve(data);	
+			});
+
+			return deferred.promise;
+		},
 
 		update: function(careerID, careerObject) {
 			if (!checkConditions(careerObject)) {

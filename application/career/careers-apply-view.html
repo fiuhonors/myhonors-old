@@ -1,0 +1,110 @@
+<div class="span12">
+	<div class="box">
+		<div class="box-header">Application Information</div>
+		<div class="box-content padded">
+				<div class="row-fluid">
+					<div class="span5">
+						<div class="space-below">
+							<b>Student Name:</b> {{application.name}}
+						</div>
+						
+						<div class="space-below">
+							<b>E-mail Address:</b> {{application.email}}
+						</div>
+						
+						<div class="space-below">						
+							<b>Panther ID: </b> {{application.pid}}
+						</div>
+					</div>
+					<div class="span5">
+						<div class="space-below">
+							<b>Credits to Date: </b> {{application.credits}}
+						</div>
+								
+						<div class="space-below">
+							<b>Major/Minor: </b> {{application.majorMinor}}
+						</div>
+					
+						<div class="space-below">
+							<b>Phone Number: </b> {{application.phone}}
+						</div>
+					</div>
+				</div>
+					
+				<hr>
+				
+				<div class="space-below">
+					<b>Skills and qualities:</b> <br>
+					<span ng-show="!application.skills">None</span>
+					<ul> 
+						<li ng-repeat="skill in application.skills" ng-show="skill">
+							{{skill}}
+						</li>
+					</ul>
+				</div> <br>
+				
+				<div class="space-below">
+					<b>Available date to start: </b> {{application.availableStart}}
+				</div>
+				
+				<div class="control-group space-below">
+					<b>Has own form of transportation? </b>
+					<span ng-show="application.hasTransportation">Yes</span>
+					<span ng-show="!application.hasTransportation">No</span>
+				</div>
+				
+				<hr>
+				
+				<b>Days and Times available (check all that apply):</b> <br>
+				<div style="font-size:90%">(Morning – 8 am to 12 pm, Afternoon – 12 pm to 5 pm, Evening 5 pm to 8 pm)</div>
+				
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<td style="width: 10%;"></td>
+							<td style="text-align:center;">Morning</td>
+							<td style="text-align:center;">Afternoon</td>
+							<td style="text-align:center;">Evening</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat='day in ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]'>
+							<td style="width: 10%;">{{day}}</td>
+							<td style="text-align:center;">
+								<span ng-show="application.timeAvailability[day].Morning">&#x2713;</span>
+							</td>
+							<td style="text-align:center;">
+								<span ng-show="application.timeAvailability[day].Afternoon">&#x2713;</span>
+							</td>
+							<td style="text-align:center;">
+								<span ng-show="application.timeAvailability[day].Evening">&#x2713;</span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				
+				<hr>
+				
+				<div class="space-below">
+					<b>Future interest after College: </b> {{application.futureInterest}}
+				</div>        
+				
+				<hr>
+				
+				<div class="space-below">
+					<b>Name of uploaded file: </b>
+					<span ng-show="application.fileName">{{application.fileName}}</span>	
+					<span ng-show="!application.fileName">N/A</span>
+				</div>  
+				
+				<div class="space-below">
+					<b>Submission time of application: </b> {{application.submissionTime | date:'medium'}}
+				</div>  
+				
+				<br>
+				
+				<a href="#/career/{{positionID}}" class="btn btn-primary">Go back</a>
+		</div>
+	</div>
+<div>
+
