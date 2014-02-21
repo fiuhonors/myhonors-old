@@ -18,7 +18,7 @@ angular.module('myhonorsCareer').controller('CareersViewCtrl', ['$scope', '$time
 	 */
 	function alreadyApplied () {
 		var userID = UserService.profile.id;
-		if ($scope.applications.hasOwnProperty(userID))
+		if ($scope.applications && $scope.applications.hasOwnProperty(userID))	//Check to see if the applications JSON object has a property with logged in user's id
 			return true;
 			
 		return false;
