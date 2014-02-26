@@ -78,6 +78,7 @@ angular.module('myhonorsEvents').controller('EventEditCtrl', ['$scope', '$locati
 
 		var event = angular.extend({}, {
 			name: $scope.event.name,
+			thumbURL: $scope.event.thumbURL,
 			desc: $scope.event.desc,
 			date: {
 				starts: moment($scope.event.date.starts.date, "MM-DD-YYYY").hour(startHour).minute(startMin).valueOf(),

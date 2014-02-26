@@ -1,0 +1,41 @@
+<div class="box" ng-controller="EventViewCtrl">
+			<div class="media padded">
+				<a class="pull-left" href="#"><img class="media-object img-rounded" src="http://placehold.it/48" /></a>
+				<div class="media-body">
+					<form class="form-inline" style="margin: 0" ng-submit="addComment()">
+						<input type="text" ng-model="userComment" class="input-block-level" style="height: 48px; padding: 0px 10px" placeholder="Leave a comment..." />
+					</form>
+				</div>
+			</div>
+			<div class="padded-small text-center" style="position: relative">
+				<div style="height: 2px; width: 100%; background-color: #00baff; position: absolute; top: 15px; left: 0px"></div>
+				<span style="padding: 0 10px; background-color: white; position: relative; z-index: 10">
+					{{comments.length}} comments. Sorted by
+					<div class="dropdown text-left" style="display: inline-block">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#">{{sortComments.getCurrent()}} <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a ng-click="sortComments.current = 'kudos'">Best</a></li>
+							<li><a ng-click="sortComments.current = '-date'">Newest First</a></li>
+							<li><a ng-click="sortComments.current = 'date'">Oldest First</a></li>
+						</ul>
+					</div>
+				</span>
+			</div>
+			<div class="padded">
+				<div ng-show="!comments.length" class="alert alert-info padded-medium" style="margin-bottom: 0">
+					<strong>Be the first to comment!</strong> Tell us what you think.
+				</div>
+				<div class="media" style="margin-top: 0; margin-bottom: 10px;" ng-repeat="comment in comments | orderBy:sortComments.current">
+					<a class="pull-left" href="#"><img class="media-object img-rounded" src="http://placehold.it/48" /></a>
+					<div class="media-body">
+						<a href="#" class="media-heading">{{comment.author.fname}} {{comment.author.lname}}</a>
+						<span style="color: rgba(30,55,70,0.4)">
+							<span style="font-size: 85%; padding: 3px">&#8226;</span> {{comment.date | timeAgo}}
+						</span>
+						<div class="pull-right">
+							<button class="btn btn-small btn-link" ng-show="0 && (user.auth.isCommentMod || comment.author.id === user.profile.id)" ng-click="deleteComment(comment.id)"><i class="icon-trash icon-white"></i></button>
+						</div>
+						<p style="font-size: 15px; color: #42474a; font-weight: 300">{{comment.content}}</p>
+					</div>
+				</div>
+			</div>

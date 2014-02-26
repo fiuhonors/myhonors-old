@@ -9,11 +9,17 @@
 							<label for="name" class="control-label">Event Name</label><br />
 							<input type="text" id="name" name="name" class="input-block-level" ng-model="newItem.name" required /><br />
 						</div>
+						
+						<div class="control-group">
+							<label for="flyerURL">Event Flyer URL</label><br />
+							<input type="url" id="flyerURL" name="name" class="input-block-level" ng-model="newItem.thumbURL"><br />
+						</div>
 
 						<hr />
 
 						<label for="desc">Description</label><br />
 						<textarea id="desc" class="input-block-level" style="height: 100px" ng-model="newItem.desc"></textarea>
+				
 
 						<hr />
 

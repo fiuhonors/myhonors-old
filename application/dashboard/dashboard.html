@@ -99,7 +99,7 @@
 		<div class="box-content" ng-show="events.length">
 			<ul class="block-hover block-clickable">
 				<li ng-repeat="event in events | orderBy:'date.starts'" ng-click="goToEvent(event.$id)" class="clearfix">
-					<img class="pull-left span2 img-rounded img-polaroid" ng-src="{{event.thumbURL || 'http://placehold.it/75'}}">
+					<img class="pull-left span2 img-rounded img-polaroid" ng-src="{{event.thumbURL || 'http://placehold.it/75'}}" width="75" height="75">
 					<div class="pull-left span8">
 						<div>
 							<strong>{{event.name}}</strong>
