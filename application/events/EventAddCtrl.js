@@ -65,6 +65,7 @@ angular.module('myhonorsEvents').controller('EventAddCtrl', ['$scope', '$locatio
 
 		$scope.newItem = {
 			name: '',
+			thumbURL: '',
 			desc: '',
 			date: {
 				starts: {

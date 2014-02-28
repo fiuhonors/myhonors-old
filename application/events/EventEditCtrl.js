@@ -27,13 +27,13 @@ angular.module('myhonorsEvents').controller('EventEditCtrl', ['$scope', '$locati
 			var start = moment(data.date.starts);
 			$scope.event.date.starts = {
 				date: start.format('MM-DD-YYYY'),
-				time: start.format('hh:mm a')
+				time: start.format('hh:mm A')
 			};
 
 			var ends = moment(data.date.ends);
 			$scope.event.date.ends = {
 				date: ends.format('MM-DD-YYYY'),
-				time: ends.format('hh:mm a')
+				time: ends.format('hh:mm A')
 			};
 			
 			// store a copy so we can undo changes
