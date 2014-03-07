@@ -7,7 +7,6 @@ angular.module('myhonorsCareer').factory('CareerService', function($q, FirebaseI
 	 */
 	function checkConditions(careerObject) {
 		if (!angular.isString(careerObject.companyName) ||
-				!angular.isString(careerObject.website) ||
 				!angular.isString(careerObject.address) ||
 				!angular.isString(careerObject.pointOfContact) ||
 				!angular.isNumber(careerObject.amountOfInterns) ||
@@ -34,8 +33,11 @@ angular.module('myhonorsCareer').factory('CareerService', function($q, FirebaseI
 				return;
 			}
 
+			var ref = FirebaseIO.child('careers').push(careerObject);
 			// Setting the priority to the date.ends value allows us to show the most recent internships/jobs in the dashboard
-			FirebaseIO.child('careers').push(careerObject).setPriority(careerObject.date.ends);
+			ref.setPriority(careerObject.date.ends);
+
+			return ref.name();	// Return the ID of the newly created position
 		},
 		read: function(positionID, onComplete) {
 			var deferred = $q.defer();

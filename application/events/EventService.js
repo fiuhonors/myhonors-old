@@ -37,7 +37,7 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
 				data.id = snapshot.name();
 				data.comments = snapshot.child('comments').numChildren();
 				data.attendance = snapshot.child('attendance').numChildren();
-				data.usersAttended = {};
+				data.usersAttended = snapshot.child('attendance');
 				
 				// calculate the total number of RSVPs
 				data.rsvps = snapshot.child('rsvps').numChildren();
@@ -45,13 +45,7 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
 					data.rsvps += snapshot.child('guests').val();
 				});
 				
-				/*
-				snapshot.child('attendance').forEach(function(snapshot) {
-					FirebaseIO.child('user_profiles/' + snapshot.name()).once('value', function(userSnapshot) {
-						//data.usersAttended.push(userSnapshot.val());
-						data.usersAttended[userSnapshot.name()] = userSnapshot.val();
-					});
-				});*/
+
 
 				if (angular.isFunction(onComplete)) {
 					onComplete(data);

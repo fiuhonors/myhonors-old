@@ -33,8 +33,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $eventName = $_GET['eventName'];
     
     
-    $rsvpsJSON = file_get_contents(FIREBASE_EVENTS_URL . $eventID . '/rsvps.json?auth=' . $temp_token);	// Get the RSVPs list from Firebase in JSON format
-    $rsvps = json_decode($rsvpsJSON, true);  // Decode JSON list into PHP array
+    $eventJSON = file_get_contents(FIREBASE_EVENTS_URL . $eventID . '.json?auth=' . $temp_token);	// Get the RSVPs list from Firebase in JSON format
+    $event = json_decode($eventJSON, true);
+    $rsvps = $event['rsvps'];
     
     /*
 	 * In the line below, we get the get the list of all Honors students and decode them into a PHP array. We then use that info
@@ -48,10 +49,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     
     //Depending on the type of the export the user choose, a different function is utilized to create the file 
     if ($_GET['exportType'] === 'Excel') {
-		exportExcel($eventID, $eventName, $rsvps, $studentsInfo);
+		exportExcel($event, $rsvps, $studentsInfo);
 	} 
 	elseif ($_GET['exportType'] === 'CSV') {
-		exportCSV($eventID, $eventName, $rsvps, $studentsInfo);
+		exportCSV($event, $rsvps, $studentsInfo);
 	}	
     
 }
@@ -59,23 +60,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 /**
  * Creates an Excel file of all the RSVPS of a particular event and sends it to the browser to be downloaded.
  * 
- * @param eventID The event id
- * @param eventName the name of the event
+ * @param event The event info
  * @param rsvps The list of students that rsvp'ed to the event
  * @param studentsInfo A list of all Honor students' profiles
  * 
  */
-function exportExcel($eventID, $eventName, $rsvps, $studentsInfo) {
+function exportExcel($event, $rsvps, $studentsInfo) {
 	$objPHPExcel = new PHPExcel();
     
     // Set document properties
     $objPHPExcel->getProperties()->setCreator("The Honors College at FIU")
 								->setLastModifiedBy("The Honors College at FIU")
-								->setTitle($eventName . " RSVPs List")
-								->setSubject($eventName . " RSVPs List")
-								->setDescription($eventName . " RSVPs List")
-								->setKeywords($eventName . " RSVPs List")
-								->setCategory($eventName . " RSVPs List");
+								->setTitle($event['name'] . " RSVPs List")
+								->setSubject($event['name'] . " RSVPs List")
+								->setDescription($event['name'] . " RSVPs List")
+								->setKeywords($event['name'] . " RSVPs List")
+								->setCategory($event['name'] . " RSVPs List");
     
     // Add headers of table
     $objPHPExcel->setActiveSheetIndex(0)
@@ -83,8 +83,8 @@ function exportExcel($eventID, $eventName, $rsvps, $studentsInfo) {
 				->setCellValue('B1', 'PID')
 				->setCellValue('C1', 'Email')
 				->setCellValue('D1', 'Guests')
-				->setCellValue('E1', 'Time of Registration');
-    
+				->setCellValue('E1', 'Time of Registration')
+				->setCellValue('F1', 'Attended?');
     
     $index = 2;
     foreach ($rsvps as $pantherID => $val) {		//Loop through the list of RSVPs
@@ -94,13 +94,19 @@ function exportExcel($eventID, $eventName, $rsvps, $studentsInfo) {
         $guestsNum = $val['guests'];	//Get the number of guests each student will bring
         $timeOfRegistration = isset($val['time']) ? date("n/j/y h:i A", $val['time']/1000) : "N/A";
        
-        //Write the student's info to the excel file
+        // Write the student's info to the excel file
         $objPHPExcel->setActiveSheetIndex(0)
 				->setCellValue('A' . $index, $studentName)
 				->setCellValue('B' . $index, $pantherID)
 				->setCellValue('C' . $index, $studentEmail)
 				->setCellValue('D' . $index, $guestsNum)
 				->setCellValue('E' . $index, $timeOfRegistration);
+				
+		// Check to see whether the student actually attended the event after rsvp'ing
+		if (array_key_exists($pantherID, $event['attendance']))
+			$objPHPExcel->setActiveSheetIndex(0)->setCellValue('F' . $index, "Yes");
+		else
+			$objPHPExcel->setActiveSheetIndex(0)->setCellValue('F' . $index, "No");
 				
 		$index++;
     }
@@ -113,7 +119,7 @@ function exportExcel($eventID, $eventName, $rsvps, $studentsInfo) {
 	/* Set up all the necessary headers so the user is prompted to download the file */
     // Redirect output to a client’s web browser (Excel5)
     header('Content-Type: application/vnd.ms-excel');
-    header('Content-Disposition: attachment;filename="' . $eventName . ' RSVPs List.xls"');
+    header('Content-Disposition: attachment;filename="' . $event['name'] . ' RSVPs List.xls"');
     header('Cache-Control: max-age=0');
     // If you're serving to IE 9, then the following may be needed
     header('Cache-Control: max-age=1');
@@ -135,16 +141,15 @@ function exportExcel($eventID, $eventName, $rsvps, $studentsInfo) {
 /**
  * Creates a CSV file of all the RSVPS of a particular event and sends it to the browser to be downloaded.
  * 
- * @param eventID The event id
- * @param eventName the name of the event
+ * @param event The event info
  * @param rsvps The list of students that rsvp'ed to the event
  * @param studentsInfo A list of all Honor students' profiles
  * 
  */
-function exportCSV($eventID, $eventName, $rsvps, $studentsInfo) {
+function exportCSV($event, $rsvps, $studentsInfo) {
 	/* Set up all the necessary headers so the user is prompted to download the file */
 	header('Content-Type: text/csv');
-	header('Content-Disposition: attachment; filename="' . $eventName . ' RSVPs List.csv"');
+	header('Content-Disposition: attachment; filename="' . $event['name'] . ' RSVPs List.csv"');
 	// If you're serving to IE 9, then the following may be needed
     header('Cache-Control: max-age=1');
     
@@ -157,7 +162,7 @@ function exportCSV($eventID, $eventName, $rsvps, $studentsInfo) {
     
     $csvFile = fopen('php://output', 'w'); //Open a new file in write mode and write to the output so the user is prompted to download it.
     
-    fputcsv($csvFile, array('Student Name', 'PID', 'Email', 'Guests', 'Registration'));	//Set up the headers of the file
+    fputcsv($csvFile, array('Student Name', 'PID', 'Email', 'Guests', 'Registration','Attended?'));	//Set up the headers of the file
     
     foreach ($rsvps as $pantherID => $val) {		//Loop through the list of RSVPs
 		$studentName = $studentsInfo[$pantherID]['fname'] . ' ' . $studentsInfo[$pantherID]['lname'];
@@ -165,8 +170,13 @@ function exportCSV($eventID, $eventName, $rsvps, $studentsInfo) {
         $guestsNum = $val['guests'];	//Get the number of guests each student will bring
         $timeOfRegistration = isset($val['time']) ? date("n/j/y h:i A", $val['time']/1000) : "N/A";
 
-                
-		fputcsv($csvFile, array($studentName, $pantherID, $studentEmail, $guestsNum, $timeOfRegistration), ",", chr(0)); // Set up an array with the student's info and write it to the file
+        // Check to see whether the student actually attended the event after rsvp'ing
+		if (array_key_exists($pantherID, $event['attendance']))
+			$attended = "Yes";
+		else
+			$attended = "No";	
+				
+		fputcsv($csvFile, array($studentName, $pantherID, $studentEmail, $guestsNum, $timeOfRegistration, $attended), ",", chr(0)); // Set up an array with the student's info and write it to the file
 		
     }
 

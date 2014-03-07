@@ -9,6 +9,12 @@ angular.module('myhonorsCareer').controller('CareersViewCtrl', ['$scope', '$time
 			$scope.position = data;		
 			$scope.applications = data.applications;
 			
+			// Regex is used to determine if the hourlyRate field contains a number or not (since sometimes 'Varies' is inputted) so 
+			// that it can be properly formatted
+			var matchNum = $scope.position.hourlyRate.match(/\d+/g);
+			if (matchNum != null)	//If a number is found in the string, add the $ sign
+					$scope.position.hourlyRate = "$" + $scope.position.hourlyRate;
+		
 			$scope.alreadyApplied = alreadyApplied();
 		});
 	});

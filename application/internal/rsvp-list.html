@@ -13,6 +13,7 @@
 					<td><b>Email</b></td>
 					<td><b>Guests</b></td>
 					<td><b>Time of Registration</b></td>
+					<td ng-show="event.attendance"><b>Attended?</b></td>
 				</tr>
 			</thead>
 			<tbody>
@@ -22,6 +23,7 @@
 					<td>{{rsvp.email}}</td>
 					<td>{{rsvp.guests}}</td>
 					<td ng-show="rsvp.time">{{rsvp.time | date:'short'}}</td><td ng-show="!rsvp.time">N/A</td>
+					<td ng-show="event.attendance">{{checkAttendance(rsvp.pid)}}</td>
 				</tr>
 			</tbody>
 		</table>

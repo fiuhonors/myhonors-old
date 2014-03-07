@@ -9,6 +9,13 @@ angular.module('myhonorsInternal').controller('RSVPListCtrl', function($scope, $
 			$scope.event = data;
 		});
 	});
+	
+	$scope.checkAttendance = function(pid) {
+		if ($scope.event.usersAttended.hasChild(pid))
+			return "Yes";
+			
+		return "No";
+	};
 
 	
 	$scope.exportExcel = function() {
