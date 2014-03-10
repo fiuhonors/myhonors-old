@@ -9,7 +9,7 @@ angular.module('myhonorsCareer').factory('CareerService', function($q, FirebaseI
 		if (!angular.isString(careerObject.companyName) ||
 				!angular.isString(careerObject.address) ||
 				!angular.isString(careerObject.pointOfContact) ||
-				!angular.isNumber(careerObject.amountOfInterns) ||
+				!angular.isString(careerObject.amountOfInterns) ||
 				!angular.isString(careerObject.details) ||
 				!angular.isObject(careerObject.date) ||
 				!angular.isString(careerObject.date.starts) ||
@@ -125,7 +125,7 @@ angular.module('myhonorsCareer').factory('CareerService', function($q, FirebaseI
 			if (!checkConditions(careerObject)) {
 				// invalid input, do nothing
 				alert("Invalid  form");
-				return;
+				return false;
 			}
 			
 			// Go through each property in the object and add that specifically, this prevents
@@ -136,6 +136,8 @@ angular.module('myhonorsCareer').factory('CareerService', function($q, FirebaseI
 
 			// Setting the priority to the date.ends value allows us to show the most recent internships/jobs in the dashboard
 			FirebaseIO.child('careers/' + careerID).setPriority(careerObject.date.ends);
+			
+			return true;
 			
 		},
 		

@@ -24,8 +24,9 @@ angular.module('myhonorsCareer').controller('CareersFormCtrl', ['$scope', '$time
 				if (positionID != null) // If positionID is not null that means the form was valid and the position was created succesfully
 					$location.path('career/' + positionID);
 			} else {
-				CareerService.update($routeParams.positionID,$scope.newPosition);
-				$location.path('career/' + $routeParams.positionID);
+				var status = CareerService.update($routeParams.positionID,$scope.newPosition);
+				if (status)
+					$location.path('career/' + $routeParams.positionID);
 			}
 			
 				
