@@ -9,13 +9,11 @@ angular.module('myhonorsCareer').factory('CareerService', function($q, FirebaseI
 		if (!angular.isString(careerObject.companyName) ||
 				!angular.isString(careerObject.address) ||
 				!angular.isString(careerObject.pointOfContact) ||
-				!angular.isString(careerObject.amountOfInterns) ||
 				!angular.isString(careerObject.details) ||
 				!angular.isObject(careerObject.date) ||
 				!angular.isString(careerObject.date.starts) ||
 				!angular.isString(careerObject.date.ends) ||
 				!angular.isObject(careerObject.time) ||
-				!angular.isString(careerObject.time.hoursPerWeek) ||
 				!angular.isString(careerObject.description) ||
 				!angular.isString(careerObject.status)
 			) {
