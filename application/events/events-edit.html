@@ -49,9 +49,9 @@
 									</div>
 								</div>
 							</div>
-							<div class="span5 offset1 control-group">
+							<div class="span5 offset1 control-group" ng-class="{error: theForm.name.$invalid}">
 								<label for="name" class="control-label">Event Type</label><br />
-								<select multiple="multiple" ng-model="event.types" ng-options="type.$id as type.name group by ((type.citizenship && 'Citizenship') || 'General') for type in eventTypes"></select>
+								<select multiple="multiple" ng-model="event.types" ng-options="type.$id as type.name group by ((type.citizenship && 'Citizenship') || 'General') for type in eventTypes" required></select>
 								<span class="help-block" style="margin-top: 5px">Tip: Hold Ctrl to select multiple types.</span>
 							</div>
 						</div>

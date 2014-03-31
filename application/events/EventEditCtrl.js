@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('myhonorsEvents').controller('EventEditCtrl', ['$scope', '$location', '$routeParams', '$timeout', 'EventService', function($scope, $location, $routeParams, $timeout, EventService) {
+angular.module('myhonorsEvents').controller('EventEditCtrl', ['$scope', '$location', '$routeParams', '$timeout', 'EventService', 'WaitingListService', function($scope, $location, $routeParams, $timeout, EventService, WaitingListService) {
+	
 	// temporary location to initialize the map
 	$scope.event = {
 		location: {
@@ -36,10 +37,12 @@ angular.module('myhonorsEvents').controller('EventEditCtrl', ['$scope', '$locati
 				time: ends.format('hh:mm A')
 			};
 			
-			// store a copy so we can undo changes
+			// Store a copy so we can undo changes. The usersAttended property must be deleted in order to avoid a circular 
+			//reference error when making a copy of the event
+			delete $scope.event.usersAttended;
 			$scope.originalEvent = angular.copy($scope.event);
 
-			// auto updates the date and time
+			// Auto updates the date and time
 			$scope.updateEnds = function(timeOrDate) {
 				if (timeOrDate === 'time') {
 					$scope.event.date.ends.time = moment($scope.event.date.starts.time, 'hh:mm A').add('hours', 1).format('hh:mm A');
@@ -94,6 +97,10 @@ angular.module('myhonorsEvents').controller('EventEditCtrl', ['$scope', '$locati
 		});
 
 		EventService.update($routeParams.eventId, event);
+		
+		if ($scope.event.options.waitingList)
+			$scope.checkWaitingList();
+		
 		$location.path('events/' + $routeParams.eventId);
 	};
 
@@ -103,5 +110,20 @@ angular.module('myhonorsEvents').controller('EventEditCtrl', ['$scope', '$locati
 
 	$scope.defaults = {
 		maxZoom: 20
-	}
+	};
+	
+	/**
+	 * 
+	 */
+	$scope.checkWaitingList = function() {
+		var newMaxRSVPs = $scope.event.options.maxRSVPs;
+		var oldMaxRSVPs = $scope.originalEvent.options.maxRSVPs;
+		if ( oldMaxRSVPs !== newMaxRSVPs &&
+			$scope.event.options.waitingList && 
+			$scope.event.waitingList) {
+			WaitingListService.transferFromWaitingListToRSVP($routeParams.eventId, newMaxRSVPs - oldMaxRSVPs);
+		}
+	};
+	
+
 }]);

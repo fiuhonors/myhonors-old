@@ -39,5 +39,11 @@ angular.module('myhonorsInternal').config(['$routeProvider', function($routeProv
 			controller: 'AttendanceListCtrl',
 			requireLogin: true,
 			resolve: appResolve,
+			showPanels: false }).
+		when('/internal/rfidtags', {
+			templateUrl: 'application/internal/rfid-tags.html',
+			controller: 'RFIDTagsCtrl',
+			requireLogin: true,
+			resolve: appResolve,
 			showPanels: false });
 }]);

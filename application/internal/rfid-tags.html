@@ -1,0 +1,48 @@
+<div class="row" style="margin-top: 100px">
+	<div class="span5" style="margin-left:50px">
+		<div class="box" style="margin-bottom: 30px">
+			<div class="box-header">Panther ID</div>
+			<div class="box-content padded-small">
+				<input type="text" id="pidField" class="input-block-level" style="height: 100%; line-height: 60px; font-size: 40px; margin-bottom: 0" placeholder="Swipe your FIU card..." ng-model="data.userId" ng-enter="changeFocus()" >
+			</div>
+		</div>
+	</div>
+	
+
+
+
+	<div class="span5 offset1">
+		<div class="box" style="margin-bottom: 30px">
+			<div class="box-header">RFID Tag</div>
+			<div class="box-content padded-small">
+				<input type="text" id="rfidField" class="input-block-level" style="height: 100%; line-height: 60px; font-size: 40px; margin-bottom: 0" placeholder="Read the RFID tag..." ng-model="data.rfid" >
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row" ng-show="error">
+	<div class="offset3 span6">
+		<div class="box">
+			<div class="box-content padded-small">
+				<div class="alert alert-error" style="margin-bottom: 0; padding: 20px"><strong>Oh snap!</strong> Try swiping again with the BLUE strip on your FIU card.</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row" ng-show="lastSwipe">
+	<div class="offset3 span6">
+		<div class="box" style="margin-bottom: 5px">
+			<div class="box-content padded-small">
+				<div class="alert alert-success text-center" style="margin-bottom: 0; padding: 20px; font-size: 32px;"><strong>{{lastSwipe.fname}} {{lastSwipe.lname}}</strong></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row" style="margin-top: 60px">
+	<div class="span2 offset5">
+		<button class="btn btn-primary btn-large" ng-click="registerRFID()">Register RFID</button>
+	</div>
+</div>

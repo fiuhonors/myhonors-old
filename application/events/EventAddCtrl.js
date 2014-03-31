@@ -46,7 +46,10 @@ angular.module('myhonorsEvents').controller('EventAddCtrl', ['$scope', '$locatio
 			lat: $scope.newItem.location.lat,
 			lng: $scope.newItem.location.lng
 		};
-
+		
+		// Ensure that the event type is not empty in case it was not added by the staff
+		newItem.types[0] = newItem.types[0] || "General Event"; 
+		
 		var startHour = getHour($scope.newItem.date.starts.time);
 		var startMin = getMinute($scope.newItem.date.starts.time);
 		newItem.date.starts = moment($scope.newItem.date.starts.date, "MM-DD-YYYY").hour(startHour).minute(startMin).valueOf();

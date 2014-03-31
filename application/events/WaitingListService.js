@@ -56,38 +56,16 @@ angular.module('myhonorsEvents').factory('WaitingListService', function($http, F
 		 * Depending on the amount of guests that student had, we then transfer that same amount of students from the waiting list to
 		 * the RSVPs of the event.
 		 * 
+		 * @param eventId The event's id
+		 * @param opnenings The number of new openings for users in the waiting list to be added
 		 */
-		transferFromWaitingListToRSVP: function(eventId, rsvpsNum, userId) {
-			var waitingList = {};
-			FirebaseIO.child('events/' + eventId + '/waitingList/').once('value', function(snapshot) {				
-				angular.forEach(snapshot.val(), function(value,key) {	
-					//waitingList.push([key,value.time]); //Key is the panther ID, value.time is the time when the student joined the waiting list
-					waitingList[key] = value.time;
-				});
-			});
+		transferFromWaitingListToRSVP: function(eventId, openings) {
+			var info = {};
+			info['openings'] = openings;
+			info['eventId'] = eventId;
+			info['userId'] = UserService.profile.id;
 			
-			waitingList['rsvpsNum'] = rsvpsNum;
-			waitingList['eventId'] = eventId;
-			waitingList['userId'] = UserService.profile.id;
-			
-			//waitingList.sort(function(a,b) { return a[1] - b[1] });
-			//console.log(waitingList);
-			
-			
-			//console.log(UserService.profile);
-			$http.post('application/events/update-rsvps-from-waitinglist.php', waitingList, {headers: {'Content-Type': 'application/json'}});
-			/*
-			for (var x = 1; x <= rsvpsNum; x++) {
-				if (x < waitingList.length) {
-					var pantherID = waitingList[x][0];
-					FirebaseIO.child('user_profiles/' + pantherID + '/waitingList/' + eventId).remove();
-					FirebaseIO.child('events/' + eventId + '/waitingList/' + pantherID).remove();
-					
-					var options = {guests: 0, time: waitingList[x][1]};
-					RSVPService.create(eventId, options, pantherID, function(){});
-				}
-						
-			}*/
+			$http.post('application/events/update-rsvps-from-waitinglist.php', info, {headers: {'Content-Type': 'application/json'}});
 		}
 	}
 });
