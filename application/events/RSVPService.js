@@ -66,13 +66,13 @@ angular.module('myhonorsEvents').factory('RSVPService', function(FirebaseIO, Fir
 			callback();
 		},
 
-		delete: function(eid) {
+		delete: function(eventId, userId) {
 			// remove attendance info from event and user's profile
-			FirebaseIO.child('/events/' + eid + '/rsvps/' + UserService.profile.id).remove();
-			UserService.ref.child('rsvps/' + eid).remove();
+			FirebaseIO.child('/events/' + eventId + '/rsvps/' + userId).remove();
+			FirebaseIO.child('/user_profiles/' + userId + '/rsvps/' + eventId).remove();
 		},
-		hasRSVP: function(eid) {
-			return UserService.profile && UserService.profile.rsvps && UserService.profile.rsvps[eid];
+		hasRSVP: function(eventId) {
+			return UserService.profile && UserService.profile.rsvps && UserService.profile.rsvps[eventId];
 		}
 	}
 });

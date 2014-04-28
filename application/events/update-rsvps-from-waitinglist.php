@@ -2,15 +2,17 @@
 
 /**
  * The following php file is used when some RSVPs and then remove it, or the max number of RSVPs changes. The users in the waiting list are
- * then added to the RSVPs according to however many new opnening were opened.
+ * then added to the RSVPs according to however many new opnening were opened and they are then notified by email.
  */
 
 require_once "../../config.php"; // Include all the necessary Firebase config variables
 include_once "../../auth/FirebaseToken.php";
 require_once '../lib/firebaseLib/firebaseLib.php';
 
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-	$tokenGen   = new Services_FirebaseTokenGenerator(FIREBASE_SECRET);
+    
+    $tokenGen   = new Services_FirebaseTokenGenerator(FIREBASE_SECRET);
     $temp_token = $tokenGen->createToken(array(), array(
         'admin' => true
     ));
@@ -22,7 +24,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $userId = $info["userId"];
 
     // Get all users in waiting list
-    $waitingList = json_decode(file_get_contents(FIREBASE_EVENTS_URL . $eventId . '/waitingList.json?auth=' . $temp_token), true);
+   // $waitingList = json_decode(file_get_contents(FIREBASE_EVENTS_URL . $eventId . '/waitingList.json?auth=' . $temp_token), true);
+    $eventInfo = json_decode(file_get_contents(FIREBASE_EVENTS_URL . $eventId . '.json?auth=' . $temp_token), true);
+    $waitingList = $eventInfo["waitingList"];
 
     // Sort waiting list by the time the users joined the list
     asort($waitingList);
@@ -49,8 +53,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			// Set the RSVP for the user in his profile
 			$fb = new fireBase(FIREBASE_USERS_URL, $temp_token);
 			$path = $pantherID . "/rsvps/" . $eventId;
-			$fb->set($path, array( "guests" => 0, "time" => $joinTime));	
-
+			$fb->set($path, array( "guests" => 0, "time" => $joinTime));
+			
+			// An email notification is sent to the user to inform him that he has been added to the RSVP list
+			$userInfo = getUserInfo($pantherID, $temp_token);
+            sendEmailNotification($userInfo, $eventInfo);
 		} 
 		
 		$index++;
@@ -71,6 +78,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	
 	$fb->delete($path);	
 
+}
+
+function getUserInfo($pantherId, $temp_token) {
+    $userInfo = json_decode((file_get_contents(FIREBASE_USERS_URL . $pantherId . '.json?auth=' . $temp_token)), true);
+    return $userInfo;
+}
+
+function sendEmailNotification($userInfo, $eventInfo) {
+    /* Email variables are set below */
+    $to  = $userInfo['email'];
+    //$to = 'fiuhonorstechteam@gmail.com';
+    
+    // subject
+    $subject = 'Honors Event RSVP Update';
+    
+    // message
+    $message = '
+    <html>
+    <head>
+    <title>Honors Event RSVP Update</title>
+    </head>
+    <body>
+    <p>Dear ' . $userInfo["fname"] . ' ' . $userInfo["lname"] . ',</p>
+    
+    <p>Good news! A spot has opened in the event <b>' . $eventInfo["name"] . '</b> and you have been atuomatically moved from the waiting list to the RSVP list.</p>
+    
+    <p>
+    The Honors College at FIU <br>
+    <a href="mailto:honors@fiu.edu">honors@fiu.edu</a> <br>
+    Phone: (305) 348-4100
+    </p>
+    </body>
+    </html>
+    ';
+    
+    // To send HTML mail, the Content-type header must be set
+    $headers  = 'MIME-Version: 1.0' . "\r\n";
+    $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+    
+    // Additional headers
+    $headers .= 'To: ' . $userInfo["fname"] . ' ' . $userInfo["lname"] . ' <' . $userInfo["email"] . '>' . "\r\n";
+    //$headers .= 'To: ' . $userInfo['fname'] . ' <fiuhonorstechteam@gmail.com>' . "\r\n";
+    $headers .= 'From: The Honors College <honors@fiu.edu>' . "\r\n";
+    
+    $email_sent = mail($to, $subject, $message, $headers); 
+    
+    if (!$email_sent) {
+        $result = array('success' => false, 'error' => "A problem ocurred when attemtping to submit your application.");
+        echo json_encode($result);
+        die();
+    }
+    
+    $result = array('success' => true);
+    echo json_encode($result);
+    
 }
 
 

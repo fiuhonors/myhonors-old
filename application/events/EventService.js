@@ -19,7 +19,7 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
 				// invalid input, do nothing
 				return;
 			}
-
+            
 			// setting the priority to the date.ends value allows us to show an event that is currently
 			// taking place in any 'Upcoming Events' section
 			FirebaseIO.child('events').push(eventObject).setPriority(eventObject.date.ends);
@@ -37,7 +37,7 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
 				data.id = snapshot.name();
 				data.comments = snapshot.child('comments').numChildren();
 				data.attendance = snapshot.child('attendance').numChildren();
-				data.usersAttended = snapshot.child('attendance');
+				data.usersAttended = snapshot.hasChild('attendance') ? snapshot.child('attendance') : null;
 				
 				// calculate the total number of RSVPs
 				data.rsvps = snapshot.child('rsvps').numChildren();
@@ -75,7 +75,8 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
 					id: snapshot.name(),
 					rsvps: snapshot.child('rsvps').numChildren(),
 					attendance: snapshot.child('attendance').numChildren(),
-					comments: snapshot.child('comments').numChildren()
+					comments: snapshot.child('comments').numChildren(),
+					numWaitingList: snapshot.child('waitingList').numChildren()
 				};
 
 				// add all the guests to the total number of RSVPs

@@ -1,6 +1,5 @@
 'use strict'
 
 angular.module('myhonorsInternal').controller('EventStatsCtrl', function($scope, EventService) {
-	$scope.events = EventService.list();
-		
+	$scope.events = EventService.list();	
 });

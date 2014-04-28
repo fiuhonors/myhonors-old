@@ -40,6 +40,12 @@ angular.module('myhonorsInternal').config(['$routeProvider', function($routeProv
 			requireLogin: true,
 			resolve: appResolve,
 			showPanels: false }).
+		when('/internal/waitinglist/:eventID', {
+			templateUrl: 'application/internal/waiting-list.html',
+			controller: 'WaitingListCtrl',
+			requireLogin: true,
+			resolve: appResolve,
+			showPanels: false }).
 		when('/internal/rfidtags', {
 			templateUrl: 'application/internal/rfid-tags.html',
 			controller: 'RFIDTagsCtrl',

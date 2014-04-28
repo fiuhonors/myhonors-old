@@ -12,8 +12,10 @@
 					<td><b>PID</b></td>
 					<td><b>Email</b></td>
 					<td><b>Guests</b></td>
+					<td ng-show="event.options.requirePhone"><b>Phone Number</b></td>
 					<td><b>Time of Registration</b></td>
 					<td ng-show="event.attendance"><b>Attended?</b></td>
+					<td></td>
 				</tr>
 			</thead>
 			<tbody>
@@ -22,8 +24,10 @@
 					<td>{{rsvp.pid}}</td>
 					<td>{{rsvp.email}}</td>
 					<td>{{rsvp.guests}}</td>
+					<td ng-show="event.options.requirePhone">{{rsvp.phone}}</td>
 					<td ng-show="rsvp.time">{{rsvp.time | date:'short'}}</td><td ng-show="!rsvp.time">N/A</td>
 					<td ng-show="event.attendance">{{checkAttendance(rsvp.pid)}}</td>
+					<td><a href="" class="icon-remove" ng-click="removeRSVP(rsvp)"></a></td>
 				</tr>
 			</tbody>
 		</table>

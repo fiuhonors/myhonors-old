@@ -1,12 +1,15 @@
 'use strict';
 
-angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeParams', '$timeout', '$location', '$window', 'FirebaseIO', 'FirebaseCollection', 'EventService', 'WaitingListService', 'CommentService', 'RSVPService', 'SwipeService', 'apikey_google', function ($scope, $routeParams, $timeout, $location, $window, FirebaseIO, FirebaseCollection, EventService, WaitingListService, CommentService, RSVPService, SwipeService, apikey_google) {
+angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeParams', '$timeout', '$location', '$window', 'FirebaseIO', 'FirebaseCollection', 'EventService', 'WaitingListService', 'CommentService', 'RSVPService', 'SwipeService', 'UserService', 'apikey_google', function ($scope, $routeParams, $timeout, $location, $window, FirebaseIO, FirebaseCollection, EventService, WaitingListService, CommentService, RSVPService, SwipeService, UserService, apikey_google) {
 	var discussionRef = FirebaseIO.child('events/' + $routeParams.eventId + '/comments');
 	$scope.rsvp = RSVPService.read($routeParams.eventId) || {guests: 0, error: false};
-	$scope.originalRSVP = angular.copy($scope.rsvp); // save an original to compare changes with hasRSVPChanges()
-	$scope.showAttendanceLimit = 6;		//Number of attendants that will be displayed
+	$scope.originalRSVP = angular.copy($scope.rsvp); // Save an original to compare changes with hasRSVPChanges()
+	$scope.waitingList = WaitingListService.read($routeParams.eventId) || {phone:"", error: false}; // Contains the waiting list info, if any, of the current user
+	$scope.originalWaitingList = angular.copy($scope.waitingList);
+	$scope.showAttendanceLimit = 6;		// Number of attendants that will be displayed
 	$scope.eventRSVPs = RSVPService.list($routeParams.eventId);
-	$scope.attendance = SwipeService.listByEvent($routeParams.eventId, {"limit": $scope.showAttendanceLimit});	//Limit the number of attendants pulled from the database according to the limit
+	$scope.eventWaitingList = WaitingListService.list($routeParams.eventId);
+	$scope.attendance = SwipeService.listByEvent($routeParams.eventId, {"limit": $scope.showAttendanceLimit});	// Limit the number of attendants pulled from the database according to the limit
 	$scope.userAttended = SwipeService.hasAttended($routeParams.eventId);
 	$scope.userComment = '';
 	$scope.truncateDesc = 200;
@@ -36,7 +39,7 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 				zoom: 17
 			};
 			$scope.markers.push(angular.extend(data.location, {message: data.location.name}));
-		});
+		}, 0, true);
 	});
 
 	/* RSVP FUNCTIONALITY */
@@ -69,9 +72,9 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 	};
 
 	$scope.removeRSVP = function() {
-		RSVPService.delete($routeParams.eventId);
+		RSVPService.delete($routeParams.eventId, UserService.profile.id);
 		
-		// If waiting list is being used and there are people in it, we update accordingly now that some removed his RSVP
+		// If waiting list is being used and there are people in it, we update accordingly now that someone removed his RSVP
 		if ($scope.event.options.waitingList && $scope.event.waitingList)
 			WaitingListService.transferFromWaitingListToRSVP($routeParams.eventId, 1 + $scope.rsvp.guests); // New openings =  user's spot + his guests
 		
@@ -149,8 +152,33 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 	
 	/* WAITING LIST FUNCTIONALITY */
 	
+	$scope.handleJoin = function() {
+	    if ($scope.event.options.requirePhone) {
+	        $scope.preWaitingList = true;
+	        return;
+	    }
+	    
+	    $scope.addToWaitingList();
+	};
+	
 	$scope.addToWaitingList = function() {
-		WaitingListService.create($routeParams.eventId);
+		var data = $scope.waitingList;
+		
+		if ($scope.event.options.requirePhone && !$scope.waitingList.phone) {
+			$scope.waitingList.error = '<strong>Woops!</strong> Please include your phone number.';
+			return;
+		} else {
+			$scope.waitingList.error = null;
+			data.phone = $scope.waitingList.phone;
+		}
+		
+		WaitingListService.create($routeParams.eventId, data, function() {
+			$timeout(function() {
+				$scope.preWaitingList = false;
+				$scope.waitingList = data;
+				$scope.originalWaitingList = angular.copy(data);
+			});
+		});
 	};
 	
 	$scope.isInWaitingList = function() {
@@ -158,9 +186,14 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 	};
 	
 	$scope.removeFromWaitingList = function() {
-		return WaitingListService.delete($routeParams.eventId);
+		$scope.waitingList = {phone:"", error: false};
+		return WaitingListService.delete($routeParams.eventId, UserService.profile.id);
 	};
-		
+	
+	$scope.hasWaitingListChanges = function() {
+		return !angular.equals($scope.waitingList, $scope.originalWaitingList);
+	};
+	
 	/* COMMENT FUNCTIONALITY */
 
 	$scope.comments = CommentService.listClutch2(discussionRef);

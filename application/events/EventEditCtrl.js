@@ -113,7 +113,7 @@ angular.module('myhonorsEvents').controller('EventEditCtrl', ['$scope', '$locati
 	};
 	
 	/**
-	 * 
+	 * Check whether the staff increased the number limit for RSVPs. If so, users in the waiting list are automatically added.
 	 */
 	$scope.checkWaitingList = function() {
 		var newMaxRSVPs = $scope.event.options.maxRSVPs;

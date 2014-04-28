@@ -3,8 +3,11 @@
 angular.module('myhonorsEvents').factory('WaitingListService', function($http, FirebaseIO, FirebaseCollection, RSVPService, UserService) {
 	
 	return {
-		create: function(eventId) {
-			this.update(eventId);
+		create: function(eventId, options, callback) {
+			this.update(eventId, options, callback);
+		},
+		read: function(eventId) {
+			return this.isInWaitingList(eventId) ? UserService.profile.waitingList[eventId] : null;
 		},
 
 		/**
@@ -28,6 +31,8 @@ angular.module('myhonorsEvents').factory('WaitingListService', function($http, F
 			}});
 		},
 		
+		
+		
 		/**
 		 * Updates an RSVP. The information gets saved on the event reference (so we can pull the info from
 		 * the event page) and also on the user's reference (so we can pull it from a user profile page).
@@ -35,20 +40,25 @@ angular.module('myhonorsEvents').factory('WaitingListService', function($http, F
 		 * @param eventId    The event ID
 		 * @param options    An object with the options you want to update
 		 */
-		update: function(eventId) {
+		update: function(eventId, options, callback) {
 			//Save the time when the student was added to the waiting list and store them in the event's waitingList child and in the user's profile
 			var time = Date.now();
 			FirebaseIO.child('events/' + eventId + '/waitingList/' + UserService.profile.id + '/time').set(time);
 			UserService.ref.child('waitingList/' + eventId + '/time').set(time);
+			
+			FirebaseIO.child('events/' + eventId + '/waitingList/' + UserService.profile.id + '/phone').set(options.phone);
+			UserService.ref.child('waitingList/' + eventId + '/phone').set(options.phone);
+			
+			callback();
 		},
 
-		delete: function(eid) {
+		delete: function(eventId, userId) {
 			// Remove waiting list info from event and user's profile
-			FirebaseIO.child('/events/' + eid + '/waitingList/' + UserService.profile.id).remove();
-			UserService.ref.child('waitingList/' + eid).remove();
+			FirebaseIO.child('/events/' + eventId + '/waitingList/' + userId).remove();
+			FirebaseIO.child('/user_profiles/' + userId + '/waitingList/' + eventId).remove();
 		},
-		isInWaitingList: function(eid) {
-			return UserService.profile && UserService.profile.waitingList && UserService.profile.waitingList[eid];
+		isInWaitingList: function(eventId) {
+			return UserService.profile && UserService.profile.waitingList && UserService.profile.waitingList.hasOwnProperty(eventId);
 		},
 		
 		/**

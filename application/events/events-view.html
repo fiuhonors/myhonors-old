@@ -86,8 +86,23 @@
 							<div class="alert alert-info padded-medium" style="margin-bottom: 7px;" ng-show="!isInWaitingList()">
 								The event attendance is full. You can join the waiting list and we will notify you if a spot opens up!
 							</div>
-							<button class="btn btn-large input-block-level" ng-click="addToWaitingList()" ng-show="!isInWaitingList()">Join Waiting List</button>
+							<button class="btn btn-large input-block-level" ng-click="handleJoin()" ng-show="!isInWaitingList()">Join Waiting List</button>
 							<button class="btn btn-large btn-primary input-block-level" ng-click="removeFromWaitingList()" ng-show="isInWaitingList()">Leave Waiting List</button>
+							<div ng-show="event.options.requirePhone && (isInWaitingList() || preWaitingList)">
+								<div class="input-prepend input-block-level" style="margin-top:10px">
+									<span class="add-on">Phone Number</span>
+									<input type="tel" placeholder="305-999-9999" ng-model="waitingList.phone">
+								</div>
+								
+								<div class="alert alert-info" style="margin-bottom: 10px" ng-show="waitingList.error" ng-bind-html-unsafe="waitingList.error"></div>
+								<div class="text-center" ng-show="!preWaitingList && hasWaitingListChanges()" ng-animate="{show: 'slide-show', hide: 'slide-hide'}">
+									<button class="btn btn-mini btn-success" ng-click="addToWaitingList()">Save Changes</button>
+								</div>
+								<div class="text-center" ng-show="preWaitingList">
+									<button class="btn btn-mini btn-primary" ng-click="addToWaitingList()">Join</button>
+									<button class="btn btn-mini btn-link" ng-click="preWaitingList = false; waitingList.error = false">Cancel</button>
+								</div>							
+							</div>
 						</div>
 
 			</div>
