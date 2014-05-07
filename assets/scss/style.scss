@@ -1,0 +1,600 @@
+// Responsive images
+img{
+    display:block;
+    width:100%;
+    height:auto;
+}
+
+//Sticky footer solution
+html, body{
+    height: 100%;
+    padding:0;
+    margin:0;
+}
+
+body{
+    display:table;
+    width:100%;
+}
+
+footer{
+    height:1px;
+    display:table-row;
+}
+
+main{
+    height:100%;
+    display:table-row;
+}
+
+div[class*="col"]{
+    height:100%;
+}
+
+footer {
+	background-color: white;
+	border-top: 1px solid #ccc; /* if you change this, also change fixed height & negative indent */
+}
+
+footer address {
+	margin-bottom: 0px;
+}
+
+/* Lastly, apply responsive CSS fixes as necessary */
+@media (max-width: 767px) {
+	#footer {
+		margin-left: -20px;
+		margin-right: -20px;
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+}
+
+/* Everything else! */
+
+html {
+	overflow-y: scroll;
+}
+
+body {
+	background: url(../img/body-bg.png);
+	color: #494949;
+}
+
+h1,h2,h3,h4,h5,h6, .opensans {
+	font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* Fix for IE9 displaying #wrap as table */
+#wrap {
+	display: block !important;
+}
+
+.container-fluid {
+	max-width: 1100px;
+	margin: 0 auto;
+}
+
+.navbar {
+	margin-bottom: 20px;
+	border-bottom: 3px solid #00baff;
+}
+
+.navbar .btn {
+	margin-top: 22px;
+}
+
+.brand {
+	background: url(../img/myhonors.png) no-repeat center center;
+	width: 156px;
+}
+
+.navbar .nav > li > a {
+	color: silver;
+	padding-top: 27px;
+}
+
+.navbar .btn-link {
+	font-size: inherit;
+	padding: 21px 4px 0;
+	text-shadow: none;
+	margin-top: 0;
+}
+
+.navbar .dropdown .btn-link {
+	padding: 4px;
+}
+
+.dropdown.open .btn-link.dropdown-toggle {
+	color: #00baff;
+	background-color: transparent;
+}
+
+.btn-link, .btn-link:hover, .btn-link:active, .btn-link.visited, .btn-link:focus {outline: 0; border: 0;}
+
+.btn-link:hover {
+	color: #00baff;
+	text-decoration: none;
+	background-color: transparent;
+}
+
+.no-decoration-link {
+	color: inherit;
+}
+
+.no-decoration-link:hover {
+	color: inherit;
+	text-decoration: none;
+}
+
+
+.well {
+	background: #fff; /* Old browsers */
+	background: -moz-linear-gradient(top,  whitesmoke 0%, #ffffff 20%, whitesmoke 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,whitesmoke), color-stop(20%,#ffffff), color-stop(100%,whitesmoke)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  whitesmoke 0%,#ffffff 20%,whitesmoke 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  whitesmoke 0%,#ffffff 20%,whitesmoke 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  whitesmoke 0%,#ffffff 20%,whitesmoke 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  whitesmoke 0%,#ffffff 20%,whitesmoke 100%); /* W3C */
+}
+
+.box {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-weight: 400;
+	font-size: 13px;
+	-webkit-box-shadow: 0 2px 2px -2px #cccccc;
+	-moz-box-shadow: 0 2px 2px -2px #cccccc;
+	box-shadow: 0 2px 2px -2px #cccccc;
+	background: #fbfbfb;
+	border: 1px solid #cdcdcd;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	-ms-border-radius: 4px;
+	-o-border-radius: 4px;
+	border-radius: 4px;
+	margin-bottom: 20px;
+	position: relative;
+}
+
+.box .box-header {
+	padding: 10px;
+	-moz-border-radius-topright: 4px;
+	-webkit-border-top-right-radius: 4px;
+	border-top-right-radius: 4px;
+	-moz-border-radius-topleft: 4px;
+	-webkit-border-top-left-radius: 4px;
+	border-top-left-radius: 4px;
+	background: #eaeaea;
+	background-size: 100%;
+	background-image: -webkit-gradient(linear,50% 0,50% 100%,color-stop(0%,#fdfdfd),color-stop(100%,#eaeaea));
+	background-image: -webkit-linear-gradient(top,#fdfdfd,#eaeaea);
+	background-image: -moz-linear-gradient(top,#fdfdfd,#eaeaea);
+	background-image: -o-linear-gradient(top,#fdfdfd,#eaeaea);
+	background-image: linear-gradient(top,#fdfdfd,#eaeaea);
+	text-shadow: 0 1px white;
+	border-bottom: 1px solid #CDCDCD;
+	color: #636363;
+	font-weight: 400;
+	font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.box .box-header .btn {
+	margin-top: -2px;
+}
+
+.box .box-content {
+	position: relative;
+}
+
+.overflow-gradient {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	pointer-events: none;
+	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIwIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+	background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0)), color-stop(100%,rgba(255,255,255,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-8 */
+}
+
+.padded-small {
+	padding: 5px;
+}
+
+.padded-medium {
+	padding: 8px;
+}
+
+.padded {
+	padding: 15px;
+}
+
+.clickable:hover {
+	cursor: pointer;
+}
+
+.nav-list-active {
+	background-color: #eeeeee;
+}
+
+/* Fix for full-size inputs with prepend/append */
+
+.input-append.input-block-level,
+.input-prepend.input-block-level {
+  display: table;
+}
+
+.input-append.input-block-level .add-on,
+.input-prepend.input-block-level .add-on {
+  display: table-cell;
+  width: 1%; /* remove this if you want default bootstrap button width */
+}
+
+.input-append.input-block-level > input,
+.input-prepend.input-block-level > input {
+  box-sizing: border-box; /* use bootstrap mixin or include vendor variants */
+  display: table; /* table-cell is not working well in Chrome for small widths */
+  min-height: inherit;
+  width: 100%;
+}
+
+.input-append.input-block-level > input {
+  border-right: 0;
+}
+
+.input-prepend.input-block-level > input {
+  border-left: 0;
+}
+
+/* end fix */
+
+h1 small,
+h2 small,
+h3 small,
+h4 small,
+h5 small,
+h6 small {
+  font-weight: normal;
+  line-height: 1;
+  color: #666;
+}
+
+.thumbnail {background-color: white; text-align: center}
+.thumbnail .caption {padding: 5px 5px 3px;}
+a.thumbnail:hover {text-decoration: none;}
+
+/* Fix for fluid thumbnails (https://github.com/twitter/bootstrap/issues/3494) */
+.row-fluid ul.thumbnails li.span12 + li {margin-left : 0px; clear:left;}
+.row-fluid ul.thumbnails li.span6:nth-child(2n + 3) {margin-left : 0px; clear:left;}
+.row-fluid ul.thumbnails li.span4:nth-child(3n + 4) {margin-left : 0px; clear:left;}
+.row-fluid ul.thumbnails li.span3:nth-child(4n + 5) {margin-left : 0px; clear:left;}
+.row-fluid ul.thumbnails li.span2:nth-child(6n + 7) {margin-left : 0px; clear:left;}
+.row-fluid ul.thumbnails li.span1:nth-child(12n + 13) {margin-left : 0px; clear:left;}
+
+.row-fluid .media.span6:nth-child(2n + 3) {margin-left : 0px; clear:left;}
+.row-fluid .media.span4:nth-child(3n + 4) {margin-left : 0px; clear:left;}
+.row-fluid .media.span3:nth-child(4n + 5) {margin-left : 0px; clear:left;}
+.row-fluid .media.span2:nth-child(6n + 7) {margin-left : 0px; clear:left;}
+.row-fluid .media.span1:nth-child(12n + 13) {margin-left : 0px; clear:left;}
+
+/* Volunteer Hours */
+
+.mh-progress {
+	background-color: #dedede;
+	height: 15px;
+}
+
+.mh-progress .bar {
+	background-color: #00baff;
+	height: 100%;
+}
+
+.volunteer-hour > .icon-remove {
+	display: none;
+}
+
+.volunteer-hour:hover > .icon-remove {
+	display: inline;
+}
+
+/* Comments */
+
+.comment p:last-child {
+	margin-bottom: 0;
+}
+
+/* Upcoming Events */
+
+ul.block-hover {
+	margin: 0;
+}
+
+ul.block-hover li {
+	list-style-type: none;
+	padding: 10px;
+	border-bottom: 1px solid #efefef;
+}
+
+ul.block-hover li:hover {
+	background-color: #f4f4f4;
+}
+
+ul.block-clickable li:hover {
+	cursor: pointer;
+}
+
+.event-types {
+	margin-top: -2px;
+	font-size: 10px;
+	text-transform: uppercase;
+}
+
+.event-types span {
+	display: inline-block;
+}
+
+.short-desc {
+	margin: 0;
+	line-height: 15px;
+}
+
+.event-attending h3 {
+	margin: 5px 0 0;
+	line-height: 18px;
+}
+
+.event-attending span {
+	display: block;
+	font-size: 10px;
+}
+
+/* COLOR CODED EVENT LABELS */
+
+.event-green {
+	color: #468847;
+}
+.label.event-green {
+	color: white;
+	background-color: #468847;
+}
+
+.event-blue {
+	color: #3a87ad;
+}
+.label.event-blue {
+	color: white;
+	background-color: #3a87ad;
+}
+
+.event-gold {
+	color: #f89406;
+}
+.label.event-gold {
+	color: white;
+	background-color: #f89406;
+}
+
+.event-red {
+	color: #b94a48;
+}
+.label.event-red {
+	color: white;
+	background-color: #b94a48;
+}
+
+.event-black {
+	color: #333333;
+}
+.label.event-black {
+	color: white;
+	background-color: #333333;
+}
+
+/* CALENDAR */
+
+th.no-border-left, td.no-border-left {
+	border-left: 0px;
+}
+
+td.month {
+	width: 33%;
+	padding-top: 45px;
+	height: 70px;
+}
+
+td.year {
+	padding-top: 45px;
+	height: 70px;
+}
+
+td.month:hover, td.year:hover {
+	cursor: pointer;
+	background-color: #efefef;
+}
+
+td.day {
+	width: 14.2857142857%
+}
+
+.label, .badge {
+	white-space: normal;
+}
+
+/* MAP OVERLAY */
+
+.mapoverlay {
+	position: absolute;
+	background: rgba(0, 0, 0, 0.85);
+	height: 90px;
+	width: 450px;
+	bottom: 40px;
+	right: 0;
+	color: white;
+	box-shadow: 1px 1px 5px rgba(0,0,0,0.8);
+	border-bottom: 1px solid #00baff;
+}
+
+.mapoverlay div {
+	margin: 15px 22px;
+}
+
+.mapoverlay h1 {
+	font-size: 32px;
+	font-family: Georgia, Serif;
+	font-weight: normal;
+	text-shadow: 2px 2px 1px black;
+}
+
+.mapoverlay p {
+	padding: 0px !important;
+	margin: 10px 0;
+}
+
+.mapoverlay .smalltext {
+	padding: 0px;
+	margin: 0px;
+	color: #DDD;
+	font-size: 12px;
+	text-shadow: 1px 1px 1px black;
+}
+
+/* PROFILE */
+
+.hero-unit {
+	border: 1px solid #aaa;
+	background-image: url(../img/gplaypattern.png);
+}
+
+.media.well {
+	margin-top: 0px;
+	margin-bottom: 3px;
+	padding-bottom: 10px;
+}
+
+/* COMMENTS */
+
+.media.comment {
+	margin: 5px 0 0 0;
+}
+
+.media.comment.depth-0 {
+	margin: 10px 0 0 0;
+}
+
+/*.comment-childwrap {
+	padding-left: 14px;
+	margin-left: 14px;
+	border-left: 1px dotted #ccc
+}*/
+
+.comment .alert {
+	margin-bottom: 0;
+}
+
+/* LOGIN PAGE */
+
+.login-header {
+	position: absolute;
+	color: white;
+ 	top: 18px;
+	width: 98.5%;
+	margin-left: 2px;
+	line-height: 35px;
+	text-align: center;
+	border-top: 1px solid #999;
+	border-bottom: 1px solid #666;
+	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.img-rotate {
+	position: relative;
+}
+
+.img-rotate img {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.example-repeat-enter-setup,
+.example-repeat-leave-setup,
+.example-repeat-move-setup {
+  -webkit-transition:all linear 0.4s;
+  -moz-transition:all linear 0.4s;
+  -ms-transition:all linear 0.4s;
+  -o-transition:all linear 0.4s;
+  transition:all linear 0.4s;
+}
+ 
+.example-repeat-enter-setup {
+  line-height:0;
+  opacity:0;
+}
+.example-repeat-enter-setup.example-repeat-enter-start {
+  line-height:20px;
+  opacity:1;
+}
+ 
+.example-repeat-leave-setup {
+  opacity:1;
+  line-height:20px;
+}
+.example-repeat-leave-setup.example-repeat-leave-start {
+  opacity:0;
+  line-height:0;
+}
+ 
+.example-repeat-move-setup { }
+.example-repeat-move-setup.example-repeat-move-start { }
+
+
+/* Misc */
+
+.disabled {
+	opacity: 0.5;
+}
+
+.space-below {
+	margin-bottom: 15px;
+}
+
+.word-wrap {
+	word-wrap: break-word;
+}
+
+
+/* 
+ * File Input button styling.
+ * 
+ * Taken from: jQuery-file-Upload by blueimp at https://github.com/blueimp/jQuery-File-Upload
+ * 
+ */
+.fileinput-button {
+  position: relative;
+  overflow: hidden;
+}
+.fileinput-button input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  opacity: 0;
+  -ms-filter: 'alpha(opacity=0)';
+  font-size: 200px;
+  direction: ltr;
+  cursor: pointer;
+}
+
+/* Fixes for IE < 8 */
+@media screen\9 {
+  .fileinput-button input {
+    filter: alpha(opacity=0);
+    font-size: 100%;
+    height: 100%;
+  }
+}
