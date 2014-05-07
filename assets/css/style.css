@@ -7,10 +7,20 @@
 /* Sticky footer styles
 -------------------------------------------------- */
 
-html,
-body {
-	height: 100%;
-	/* The html and body elements cannot have any padding or margin. */
+
+img{
+    display:block;
+    width:100%;
+    height:auto;
+}
+
+html{
+    height: 100%;
+}
+
+body{
+    display:table;
+    width:100%;
 }
 
 /* Wrapper for page content to push down footer */
@@ -35,10 +45,6 @@ body {
 
 #footer address {
 	margin-bottom: 0px;
-}
-
-#footer-image {
-	margin-top: 10px;
 }
 
 #footer-content {
