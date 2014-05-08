@@ -4,6 +4,7 @@
 .zedstate
 assets/img/honorshours
 assets/json
+desktop.ini
 
 #Config variables
 config.php
