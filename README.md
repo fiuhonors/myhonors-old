@@ -21,7 +21,7 @@ All necessary files are already included in the repository, so you can get start
 ###Roadmap
 | Version |     | Description |
 |---------|-----|-------------|
-| **0.x** |     | Adding existing features into repo |
+| **0.x** |     | Adding existing features into repo TEST|
 |         | 0.1 | Linked Authentication with LDAP **[DONE]** |
 |         | 0.2 | Attendance and Events **[DONE]** |
 |         | 0.3 | ARCH Registration | **[IN PROGRESS]**
