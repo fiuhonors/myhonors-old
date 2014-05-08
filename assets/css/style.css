@@ -1,44 +1,77 @@
-img {
-  display: block;
-  width: 100%;
-  height: auto; }
+/* Media Query variables ==================================================== */
+/* End Media Query variables ================================================ */
+/* Vertical align fix for Bootstrap 3 
+    http://www.minimit.com/articles/solutions-tutorials/bootstrap-3-responsive-columns-of-same-height
+============================================================================= */
+.container-xs-height {
+  display: table;
+  padding-left: 0px;
+  padding-right: 0px; }
 
+.row-xs-height {
+  display: table-row; }
+
+.col-xs-height {
+  display: table-cell;
+  float: none; }
+
+@media (min-width: 768px) {
+  .container-sm-height {
+    display: table;
+    padding-left: 0px;
+    padding-right: 0px; }
+
+  .row-sm-height {
+    display: table-row; }
+
+  .col-sm-height {
+    display: table-cell;
+    float: none; } }
+@media (min-width: 992px) {
+  .container-md-height {
+    display: table;
+    padding-left: 0px;
+    padding-right: 0px; }
+
+  .row-md-height {
+    display: table-row; }
+
+  .col-md-height {
+    display: table-cell;
+    float: none; } }
+@media (min-width: 1200px) {
+  .container-lg-height {
+    display: table;
+    padding-left: 0px;
+    padding-right: 0px; }
+
+  .row-lg-height {
+    display: table-row; }
+
+  .col-lg-height {
+    display: table-cell;
+    float: none; } }
+/* vertical alignment styles */
+.col-top {
+  vertical-align: top; }
+
+.col-middle {
+  vertical-align: middle; }
+
+.col-bottom {
+  vertical-align: bottom; }
+
+/* End Vertical Align Fix =================================================== */
 html, body {
   height: 100%;
   padding: 0;
-  margin: 0; }
+  margin: 0;
+  overflow: hidden; }
 
 body {
   display: table;
   width: 100%; }
 
-footer {
-  height: 1px;
-  display: table-row; }
-
-main {
-  height: 100%;
-  display: table-row; }
-
-div[class*="col"] {
-  height: 100%; }
-
-footer {
-  background-color: white;
-  border-top: 1px solid #ccc;
-  /* if you change this, also change fixed height & negative indent */ }
-
-footer address {
-  margin-bottom: 0px; }
-
-/* Lastly, apply responsive CSS fixes as necessary */
-@media (max-width: 767px) {
-  #footer {
-    margin-left: -20px;
-    margin-right: -20px;
-    padding-left: 20px;
-    padding-right: 20px; } }
-/* Everything else! */
 html {
   overflow-y: scroll; }
 
@@ -47,14 +80,90 @@ body {
   color: #494949; }
 
 h1, h2, h3, h4, h5, h6, .opensans {
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: bold; }
 
 /* Fix for IE9 displaying #wrap as table */
 #wrap {
   display: block !important; }
 
+.border-box {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+.btn {
+  max-width: 100%; }
+
+#loginBox {
+  margin-top: 0px; }
+  @media (min-width: 0px) {
+    #loginBox {
+      margin-top: 0px; } }
+  @media (min-width: 992px) {
+    #loginBox {
+      margin-top: 100px; } }
+  #loginBox img {
+    z-index: 10; }
+
+#main {
+  display: table;
+  height: 100%;
+  margin-bottom: 30px; }
+
+footer {
+  height: 1px;
+  display: table-row;
+  background-color: white;
+  border-top: 1px solid #ccc; }
+  footer img {
+    max-width: 90%;
+    display: block;
+    max-height: 100px;
+    z-index: 0;
+    margin: 0 auto; }
+  footer p {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: 15px; }
+  @media (max-width: 767px) {
+    footer p {
+      text-align: center;
+      margin-left: 0px; } }
+  @media (min-width: 992px) {
+    footer p {
+      margin-top: 10px;
+      margin-bottom: 10px; }
+    footer img {
+      margin-top: 10px;
+      margin-bottom: 10px; } }
+
+/* Lastly, apply responsive CSS fixes as necessary */
+@media (max-width: 767px) {
+  #footer {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px; } }
+@media (min-width: 0px) {
+  #homeImage {
+    display: none; } }
+@media (min-width: 992px) {
+  #homeImage {
+    display: block; }
+    #homeImage img {
+      width: 100%; } }
+.img-polaroid {
+  padding: 4px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
+
 .container-fluid {
-  max-width: 1100px;
+  max-width: 1100px !important;
   margin: 0 auto; }
 
 .navbar {
@@ -66,7 +175,8 @@ h1, h2, h3, h4, h5, h6, .opensans {
 
 .brand {
   background: url(../img/myhonors.png) no-repeat center center;
-  width: 156px; }
+  width: 156px;
+  display: block; }
 
 .navbar .nav > li > a {
   color: silver;
@@ -81,7 +191,7 @@ h1, h2, h3, h4, h5, h6, .opensans {
 .navbar .dropdown .btn-link {
   padding: 4px; }
 
-.dropdown.open .btn-link.dropdown-toggle {
+.navbar .dropdown-toggle {
   color: #00baff;
   background-color: transparent; }
 
@@ -311,7 +421,8 @@ a.thumbnail:hover {
 
 /* Upcoming Events */
 ul.block-hover {
-  margin: 0; }
+  margin: 0;
+  padding: 0; }
 
 ul.block-hover li {
   list-style-type: none;
@@ -462,9 +573,9 @@ td.day {
 
 /* LOGIN PAGE */
 .login-header {
-  position: absolute;
+  position: relative;
   color: white;
-  top: 18px;
+  top: 55px;
   width: 98.5%;
   margin-left: 2px;
   line-height: 35px;
