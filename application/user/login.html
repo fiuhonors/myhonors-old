@@ -1,5 +1,5 @@
-	<div class="row" style="margin-top: 100px">
-		<div class="col-md-4 col-md-offset-2" img-rotate delay="4000">
+	<div class="row" id='loginBox'>
+		<div class="col-md-5 col-md-offset-1" id="homeImage" img-rotate delay="4000">
 			<img src="assets/img/frontpage-1.jpg" class="img-polaroid img-rounded" />
 			<img src="assets/img/frontpage-2.jpg" class="img-polaroid img-rounded" />
 			<img src="assets/img/frontpage-3.jpg" class="img-polaroid img-rounded" />
@@ -11,21 +11,22 @@
 				<strong ng-switch-when="forgotPass">Forgot your password?</strong>
 			</div>
 
-			<div class="well well-large" style="padding-top: 70px" data-ng-switch="currentPage">
+			<div class="well well-lg" style="padding-top: 70px" data-ng-switch="currentPage">
 				<div ng-switch-when="loginPage">
 					<form ng-submit="doLogin()">
-						
+                                            <div class="form-group">
 						<label for="email">Panther ID</label>
-						<input type="text" id="email" placeholder="1234567" ng-model="loginForm.pid" />
-						
+						<input type="text" class="form-control" id="email" placeholder="1234567" ng-model="loginForm.pid" />
+                                            </div>
+                                            <div class="form-group">
 						<label for="password">MyAccounts Password</label>
-						<input type="password" id="password" name="password" ng-model="loginForm.password" />
-						
+						<input type="password" class="form-control" id="password" name="password" ng-model="loginForm.password" />
+                                            </div>
+                                            <div class="form-group">
 						<button ng-show="!status.loading" class="btn btn-primary" type="submit" >Login</button>
 						<button ng-show="status.loading" class="btn btn-primary disabled">Loading...</button>
-
 						<button class="btn btn-link" ng-click="$parent.currentPage = 'forgotPass'">Forgot Password?</button>
-						
+                                            </div>
 					</form>
 				</div>
 				<div ng-switch-when="forgotPass">
