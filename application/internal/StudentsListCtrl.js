@@ -61,7 +61,7 @@ angular.module('myhonorsInternal').controller('StudentsListCtrl', function($scop
 					generalEventsNum: generalEvents,
 					heartsEventsNum: heartsEvents,
 					volunteerHoursNum: totalVolunteerHours,
-					totalPoints: honorsHours*2 + colloquia*3 + excellenceLectures*4 + generalEvents*1 + heartsEvents*1 + totalVolunteerHours*1
+					totalPoints: honorsHours*2 + colloquia*3 + excellenceLectures*4 + generalEvents*1 + heartsEvents*1
 					
 				};
 				

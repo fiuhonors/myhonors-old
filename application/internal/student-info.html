@@ -46,6 +46,7 @@
 						<label class="label label-success" ng-show="volunteer.status == 'accepted'" " ng-init="countVolunteerHours(volunteer)" style="margin-right: 2px">ACCEPTED</label> 
 						{{volunteer.agency}} - {{volunteer.activity}} <a href="" class="icon-remove" ng-click="removeVolunteerHours(volunteer)"></a>
 						<br>
+						Hours: {{volunteer.hours}} <span ng-show="!volunteer.hours">N/A</span>  <br>
 						Reference Name: {{volunteer.referenceName}} <span ng-show="!volunteer.referenceName">N/A</span> <br>
 						Reference Title: {{volunteer.referenceTitle}} <span ng-show="!volunteer.referenceTitle">N/A</span> <br>
 						Reference Email: {{volunteer.referenceEmail}} <span ng-show="!volunteer.referenceEmail">N/A</span> <br>
