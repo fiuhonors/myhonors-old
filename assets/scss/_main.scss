@@ -1,0 +1,19 @@
+#loginBox{
+    margin-top:0px;
+    @media #{$screen-xs}{
+        margin-top:0px;
+    }
+    @media #{$screen-md}{
+        margin-top:100px;
+    }
+    
+    img{
+        z-index:10;
+    }
+}
+
+#main{
+    display:table;
+    height:100%;
+    margin-bottom:30px;
+}
