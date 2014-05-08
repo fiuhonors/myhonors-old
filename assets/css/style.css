@@ -299,12 +299,13 @@ a.thumbnail:hover {text-decoration: none;}
 	height: 100%;
 }
 
-.volunteer-hour > .icon-remove {
+.hover-icon-remove > .icon-remove {
 	display: none;
 }
 
-.volunteer-hour:hover > .icon-remove {
+.hover-icon-remove:hover > .icon-remove {
 	display: inline;
+	margin-left: 3px;
 }
 
 /* Comments */

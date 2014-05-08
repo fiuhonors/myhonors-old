@@ -23,6 +23,12 @@ angular.module('myhonorsInternal').config(['$routeProvider', function($routeProv
 			requireLogin: false,
 			resolve: appResolve,
 			showPanels: false }).
+		when('/internal/studyroomswipe', {
+			templateUrl: 'application/internal/study-room-swipe.html',
+			controller: 'StudyRoomSwipeCtrl',
+			requireLogin: false,
+			resolve: appResolve,
+			showPanels: false }).
 		when('/internal/rsvplist/:eventID', {
 			templateUrl: 'application/internal/rsvp-list.html',
 			controller: 'RSVPListCtrl',
@@ -51,5 +57,10 @@ angular.module('myhonorsInternal').config(['$routeProvider', function($routeProv
 			controller: 'RFIDTagsCtrl',
 			requireLogin: true,
 			resolve: appResolve,
-			showPanels: false });
+			showPanels: false }).
+		when('/internal/studentinfo/:pid', {
+			templateUrl: 'application/internal/student-info.html',
+			controller: 'StudentInfoCtrl',
+			requireLogin: true,
+			resolve: appResolve});
 }]);

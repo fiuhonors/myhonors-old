@@ -3,7 +3,9 @@
 		<div class="box-header">{{position.companyName}} Information</div>
 		<div class="box-content padded word-wrap">
 
-			<img class="img-rounded img-polaroid" ng-src="{{position.thumbURL || 'http://placehold.it/135'}}" style="margin-bottom:20px;margin-left:25%;">
+			<div class="text-center space-below">
+				<img class="img-rounded img-polaroid" ng-src="{{position.thumbURL || 'http://placehold.it/135'}}">
+			</div>
 
 			<div class="space-below">
 				<b>Company Name: </b> {{position.companyName}}

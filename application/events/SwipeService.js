@@ -41,8 +41,8 @@ angular.module('myhonorsEvents').factory('SwipeService', function($q, FirebaseIO
 				userRef.setPriority(now);
 			});
 
-			
-			FirebaseIO.child('user_profiles/' + userId + '/attendance/' + eventId + "/eventType").set(eventType);	//Push the event type to the user's profile record
+			//Push the event type and swipe time to the user's profile record
+			FirebaseIO.child('user_profiles/' + userId + '/attendance/' + eventId + "/eventType").set(eventType);	
 			FirebaseIO.child('user_profiles/' + userId + '/attendance/' + eventId + '/' + swipeRef.name()).set(now);
 			
 

@@ -31,12 +31,12 @@ angular.module('myhonorsInternal').controller('AttendanceListCtrl', function($sc
 	
 	
 	/* This is only used when the event chosen is BBC Lab */
-	$scope.bbcAttendance = {};
-	$scope.getBBCLabAttendance = function(pid) {
+	$scope.labAttendance = {};
+	$scope.getLabAttendance = function(pid) {
 		FirebaseIO.child('events/' + $scope.eventID + '/attendance/' + pid).on('value', function(snapshot) {
-			$scope.bbcAttendance[pid] = [];
+			$scope.labAttendance[pid] = [];
 			angular.forEach(snapshot.val(), function(value,key) {
-				$scope.bbcAttendance[pid].push(value);
+				$scope.labAttendance[pid].push(value);
 			});
 		});
 	};

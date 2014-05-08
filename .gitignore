@@ -4,6 +4,8 @@
 .zedstate
 assets/img/honorshours
 assets/json
+.gitignore~
+
 
 #Config variables
 config.php
@@ -23,6 +25,3 @@ logs/
 access.log
 error.log
 
-#Misc
-application/career/upload.php
-#TODO make the "Disable Email" option into an environment variable so that we can upload it to GitHub

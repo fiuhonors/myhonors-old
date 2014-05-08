@@ -24,7 +24,7 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="student in students | orderBy:columnOrder:reverseOrder | filter:student.search | limitTo:limit " >
-					<td>{{student.name}}</td>
+					<td><a href="#/internal/studentinfo/{{student.id}}">{{student.name}}</a></td>
 					<td>{{student.id}}</td>
 					<td>{{student.email}}</td>
 					<td>{{student.honorsHoursNum}}</td>

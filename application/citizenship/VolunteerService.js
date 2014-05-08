@@ -30,14 +30,14 @@ angular.module('myhonorsCitizenship').factory('VolunteerService', function($q, $
 			
 		},
 		
-		list: function() {
-			var index = new FirebaseIndex(FirebaseIO.child('user_profiles/' + UserService.profile.id + '/volunteerHours'), FirebaseIO.child('volunteerHours'));
+		list: function(pid) {
+			var index = new FirebaseIndex(FirebaseIO.child('user_profiles/' + pid + '/volunteerHours'), FirebaseIO.child('volunteerHours'));
 			return FirebaseCollection(index);
 		},
 		
-		remove: function(volunteerHour) {
+		remove: function(volunteerHour, pid) {
 			volunteerHour.$ref.remove();	//Delete the volunteer hours child from the volunteerHours collection
-			FirebaseIO.child('user_profiles/' + UserService.profile.id + '/volunteerHours/' + volunteerHour.$id).remove();	//Delete the volunteer hours from the user_profiles/volunteerHours child
+			FirebaseIO.child('user_profiles/' + pid + '/volunteerHours/' + volunteerHour.$id).remove();	//Delete the volunteer hours from the user_profiles/volunteerHours child
 		}
 	
 	}

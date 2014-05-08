@@ -1,9 +1,8 @@
 'use strict'
 
-angular.module('myhonorsInternal').controller('BBCLabSwipeCtrl', function($scope, $timeout, FirebaseIO, SwipeService, UserService) {
-	$scope.buttons = ['Advising', 'Honors Meeting', 'Use the Computers', 'Study Area', 'Both (computers & study)'];
+angular.module('myhonorsInternal').controller('StudyRoomSwipeCtrl', function($scope, $timeout, FirebaseIO, SwipeService, UserService) {
+	$scope.buttons = ['Use the Computers', 'Study Area', 'Both (computers & study)'];
 	$scope.showButtons = false;
-	$scope.pageTitle = 'BBC Lab Swipe-In';
 	$scope.question = 'What is the PRIMARY reason for your visit?';
 	$scope.lastSwipe = false;	// Holds the user profile for the last student who swiped in
 
@@ -25,10 +24,9 @@ angular.module('myhonorsInternal').controller('BBCLabSwipeCtrl', function($scope
 		
 	};
 	
-	
 
 	$scope.save = function(answer) {
-		SwipeService.create('bbclabswipe', $scope.data.userId, "bbclabswipe", function(swipeRef) {
+		SwipeService.create('studyroomswipe', $scope.data.userId, "studyroomswipe", function(swipeRef) {
 			swipeRef.set({time: Date.now(), answer: answer});
 		});
 		$scope.clear();
