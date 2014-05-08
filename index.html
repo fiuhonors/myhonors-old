@@ -134,10 +134,12 @@
     
 <!-- header -->
 <header class="navbar navbar-static-top navbar-inverse" data-ng-show="showPanels" style="display: none">
-    <div class="navbar-inner">
-	<div class="container-fluid">
-            <a class="brand" href="#/">&nbsp;</a>
-                <ul class="nav" data-ng-show="user.profile">
+	<div class="container">
+            <div class="navbar-header">
+                <a class="brand" href="#/"><img src="assets/img/myhonors.png" /></a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav" data-ng-show="user.profile">
                     <li class="dropdown" ng-show="user.auth.isMiddleCircle">
 			<a href="#" class="dropdown-toggle">Courses <i class="icon-caret-down"></i></a>
 			<ul class="dropdown-menu" role="menu">
@@ -149,7 +151,7 @@
                     <li><a href="#/career">Internships</a></li>
                     <li><a href="#/arch">ARCH</a></li>
                 </ul>
-                <ul class="nav pull-right">
+                <ul class="nav navbar-nav pull-right">
                     <li class="dropdown" data-ng-show="user.profile">
                         <a href="#" class="dropdown-toggle"><i class="icon-user icon-white"></i> {{user.profile.fname}} {{user.profile.lname}}</a>
 			<ul class="dropdown-menu" role="menu">
@@ -166,27 +168,29 @@
                         <a href="#/login" class="btn btn-primary">Login</a>
                     </li>
 		</ul>
-	</div>
-    </div>
+            </div>
+        </div>
 </header>
 
-<main data-ng-view>
+<div class="container" id="main" data-ng-view>
     
-</main>
+</div>
 
 <!-- footer -->
 <footer>
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-6 pagination-right">
-				<img src="assets/img/honors-logo.jpg" alt="Honors College - Florida International University" />
-			</div>
-			<div class="col-sm-6">
-				<address><small>The Honors College (DM 233), 11200 SW 8th Street, Miami, FL 33199</small></address>
-				<small>Phone: (305) 348-4100 &#8226; Fax: (305) 348-2118 &#8226; Email: <a href="mailto:honors@fiu.edu">honors@fiu.edu</a></small>
-			</div>
-		</div>
-	</div>
+    <div class="container-fluid container-sm-height">
+        <div class="row row-sm-height">
+            <div class="col-sm-6 col-sm-height col-middle">
+                <img src="assets/img/honors-logo.jpg" alt="Honors College - Florida International University" />
+            </div>
+            <div class="col-sm-6 col-sm-height col-middle">
+                <p>
+                    <small>The Honors College (DM 233), 11200 SW 8th Street, Miami, FL 33199</small><br/>
+                    <small>Phone: (305) 348-4100 &#8226; Fax: (305) 348-2118 &#8226; Email: <a href="mailto:honors@fiu.edu">honors@fiu.edu</a></small>
+                </p>
+                </div>
+        </div>
+    </div>
 </footer>
 
 <script>
