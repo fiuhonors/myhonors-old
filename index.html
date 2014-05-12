@@ -125,15 +125,21 @@
 <body data-ng-controller="AppCtrl">
     
 <!-- header -->
-<header class="navbar navbar-static-top navbar-inverse" data-ng-show="showPanels" style="display: none">
+<nav class="navbar navbar-static-top navbar-inverse" role="navigation" data-ng-show="showPanels" style="display: none">
 	<div class="container">
             <div class="navbar-header">
-                <a class="brand" href="#/"><img src="assets/img/myhonors.png" /></a>
+                <button class="navbar-toggle" data-toggle="collapse" data-target="#collapsibleMenu">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#/">&nbsp;</a>
             </div>
-            <div class="collapse navbar-collapse">
+            <div class="collapse navbar-collapse" id="collapsibleMenu">
                 <ul class="nav navbar-nav" data-ng-show="user.profile">
                     <li class="dropdown" ng-show="user.auth.isMiddleCircle">
-			<a href="#" class="dropdown-toggle">Courses <i class="icon-caret-down"></i></a>
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Courses <i class="icon-caret-down"></i></a>
 			<ul class="dropdown-menu" role="menu">
                             <li><a href="#/courses/middlecircle">The Middle Circle: Integrating Ideas & Knowledge</a></li>
 			</ul>
@@ -144,7 +150,7 @@
                     <li><a href="#/arch">ARCH</a></li>
                 </ul>
                 <ul class="nav navbar-nav pull-right">
-                    <li class="dropdown" data-ng-show="user.profile">
+                    <li class="dropdown" data-toggle="dropdown" data-ng-show="user.profile">
                         <a href="#" class="dropdown-toggle"><i class="icon-user icon-white"></i> {{user.profile.fname}} {{user.profile.lname}}</a>
 			<ul class="dropdown-menu" role="menu">
                             <li ng-show="user.auth.isAdmin"><a href="#/profile/{{user.profile.user_id}}">View Profile</a></li>
@@ -162,7 +168,7 @@
 		</ul>
             </div>
         </div>
-</header>
+</nav>
 
 <div class="container" id="main" data-ng-view>
     
@@ -170,7 +176,7 @@
 
 <!-- footer -->
 <footer>
-    <div class="container-fluid container-sm-height">
+    <div class="container container-sm-height">
         <div class="row row-sm-height">
             <div class="col-sm-6 col-sm-height col-middle">
                 <img src="assets/img/honors-logo.jpg" alt="Honors College - Florida International University" />
