@@ -1,0 +1,42 @@
+// Responsive calendar http://www.searchdiscovery.com/blog/tutorial-creating-a-responsive-calendar/
+
+.calendar ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    clear: both;
+    width: 100%;
+}
+ 
+.calendar li{
+    display: block;
+    float: left;
+    width: 14.2857142857%;
+    padding: 5px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    margin-right: -1px;
+    margin-bottom: -1px;
+}
+
+@media only screen and (max-width : 768px) {
+ 
+    .calendar .weekdays{
+        display: none;
+    }
+ 
+    .calendar li{
+        height: auto!important;
+        border: 1px solid #ededed;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: -1px;
+    }
+    .calendar li .day, .calendar li .month{
+        display: inline;
+    }
+ 
+    .calendar li.out_of_range {
+        display: none;
+    }
+}
