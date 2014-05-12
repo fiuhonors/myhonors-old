@@ -1,0 +1,17 @@
+.navbar-brand, .brand {
+    background: url(../img/myhonors.png) no-repeat center center;
+    min-width: 156px;
+    min-height: 68px;
+    display:block;
+    background-size: cover;
+}
+
+.navbar .navbar-toggle{
+    margin-top:15px;
+}
+
+@media #{$screen-xs-only}{
+    nav .pull-right{
+        float:left !important;
+    }
+}
