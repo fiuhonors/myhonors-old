@@ -17,3 +17,17 @@
     height:100%;
     margin-bottom:30px;
 }
+
+@media #{$screen-xs}{
+    #homeImage{
+        display:none;
+    }
+}
+@media #{$screen-md}{
+    #homeImage{
+        display:block;
+        img{
+            width:100%;
+        }
+    }   
+}

@@ -3,20 +3,6 @@
 @import "main";
 @import "footer";
 
-@media #{$screen-xs}{
-    #homeImage{
-        display:none;
-    }
-}
-@media #{$screen-md}{
-    #homeImage{
-        display:block;
-        img{
-            width:100%;
-        }
-    }   
-}
-
 .img-polaroid {
     padding: 4px;
     background-color: #fff;

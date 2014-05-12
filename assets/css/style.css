@@ -111,6 +111,14 @@ h1, h2, h3, h4, h5, h6, .opensans {
   height: 100%;
   margin-bottom: 30px; }
 
+@media (min-width: 0px) {
+  #homeImage {
+    display: none; } }
+@media (min-width: 992px) {
+  #homeImage {
+    display: block; }
+    #homeImage img {
+      width: 100%; } }
 footer {
   height: 1px;
   display: table-row;
@@ -145,14 +153,6 @@ footer {
     margin-right: -20px;
     padding-left: 20px;
     padding-right: 20px; } }
-@media (min-width: 0px) {
-  #homeImage {
-    display: none; } }
-@media (min-width: 992px) {
-  #homeImage {
-    display: block; }
-    #homeImage img {
-      width: 100%; } }
 .img-polaroid {
   padding: 4px;
   background-color: #fff;
