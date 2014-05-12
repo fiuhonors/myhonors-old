@@ -1,4 +1,4 @@
-.navbar-brand, .brand {
+.navbar-brand{
     background: url(../img/myhonors.png) no-repeat center center;
     min-width: 156px;
     min-height: 68px;
@@ -14,4 +14,30 @@
     nav .pull-right{
         float:left !important;
     }
+}
+
+// Menu bar styling
+.navbar {
+	margin-bottom: 20px;
+	border-bottom: 3px solid #00baff;
+}
+.navbar .btn {
+	margin-top: 22px;
+}
+.navbar .nav > li > a {
+	color: silver;
+	padding-top: 27px;
+}
+.navbar .btn-link {
+	font-size: inherit;
+	padding: 21px 4px 0;
+	text-shadow: none;
+	margin-top: 0;
+}
+.navbar .dropdown .btn-link {
+	padding: 4px;
+}
+.navbar .dropdown-toggle {
+	color: #00baff;
+	background-color: transparent;
 }
