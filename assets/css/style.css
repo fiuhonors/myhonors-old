@@ -5843,8 +5843,7 @@ h1, h2, h3, h4, h5, h6, .opensans {
 footer {
   height: 1px;
   display: table-row;
-  background-color: white;
-  border-top: 50px solid #000; }
+  background-color: white; }
   footer img {
     max-width: 90%;
     display: block;

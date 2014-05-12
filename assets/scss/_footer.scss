@@ -2,7 +2,7 @@ footer{
     height:1px; // Sticky Footer solution
     display:table-row; // Sticky Footer solution
     background-color: white;
-    border-top: 1px solid #ccc;
+    border-top:50px solid #000;
     img{
         max-width:90%;
         display:block;
@@ -32,14 +32,4 @@ footer{
         }
     }
     
-}
-
-/* Lastly, apply responsive CSS fixes as necessary */
-@media (max-width: 767px) {
-	#footer {
-		margin-left: -20px;
-		margin-right: -20px;
-		padding-left: 20px;
-		padding-right: 20px;
-	}
 }
