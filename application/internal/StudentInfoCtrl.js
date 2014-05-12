@@ -2,12 +2,15 @@
 
 angular.module('myhonorsInternal').controller('StudentInfoCtrl', function ($scope, $http, $timeout, $routeParams, FirebaseIO, SwipeService, VolunteerService, UserService) {
 	$scope.pid = $routeParams.pid;
-	$scope.user = {};
 	$scope.volunteerHours = VolunteerService.list($scope.pid);
 	$scope.eventsAttended = SwipeService.listByUser($scope.pid);	// All the events that the user attended
 	
-	FirebaseIO.child('user_profiles/' + $scope.pid).on('value', function(snapshot) {
-		$scope.user = snapshot.val();
+	UserService.exists($routeParams.pid, function(exists, result) {
+		$timeout(function() {
+			if (exists) {
+				$scope.user = result;
+			}
+		});
 	});
 		
 	/******* Events Attendance *********/
