@@ -24,10 +24,23 @@
     }
 }
 @media #{$screen-md}{
+    // Homepage login image animation
     #homeImage{
         display:block;
         img{
             width:100%;
         }
-    }   
+    }
 }
+
+@media #{$screen-md-only}{
+    // Citizenship (Honors Hours, Colloquia, lectures, etc - on dashboard)
+    .citizenship .box .pull-right{
+        float:none !important;
+        text-align:center;
+        h2{
+            margin:0;
+        }
+    }
+}
+
