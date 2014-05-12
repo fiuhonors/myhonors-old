@@ -39,6 +39,6 @@ angular.module('myhonorsCitizenship').factory('VolunteerService', function($q, $
 			volunteerHour.$ref.remove();	//Delete the volunteer hours child from the volunteerHours collection
 			FirebaseIO.child('user_profiles/' + pid + '/volunteerHours/' + volunteerHour.$id).remove();	//Delete the volunteer hours from the user_profiles/volunteerHours child
 		}
-	
+
 	}
 });

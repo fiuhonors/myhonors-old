@@ -172,7 +172,7 @@ function exportCSV($studentsInfo) {
 								$eventTypesCount[3],
 								$eventTypesCount[4],
 								$totalVolunteerHours,
-								$eventTypesCount[5]);
+								$eventTypesCount[5]));
 	}
 	
 	
@@ -194,7 +194,7 @@ function countEventsTypes($studentInfo) {
 	$eventTypesCount = array(0,0,0,0,0,0);
 	
 	
-	if (!array_key_exists("attendance", $studentInfo)) { // First make sure the student has an attendance array in his profile
+	if (!array_key_exists('attendance', $studentInfo)) { // First make sure the student has an attendance array in his profile
 		return $eventTypesCount;
 	}
 	
@@ -237,7 +237,7 @@ function countEventsTypes($studentInfo) {
  */
 function countTotalVolunteerHours($studentInfo) {
 	$totalVolunteerHours = 0;
-	if (!array_key_exists("volunteerHours", $studentInfo)) {
+	if (!array_key_exists('volunteerHours', $studentInfo)) {
 		return $totalVolunteerHours;
 	}
 	

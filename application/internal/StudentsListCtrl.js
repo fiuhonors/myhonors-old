@@ -44,8 +44,7 @@ angular.module('myhonorsInternal').controller('StudentsListCtrl', function($scop
 				var volunteerHours = snapshot.child("volunteerHours").val();
 				var totalVolunteerHours = 0;
 				angular.forEach(volunteerHours, function(value, key) {
-					//alert(key);
-					if (value.status != null && value.status == "accepted") {
+					if (value.status != null && value.status == "accepted" && value.hours) {
 						totalVolunteerHours += value.hours;
 					}
 					

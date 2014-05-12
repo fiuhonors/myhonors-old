@@ -74,10 +74,10 @@ angular.module('myhonorsInternal').controller('StudentInfoCtrl', function ($scop
 			
 			
 		if (confirmation1 && confirmation2) {
-			VolunteerService.remove(volunteerHour, UserService.profile.id);	
+			VolunteerService.remove(volunteerHour, $scope.pid);	
 		
 			$scope.hoursCompleted = 0;	//Reset the total volunteer hours counter
-			$scope.submissions = VolunteerService.list(UserService.profile.pid);	//Reload the volunteer hours list
+			$scope.volunteerHours = VolunteerService.list($scope.pid);	//Reload the volunteer hours list
 		}
 	}
 	
