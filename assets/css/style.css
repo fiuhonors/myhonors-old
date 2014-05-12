@@ -95,6 +95,19 @@ h1, h2, h3, h4, h5, h6, .opensans {
 .btn {
   max-width: 100%; }
 
+.navbar-brand, .brand {
+  background: url(../img/myhonors.png) no-repeat center center;
+  min-width: 156px;
+  min-height: 68px;
+  display: block;
+  background-size: cover; }
+
+.navbar .navbar-toggle {
+  margin-top: 15px; }
+
+@media (max-width: 767px) {
+  nav .pull-right {
+    float: left !important; } }
 #loginBox {
   margin-top: 0px; }
   @media (min-width: 0px) {
@@ -119,6 +132,12 @@ h1, h2, h3, h4, h5, h6, .opensans {
     display: block; }
     #homeImage img {
       width: 100%; } }
+@media (min-width: 992px) and (max-width: 1199px) {
+  .citizenship .box .pull-right {
+    float: none !important;
+    text-align: center; }
+    .citizenship .box .pull-right h2 {
+      margin: 0; } }
 footer {
   height: 1px;
   display: table-row;
@@ -172,11 +191,6 @@ footer {
 
 .navbar .btn {
   margin-top: 22px; }
-
-.brand {
-  background: url(../img/myhonors.png) no-repeat center center;
-  width: 156px;
-  display: block; }
 
 .navbar .nav > li > a {
   color: silver;
