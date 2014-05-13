@@ -18,6 +18,11 @@ $screen-xs: "(min-width: 0px)"; // Style phones and up
 $screen-sm: "(min-width: #{$screen-sm-min})"; // Style tablets and up
 $screen-md: "(min-width: #{$screen-md-min})"; // Style old desktop/laptops and up
 $screen-lg: "(min-width: #{$screen-lg-min})"; // Style modern desktop/laptops and up
+
+// Breakpoint that style elements up to a certain size--------------------------
+$screen-xs-upto: "(max-width: #{$screen-xs-max})"; // Style anything below tablets
+$screen-sm-upto: "(max-width: #{$screen-sm-max})"; // Style tablets and below
+$screen-md-upto: "(max-width: #{$screen-md-max})"; // Style old desktop/laptops and below
 /* End Media Query variables ================================================ */
 
 
