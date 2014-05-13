@@ -5775,10 +5775,10 @@ h1, h2, h3, h4, h5, h6, .opensans {
 
 .navbar-brand {
   background: url(../img/myhonors.png) no-repeat center center;
-  min-width: 156px;
+  min-width: 186px;
   min-height: 68px;
   display: block;
-  background-size: cover; }
+  background-size: contain; }
 
 .navbar .navbar-toggle {
   margin-top: 15px; }
@@ -5866,39 +5866,61 @@ footer {
       margin-top: 10px;
       margin-bottom: 10px; } }
 
-.calendar ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  clear: both;
-  width: 100%; }
-
-.calendar li {
+.calendar {
+  margin: 0 auto;
   display: block;
-  float: left;
-  width: 14.2857142857%;
-  padding: 5px;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  margin-right: -1px;
-  margin-bottom: -1px; }
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px; }
+  .calendar .row {
+    margin-bottom: 10px; }
+  .calendar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    display: table; }
+    .calendar ul li {
+      display: table-cell;
+      width: 14.2857142857%;
+      padding: 5px;
+      box-sizing: border-box;
+      border: 1px solid #eee;
+      margin-right: -1px;
+      margin-bottom: -1px;
+      text-align: center; }
+      .calendar ul li.calendar-week {
+        width: 100%; }
+      .calendar ul li .day {
+        display: none; }
+      .calendar ul li .month {
+        display: none; }
 
-@media only screen and (max-width: 768px) {
-  .calendar .weekdays {
-    display: none; }
-
-  .calendar li {
+@media (max-width: 767px) {
+  .calendar ul li {
+    display: block;
     height: auto !important;
     border: 1px solid #ededed;
     width: 100%;
     padding: 10px;
-    margin-bottom: -1px; }
-
-  .calendar li .day, .calendar li .month {
-    display: inline; }
-
-  .calendar li.out_of_range {
-    display: none; } }
+    margin-bottom: -1px;
+    overflow: auto; }
+    .calendar ul li a {
+      float: left;
+      width: 15%;
+      margin-left: 2.5%;
+      margin-right: 2.5%; }
+      .calendar ul li a .label {
+        padding-top: 10px;
+        padding-bottom: 10px; }
+    .calendar ul li .day {
+      display: inline; }
+    .calendar ul li .month {
+      display: inline; }
+    .calendar ul li .out_of_range {
+      display: none; }
+  .calendar .btn {
+    margin-bottom: 5px; } }
 .img-polaroid {
   padding: 4px;
   background-color: #fff;
@@ -5909,8 +5931,8 @@ footer {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
 
 .container-fluid {
-  max-width: 1100px !important;
-  margin: 0 auto; }
+  max-width: 1170px !important;
+  width: 100%; }
 
 .btn-link, .btn-link:hover, .btn-link:active, .btn-link.visited, .btn-link:focus {
   outline: 0;
