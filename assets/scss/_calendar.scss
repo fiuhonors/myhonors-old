@@ -27,6 +27,14 @@
             margin-right: -1px;
             margin-bottom: -1px;
             text-align:center;
+            
+            a{
+                .label{
+                    word-break:break-all;
+                    word-wrap:break-word;
+                }
+            }
+            
             &.calendar-week{
                 width:100%;
             }
