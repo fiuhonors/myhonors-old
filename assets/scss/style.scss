@@ -16,8 +16,8 @@
 }
 
 .container-fluid {
-	max-width: 1100px !important;
-	margin: 0 auto;
+	max-width: 1170px !important; // 1140px to match header inner width + 30px padding
+        width:100%; // Prevent it from collapsing into a small container
 }
 
 .btn-link, .btn-link:hover, .btn-link:active, .btn-link.visited, .btn-link:focus {outline: 0; border: 0;}
