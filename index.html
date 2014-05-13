@@ -28,6 +28,7 @@
 	<script src="assets/lib/leaflet.min.js"></script>
 	<script src="assets/lib/bootstrap-datepicker.js"></script>
 	<script src="assets/lib/bootstrap-timepicker.js"></script>
+        <script src="assets/lib/bootstrap.min.js"></script>
 	<script src="assets/lib/showdown.min.js"></script>
 	<script src="assets/lib/angular-file-upload.min.js"></script>
 	<script src="http://underscorejs.org/underscore-min.js"></script>
@@ -127,7 +128,7 @@
     
 <!-- header -->
 <nav class="navbar navbar-static-top navbar-inverse" role="navigation" data-ng-show="showPanels" style="display: none">
-	<div class="container">
+	<div class="container-fluid">
             <div class="navbar-header">
                 <button class="navbar-toggle" data-toggle="collapse" data-target="#collapsibleMenu">
                     <span class="sr-only">Toggle navigation</span>
@@ -171,13 +172,13 @@
         </div>
 </nav>
 
-<div class="container" id="main" data-ng-view>
+<div class="container-fluid" id="main" data-ng-view>
     
 </div>
 
 <!-- footer -->
 <footer>
-    <div class="container container-sm-height">
+    <div class="container-fluid container-sm-height">
         <div class="row row-sm-height">
             <div class="col-sm-6 col-sm-height col-middle">
                 <img src="assets/img/honors-logo.jpg" alt="Honors College - Florida International University" />
