@@ -5889,6 +5889,9 @@ footer {
       margin-right: -1px;
       margin-bottom: -1px;
       text-align: center; }
+      .calendar ul li a .label {
+        word-break: break-all;
+        word-wrap: break-word; }
       .calendar ul li.calendar-week {
         width: 100%; }
       .calendar ul li .day {
