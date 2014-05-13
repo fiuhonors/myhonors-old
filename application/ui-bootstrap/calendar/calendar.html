@@ -1,5 +1,5 @@
 <div class="container-fluid calendar">
-    <div class="row hidden-xs hidden-sm">
+    <div class="row hidden-xs">
         <div class="col-sm-2">
             <button class="btn btn-primary btn-block" ng-click="move(-1)" ng-switch="mode">
                 <i class="icon-chevron-left icon-white"></i> Prev
@@ -20,7 +20,7 @@
             </button>
         </div>
     </div>
-    <ul class="weekdays hidden-xs hidden-sm" ng-show="labels.length > 0">
+    <ul class="weekdays hidden-xs" ng-show="labels.length > 0">
         <li ng-repeat="label in labels">{{label}}</li>
     </ul>
     <ul class="days" ng-repeat="row in rows">
