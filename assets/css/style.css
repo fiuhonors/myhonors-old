@@ -5924,6 +5924,9 @@ footer {
       display: none; }
   .calendar .btn {
     margin-bottom: 5px; } }
+label .help-block {
+  display: inline; }
+
 .img-polaroid {
   padding: 4px;
   background-color: #fff;
