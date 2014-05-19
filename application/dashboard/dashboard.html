@@ -1,39 +1,39 @@
 <div class="row">
     <div class="col-md-6">
-	<div class="box">
+        <div class="box">
             <div class="box-header">Welcome to MyHonors!</div>
             <div class="box-content padded">
                 <p>MyHonors is a fast, modern infrastructure and social base for students, faculty, and staff. This online portal is still in active development, which means three things:</p>
-		<ol>
+                <ol>
                     <li>You'll probably see new changes (big and small) come out every week or two.</li>
                     <li>For now, we can only promise a seamless experience in the latest versions of Mozilla Firefox and Google Chrome. Accessibility is important to us and we will be adapting the software for older browsers very soon.</li>
                     <li>If you encounter any bugs, if you have any recommendations, or if you want to ask a question about MyHonors, you can email us at <a href="mailto:honors@fiu.edu">honors@fiu.edu</a></li>
                 </ol>
-		<p>Good luck with your classes!</p>
+                <p>Good luck with your classes!</p>
             </div>
         </div>
-	<div class="box">
+        <div class="box">
             <div class="box-header"><a href="#/career" class="no-decoration-link">New Jobs & Internships</a></div>
-		<div class="box-content" ng-show="careers.length">
-                    <ul class="block-hover block-clickable">
-			<li ng-repeat="career in careers | orderBy:'date.starts'" ng-click="goToCareer(career.$id)" class="clearfix" ng-show="career.status == 'active'">
-                            <img class="pull-left col-xs-2 img-rounded img-polaroid" ng-src="{{career.thumbURL || 'http://placehold.it/75'}}">
-				<div class="pull-left col-xs-8">
-                                    <div>
-					<strong>{{career.companyName}}</strong>
-					<span>from {{career.date.starts}} to {{career.date.ends}}</span>
-                                    </div>
-                                    <p class="short-desc">{{(career.description || 'No description.') | truncate:75}} <a href="#/career/{{career.$id}}" ng-show="career.description.length > 75">read more</a></p>
-                                </div>
-			</li>
-                    </ul>
+            <div class="box-content" ng-show="careers.length">
+                <ul class="block-hover block-clickable">
+                    <li ng-repeat="career in careers| orderBy:'date.starts'" ng-click="goToCareer(career.$id)" class="clearfix" ng-show="career.status == 'active'">
+                        <img class="pull-left col-xs-2 img-rounded img-polaroid" ng-src="{{career.thumbURL|| 'http://placehold.it/75'}}">
+                        <div class="pull-left col-xs-8">
+                            <div>
+                                <strong>{{career.companyName}}</strong>
+                                <span>from {{career.date.starts}} to {{career.date.ends}}</span>
+                            </div>
+                            <p class="short-desc">{{(career.description|| 'No description.') | truncate:75}} <a href="#/career/{{career.$id}}" ng-show="career.description.length > 75">read more</a></p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="box-content padded" ng-show="!careers.length">
+                <div class="alert alert-info padded-medium" style="margin-bottom: 0">
+                    <strong>No upcoming internships.</strong> Check back again soon!
                 </div>
-		<div class="box-content padded" ng-show="!careers.length">
-                    <div class="alert alert-info padded-medium" style="margin-bottom: 0">
-			<strong>No upcoming internships.</strong> Check back again soon!
-                    </div>
-		</div>			
-	</div>
+            </div>			
+        </div>
     </div>
     <div class="col-md-6">
         <div class="row citizenship" ng-controller="CitizenshipCtrl"> 
@@ -65,67 +65,67 @@
                 </div>
             </div>
         </div>
-            <div class="box">
-                <div class="box-header">
-                    Volunteer Hours ({{hoursCompleted}}/20)
-                    <div class="pull-right" ng-show="user.auth.isMiddleCircleAdmin">
-                        <a href="#/citizenship" class="btn btn-mini" ng-click="">
-                            <i class="icon-plus"></i> Add
-                        </a>
-                    </div>
-                </div>
-                <div class="box-content padded clearfix">
-                    <ul class="block-hover">
-                        <li ng-repeat="sub in submissions" style="display: none;">
-                            <label class="" ng-init="addVolunteerHours(sub)" style="display: none;"></label> 
-                        </li>
-                    </ul>
-                    <div class="mh-progress">
-                        <!-- We multiply: (Student's hours/20)*100 = (Student's hours * 5) -->
-                        <!-- Then if the resulting percentage is less than 100%, we use the first div below. If it is bigger than 100%, we use the second div below, that has a width of 100% -->
-                        <div class="bar" ng-if="hoursCompleted*5 <= 100" style="width: {{hoursCompleted*5}}%;"></div>
-                        <div class="bar" ng-if="hoursCompleted*5 > 100" style="width: 100%;"></div>
-                    </div>
+        <div class="box">
+            <div class="box-header">
+                Volunteer Hours ({{hoursCompleted}}/20)
+                <div class="pull-right" ng-show="user.auth.isMiddleCircleAdmin">
+                    <a href="#/citizenship" class="btn btn-mini" ng-click="">
+                        <i class="icon-plus"></i> Add
+                    </a>
                 </div>
             </div>
-            <div class="box">
-                <div class="box-header">Upcoming Events</div>
-                <div class="box-content" ng-show="events.length">
-                    <ul class="block-hover block-clickable">
-                        <li ng-repeat="event in events | orderBy:'date.starts'" ng-click="goToEvent(event.$id)" class="clearfix">
-                            <img class="col-sm-2 col-xs-3 img-rounded img-polaroid" ng-src="{{event.thumbURL || 'http://placehold.it/75'}}">
-                            <div class="col-sm-7 col-xs-7">
-                                <div>
-                                    <strong>{{event.name}}</strong>
-                                    <span>on {{event.date.starts | date:"MMM d 'at' h:mm a"}}</span>
-                                </div>
-                                <div class="event-types">
-                                    <span class="muted" ng-repeat="type in event.types" ng-show="event.types">{{type}}<span ng-show="!$last">,&nbsp;</span></span>
-                                    <span class="muted" ng-show="!event.types">GENERAL EVENT</span>
-                                </div>
-                                <p class="short-desc">{{(event.desc || 'No description.') | truncate:75}} <a href="#/events/{{event.id}}" ng-show="event.desc.length > 75">read more</a></p>
-                            </div>
-                            <div class="col-sm-3 col-xs-12 text-center event-attending">
-                                <h3>{{event.rsvps}}</h3>
-                                <div ng-show='!event.options.waitingList || event.rsvps < event.options.maxRSVPs || hasRSVP(event.$id)'>
-                                    <span class="opensans">ATTENDING</span>
-                                    <button class="btn btn-mini" ng-click="addRSVP(event.$id, $event)" ng-show="!hasRSVP(event.$id)">I'm Going</button>
-                                    <button class="btn btn-mini btn-primary" ng-click="removeRSVP(event.$id, $event, event)" ng-show="hasRSVP(event.$id)">I'm Going</button>
-                                </div>
-                                <div ng-show='event.options.waitingList && event.rsvps >= event.options.maxRSVPs && !hasRSVP(event.$id)'>
-                                    <span class="opensans">Attendance Full</span>
-                                    <button class="btn btn-mini" ng-click="addToWaitingList(event.$id, $event)" ng-show="!isInWaitingList(event.$id)">Waiting List</button>
-                                    <button class="btn btn-mini btn-primary" ng-click="removeFromWaitingList(event.$id, $event)" ng-show="isInWaitingList(event.$id)">Waiting List</button>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="box-content padded" ng-show="!events.length">
-                    <div class="alert alert-info padded-medium" style="margin-bottom: 0">
-                        <strong>No upcoming events.</strong> Check back again soon!
-                    </div>
+            <div class="box-content padded clearfix">
+                <ul class="block-hover">
+                    <li ng-repeat="sub in submissions" style="display: none;">
+                        <label class="" ng-init="addVolunteerHours(sub)" style="display: none;"></label> 
+                    </li>
+                </ul>
+                <div class="mh-progress">
+                    <!-- We multiply: (Student's hours/20)*100 = (Student's hours * 5) -->
+                    <!-- Then if the resulting percentage is less than 100%, we use the first div below. If it is bigger than 100%, we use the second div below, that has a width of 100% -->
+                    <div class="bar" ng-if="hoursCompleted * 5 <= 100" style="width: {{hoursCompleted * 5}}%;"></div>
+                    <div class="bar" ng-if="hoursCompleted * 5 > 100" style="width: 100%;"></div>
                 </div>
             </div>
+        </div>
+        <div class="box">
+            <div class="box-header">Upcoming Events</div>
+            <div class="box-content" ng-show="events.length">
+                <ul class="block-hover block-clickable">
+                    <li ng-repeat="event in events| orderBy:'date.starts'" ng-click="goToEvent(event.$id)" class="clearfix">
+                        <img class="col-sm-2 col-xs-3 img-rounded img-polaroid" ng-src="{{event.thumbURL|| 'http://placehold.it/75'}}">
+                        <div class="col-sm-7 col-xs-7">
+                            <div>
+                                <strong>{{event.name}}</strong>
+                                <span>on {{event.date.starts| date:"MMM d 'at' h:mm a"}}</span>
+                            </div>
+                            <div class="event-types">
+                                <span class="muted" ng-repeat="type in event.types" ng-show="event.types">{{type}}<span ng-show="!$last">,&nbsp;</span></span>
+                                <span class="muted" ng-show="!event.types">GENERAL EVENT</span>
+                            </div>
+                            <p class="short-desc">{{(event.desc|| 'No description.') | truncate:75}} <a href="#/events/{{event.id}}" ng-show="event.desc.length > 75">read more</a></p>
+                        </div>
+                        <div class="col-sm-3 col-xs-12 text-center event-attending">
+                            <h3>{{event.rsvps}}</h3>
+                            <div ng-show='!event.options.waitingList || event.rsvps < event.options.maxRSVPs || hasRSVP(event.$id)'>
+                                <span class="opensans">ATTENDING</span>
+                                <button class="btn btn-mini" ng-click="addRSVP(event.$id, $event)" ng-show="!hasRSVP(event.$id)">I'm Going</button>
+                                <button class="btn btn-mini btn-primary" ng-click="removeRSVP(event.$id, $event, event)" ng-show="hasRSVP(event.$id)">I'm Going</button>
+                            </div>
+                            <div ng-show='event.options.waitingList && event.rsvps >= event.options.maxRSVPs && !hasRSVP(event.$id)'>
+                                <span class="opensans">Attendance Full</span>
+                                <button class="btn btn-mini" ng-click="addToWaitingList(event.$id, $event)" ng-show="!isInWaitingList(event.$id)">Waiting List</button>
+                                <button class="btn btn-mini btn-primary" ng-click="removeFromWaitingList(event.$id, $event)" ng-show="isInWaitingList(event.$id)">Waiting List</button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="box-content padded" ng-show="!events.length">
+                <div class="alert alert-info padded-medium" style="margin-bottom: 0">
+                    <strong>No upcoming events.</strong> Check back again soon!
+                </div>
+            </div>
+        </div>
     </div>
 </div>
