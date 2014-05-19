@@ -5840,6 +5840,11 @@ h1, h2, h3, h4, h5, h6, .opensans {
     text-align: center; }
     .citizenship .box .pull-right h2 {
       margin: 0; } }
+.citizenship .box canvas {
+  max-width: 60px !important;
+  height: auto !important;
+  min-width: 20px !important; }
+
 footer {
   height: 1px;
   display: table-row;
