@@ -5773,6 +5773,9 @@ h1, h2, h3, h4, h5, h6, .opensans {
 .btn {
   max-width: 100%; }
 
+img {
+  max-width: 100%; }
+
 .navbar-brand {
   background: url(../img/myhonors.png) no-repeat center center;
   min-width: 186px;
