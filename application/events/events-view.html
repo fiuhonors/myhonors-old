@@ -134,7 +134,7 @@
         </div>
     </div>
 
-    <div class="span3" ng-show="attendance.length">
+    <div class="col-md-3" ng-show="attendance.length">
         <div class="box" ng-show="userAttended">
             <div class="box-content padded-medium">
                 <div class="alert alert-success padded-medium" style="margin-bottom: 0">
@@ -144,8 +144,8 @@
         </div>
         <div class="box">
             <div class="box-header text-center">{{event.attendance}} <span ng-show="event.attendance === 1">person</span><span ng-show="event.attendance !== 1">people</span> attended</div>
-            <div class="box-content clearfix">
-                <ul class="unstyled block-hover">
+            <div class="box-content">
+                <ul class="block-hover block-clickable">
                     <li ng-repeat="person in attendance| limitTo:showAttendanceLimit" class="clearfix">
                         <img class="pull-left img-rounded" src="http://placehold.it/36">
                         <div class="pull-left" style="margin-left: 10px; line-height: 36px">
@@ -164,15 +164,19 @@
 
 <!-- Modal -->
 <div modal="showDeleteConfirmation" close="cancelDelete()" options="modalOpts">
-    <div class="modal-header">
-        <button type="button" class="close" ng-click="cancelDelete()">×</button>
-        <h3>Are you sure you want to DELETE?</h3>
-    </div>
-    <div class="modal-body">
-        <p>This will <strong>permanently</strong> erase all data related to this event. Are you sure you want to do this?</p>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-danger" ng-click="doDelete()">Yes, DELETE the Event</button>
-        <button class="btn cancel" ng-click="cancelDelete()">Cancel</button>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="cancelDelete()">×</button>
+                <h3>Are you sure you want to DELETE?</h3>
+            </div>
+            <div class="modal-body">
+                <p>This will <strong>permanently</strong> erase all data related to this event. Are you sure you want to do this?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" ng-click="doDelete()">Yes, DELETE the Event</button>
+                <button class="btn cancel" ng-click="cancelDelete()">Cancel</button>
+            </div>
+        </div>
     </div>
 </div>
