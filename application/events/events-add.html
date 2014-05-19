@@ -68,7 +68,7 @@
                         </div>
                         <div class="col-md-5 col-md-offset-1 form-group">
                             <label for="name" class="control-label">Event Type</label><br />
-                            <select multiple="multiple" ng-model="newItem.types" ng-options="type.$id as type.name group by ((type.citizenship && 'Citizenship') || 'General') for type in eventTypes"></select>
+                            <select multiple="multiple" ng-model="newItem.types" class="form-control" ng-options="type.$id as type.name group by ((type.citizenship && 'Citizenship') || 'General') for type in eventTypes"></select>
                             <span class="help-block" style="margin-top: 5px">Tip: Hold Ctrl to select multiple types.</span>
                         </div>
                     </div>
