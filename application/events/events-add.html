@@ -30,17 +30,17 @@
                                 <div class="col-md-6">
                                     <div class="form-group input-group">
                                         <input type="text" id="date" name="date" class="form-control" placeholder="Date..." ng-model="newItem.date.starts.date" ng-change="updateEnds('date')" data-date-format="mm/dd/yyyy" date-type="string" bs-datepicker>
-                                        <span class="input-group-btn">
-                                            <button type="button" class="btn btn-default" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+                                        <span class="input-group-btn" data-toggle="datepicker">
+                                            <button type="button" class="btn btn-default"><i class="icon-calendar"></i></button>
                                         </span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group input-group">
                                         <input type="text" id="date" name="date" class="form-control" placeholder="at Time..." ng-model="newItem.date.starts.time" ng-change="updateEnds('time')" bs-timepicker>
-                                         <span class="input-group-btn">
-                                             <button type="button" class="btn btn-default" data-toggle="timepicker"><i class="icon-time"></i></button>
-                                         </span>
+                                        <span class="input-group-btn" data-toggle="timepicker">
+                                            <button type="button" class="btn btn-default"><i class="icon-time"></i></button>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -51,16 +51,16 @@
                                 <div class="col-md-6">
                                     <div class="form-group input-group">
                                         <input type="text" id="date" name="date" class="form-control" placeholder="Date..." ng-model="newItem.date.ends.date" data-date-format="mm/dd/yyyy" date-type="string" bs-datepicker>
-                                        <span class="input-group-btn">
-                                            <button type="button" class="btn btn-default" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+                                        <span class="input-group-btn" data-toggle="datepicker">
+                                            <button type="button" class="btn btn-default"><i class="icon-calendar"></i></button>
                                         </span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group input-group">
                                         <input type="text" id="date" name="date" class="form-control" placeholder="at Time..." ng-model="newItem.date.ends.time" bs-timepicker>
-                                        <span class="input-group-btn">
-                                            <button type="button" class="btn btn-default" data-toggle="timepicker"><i class="icon-time"></i></button>
+                                        <span class="input-group-btn" data-toggle="timepicker">
+                                            <button type="button" class="btn btn-default"><i class="icon-time"></i></button>
                                         </span>
                                     </div>
                                 </div>
@@ -91,13 +91,13 @@
                 </div>
                 <div class="col-md-5">
 
-                        <!-- map -->
-                        <leaflet class="well" center="newItem.location" marker="newItem.location" defaults="defaults" height="300px" style="margin-bottom: 15px"></leaflet>
+                    <!-- map -->
+                    <leaflet class="well" center="newItem.location" marker="newItem.location" defaults="defaults" height="300px" style="margin-bottom: 15px"></leaflet>
 
-                        <div class="form-group" ng-class="{'has-error': theForm.locationName.$invalid}">
-                            <label for="locationName" class="control-label">Location Name</label><br />
-                            <input type="text" class="form-control" id="locationName" name="locationName" ng-model="newItem.location.name" required /><br />
-                        </div>
+                    <div class="form-group" ng-class="{'has-error': theForm.locationName.$invalid}">
+                        <label for="locationName" class="control-label">Location Name</label><br />
+                        <input type="text" class="form-control" id="locationName" name="locationName" ng-model="newItem.location.name" required /><br />
+                    </div>
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
