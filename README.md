@@ -1,10 +1,3 @@
-# MyHonors - Bootstrap 3 compliance and CSS responsiveness branch
-The main purpose of this branch is to update MyHonors to be responsive (work across multiple platforms including tablets, laptops, and smartphones). Of outmost importance in this branch is also upgrading all dependencies to their newest versions, which includes all the additional javascript modules (datepicker and timepicker), styling CSS (utilizing new Bootstrap 3 classes in the stylesheets) and upgrading HTML classname/id markups to Bootstrap 3 compliant code.
+# MyHonors - Javascript Framework Updates Branch - NO COMMIT/MERGE
+This is an attempt to update all of MyHonors Javascript dependencies, utilizing CDNs as much as possible to prioritize speed (coder can always check scripts by himself). Before working on this, please add to this branch, the latest responsive updates (in other words, when CSS3/Bootstrap 3 compliance branch is done, roll those changes here). I tried working on upgrading Angular, but a lot of stuff just broke.
 
-## Important Migration of Bootstrap 2-to-3 links:
-* http://www.bootply.com/bootstrap-3-migration-guide
-* http://code.divshot.com/bootstrap3_upgrader/
-* http://getbootstrap.com/ - Bootstrap 3 Official Reference
-
-### Development Environment
-Currently, this branch can only be "gitted" (get it?) to and worked/coded on a local working environment, using the testing Firebase database. This is to prevent any problems with accidentally deleting real actual data needed to run the current system OR accidentally delete any important files that may be crucial to keeping the current system from running (which uses Bootstrap 2 instead of 3).
