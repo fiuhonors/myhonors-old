@@ -2,9 +2,11 @@
 
 angular.module('myhonors', [
 	// module dependencies
+        'ngRoute',
+        'ngResource',
+        'ngAnimate',
 	'webStorageModule',
 	'ui.bootstrap',
-	'ui.bootstrap.calendar',
 	'leaflet-directive',
 	'angularFileUpload',
 	'myhonorsConfig',

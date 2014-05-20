@@ -1,4 +1,4 @@
-angular.module('ui.bootstrap.calendar', [])
+angular.module('ui.bootstrap.calendar', ['ngRoute', 'ngResource', 'ngAnimate'])
 
 .constant('calendarConfig', {
   dayFormat: 'dd',

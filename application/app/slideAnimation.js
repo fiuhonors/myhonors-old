@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myhonors').animation('slide-show', ['$rootScope', function($rootScope) {
+angular.module('myhonors').animation('.slide-show', ['$rootScope', function($rootScope) {
 	return { 
 		setup : function(element) {
 			jQuery(element).hide();
@@ -16,7 +16,7 @@ angular.module('myhonors').animation('slide-show', ['$rootScope', function($root
 			//whilst the previous animation is still chugging away
 		}   
 	};
-}]).animation('slide-hide', ['$rootScope', function($rootScope) {
+}]).animation('.slide-hide', ['$rootScope', function($rootScope) {
 	return { 
 		setup : function() {
 			// do nothing
