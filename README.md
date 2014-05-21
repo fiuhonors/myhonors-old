@@ -40,7 +40,7 @@ All necessary files are already included in the repository, so you can get start
 |         | X.x | User-created groups |
 |         | X.x | Integration with main Honors College website |
 |         | X.x | Tagging events, posts, profiles, etc. |
-|         | X.x | Gamification |
+|         | X.x | Gamification **[IN PROGRESS]** |
 |         | X.x | Analytics system for attendance, activity, etc. |
 |		  | X.x | Responsive site for multi-platform use, upgrade to Bootstrap 3 **[IN PROGRESS]** |
 |         | X.x | Universal Angular-PHP sessions (login to myHonors, automatic logins to others) **[IN PROGRESS]** |
