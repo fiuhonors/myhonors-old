@@ -5,6 +5,7 @@
 assets/img/honorshours
 assets/json
 desktop.ini
+nbproject/
 
 #Config variables
 config.php
