@@ -7,6 +7,8 @@ angular.module('myhonorsInternal').controller('BBCLabSwipeCtrl', function($scope
 	$scope.question = 'What is the PRIMARY reason for your visit?';
 	$scope.lastSwipe = false;	// Holds the user profile for the last student who swiped in
 
+	$('input').focus();
+
 	$scope.swipe = function() {
 		UserService.exists($scope.data.userId, function(result, userData) {
 			if (result === true) {
