@@ -5932,6 +5932,9 @@ footer {
       display: none; }
   .calendar .btn {
     margin-bottom: 5px; } }
+.modalShow {
+  display: block; }
+
 label .help-block {
   display: inline; }
 
