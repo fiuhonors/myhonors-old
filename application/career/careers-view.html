@@ -31,6 +31,7 @@
 				<a href="#/career/{{position.id}}/edit" class="btn span4">Edit</a>
 				<button class="btn span4" ng-show="position.status == 'active'" ng-click="toggleActivation($event,position.id,position.status)">Deactivate</button>
 				<button class="btn span4" ng-show="position.status == 'inactive'" ng-click="toggleActivation($event,position.id,position.status)">Activate</button>
+				<button class="btn span4" ng-show="position.status == 'pending'" ng-click="approvePosition($event,position.id)" ng-click="">Approve</button>
 				<button class="btn span4" ng-click="confirmDelete()">Delete</button>
 			</div>
 			
@@ -105,8 +106,13 @@
 				<b>Details: </b> {{position.details}}
 			</div>
 			
-			<a href="#/career/{{positionID}}/apply" class="btn btn-primary" style="margin-top:15px;" ng-show="!alreadyApplied">Apply</a>
-			<a href class="btn btn-primary disabled" style="margin-top:15px;" ng-show="alreadyApplied">Already Applied</a>
+			<div ng-show="position.status != 'pending'">
+				<a href="#/career/{{positionID}}/apply" class="btn btn-primary" style="margin-top:15px;" ng-show="!alreadyApplied">Apply</a>
+				<a href class="btn btn-primary disabled" style="margin-top:15px;" ng-show="alreadyApplied">Already Applied</a>
+			</div>
+			<div ng-show="position.status == 'pending'">
+				<a href class="btn btn-primary" style="margin-top:15px;" ng-click="approvePosition($event,position.id)"> Approve </a>
+			</div>
 
 		</div>
 	</div>
@@ -122,7 +128,7 @@
 		<p>This will <strong>permanently</strong> erase all data related to this position. Are you sure you want to do this?</p>
 	</div>
 	<div class="modal-footer">
-		<button class="btn btn-danger" ng-click="doDelete()">Yes, DELETE the Event</button>
+		<button class="btn btn-danger" ng-click="doDelete()">Yes, DELETE the Position</button>
 		<button class="btn cancel" ng-click="cancelDelete()">Cancel</button>
 	</div>
 </div>
