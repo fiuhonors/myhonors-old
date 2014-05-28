@@ -1,6 +1,5 @@
-<div class="row">
-	<div class="span12" ng-controller="CitizenshipCtrl">
-		<div class="span4">
+<div class="row" ng-controller="CitizenshipCtrl">
+		<div class="col-md-4">
 			<div class="box">
 				<div class="box-header">Honors Hours</div>
 				<div class="box-content padded clearfix">
@@ -16,7 +15,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="span4">
+		<div class="col-md-4">
 			<div class="box">
 				<div class="box-header">Colloquia</div>
 				<div class="box-content padded clearfix">
@@ -32,7 +31,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="span4">
+		<div class="col-md-4">
 			<div class="box">
 				<div class="box-header">Excellence Lectures</div>
 				<div class="box-content padded clearfix">
@@ -48,70 +47,72 @@
 				</div>
 			</div>
 		</div>
-	</div>
 </div>
 <div class="row">
-	<div class="span6">
+	<div class="col-md-6">
 		<div class="box">
 			<div class="box-header">Add Volunteer Hours</div>
 			<div class="box-content padded clearfix">
 				<form class="form" name="volunteerHoursForm">
-
-					<label for="agency">Agency/Organization</label>
-					<input ng-model="newData.agency" type="text" id="agency" required />
-
-					<div class="row-fluid">
-						<div class="span6">
-							<label for="activity">Activity Name</label>
-							<input ng-model="newData.activity" type="text" id="activity" required />
+                                    
+                                        <div class="form-group">
+					<label class="control-label" for="agency">Agency/Organization</label>
+					<input class="form-control" ng-model="newData.agency" type="text" id="agency" required />
+                                        </div>
+                                    
+					<div class="row">
+						<div class="col-md-6">
+							<label class="control-label" for="activity">Activity Name</label>
+							<input class="form-control" ng-model="newData.activity" type="text" id="activity" required />
 						</div>
-						<div class="span6">
-							<label for="hours">Total Hours</label>
-							<input ng-model="newData.hours" type="number" id="hours" placeholder="0" required />
-						</div>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span6">
-							<label for="startDate">Start Date</label>
-							<input ng-model="newData.startDate" type="text" id="startDate" placeholder="MM/DD/YYYY" required />
-						</div>
-						<div class="span6">
-							<label for="endDate">End Date</label>
-							<input ng-model="newData.endDate" type="text" id="endDate" placeholder="MM/DD/YYYY" required />
+						<div class="col-md-6">
+							<label class="control-label" for="hours">Total Hours</label>
+							<input class="form-control" ng-model="newData.hours" type="number" id="hours" placeholder="0" required />
 						</div>
 					</div>
 
-					<div class="row-fluid">
-						<div class="span6">
-							<label for="referenceName">Reference Name</label>
-							<input ng-model="newData.referenceName" type="text" id="referenceName" required />
+					<div class="row">
+						<div class="col-md-6">
+							<label class="control-label" for="startDate">Start Date</label>
+							<input class="form-control" ng-model="newData.startDate" type="text" id="startDate" placeholder="MM/DD/YYYY" required />
 						</div>
-						<div class="span6">
-							<label for="referenceTitle">Reference Title/Position</label>
-							<input ng-model="newData.referenceTitle" type="text" id="referenceTitle" />
-						</div>
-					</div>
-
-					<div class="row-fluid">
-						<div class="span6">
-							<label for="referenceEmail">Reference Email Address</label>
-							<input ng-model="newData.referenceEmail" type="text" id="referenceEmail" required />
-						</div>
-						<div class="span6">
-							<label for="referencePhone">Reference Phone Number</label>
-							<input ng-model="newData.referencePhone" type="text" id="referencePhone" />
+						<div class="col-md-6">
+							<label class="control-label" for="endDate">End Date</label>
+							<input class="form-control" ng-model="newData.endDate" type="text" id="endDate" placeholder="MM/DD/YYYY" required />
 						</div>
 					</div>
 
-					<label></label>
+					<div class="row">
+						<div class="col-md-6">
+							<label class="control-label" for="referenceName">Reference Name</label>
+							<input class="form-control" ng-model="newData.referenceName" type="text" id="referenceName" required />
+						</div>
+						<div class="col-md-6">
+							<label class="control-label" for="referenceTitle">Reference Title/Position</label>
+							<input class="form-control" ng-model="newData.referenceTitle" type="text" id="referenceTitle" />
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6">
+							<label class="control-label" for="referenceEmail">Reference Email Address</label>
+							<input class="form-control" ng-model="newData.referenceEmail" type="text" id="referenceEmail" required />
+						</div>
+						<div class="col-md-6">
+							<label class="control-label" for="referencePhone">Reference Phone Number</label>
+							<input class="form-control" ng-model="newData.referencePhone" type="text" id="referencePhone" />
+						</div>
+					</div>
+
+                                        <br/>
+                                        
 					<button type="submit" class="btn btn-primary" ng-click="submit(volunteerHoursForm)">Add Hours</button>
 
 				</form>
 			</div>
 		</div>
 	</div>
-	<div class="span6">
+	<div class="col-md-6">
 		<div class="box">
 			<div class="box-header">Volunteer Hours ({{hoursCompleted}}/20) </div>
 			<div class="box-content padded clearfix">

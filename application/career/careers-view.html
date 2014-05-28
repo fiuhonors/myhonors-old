@@ -1,126 +1,141 @@
-<div class="span4">
-	<div class="box">
-		<div class="box-header">{{position.companyName}} Information</div>
-		<div class="box-content padded word-wrap">
+<div class="row">
+    <div class="col-md-4">
+        <div class="box">
+            <div class="box-header">{{position.companyName}} Information</div>
+            <div class="box-content padded word-wrap">
 
-			<img class="img-rounded img-polaroid" ng-src="{{position.thumbURL || 'http://placehold.it/135'}}" style="margin-bottom:20px;margin-left:25%;">
+                <img class="img-rounded img-polaroid" ng-src="{{position.thumbURL|| 'http://placehold.it/135'}}" style="margin:0 auto 20px; display:block;">
 
-			<div class="space-below">
-				<b>Company Name: </b> {{position.companyName}}
-			</div>
-			<div class="space-below">
-				<b>Website: </b> <a href="{{position.website}}">{{position.website}}</a>
-			</div>
-			<div class="space-below">
-				<b>Address: </b> {{position.address}}
-			</div>
-			<div class="space-below">
-				<b>Email: </b> <a href="mailto:{{position.email}}">{{position.email}}</a>
-			</div>
-			<div class="space-below">
-				<b>Phone Number: </b> {{position.phone}}
-			</div>
-			<div class="space-below">
-				<b>Description: </b> {{position.description}}
-			</div>
-			
-			<hr style="margin-top: 10px; margin-bottom: 10px" ng-show="user.auth.isAdmin || user.auth.isStaff" />
-			<div class="row-fluid" ng-show="user.auth.isAdmin || user.auth.isStaff">
-				<a href="#/career/{{position.id}}/edit" class="btn span4">Edit</a>
-				<button class="btn span4" ng-show="position.status == 'active'" ng-click="toggleActivation($event,position.id,position.status)">Deactivate</button>
-				<button class="btn span4" ng-show="position.status == 'inactive'" ng-click="toggleActivation($event,position.id,position.status)">Activate</button>
-				<button class="btn span4" ng-click="confirmDelete()">Delete</button>
-			</div>
-			
-		</div>
-	</div>
-	
-	<div class="box" ng-show="user.auth.isAdmin || user.auth.isStaff">
-		<div class="box-header">Applications</div>
-		<div class="box-content padded word-wrap">
+                <div class="space-below">
+                    <b>Company Name: </b> {{position.companyName}}
+                </div>
+                <div class="space-below">
+                    <b>Website: </b> <a href="{{position.website}}">{{position.website}}</a>
+                </div>
+                <div class="space-below">
+                    <b>Address: </b> {{position.address}}
+                </div>
+                <div class="space-below">
+                    <b>Email: </b> <a href="mailto:{{position.email}}">{{position.email}}</a>
+                </div>
+                <div class="space-below">
+                    <b>Phone Number: </b> {{position.phone}}
+                </div>
+                <div class="space-below">
+                    <b>Description: </b> {{position.description}}
+                </div>
 
-			<ul ng-show="position.numApplications">
-				<li ng-repeat="application in applications">
-					<a href="#/career/{{positionID}}/apply/{{application.pid}}">{{application.name}}, {{application.pid}}</a>
-				</li>
-			</ul>
-			
-			<div class="alert alert-info padded-medium" style="margin-bottom: 0" ng-show="!position.numApplications">
-				<strong>No applications have been submitted.</strong>
-			</div>
-			
-		</div>
-	</div>
-	
-</div>
+                <hr style="space-below" ng-show="user.auth.isAdmin || user.auth.isStaff" />
+                <div class="row" ng-show="user.auth.isAdmin || user.auth.isStaff">
+                    <div class="col-md-4">
+                        <a href="#/career/{{position.id}}/edit" class="btn btn-default btn-block">Edit</a>
+                    </div>
+                    <div class="col-md-4" ng-show="position.status == 'active'">
+                        <button class="btn btn-default btn-block" ng-click="toggleActivation($event, position.id, position.status)">Deactivate</button>
+                    </div>
+                    <div class="col-md-4" ng-show="position.status == 'inactive'">
+                        <button class="btn btn-default btn-block" ng-click="toggleActivation($event, position.id, position.status)">Activate</button>
+                    </div>
+                    <div class="col-md-4">
+                        <button class="btn btn-default btn-block" ng-click="confirmDelete()">Delete</button>
+                    </div>
+                </div>
 
-<div class="span8">
-	<div class="box">
-		<div class="box-header">Internship Details</div>
-		<div class="box-content padded clearfix word-wrap">		
-			<h4 class="text-center">Internship Details</h4>
-			
-			<div class="space-below">
-				<b>Start Date: </b> {{position.date.starts}}
-			</div>
-			<div class="space-below">
-				<b>End Date: </b> {{position.date.ends}}
-			</div>
-			<div class="space-below">
-				<b>Hourly Rate: </b> 
-				<span ng-show="!position.hourlyRate">Unpaid</span>
-				<span ng-show="position.hourlyRate">{{position.hourlyRate}}</span>
-				
-			</div>
-			<div>
-				<b>Hours Per Week: </b> {{position.time.hoursPerWeek}}
-			</div>
-			
-			<hr>
-			
-			<div class="space-below">
-				<b>Requirements: </b>
-				<span ng-show="!position.requirements">None</span>
-				<ul> 
-					<li ng-repeat="requirement in position.requirements track by $index">
-						{{requirement}}
-					</li>
-				</ul>
-			</div>
-			<div class="space-below">
-				<b>Desired skills and qualities: </b>
-				<span ng-show="!position.skills">None</span>
-				<ul> 
-					<li ng-repeat="skill in position.skills track by $index">
-						{{skill}}
-					</li>
-				</ul>
-			</div>
-			
-			<hr>
-			
-			<div class="space-below">
-				<b>Details: </b> {{position.details}}
-			</div>
-			
-			<a href="#/career/{{positionID}}/apply" class="btn btn-primary" style="margin-top:15px;" ng-show="!alreadyApplied">Apply</a>
-			<a href class="btn btn-primary disabled" style="margin-top:15px;" ng-show="alreadyApplied">Already Applied</a>
+            </div>
+        </div>
 
-		</div>
-	</div>
-</div>
+        <div class="box" ng-show="user.auth.isAdmin || user.auth.isStaff">
+            <div class="box-header">Applications</div>
+            <div class="box-content padded word-wrap">
 
-<!-- Modal -->
-<div modal="showDeleteConfirmation" close="cancelDelete()" options="modalOpts">
-	<div class="modal-header">
-		<button type="button" class="close" ng-click="cancelDelete()">×</button>
-		<h3>Are you sure you want to DELETE?</h3>
-	</div>
-	<div class="modal-body">
-		<p>This will <strong>permanently</strong> erase all data related to this position. Are you sure you want to do this?</p>
-	</div>
-	<div class="modal-footer">
-		<button class="btn btn-danger" ng-click="doDelete()">Yes, DELETE the Event</button>
-		<button class="btn cancel" ng-click="cancelDelete()">Cancel</button>
-	</div>
+                <ul ng-show="position.numApplications">
+                    <li ng-repeat="application in applications">
+                        <a href="#/career/{{positionID}}/apply/{{application.pid}}">{{application.name}}, {{application.pid}}</a>
+                    </li>
+                </ul>
+
+                <div class="alert alert-info padded-medium" style="margin-bottom: 0" ng-show="!position.numApplications">
+                    <strong>No applications have been submitted.</strong>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-8">
+        <div class="box">
+            <div class="box-header">Internship Details</div>
+            <div class="box-content padded clearfix word-wrap">		
+                <h4 class="text-center">Internship Details</h4>
+
+                <div class="space-below">
+                    <b>Start Date: </b> {{position.date.starts}}
+                </div>
+                <div class="space-below">
+                    <b>End Date: </b> {{position.date.ends}}
+                </div>
+                <div class="space-below">
+                    <b>Hourly Rate: </b> 
+                    <span ng-show="!position.hourlyRate">Unpaid</span>
+                    <span ng-show="position.hourlyRate">{{position.hourlyRate}}</span>
+
+                </div>
+                <div>
+                    <b>Hours Per Week: </b> {{position.time.hoursPerWeek}}
+                </div>
+
+                <hr>
+
+                <div class="space-below">
+                    <b>Requirements: </b>
+                    <span ng-show="!position.requirements">None</span>
+                    <ul> 
+                        <li ng-repeat="requirement in position.requirements track by $index">
+                            {{requirement}}
+                        </li>
+                    </ul>
+                </div>
+                <div class="space-below">
+                    <b>Desired skills and qualities: </b>
+                    <span ng-show="!position.skills">None</span>
+                    <ul> 
+                        <li ng-repeat="skill in position.skills track by $index">
+                            {{skill}}
+                        </li>
+                    </ul>
+                </div>
+
+                <hr>
+
+                <div class="space-below">
+                    <b>Details: </b> {{position.details}}
+                </div>
+
+                <a href="#/career/{{positionID}}/apply" class="btn btn-primary" ng-show="!alreadyApplied">Apply</a>
+                <a href class="btn btn-primary disabled" ng-show="alreadyApplied">Already Applied</a>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div modal="showDeleteConfirmation" close="cancelDelete()" options="modalOpts">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="cancelDelete()">×</button>
+                    <h3>Are you sure you want to DELETE?</h3>
+                </div>
+                <div class="modal-body">
+                    <p>This will <strong>permanently</strong> erase all data related to this position. Are you sure you want to do this?</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" ng-click="doDelete()">Yes, DELETE the Event</button>
+                    <button class="btn cancel" ng-click="cancelDelete()">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>

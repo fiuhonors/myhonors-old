@@ -1,149 +1,151 @@
-<div class="span12">
-	<div class="box">
-		<div class="box-header">Apply to {{position.companyName}}</div>
-		<div class="box-content padded">
-			<form name="form" class="form-inline" ng-submit="submit(form)" validate>
-				<div class="row-fluid">
-					<div class="span6">
-						<div class="control-group space-below">
-							<label for="username">Student Name</label> <br>
-							<input type="text" value="{{user.fname}} {{user.lname}}" disabled>
-						</div>
-						
-						<div class="control-group space-below">
-							<label for="email">E-mail Address</label> <br>
-							<input type="email" value={{user.email}} ng-model="user.email" required>
-						</div>
-						
-						<div class="control-group space-below">						
-							<label for="pantherID">Panther ID</label> <br>
-							<input type="text" value={{user.pid}} disabled>
-						</div>
-					</div>
-					<div class="span6">
-						<div class="control-group space-below">
-							<label for="credits">Credits to Date</label> <br>
-							<input id="credits" type="number" ng-model="formInfo.credits" required>
-						</div>
-								
-						<div class="control-group space-below">
-							<label for="majorMinor">Major/Minor</label> <br>
-							<input id="majorMinor" type="text" ng-model="formInfo.majorMinor" required>
-						</div>
-					
-						<div class="control-group space-below">
-							<label for="phone">Phone Number</label> <br>
-							<input id="phone" type="tel" ng-model="formInfo.phone" required>
-						</div>
-					</div>
-				</div>
-					
-				<hr>
-				
-				<div class="control-group space-below">
-					<label>Please list any skills or qualities that you currently have that pertain to the internship you are applying for:</label><br>
-					<div class="row-fluid" style="width: 60%">
-						<div class="span6">
-							<input type="text" ng-model="formInfo.skills.0"> <br>
-							<input type="text" ng-model="formInfo.skills.1"> <br>
-							<input type="text" ng-model="formInfo.skills.2"> <br>
-							<input type="text" ng-model="formInfo.skills.3"> <br>
-						</div>
-						<div class="span6">
-							<input type="text" ng-model="formInfo.skills.4"> <br>
-							<input type="text" ng-model="formInfo.skills.5"> <br>
-							<input type="text" ng-model="formInfo.skills.6"> <br>
-							<input type="text" ng-model="formInfo.skills.7"> <br>
-						</div>
-					</div>
-				</div> <br>
-				
-				<div class="control-group space-below">
-					<label for="avalaibleStart" style="margin-right:5px;">When are you avalailable to start?</label>
-					<input type="text" id="availableStart" name="availableStart" class="input-small" placeholder="Date..." ng-model="formInfo.availableStart" data-date-format="mm/dd/yyyy" date-type="string" bs-datepicker required>
-					<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
-				</div>
-				<br>
-				
-				<div class="control-group space-below">
-					<label for="hasTransportation" style="margin-right:5px;">Do you have your own form of transportation?</label>
-					<input id="hasTransportation" type="checkbox" ng-model="formInfo.hasTransporation">
-				</div>
-				
-				<hr>
-				
-				<label>Days and Times available (check all that apply):</label> <br>
-				<label style="font-size:90%">(Morning – 8 am to 12 pm, Afternoon – 12 pm to 5 pm, Evening 5 pm to 8 pm)</label>
-				
-				<table class="table table-hover">
-					<thead>
-						<tr>
-							<td style="width: 10%;"></td>
-							<td style="text-align:center;">Morning</td>
-							<td style="text-align:center;">Afternoon</td>
-							<td style="text-align:center;">Evening</td>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat='day in ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]'>
-							<td style="width: 10%;">{{day}}</td>
-							<td style="text-align:center;"><input type="checkbox" ng-click="addTime(day,'Morning')"></td>
-							<td style="text-align:center;"><input type="checkbox" ng-click="addTime(day,'Afternoon')"></td>
-							<td style="text-align:center;"><input type="checkbox" ng-click="addTime(day,'Evening')"></td>
-						</tr>
-					</tbody>
-				</table>
-				
-				<hr>
-				
-				<div class="control-group space-below">
-					<label for="futureInterest">Future interest after College</label><br>
-					<textarea id="futureInterest" style="height: 100px; width: 50%;" ng-model="formInfo.futureInterest" required></textarea>
-				</div>
 
-				<hr>
+<div class="box">
+    <div class="box-header">Apply to {{position.companyName}}</div>
+    <div class="box-content padded">
+        <form name="form" ng-submit="submit(form)" validate>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group space-below">
+                        <label for="username" class="control-label">Student Name</label>
+                        <input type="text" class="form-control" value="{{user.fname}} {{user.lname}}" disabled>
+                    </div>
 
+                    <div class="form-group space-below">
+                        <label for="email" class="control-label">E-mail Address</label> <br>
+                        <input type="email" class="form-control" value={{user.email}} ng-model="user.email" required>
+                    </div>
 
-				<div class="control-group space-below">
-					<label>Please upload your resume:</label>
-					<span class="btn btn-success fileinput-button" ng-disabled="uploader.queue.length == 1">
-		                    <i class="glyphicon glyphicon-plus"></i>
-		                    <span>Add file...</span>
-							<input ng-file-select type="file" >                
-					</span>
-				</div>
-				
-				<div class="alert alert-danger" style="margin-bottom: 10px" ng-show="form.error" ng-bind-html-unsafe="form.error"></div>
-				
-				<table class="table">
-	                        <thead>
-	                            <tr>
-	                                <th width="50%">Name</th>
-	                                <th ng-show="uploader.isHTML5">Size</th>
-	                                <th>Actions</th>
-	                            </tr>
-	                        </thead>
-	                        <tbody>
-	                            <tr ng-repeat="item in uploader.queue">
-	                                <td><strong>{{ item.file.name }}</strong></td>
-	                                <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
-	
-	                                <td nowrap>
-	                                    <button type="button" class="btn btn-danger btn-small" ng-click="item.remove()">
-	                                        <span class="glyphicon glyphicon-trash"></span> Remove
-	                                    </button>
-	                                </td>
-	                            </tr>
-	                        </tbody>
-	              </table>
-	              
-				<div class="control-group space-below">
-	                 <button type="submit" class="btn btn-primary" ng-disabled="!uploader.getNotUploadedItems().length">
-	                  <span class="glyphicon glyphicon-upload"></span> Submit Application
-	                  </button>
-				</div>
+                    <div class="form-group space-below">						
+                        <label for="pantherID" class="control-label">Panther ID</label> <br>
+                        <input type="text" class="form-control" value={{user.pid}} disabled>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group space-below">
+                        <label for="credits" class="control-label">Credits to Date</label>
+                        <input id="credits" type="number" class="form-control" ng-model="formInfo.credits" required>
+                    </div>
+
+                    <div class="form-group space-below">
+                        <label for="majorMinor" class="control-label">Major/Minor</label>
+                        <input id="majorMinor" type="text" class="form-control" ng-model="formInfo.majorMinor" required>
+                    </div>
+
+                    <div class="form-group space-below">
+                        <label for="phone" class="control-label">Phone Number</label>
+                        <input id="phone" type="tel" class="form-control" ng-model="formInfo.phone" required>
+                    </div>
+                </div>
+            </div>
+
+            <hr/>
+
+            <div class="form-group space-below">
+                <label class="control-label">Please list any skills or qualities that you currently have that pertain to the internship you are applying for:</label>
+                <div class="row">
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" ng-model="formInfo.skills.0">
+                        <input type="text" class="form-control" ng-model="formInfo.skills.1">
+                        <input type="text" class="form-control" ng-model="formInfo.skills.2">
+                        <input type="text" class="form-control" ng-model="formInfo.skills.3">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" ng-model="formInfo.skills.4">
+                        <input type="text" class="form-control" ng-model="formInfo.skills.5">
+                        <input type="text" class="form-control" ng-model="formInfo.skills.6">
+                        <input type="text" class="form-control" ng-model="formInfo.skills.7">
+                    </div>
+                </div>
+            </div> 
             
-            </form>
-		</div>
-	</div>
-<div>
+            <br/>
+
+            <div class="form-group form-inline space-below">
+                <label for="availableStart" class="control-label" style="margin-right:5px;">When are you available to start?</label>
+                <input type="text" class="form-control" style="width:50%;" id="availableStart" name="availableStart" placeholder="Date..." ng-model="formInfo.availableStart" data-date-format="mm/dd/yyyy" date-type="string" bs-datepicker required>
+                <button type="button" class="btn btn-default" data-toggle="datepicker"><i class="icon icon-calendar"></i></button>
+            </div>
+            
+            <br/>
+
+            <div class="form-group form-inline space-below">
+                <label for="hasTransportation" class="control-label" style="margin-right:5px;">Do you have your own form of transportation?</label>
+                <input id="hasTransportation" style="vertical-align:middle;" type="checkbox" ng-model="formInfo.hasTransporation">
+            </div>
+
+            <hr/>
+
+            <label>Days and Times available (check all that apply):</label> <br>
+            <label class="text-muted">(Morning – 8 am to 12 pm, Afternoon – 12 pm to 5 pm, Evening 5 pm to 8 pm)</label>
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <td style="width: 10%;"></td>
+                        <td style="text-align:center;">Morning</td>
+                        <td style="text-align:center;">Afternoon</td>
+                        <td style="text-align:center;">Evening</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat='day in ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]'>
+                        <td style="width: 10%;">{{day}}</td>
+                        <td style="text-align:center;"><input type="checkbox" ng-click="addTime(day, 'Morning')"></td>
+                        <td style="text-align:center;"><input type="checkbox" ng-click="addTime(day, 'Afternoon')"></td>
+                        <td style="text-align:center;"><input type="checkbox" ng-click="addTime(day, 'Evening')"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr>
+
+            <div class="form-group space-below">
+                <label for="futureInterest" class="control-label">Future interest after College</label>
+                <textarea id="futureInterest" class="form-control" style="height:100px; width:50%;" ng-model="formInfo.futureInterest" required></textarea>
+            </div>
+
+            <hr>
+
+
+            <div class="form-group space-below">
+                <label>Please upload your resume:</label>
+                <span class="btn btn-success fileinput-button" ng-disabled="uploader.queue.length == 1">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>Add file...</span>
+                    <input ng-file-select type="file" >                
+                </span>
+            </div>
+
+            <div class="alert alert-danger" style="margin-bottom: 10px" ng-show="form.error" ng-bind-html-unsafe="form.error"></div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th width="50%">Name</th>
+                        <th ng-show="uploader.isHTML5">Size</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in uploader.queue">
+                        <td><strong>{{ item.file.name}}</strong></td>
+                        <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size / 1024 / 1024|number:2 }} MB</td>
+
+                        <td nowrap>
+                            <button type="button" class="btn btn-danger btn-small" ng-click="item.remove()">
+                                <span class="glyphicon glyphicon-trash"></span> Remove
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="form-group space-below">
+                <button type="submit" class="btn btn-primary" ng-disabled="!uploader.getNotUploadedItems().length">
+                    <span class="glyphicon glyphicon-circle-arrow-up"></span> Submit Application
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>

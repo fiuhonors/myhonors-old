@@ -2,28 +2,30 @@
     <div class="box-header">View ARCH Project</div>
     <div class="box-content padded">
         <form name="theForm" class="form-inline" novalidate>
-            <label for="name">Project Name</label><br />
-            <input type="text" id="name" ng-model="project.name" class="input-xxlarge" /><br />
-
+            <div class="form-group">
+                <label for="name" class="control-label">Project Name</label>
+                <input type="text" class="form-control" id="name" ng-model="project.name" class="input-xxlarge" />
+            </div>
+            
             <hr />
 
             <h4>Student Information</h4>
             <div class="row" style="margin-bottom: 20px">
                 <div class="col-md-3">
                     <div class="form-group" ng-class="{error: theForm.studentId.$invalid}">
-                        <label for="studentId" class="control-label">Panther ID *</label><br />
+                        <label for="studentId" class="control-label">Panther ID *</label>
                         <input type="text" class="form-control" id="studentId" name="studentId" ng-model="project.student.id" required />
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="studentFname">First Name</label><br />
+                        <label for="studentFname" class="control-label">First Name</label>
                         <input type="text" class="form-control" id="studentFname" ng-model="project.student.fname" />
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="studentLname">Last Name</label><br />
+                        <label for="studentLname" class="control-label">Last Name</label>
                         <input type="text" class="form-control" id="studentLname" ng-model="project.student.lname" />
                     </div>
                 </div>
@@ -37,19 +39,19 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="studentPhone">Phone Number</label><br />
+                        <label for="studentPhone" class="control-label">Phone Number</label>
                         <input type="text" class="form-control" id="studentPhone" ng-model="project.otherInfo.studentPhone" />
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="studentMajor1">Major 1</label><br />
+                        <label for="studentMajor1" class="control-label">Major 1</label>
                         <input type="text" class="form-control" id="studentMajor1" ng-model="project.otherInfo.studentMajor1" />
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="studentMajor2">Major 2</label><br />
+                        <label for="studentMajor2" class="control-label">Major 2</label>
                         <input type="text" class="form-control" id="studentMajor2" ng-model="project.otherInfo.studentMajor2" />
                     </div>
                 </div>
@@ -60,20 +62,28 @@
             <h4>Advisor Information</h4>
             <div class="row">
                 <div class="col-md-3" ng-class="{error: theForm.advisorId.$invalid}">
-                    <label for="advisorId" class="control-label">Panther ID *</label><br />
-                    <input type="text" class="form-control" id="advisorId" name="advisorId" ng-model="project.advisor.id" required />
+                    <div class="form-group">
+                        <label for="advisorId" class="control-label">Panther ID *</label>
+                        <input type="text" class="form-control" id="advisorId" name="advisorId" ng-model="project.advisor.id" required />
+                    </div>
                 </div>
                 <div class="col-md-3">
-                    <label for="advisorFname">First Name</label><br />
-                    <input type="text" class="form-control" id="advisorFname" ng-model="project.advisor.fname" />
+                    <div class="form-group">
+                        <label for="advisorFname">First Name</label>
+                        <input type="text" class="form-control" id="advisorFname" ng-model="project.advisor.fname" />
+                    </div>
                 </div>
                 <div class="col-md-3">
-                    <label for="advisorLname">Last Name</label><br />
-                    <input type="text" id="advisorLname" ng-model="project.advisor.lname" />
+                    <div class="form-group">
+                        <label for="advisorLname">Last Name</label>
+                        <input type="text" class="form-control" id="advisorLname" ng-model="project.advisor.lname" />
+                    </div>
                 </div>
-                <div class="col-md-3 control-group" ng-class="{error: theForm.advisorEmail.$invalid}">
-                    <label for="advisorEmail" class="control-label">Email Address</label><br />
-                    <input type="text" id="advisorEmail" name="advisorEmail" ng-model="project.otherInfo.advisorEmail" />
+                <div class="col-md-3" ng-class="{error: theForm.advisorEmail.$invalid}">
+                    <div class="form-group">
+                        <label for="advisorEmail" class="control-label">Email Address</label>
+                        <input type="text" class="form-control" id="advisorEmail" name="advisorEmail" ng-model="project.otherInfo.advisorEmail" />
+                    </div>
                 </div>
             </div>
 
