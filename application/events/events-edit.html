@@ -32,7 +32,7 @@
                                     <div class="form-group input-group">        
                                         <input type="text" id="date" name="date" class="form-control" placeholder="Date..." ng-model="event.date.starts.date" ng-change="updateEnds('date')" data-date-format="mm/dd/yyyy" date-type="string" bs-datepicker>
                                         <span class="input-group-btn" data-toggle="datepicker">
-                                            <button type="button" class="btn btn-default"><i class="icon-calendar"></i></button>
+                                            <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
                                         </span>
                                     </div>
                                 </div>
@@ -40,7 +40,7 @@
                                     <div class="form-group input-group">
                                         <input type="text" id="date" name="date" class="form-control" placeholder="at Time..." ng-model="event.date.starts.time" ng-change="updateEnds('time')" bs-timepicker>
                                         <span class="input-group-btn" data-toggle="timepicker">
-                                            <button type="button" class="btn btn-default"><i class="icon-time"></i></button>
+                                            <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-time"></i></button>
                                         </span>
                                     </div>
                                 </div>
@@ -53,7 +53,7 @@
                                     <div class="form-group input-group">
                                         <input type="text" id="date" name="date" class="form-control" placeholder="Date..." ng-model="event.date.ends.date" data-date-format="mm/dd/yyyy" date-type="string" bs-datepicker>
                                         <span class="input-group-btn" data-toggle="datepicker">
-                                            <button type="button" class="btn btn-default"><i class="icon-calendar"></i></button>
+                                            <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
                                         </span>
                                     </div>
                                 </div>
@@ -61,7 +61,7 @@
                                     <div class="form-group input-group">
                                         <input type="text" id="date" name="date" class="form-control" placeholder="at Time..." ng-model="event.date.ends.time" bs-timepicker>
                                         <span class="input-group-btn" data-toggle="timepicker">
-                                            <button type="button" class="btn btn-default"><i class="icon-time"></i></button>
+                                            <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-time"></i></button>
                                         </span>
                                     </div>
                                 </div>
@@ -123,7 +123,7 @@
             </div>
             <hr />
             <button class="btn btn-primary" ng-disabled="theForm.$invalid" ng-click="doSaveChanges(theForm)">Save Changes</button>
-            <button class="btn" ng-click="undoChanges()">Undo Changes</button>
+            <button class="btn btn-default" ng-click="undoChanges()">Undo Changes</button>
             <a href="#/events/{{event.id}}" class="btn btn-link">Go Back</a>
         </form>
     </div>

@@ -81,7 +81,7 @@
                     <label for="studentName">Your Name</label>
                     <input type="text" id="studentName" /><br />
                     <p><strong>Today's Date</strong>: {{now| date:'fullDate'}}</p>
-                    <button class="btn btn-primary btn-large">Accept Agreement</button>
+                    <button class="btn btn-primary btn-lg">Accept Agreement</button>
                 </form>
                 <div ng-show="isStudent() && project.contract.signedByStudent" class="alert alert-block alert-success">
                     <h4>Success!</h4>
@@ -192,7 +192,7 @@
                     <label for="advisorName">Your Name</label>
                     <input type="text" id="advisorName" /><br />
                     <p><strong>Today's Date</strong>: {{now| date:'fullDate'}}</p>
-                    <button class="btn btn-primary btn-large">Accept Agreement</button>
+                    <button class="btn btn-primary btn-lg">Accept Agreement</button>
                 </form>
                 <div ng-show="isAdvisor() && project.contract.signedByAdvisor" class="alert alert-success">
                     <h4>Success!</h4>

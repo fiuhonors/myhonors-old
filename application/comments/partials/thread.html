@@ -12,10 +12,10 @@
 				      popover-placement="bottom"
 				      popover-trigger="mouseenter"
 				      popover="Sorry! You can't upvote your own comments.">
-					<i class="icon-star-empty"></i> {{source.points || 0}}
+					<i class="glyphicon glyphicon-star-empty"></i> {{source.points || 0}}
 				</span>
-				<a class="clickable" style="color: rgba(30,55,70,0.4); font-size: 11px" ng-click="mainReply.addPoint()" ng-if="!mainReply.isAuthor() && !mainReply.hasVoted()"><i class="icon-star-empty"></i> {{source.points || 0}}</a>
-				<a class="clickable" style="color: rgba(30,55,70,0.4); font-size: 11px" ng-click="mainReply.removePoint()" ng-if="!mainReply.isAuthor() && mainReply.hasVoted()"><i class="icon-star"></i> {{source.points || 0}}</a>
+				<a class="clickable" style="color: rgba(30,55,70,0.4); font-size: 11px" ng-click="mainReply.addPoint()" ng-if="!mainReply.isAuthor() && !mainReply.hasVoted()"><i class="glyphicon glyphicon-star-empty"></i> {{source.points || 0}}</a>
+				<a class="clickable" style="color: rgba(30,55,70,0.4); font-size: 11px" ng-click="mainReply.removePoint()" ng-if="!mainReply.isAuthor() && mainReply.hasVoted()"><i class="glyphicon glypicon-star"></i> {{source.points || 0}}</a>
 				<a class="clickable" ng-click="mainReply.showReply = true" style="margin-left: 4px; color: rgba(30,55,70,0.4)">reply</a>
 				<a href="{{mainReply.getPermalink()}}" style="color: rgba(30,55,70,0.4); margin-left: 4px">permalink</a>
 			</div>
@@ -23,7 +23,7 @@
 				<a class="pull-left" href="#"><img class="media-object img-rounded" src="http://placehold.it/48" /></a>
 				<div class="media-body">
 					<textarea class="input-block-level" style="height: 72px; font-size: 13px; line-height: 1.38em; color: #42474a; font-weight: 300" ng-model="mainReply.replyContent"></textarea>
-					<button class="btn btn-mini" ng-click="mainReply.addReply()">Post</button> <button class="btn btn-mini" ng-click="mainReply.showReply = false">Cancel</button> <a class="btn btn-link btn-mini" ng-click="showHelp = !showHelp">formatting help</a>
+					<button class="btn btn-default btn-xs" ng-click="mainReply.addReply()">Post</button> <button class="btn btn-default btn-xs" ng-click="mainReply.showReply = false">Cancel</button> <a class="btn btn-link btn-xs" ng-click="showHelp = !showHelp">formatting help</a>
 				</div>
 			</div>
 			<div style="margin-top: 10px; padding-left: 58px">

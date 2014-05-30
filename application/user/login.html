@@ -6,7 +6,7 @@
 		</div>
 
 		<div class="col-md-4">
-			<div class="btn-primary login-header" data-ng-switch="currentPage">
+			<div class="btn btn-primary login-header" data-ng-switch="currentPage">
 				<strong ng-switch-when="loginPage">Login to FIU MyHonors</strong>
 				<strong ng-switch-when="forgotPass">Forgot your password?</strong>
 			</div>
@@ -32,7 +32,7 @@
 				<div ng-switch-when="forgotPass">
 					<p>To reset your MyAccounts password, please visit the <a target="_blank" href="https://myaccounts.fiu.edu/itim/self/reset-password/">Password Reset</a> page.</p>
 					<p>Don't forget to come back! :)</p>
-					<button class="btn btn-primary" ng-click="$parent.currentPage = 'loginPage'"><i class="icon-chevron-left icon-white"></i> Go back</button>
+					<button class="btn btn-primary" ng-click="$parent.currentPage = 'loginPage'"><i class="glyphicon glyphicon-chevron-left icon-white"></i> Go back</button>
 				</div>
 			</div>
 

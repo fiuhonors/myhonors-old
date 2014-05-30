@@ -1,9 +1,9 @@
 <table class="well well-large">
   <thead>
     <tr class="text-center">
-      <th><button class="btn pull-left" ng-click="move(-1)"><i class="icon-chevron-left"></i></button></th>
-      <th colspan="{{rows[0].length - 2 + showWeekNumbers}}"><button class="btn btn-block" ng-click="toggleMode()"><strong>{{title}}</strong></button></th>
-      <th><button class="btn pull-right" ng-click="move(1)"><i class="icon-chevron-right"></i></button></th>
+      <th><button class="btn pull-left btn-default" ng-click="move(-1)"><i class="glyphicon glyphicon-chevron-left"></i></button></th>
+      <th colspan="{{rows[0].length - 2 + showWeekNumbers}}"><button class="btn btn-default btn-block" ng-click="toggleMode()"><strong>{{title}}</strong></button></th>
+      <th><button class="btn pull-right btn-default" ng-click="move(1)"><i class="glyphicon glyphicon-chevron-right"></i></button></th>
     </tr>
     <tr class="text-center" ng-show="labels.length > 0">
       <th ng-show="showWeekNumbers">#</th>

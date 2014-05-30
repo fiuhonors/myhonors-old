@@ -63,7 +63,7 @@
             <div class="form-group form-inline space-below">
                 <label for="availableStart" class="control-label" style="margin-right:5px;">When are you available to start?</label>
                 <input type="text" class="form-control" style="width:50%;" id="availableStart" name="availableStart" placeholder="Date..." ng-model="formInfo.availableStart" data-date-format="mm/dd/yyyy" date-type="string" bs-datepicker required>
-                <button type="button" class="btn btn-default" data-toggle="datepicker"><i class="icon icon-calendar"></i></button>
+                <button type="button" class="btn btn-default" data-toggle="datepicker"><i class="glyphicon glyphicon-calendar"></i></button>
             </div>
             
             <br/>
@@ -132,7 +132,7 @@
                         <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size / 1024 / 1024|number:2 }} MB</td>
 
                         <td nowrap>
-                            <button type="button" class="btn btn-danger btn-small" ng-click="item.remove()">
+                            <button type="button" class="btn btn-danger btn-sm" ng-click="item.remove()">
                                 <span class="glyphicon glyphicon-trash"></span> Remove
                             </button>
                         </td>

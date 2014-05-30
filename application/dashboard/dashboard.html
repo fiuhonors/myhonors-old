@@ -69,8 +69,8 @@
             <div class="box-header">
                 Volunteer Hours ({{hoursCompleted}}/20)
                 <div class="pull-right" ng-show="user.auth.isMiddleCircleAdmin">
-                    <a href="#/citizenship" class="btn btn-mini" ng-click="">
-                        <i class="icon-plus"></i> Add
+                    <a href="#/citizenship" class="btn btn-xs btn-default" ng-click="">
+                        <i class="glyphicon glyphicon-plus"></i> Add
                     </a>
                 </div>
             </div>
@@ -109,13 +109,13 @@
                             <h3>{{event.rsvps}}</h3>
                             <div ng-show='!event.options.waitingList || event.rsvps < event.options.maxRSVPs || hasRSVP(event.$id)'>
                                 <span class="opensans">ATTENDING</span>
-                                <button class="btn btn-mini" ng-click="addRSVP(event.$id, $event)" ng-show="!hasRSVP(event.$id)">I'm Going</button>
-                                <button class="btn btn-mini btn-primary" ng-click="removeRSVP(event.$id, $event, event)" ng-show="hasRSVP(event.$id)">I'm Going</button>
+                                <button class="btn btn-xs btn-default" ng-click="addRSVP(event.$id, $event)" ng-show="!hasRSVP(event.$id)">I'm Going</button>
+                                <button class="btn btn-xs btn-primary" ng-click="removeRSVP(event.$id, $event, event)" ng-show="hasRSVP(event.$id)">I'm Going</button>
                             </div>
                             <div ng-show='event.options.waitingList && event.rsvps >= event.options.maxRSVPs && !hasRSVP(event.$id)'>
                                 <span class="opensans">Attendance Full</span>
-                                <button class="btn btn-mini" ng-click="addToWaitingList(event.$id, $event)" ng-show="!isInWaitingList(event.$id)">Waiting List</button>
-                                <button class="btn btn-mini btn-primary" ng-click="removeFromWaitingList(event.$id, $event)" ng-show="isInWaitingList(event.$id)">Waiting List</button>
+                                <button class="btn btn-xs btn-default" ng-click="addToWaitingList(event.$id, $event)" ng-show="!isInWaitingList(event.$id)">Waiting List</button>
+                                <button class="btn btn-xs btn-primary" ng-click="removeFromWaitingList(event.$id, $event)" ng-show="isInWaitingList(event.$id)">Waiting List</button>
                             </div>
                         </div>
                     </li>
