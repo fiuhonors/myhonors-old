@@ -4,8 +4,8 @@
 .zedstate
 assets/img/honorshours
 assets/json
+nbproject
 desktop.ini
-nbproject/*
 
 #Config variables
 config.php
