@@ -44,8 +44,7 @@ angular.module('myhonorsInternal').controller('StudentsListCtrl', function($scop
 				var volunteerHours = snapshot.child("volunteerHours").val();
 				var totalVolunteerHours = 0;
 				angular.forEach(volunteerHours, function(value, key) {
-					//alert(key);
-					if (value.status != null && value.status == "accepted") {
+					if (value.status != null && value.status == "accepted" && value.hours) {
 						totalVolunteerHours += value.hours;
 					}
 					
@@ -61,7 +60,7 @@ angular.module('myhonorsInternal').controller('StudentsListCtrl', function($scop
 					generalEventsNum: generalEvents,
 					heartsEventsNum: heartsEvents,
 					volunteerHoursNum: totalVolunteerHours,
-					totalPoints: honorsHours*2 + colloquia*3 + excellenceLectures*4 + generalEvents*1 + heartsEvents*1 + totalVolunteerHours*1
+					totalPoints: honorsHours*2 + colloquia*3 + excellenceLectures*4 + generalEvents*1 + heartsEvents*1
 					
 				};
 				

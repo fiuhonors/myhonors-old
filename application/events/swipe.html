@@ -28,3 +28,55 @@
 		</div>
 	</div>
 </div>
+
+
+<div class="row" style="margin-top: 20%;">
+	<div class="span6">
+		<div class="box pull-left" >
+			<div class="box-header">Mass Attendance Import</div>
+			<div class="box-content padded-medium">
+				<form name="form" class="form-inline" ng-submit="submit()" style="margin-bottom: 0px;">
+					<div>
+					    <label>Please upload the Excel file containing the attendance:</label>
+					    <span class="btn btn-success fileinput-button">
+					            <i class="glyphicon glyphicon-plus"></i>
+					            <span>Add file...</span>
+					            <input ng-file-select type="file" >                
+					    </span>
+					</div>
+					
+					<div class="alert alert-danger" style="margin-bottom: 10px" ng-show="uploadError" ng-bind-html-unsafe="uploadError"></div>
+					
+					<table class="table" ng-show="uploader.getNotUploadedItems().length">
+					            <thead>
+					                <tr>
+					                    <th width="50%">Name</th>
+					                    <th ng-show="uploader.isHTML5">Size</th>
+					                    <th>Actions</th>
+					                </tr>
+					            </thead>
+					            <tbody>
+					                <tr ng-repeat="item in uploader.queue">
+					                    <td><strong>{{ item.file.name }}</strong></td>
+					                    <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+					
+					                    <td nowrap>
+					                        <button type="button" class="btn btn-danger btn-small" ng-click="item.remove()">
+					                            <span class="glyphicon glyphicon-trash"></span> Remove
+					                        </button>
+					                    </td>
+					                </tr>
+					            </tbody>
+					  </table>
+					  
+					<div>
+					     <button type="submit" class="btn btn-primary" ng-show="uploader.getNotUploadedItems().length" ng-disabled="processingFile">
+					      <span class="glyphicon glyphicon-upload" ng-show="!processingFile">Submit Files</span>
+					      <span ng-show="processingFile">Please Wait...</span>
+					      </button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

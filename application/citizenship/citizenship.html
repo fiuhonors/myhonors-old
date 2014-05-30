@@ -128,7 +128,7 @@
 			<div class="box-header">Pending Submissions</div>
 			<div class="box-content" ng-if="submissions.length > 0">
 				<ul class="block-hover">
-					<li ng-repeat="sub in submissions" class="volunteer-hour" style="word-wrap: break-word;">
+					<li ng-repeat="sub in submissions" class="hover-icon-remove" style="word-wrap: break-word;">
 						{{ $index + 1 }}.
 						<label class="label label-info" ng-show="sub.status != 'accepted'" style="margin-right: 2px">WAITING FOR VERIFICATION</label> 
 						<label class="label label-success" ng-show="sub.status == 'accepted'" ng-init="addVolunteerHours(sub)" style="margin-right: 2px">ACCEPTED</label> 

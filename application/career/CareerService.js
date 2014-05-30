@@ -32,8 +32,8 @@ angular.module('myhonorsCareer').factory('CareerService', function($q, FirebaseI
 			}
 
 			var ref = FirebaseIO.child('careers').push(careerObject);
-			// Setting the priority to the date.ends value allows us to show the most recent internships/jobs in the dashboard
-			ref.setPriority(careerObject.date.ends);
+			// Setting the priority to the date.starts value allows us to show the most recent internships/jobs in the dashboard
+			ref.setPriority(careerObject.date.starts);
 
 			return ref.name();	// Return the ID of the newly created position
 		},
@@ -150,6 +150,10 @@ angular.module('myhonorsCareer').factory('CareerService', function($q, FirebaseI
 			else
 				FirebaseIO.child('careers/' + positionID + '/status').set("active");
 			
+		},
+		
+		approvePosition: function(positionID) {
+			FirebaseIO.child('careers/' + positionID + '/status').set("active");
 		},
 
 		delete: function(positionID) {

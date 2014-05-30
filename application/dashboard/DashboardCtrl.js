@@ -1,11 +1,11 @@
 'use strict';
 
-angular.module('myhonorsDashboard').controller('DashboardCtrl', ['$scope', '$location', 'FirebaseIO', 'EventService', 'RSVPService', 'VolunteerService', 'WaitingListService', 'CareerService', function($scope, $location, FirebaseIO, EventService, RSVPService, VolunteerService, WaitingListService, CareerService) {
+angular.module('myhonorsDashboard').controller('DashboardCtrl', ['$scope', '$location', 'FirebaseIO', 'EventService', 'RSVPService', 'VolunteerService', 'WaitingListService', 'CareerService', 'UserService', function($scope, $location, FirebaseIO, EventService, RSVPService, VolunteerService, WaitingListService, CareerService, UserService) {
 	$scope.events = EventService.list({limit: 3, startAt: Date.now()});
 	$scope.careers = CareerService.list({limit: 3, startAt: Date.now()});
 
 	
-	$scope.submissions = VolunteerService.list();
+	$scope.submissions = VolunteerService.list(UserService.profile.id);
 	// Calculate the total amount of volunteer hours completed
 	$scope.hoursCompleted = 0;	
 	$scope.addVolunteerHours = function (submission) {

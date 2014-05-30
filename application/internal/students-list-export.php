@@ -99,7 +99,7 @@ function exportExcel($studentsInfo) {
 				->setCellValue('G' . $index, $eventTypesCount[3])
 				->setCellValue('H' . $index, $eventTypesCount[4])
 				->setCellValue('I' . $index, $totalVolunteerHours)
-				->setCellValue('J' . $index, $eventTypesCount[5] + $totalVolunteerHours*1); //Adds the total volunteer hours to the student's overall points		
+				->setCellValue('J' . $index, $eventTypesCount[5]);	
 		
 		
 		$index++;
@@ -172,7 +172,7 @@ function exportCSV($studentsInfo) {
 								$eventTypesCount[3],
 								$eventTypesCount[4],
 								$totalVolunteerHours,
-								$eventTypesCount[5] + $totalVolunteerHours*1));
+								$eventTypesCount[5]));
 	}
 	
 	
@@ -182,6 +182,7 @@ function exportCSV($studentsInfo) {
 
 /**
  * Count the student's attendance to the different types of events: Honors Hours, Colloquia, Excellence Lectures, General Events, and HEARTS.
+ * It also returns the total points that the student has.
  * 
  * @param studentInfo The student's profile
  * 
@@ -193,7 +194,7 @@ function countEventsTypes($studentInfo) {
 	$eventTypesCount = array(0,0,0,0,0,0);
 	
 	
-	if (!array_key_exists("attendance", $studentInfo)) { // First make sure the student has an attendance array in his profile
+	if (!array_key_exists('attendance', $studentInfo)) { // First make sure the student has an attendance array in his profile
 		return $eventTypesCount;
 	}
 	
@@ -236,7 +237,7 @@ function countEventsTypes($studentInfo) {
  */
 function countTotalVolunteerHours($studentInfo) {
 	$totalVolunteerHours = 0;
-	if (!array_key_exists("volunteerHours", $studentInfo)) {
+	if (!array_key_exists('volunteerHours', $studentInfo)) {
 		return $totalVolunteerHours;
 	}
 	

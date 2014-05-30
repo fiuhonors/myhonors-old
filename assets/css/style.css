@@ -6171,11 +6171,14 @@ a.thumbnail:hover {
   background-color: #00baff;
   height: 100%; }
 
-.volunteer-hour > .icon-remove {
-  display: none; }
+.hover-icon-remove > .icon-remove {
+	display: none;
+}
 
-.volunteer-hour:hover > .icon-remove {
-  display: inline; }
+.hover-icon-remove:hover > .icon-remove {
+	display: inline;
+	margin-left: 3px;
+}
 
 /* Comments */
 .comment p:last-child {

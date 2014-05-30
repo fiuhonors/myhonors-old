@@ -30,12 +30,19 @@ angular.module('myhonorsUser').factory('UserService', function($http, $location,
 						var ref = FirebaseIO.child('/user_profiles/' + authObject.auth.id);
 
 						ref.once('value', function(snapshot) {
-							// if user profile doesn't exist, OR if information has been pre-loaded into
-							// their user profile, but the user has never actually logged in before
-							if (snapshot.val() === null ||
-								snapshot.child('lastActivity').val() === null ||
-								snapshot.child('fname').val() === null ||
-								snapshot.child('lname').val() === null)
+							// If the user profile doesn't exist then that means 
+							if (snapshot.val() === null) {
+								alert("You must be an Honors student if you wish to login.");
+								$timeout(function() {
+									self.profile = null;
+									self.status.loading = false;
+								});
+								return;
+							}
+							// If information has been pre-loaded into their user profile, but the user has never actually logged in before
+							else if (snapshot.child('lastActivity').val() === null ||
+									  snapshot.child('fname').val() === null ||
+									  snapshot.child('lname').val() === null)
 							{
 								// new user, create profile for them
 								ref.child('fname').set(result.fname);

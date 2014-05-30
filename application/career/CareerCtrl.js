@@ -2,6 +2,18 @@
 
 angular.module('myhonorsCareer').controller('CareerCtrl', ['$scope', '$timeout', 'FirebaseIO', 'CareerService', 'UserService', function($scope, $timeout, FirebaseIO, CareerService, UserService) {
 	$scope.careers = CareerService.list();
+	$scope.pendingCareers = {};
+	
+	$scope.$watchCollection( 'careers', function( collection ) {
+		angular.forEach( collection, function( career, key ) {
+			if ( career.status === "pending" )
+			{
+				$scope.pendingCareers[ key ] = career;
+				$scope.showPending = true;
+			}
+		});
+	});
+	
 	//$scope.newPosition = {companyName: '', contactName: '', contactEmail: '', description: '', startDate: '', endDate: '', hoursPerWeek: '' , workDays: $scope.selectedDays, paid: false};
 	$scope.newPosition = {};
 	$scope.selectedDays = [];
@@ -18,12 +30,5 @@ angular.module('myhonorsCareer').controller('CareerCtrl', ['$scope', '$timeout',
 		$event.stopPropagation();
 		CareerService.toggleActivation(positionID, currentStatus);
 	};
-	//~ $scope.deactivatePosition = function($event, positionID) {
-		//~ $event.stopPropagation();
-		//~ FirebaseIO.child('careers/' + positionID + '/status').set("inactive");
-	//~ };
-	//~ $scope.activatePosition = function($event, positionID) {
-		//~ $event.stopPropagation();
-		//~ FirebaseIO.child('careers/' + positionID + '/status').set("active");
-	//~ };
+
 }]);

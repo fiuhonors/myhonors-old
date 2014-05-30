@@ -15,7 +15,7 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="event in events">
-					<td><a href="#/events/{{event.$id}}">{{event.name}}</a></td>
+					<td><a href="#/events/{{event.$id}}" target="_blank">{{event.name}}</a></td>
 					<td>{{event.date.starts | date:"EEE, MMMM d"}}</td>
 					<td><a href="#/internal/rsvplist/{{event.$id}}" onclick="window.open(this.href, 'RSVP List',
 					'left=20,top=20,width=800,height=600,toolbar=no,resizable=yes,scrollbars=yes'); return false;">

@@ -38,5 +38,22 @@
                 <a href="#/career/add" class="btn btn-primary btn-block">Add New Position</a>
             </div>
         </div>
+
+        <div class="box">
+            <div class="box-header">
+                Pending Internships
+            </div>
+            <div class="box-content padded">
+                <ul ng-show="showPending">
+                    <li ng-repeat="item in pendingCareers">
+                        <a href="#/career/{{item.id}}"> {{item.companyName}} </a>
+                    </li>
+                </ul>
+
+                <div class="alert alert-info padded-medium" ng-show="!showPending">
+                    <strong> There are no pending internships. </strong>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

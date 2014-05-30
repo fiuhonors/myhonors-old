@@ -10,7 +10,6 @@ angular.module('myhonorsCareer').config(['$routeProvider', function($routeProvid
 		when('/career/add', {
 			templateUrl: 'application/career/careers-form.html',
 			controller: 'CareersFormCtrl',
-			requireLogin: true,
 			resolve: appResolve}).
 		when('/career/:positionID/edit', {
 			templateUrl: 'application/career/careers-form.html',

@@ -64,11 +64,15 @@ angular.module('myhonorsCareer').controller('CareersViewCtrl', ['$scope', '$time
 			$location.path('career');
 		};
 		
-		
 		$scope.toggleActivation = function($event, positionID, currentStatus) {
 			$event.stopPropagation();
 			CareerService.toggleActivation(positionID, currentStatus);
 		};
+		
+		$scope.approvePosition = function($event, positionID) {
+			$event.stopPropagation();
+			CareerService.approvePosition(positionID);
+		}
 	}	
 	
 }]);

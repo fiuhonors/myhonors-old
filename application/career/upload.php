@@ -45,7 +45,7 @@ foreach($applicationInfo["skills"] as $skill) {
 }
 $skills .= "</ul>";
 	
-// Also, before sending the email, the time availability of the student must also be translate into a HTML table
+// Also, before sending the email, the time availability of the student must also be translated into an HTML table
 $timeAvailability = "<table class=\"table table-hover\" style=\"border: 1px solid black;\">
 					<thead>
 						<tr>

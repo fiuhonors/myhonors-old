@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$timeout', 'FirebaseIO', 'SwipeService', 'UserService', 'VolunteerService', function($scope, $timeout, FirebaseIO, SwipeService, UserService, VolunteerService) {
-	$scope.submissions = VolunteerService.list();
+	$scope.submissions = VolunteerService.list(UserService.profile.pid);
 	
 	$scope.submit = function(volunteerHoursForm) {
 		if (volunteerHoursForm.$valid) {
@@ -24,7 +24,6 @@ angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$time
 	}
 	
 	$scope.removeVolunteerHours = function(volunteerHour) {	
-		
 		// We ask the user for a double confirmation before deleting the volunteer hours
 		var confirmation1 = confirm("Are you sure you wish to delete this volunteer hour?")	
 		var confirmation2 = false;	
@@ -34,12 +33,11 @@ angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$time
 			
 			
 		if (confirmation1 && confirmation2) {
-			VolunteerService.remove(volunteerHour);	
+			VolunteerService.remove(volunteerHour, UserService.profile.id);	
 		
 			$scope.hoursCompleted = 0;	//Reset the total volunteer hours counter
-			$scope.submissions = VolunteerService.list();	//Reload the volunteer hours list
+			$scope.submissions = VolunteerService.list(UserService.profile.pid);	//Reload the volunteer hours list
 		}
-		
 	}
 
 	UserService.ref.child('attendance').on('value', function(snapshot) {
