@@ -138,7 +138,7 @@
             <div class="collapse navbar-collapse" id="collapsibleMenu">
                 <ul class="nav navbar-nav" data-ng-show="user.profile">
                     <li class="dropdown" ng-show="user.auth.isMiddleCircle">
-			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Courses <i class="icon-caret-down"></i></a>
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Courses <i class="glyphicon glyphicon-chevron-down"></i></a>
 			<ul class="dropdown-menu" role="menu">
                             <li><a href="#/courses/middlecircle">The Middle Circle: Integrating Ideas & Knowledge</a></li>
 			</ul>
@@ -150,7 +150,7 @@
                 </ul>
                 <ul class="nav navbar-nav pull-right">
                     <li class="dropdown" data-toggle="dropdown" data-ng-show="user.profile">
-                        <a href="#" class="dropdown-toggle"><i class="icon-user icon-white"></i> {{user.profile.fname}} {{user.profile.lname}}</a>
+                        <a href="#" class="dropdown-toggle"><i class="glyphicon glyphicon-user icon-white"></i> {{user.profile.fname}} {{user.profile.lname}}</a>
 			<ul class="dropdown-menu" role="menu">
                             <li ng-show="user.auth.isAdmin"><a href="#/profile/{{user.profile.user_id}}">View Profile</a></li>
                             <li ng-show="user.auth.isAdmin"><a href="#/profile/{{user.profile.user_id}}/edit">Update Profile</a></li>
