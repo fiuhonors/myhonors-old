@@ -5935,6 +5935,9 @@ footer {
       display: none; }
   .calendar .btn {
     margin-bottom: 5px; } }
+.icon-white {
+  color: white; }
+
 .modalShow {
   display: block; }
 
