@@ -299,11 +299,11 @@ a.thumbnail:hover {text-decoration: none;}
 	height: 100%;
 }
 
-.hover-icon-remove > .icon-remove {
+.hover-icon .icon {
 	display: none;
 }
 
-.hover-icon-remove:hover > .icon-remove {
+.hover-icon:hover .icon {
 	display: inline;
 	margin-left: 3px;
 }
@@ -573,6 +573,10 @@ td.day {
 	word-wrap: break-word;
 }
 
+.no-wrap {
+	white-space: nowrap;
+}
+
 
 /* 
  * File Input button styling.
@@ -603,4 +607,15 @@ td.day {
     font-size: 100%;
     height: 100%;
   }
+}
+
+/* xEditable CSS */
+.inherit-color, .inherit-color:hover{
+	color: inherit;
+}
+
+.disable-editable {
+	color: inherit;
+    text-decoration: none;
+    cursor: default;
 }
