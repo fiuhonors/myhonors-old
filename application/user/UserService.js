@@ -1,14 +1,15 @@
 'use strict'
 
-angular.module('myhonorsUser').factory('UserService', function($http, $location, $timeout, FirebaseIO, webStorage) {
+angular.module('myhonorsUser').factory('UserService', function($http, $location, $timeout, $q, FirebaseIO, webStorage) {
 	var login = function(username, password) {
 		// used to show "Loading..." status after clicking Login button
 		this.status.loading = true;
 
 		var self = this;
-
+		var defer = $q.defer();	
 		var data = 'pid=' + username + '&password=' + password;
 		$http.post('auth/auth.php', data, {headers: {'Content-Type' : 'application/x-www-form-urlencoded'}}).success(function(result) {
+			var loginSuccess = false;
 			if (result.success === true && angular.isDefined(result.token))
 			{
 				FirebaseIO.auth(result.token, function(error, authObject) {
@@ -25,6 +26,8 @@ angular.module('myhonorsUser').factory('UserService', function($http, $location,
 						// user successfully logged in. save token to localStorage (or cookies if browser doesn't support it)
 						// so we can auth on every page load via appResolve
 						webStorage.add('auth_token', result.token);
+						loginSuccess = true;
+						defer.resolve( loginSuccess );
 
 						// then check if the user has a profile. if not, create it
 						var ref = FirebaseIO.child('/user_profiles/' + authObject.auth.id);
@@ -64,7 +67,7 @@ angular.module('myhonorsUser').factory('UserService', function($http, $location,
 								})
 
 								// redirect to homepage
-								$location.path('');
+								//$location.path('');
 								self.status.loading = false;
 							}
 						});
@@ -84,10 +87,15 @@ angular.module('myhonorsUser').factory('UserService', function($http, $location,
 				alert(result.error);
 				self.status.loading = false;
 			}
+			
 		});
+		
+		return defer.promise;
+		
 	};
 
 	var logout = function() {
+		$http.get('auth/un_auth.php', {headers: {'Content-Type' : 'application/x-www-form-urlencoded'}});
 		webStorage.remove('auth_token');
 		FirebaseIO.unauth(); 
 		this.profile = null;

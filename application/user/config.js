@@ -2,7 +2,7 @@
 
 angular.module('myhonorsUser').config(['$routeProvider', function($routeProvider) {
 	$routeProvider.
-		when('/login', {
+		when('/login/:redirect', {
 			templateUrl: 'application/user/login.html',
 			controller: 'LoginCtrl',
 			requireLogin: false,

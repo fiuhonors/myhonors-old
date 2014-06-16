@@ -20,8 +20,7 @@ angular.module('myhonors').controller('AppCtrl', function ($scope, $rootScope, $
 			case 'NO_PROFILE_FOUND':
 			case 'NOT_LOGGED_IN':
 			default:
-				console.log(rejection);
-				$location.path('login');
+				$location.path('login/');
 				break;
 		}
 	});

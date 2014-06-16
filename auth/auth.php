@@ -1,5 +1,4 @@
 <?php
-
 /* Config settings */
 
 define("SERVER_ADDRESS", "");
@@ -46,6 +45,17 @@ function getData($username, $data) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
+	// Set PHP session so that we can catch it if they try to login on a PHP-powered project and automatically
+	// log them in. We're following some security tips from http://blog.teamtreehouse.com/how-to-create-bulletproof-sessions
+	// and http://stackoverflow.com/questions/5081025/php-session-fixation-hijacking
+	session_name('HonorsAuth_Session');
+	session_set_cookie_params(0, '/', '', false, true);
+	session_start();
+	$_SESSION['ip_address'] = $_SERVER['REMOTE_ADDR'];
+	$_SESSION['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+	$_SESSION['user_identifier'] = "000000";
+	
+	
 	// all output after POSTing will be delivered in JSON format
 	header('Content-Type: application/json');
 
@@ -58,6 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 	}
 
 	if (DISABLE_LDAP == true) {
+		$_SESSION['user_identifier'] = $_POST['pid']; // Store student's ID in SESSION if verified.
 		// just get user's data from Firebase without checking their LDAP password
 		$data = array( array( "givenname" => array("Fname"), "sn" => array("Lname")));
 		$result = getData($_POST['pid'], $data);
@@ -84,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 			$data = ldap_get_entries($ldapconn, $search);
 
 			$result = getData($_POST['pid'], $data);
-
+			$_SESSION['user_identifier'] = $_POST['pid']; // Store student's ID in SESSION if verified.
 			ldap_unbind($ldapconn);
 		}
 		else
