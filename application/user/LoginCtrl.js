@@ -26,10 +26,8 @@ angular.module('myhonorsUser').controller('LoginCtrl', ['$scope', '$route', '$lo
 		// If options is equal to CRS && login was successful, then redirect....
 		// else redirect location('');
 		if(!redirectOption){
-			alert('redirect to nothing');
 			$location.path('/');
 		}else{
-			alert('redirect to ' + redirectOption);
 			window.location.href = redirectOption;
 		}
 	};
