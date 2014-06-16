@@ -35,11 +35,12 @@ function getData($username, $data) {
 		'isMiddleCircleAdmin' => (!empty($access_levels['isMiddleCircleAdmin']) && array_key_exists($username, $access_levels['isMiddleCircleAdmin'])) ? true : false
 	);
 	
-
 	// create firebase token for user and include additional security info
 	$user_token = $tokenGen->createToken($auth_payload);
-
-
+	
+	$_SESSION['user_identifier'] = $username; // Store user's ID in SESSION if verified.
+	$_SESSION['user_token'] = $user_token; // Store user's Firebase token if verified.
+	
 	return array('success' => true, 'pid' => $username, "fname" => $data[0]["givenname"][0], "lname" => $data[0]["sn"][0], "auth" => $auth_payload, "token" => $user_token);
 }
 
@@ -68,7 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 	}
 
 	if (DISABLE_LDAP == true) {
-		$_SESSION['user_identifier'] = $_POST['pid']; // Store student's ID in SESSION if verified.
 		// just get user's data from Firebase without checking their LDAP password
 		$data = array( array( "givenname" => array("Fname"), "sn" => array("Lname")));
 		$result = getData($_POST['pid'], $data);
@@ -95,7 +95,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 			$data = ldap_get_entries($ldapconn, $search);
 
 			$result = getData($_POST['pid'], $data);
-			$_SESSION['user_identifier'] = $_POST['pid']; // Store student's ID in SESSION if verified.
 			ldap_unbind($ldapconn);
 		}
 		else
