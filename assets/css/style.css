@@ -614,7 +614,7 @@ td.day {
 	color: inherit;
 }
 
-.disable-editable {
+.disable-editable, .disable-editable:hover {
 	color: inherit;
     text-decoration: none;
     cursor: default;

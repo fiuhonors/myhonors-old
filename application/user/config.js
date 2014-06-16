@@ -17,7 +17,7 @@ angular.module('myhonorsUser').config(['$routeProvider', function($routeProvider
 			}).
 		when('/profile/:userId', {
 			templateUrl: 'application/user/profile-view.html', 
-			controller: 'ProfileCtrl',
+			controller: 'ProfileViewCtrl',
 			requireLogin: true, 
 			resolve: appResolve
 			}).
@@ -26,5 +26,11 @@ angular.module('myhonorsUser').config(['$routeProvider', function($routeProvider
 			controller: 'ProfileEditCtrl', 
 			requireLogin: true, 
 			resolve: appResolve
-			});
+			}).
+		when('/profile/:userId/projects/:projectId', {
+        templateUrl: 'application/user/project-view.html', 
+        controller: 'ProjectViewCtrl', 
+        requireLogin: true, 
+        resolve: appResolve
+        });
 }]);

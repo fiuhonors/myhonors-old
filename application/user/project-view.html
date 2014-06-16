@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="span4 well word-wrap">
+        <p> <b> From the Portfolio of: </b> </p>
+
+    
+        <img ng-src="{{user.profile.picture || 'http://placehold.it/90'}}" class="pull-left img-rounded img-polaroid">
+
+        <div class="pull-left" style="margin:5% 0 0 2%;">
+            <a href="#/profile/{{ pid }}"> <b> {{ user.fname }} {{ user.lname }} </b> </a> <br>
+            <b> Major: </b> {{ user.profile.major }} <br>
+            <b> Year: </b> {{ user.profile.year }} <br>
+        </div>
+    </div>
+    
+    <div class="span8 well">
+        
+        <span ng-class="chooseLabel(project.category)"> {{ project.category }} </span>
+        
+        <ul rn-carousel rn-carousel-indicator class="image text-center" ng-if="hasAssets( project )">
+          <li ng-repeat="asset in project.assets">
+                {{ asset.url }}
+                <img ng-src="{{ asset.url }}">
+          </li>
+        </ul>
+    
+        <h3 class="text-center"> {{ project.title }} </h3>
+        
+        <p> {{ project.description }} </p>  
+    </div>
+    
+</div>
