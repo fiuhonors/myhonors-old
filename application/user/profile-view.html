@@ -1,8 +1,28 @@
+<!--
+<div class="row">
+	<div style="width:420px; height:420px">
+		<div croppic id="cropContainerModal" style="width:100%;height:100%; position: relative; border:1px solid #ccc;"></div>
+	</div>
+</div>
+-->
+
+<div class="alert alert-danger" style="margin-bottom: 10px" ng-show="form.error" ng-bind-html-unsafe="form.error"></div>
+<form class="form" name="profilePictureForm">
+    <input type="hidden" name="coordinates" value="{{ cropImgCoordinates }}">
+    <input type='file' ng-model="profilePic" id="imgInp" onchange="angular.element(this).scope().showPreviewImg(this)">
+    <jcrop src="{{ previewImgSrc }}"  after-selection='setCropImgCoordinates(cords)'></jcrop>
+    
+    <button type="submit" class="btn btn-primary" ng-click="submitCroppedImg(profilePictureForm,cropImgCoordinates)"> Submit Crop </button>
+<!--    <button type="submit" class="btn btn-primary"> Submit Crop </button>-->
+</form>
+
 <div class="row-fluid">
 	<div class="span12">
 		<div class="hero-unit clearfix" style="padding: 15px;">
-			<img ng-src="{{user.profile.picture || 'http://placehold.it/140'}}" class="pull-left img-rounded img-polaroid" style="margin-top:15px;" />
-			<div class="pull-right">
+            <div style="position:relative;">
+                <img ng-src="{{ user.profile.picture.url || 'http://placehold.it/140'}}" class="pull-left img-rounded img-polaroid"         style="width:140px;height:140px;margin-top:15px;">
+			</div>
+            <div class="pull-right">
 				<h1 class="no-wrap">{{user.fname}} {{user.lname}}</h1>
 
 				<div class="pull-right">
@@ -98,7 +118,7 @@
 					<li ng-repeat="project in projects | orderBy:'createdAt':true" class="span3">
 						<div class="thumbnail word-wrap hover-icon" style="position:relative;" ng-click="goToProject(project)">
 							<span ng-class="chooseLabel(project.category)" style="position:absolute;"> {{ project.category }} </span>
-							<a><i class="icon fa fa-pencil" style="position:absolute;right:0;" ng-click="editProject($event,project)"></i></a>
+							<a><i class="icon fa fa-pencil" style="position:absolute;right:0;" ng-click="editProject($event,project)" ng-show="isAbleEdit"></i></a>
 							<a><img ng-src="{{project.picture || 'http://placehold.it/150'}}"  alt="Project picture" class="img-rounded"></a>
 							<b> {{ project.title | truncate:30 }}</b>
 							<br>
@@ -118,10 +138,26 @@
 	</div>
 </div>
 
-<!-- Modal -->
+
+<!-- Modal for choosing the profile picture-->
 <div modal="showProjectModal" close="closeModal()" options="modalOpts">
 	<div class="modal-header">
 		<button type="button" class="close" aria-hidden="true" ng-click="closeModal()">×</button>
+	</div>
+	<div class="modal-body">
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()">Cancel</button>
+	    <button type="submit" class="btn btn-primary" form="form">
+			Add Project
+		</button>
+	</div>
+</div>
+
+<!-- Modal for creating/editing project-->
+<div modal="showProjectModal" close="closeModal('project')" options="modalOpts" ng-show="showProjectModal">
+	<div class="modal-header">
+		<button type="button" class="close" aria-hidden="true" ng-click="closeModal('project')">×</button>
 		<h3 id="myModalLabel" ng-show="newProject">Add Project</h3>
 		<h3 id="myModalLabel" ng-show="!newProject">Edit Project</h3>
 	</div>
@@ -194,7 +230,7 @@
 		</form>
 	</div>
 	<div class="modal-footer">
-		<button class="btn" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()">Cancel</button>
+		<button class="btn" data-dismiss="modal" aria-hidden="true" ng-click="closeModal('project')">Cancel</button>
 	    <button type="submit" class="btn btn-primary" form="form" ng-click="addProject(form)" ng-show="newProject">
 			Add Project
 		</button>
@@ -203,3 +239,25 @@
 		</button>
 	</div>
 </div>
+
+<!-- Modal for changing the profile picture -->
+<div modal="showProfilePicModal" close="closeModal('profilePic')" options="modalOpts">
+	<div class="modal-header">
+		<button type="button" class="close" ng-click="closeModal('profilePic')">×</button>
+		<h3>Change Your Profile Picture</h3>
+	</div>
+	<div class="modal-body">
+        <div class="alert alert-danger" style="margin-bottom: 10px" ng-show="form.error" ng-bind-html-unsafe="form.error"></div>
+        <form class="form" name="profilePictureForm">
+            <input type="hidden" name="coordinates" value="{{ cropImgCoordinates }}">
+            <input type='file' ng-model="profilePic" id="imgInp" onchange="angular.element(this).scope().showPreviewImg(this)">
+            <jcrop src="{{ previewImgSrc }}"  after-selection='setCropImgCoordinates(cords)'></jcrop>
+        </form>
+    </div>
+	<div class="modal-footer">
+        <button type="submit" class="btn btn-primary" form="form" ng-click="submitCroppedImg(profilePictureForm,cropImgCoordinates)"> Submit Crop </button>
+		<button class="btn cancel" ng-click="closeModal('profilePic')">Cancel</button>
+	</div>
+</div>
+
+

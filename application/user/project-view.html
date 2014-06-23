@@ -1,31 +1,53 @@
 <div class="row">
     <div class="span4 well word-wrap">
         <p> <b> From the Portfolio of: </b> </p>
-
     
-        <img ng-src="{{user.profile.picture || 'http://placehold.it/90'}}" class="pull-left img-rounded img-polaroid">
+        <img ng-src="{{user.profile.picture.url || 'http://placehold.it/90'}}" class="pull-left img-rounded img-polaroid">
 
         <div class="pull-left" style="margin:5% 0 0 2%;">
             <a href="#/profile/{{ pid }}"> <b> {{ user.fname }} {{ user.lname }} </b> </a> <br>
             <b> Major: </b> {{ user.profile.major }} <br>
             <b> Year: </b> {{ user.profile.year }} <br>
         </div>
+        
+        <div class="clearfix"></div>
+        
+        <hr style="margin-top: 10px; margin-bottom: 10px">
+		<div class="row-fluid" ng-show="isAbleEdit">
+			<button class="btn span4" ng-click="confirmDelete()" style="width:100%;">Delete</button>
+		</div>
     </div>
     
     <div class="span8 well">
         
         <span ng-class="chooseLabel(project.category)"> {{ project.category }} </span>
         
-        <ul rn-carousel rn-carousel-indicator class="image text-center" ng-if="hasAssets( project )">
-          <li ng-repeat="asset in project.assets">
-                {{ asset.url }}
-                <img ng-src="{{ asset.url }}">
-          </li>
-        </ul>
-    
         <h3 class="text-center"> {{ project.title }} </h3>
         
+        <ul rn-carousel rn-carousel-indicator rn-carousel-control class="image text-center" ng-if="hasAssets( project )">
+            <li ng-repeat="asset in project.assets">
+                {{ asset.url }}
+                <img ng-src="{{ asset.url }}">
+            </li>
+        </ul>
+    
         <p> {{ project.description }} </p>  
     </div>
     
+</div>
+
+
+<!-- Modal -->
+<div modal="showDeleteConfirmation" close="cancelDelete()" options="modalOpts">
+	<div class="modal-header">
+		<button type="button" class="close" ng-click="cancelDelete()">×</button>
+		<h3>Are you sure you want to DELETE?</h3>
+	</div>
+	<div class="modal-body">
+		<p>This will <strong>permanently</strong> erase all data related to this project. Are you sure you want to do this?</p>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-danger" ng-click="doDelete()">Yes, DELETE the Project</button>
+		<button class="btn cancel" ng-click="cancelDelete()">Cancel</button>
+	</div>
 </div>

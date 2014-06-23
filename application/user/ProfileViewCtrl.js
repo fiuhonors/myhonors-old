@@ -16,6 +16,63 @@ angular.module('myhonorsUser').controller('ProfileViewCtrl', function EventBrows
             organizations: []
         }
     };
+    $scope.form = {};
+
+
+	/****** Testing for Croppic ******/
+	
+	//~ var cropperHeader = new Croppic('cropContainerHeader', cropperOptions);
+					//~ 
+	//~ var cropperOptions = {
+		//~ uploadUrl:'process-crop.php'
+	//~ }
+	
+	/*********************************/
+    
+    
+    /******************* Testing for jCrop *************/
+    
+    $scope.cropImgCoordinates;
+    $scope.setCropImgCoordinates = function( coordinates ) {
+        $scope.cropImgCoordinates = coordinates;
+        console.log( "Test", $scope.cropImgCoordinates );
+    };
+    
+    $scope.previewImgSrc = "";
+    function readURL( input ) {
+        if ( input.files && input.files[ 0 ] ) {
+            
+            $scope.picUpload = input.files[ 0 ];
+            
+            var reader = new FileReader();
+            
+            reader.onload = function ( e ) {
+                $scope.previewImgSrc = e.target.result;
+                $scope.$apply();
+            }
+            
+            reader.readAsDataURL( input.files[ 0 ] );
+        }
+    }
+    
+    $scope.showPreviewImg = function( input ) {
+        readURL( input );   
+    }
+    
+    $scope.submitCroppedImg = function( form, coordinates ) {
+        if ( coordinates == null )
+            alert( "Please crop part of the picture" );
+        console.log( form );
+        console.log( $scope.picUpload );
+        
+        $scope.uploader.addToQueue( $scope.picUpload, { name: $scope.picUpload.name , size:  $scope.picUpload.size, type:  $scope.picUpload.type } );
+        $scope.uploader.formData[ 0 ].coordinates = JSON.stringify( coordinates );
+        $scope.updateUploadUrl( "application/user/crop-image.php" );
+        $scope.updateUploadPath( $scope.pid + '/profile/picture/' );
+        $scope.uploader.uploadAll();
+    };
+    
+    /****************************************************/
 
     // Load the student's info and profile	
     UserService.exists($routeParams.userId, function(exists, result) {
@@ -71,22 +128,30 @@ angular.module('myhonorsUser').controller('ProfileViewCtrl', function EventBrows
 
         $scope.modalOpts = {
             backdropFade: true,
-            dialogFade: true
+            dialogFade: true,
+            windowClass: 'dynamic-modal'
         };
 
-        $scope.showModal = function() {
-            $scope.showProjectModal = true;
+        $scope.showModal = function( modalName ) {
+			if ( modalName === "project" ) {
+				$scope.showProjectModal = true;
+			}
         };
 
-        $scope.closeModal = function() {
-            $scope.showProjectModal = false;
-            $scope.currentProject = {};
-            $scope.newProject = false;
+        $scope.closeModal = function( modalName ) {
+			if ( modalName === "project" ) {
+	            $scope.showProjectModal = false;
+	            $scope.currentProject = {};
+	            $scope.newProject = false
+			}
+            else if ( modalName === "profilePicture" ) {
+                $scope.showProfilePicModal = false;   
+            }
         };
 
         $scope.newProjectModal = function() {
             $scope.newProject = true;
-            $scope.showModal();
+            $scope.showModal( "project" );
         };
 
         $scope.addProject = function(form) {
@@ -95,48 +160,54 @@ angular.module('myhonorsUser').controller('ProfileViewCtrl', function EventBrows
             }
 
             $scope.currentProject.createdAt = Date.now();
-            ProjectService.add($scope.pid, $scope.currentProject);
-            // TODO add updateUploadPath( .. )
+            var projectId = ProjectService.add($scope.pid, $scope.currentProject);
+            
+            $scope.updateUploadUrl( "application/user/file-upload.php" );
+            $scope.updateUploadPath( $scope.pid + '/profile/projects/' + projectId + '/assets/' );
             $scope.uploadSubmittedFiles();
             
-            $scope.closeModal();
+            $scope.closeModal( "project" );
         };
 
         $scope.editProject = function($event, project) {
             $scope.currentProject = project;
-            $scope.showModal();
+            $scope.showModal( "project" );
             
-            $event.stopPropagation();
+            $event.stopImmediatePropagation();
         };
 
         $scope.updateProject = function(form) {
             if ( form.$invalid) {
                 return;
             }
-            
-        //    var project = {
-              //  title: $scope.currentProject.title,
-              //  category: $scope.currentProject.category,
-             //   description: $scope.currentProject.description,
-            //    createdAt: $scope.currentProject.createdAt,
-              //  editedAt: Date.now()
-            //}
-            
+
             var project = JSON.parse( angular.toJson( $scope.currentProject ) );
 
             var projectId = $scope.currentProject.$id;
             ProjectService.update($scope.pid, projectId, project);
             
+            $scope.updateUploadUrl( "application/user/file-upload.php" );
             $scope.updateUploadPath( $scope.pid + '/profile/projects/' + projectId + '/assets/' );
             $scope.uploadSubmittedFiles();
 
-            $scope.closeModal();
+            $scope.closeModal( "project" );
+        };
+        
+        /******** Profile Picture *********/
+        
+        $scope.editProfilePicture = function() {
+            $scope.showProfilePicModal = true;
         };
     
+        
+        $scope.$watch( 'profile.picture.url', function( newVal, oldVal ) {
+           console.log( newVal ); 
+        });
     
 	    /* File Upload set up */
 	    
 	    $scope.fileUploadPath = "";
+	    $scope.numFilesAllowed = 2;  // The number of total files that a user can upload for a project
 	    
 	    // Create the file uploader with options
 	    var uploader = $scope.uploader = $fileUploader.create({
@@ -145,16 +216,25 @@ angular.module('myhonorsUser').controller('ProfileViewCtrl', function EventBrows
 	            formData: [
 					{
 						userId: $scope.pid,		// Send the user pid along with the file
-						path: 'testssssssssssss'
+						path: ''
 					}
 				],
 				removeAfterUpload: true,
 	            filters: [
 					//We use this filter to determine that the file uploaded is the correct type and file size
 	                function (item) {
-	                    var fileType = item.name.split('.').pop();
 	                    
 	                    $scope.form.error = "";
+	                    
+	                    if ( $scope.currentProject.hasOwnProperty( "assets" ) && $scope.currentProject.assets.length == $scope.numFilesAllowed ) {
+	                        $scope.form.error = "<strong>Sorry!</strong> You can only upload a total of " + $scope.numFilesAllowed + " files per project.";
+	                        return false;
+	                    }
+	                        
+	                    
+	                    var fileType = item.name.split('.').pop();
+	                    
+	                    
 	                    
 	                    //~ if (fileType !== 'doc' && fileType !== 'docx' && fileType !== 'pdf') {
 							//~ $scope.form.error = "<strong>Sorry!</strong> You can only upload Word or PDF files.";
@@ -175,6 +255,10 @@ angular.module('myhonorsUser').controller('ProfileViewCtrl', function EventBrows
 	        uploader.bind('success', function( event, xhr, item, result ) {
 				if (result.success === true) {
 						alert("The files has been succesfully submitted.");
+                        if ( result.newPath  ) {
+                            $scope.user.profile.picture.url = result.newPath;
+                            $scope.$apply();
+                        }
 				} 
 				else {
 						$scope.form.error = "<strong>Sorry!</strong> " + result.error;
@@ -189,6 +273,7 @@ angular.module('myhonorsUser').controller('ProfileViewCtrl', function EventBrows
 			 */
             uploader.bind('beforeupload', function( event, item ) {
                 item.formData = uploader.formData;
+                item.url = uploader.url;
                 var itemIndex = ( item.index - 1 );
                 itemIndex += ( $scope.currentProject.hasOwnProperty( "assets" ) ) ? $scope.currentProject.assets.length : 0;
                 item.formData[0].itemIndex =  itemIndex; 
@@ -202,6 +287,10 @@ angular.module('myhonorsUser').controller('ProfileViewCtrl', function EventBrows
          
          $scope.updateUploadPath = function( newPath ) {
              $scope.uploader.formData[ 0 ].path = newPath;
+         };
+        
+         $scope.updateUploadUrl = function( newUrl ) {
+              $scope.uploader.url = newUrl;
          };
          
          $scope.removeAsset = function( project, assetIndex, pathToAsset ) {

@@ -3,6 +3,7 @@
 angular.module('myhonorsUser').controller('ProjectViewCtrl', function EventBrowseCtrl($scope, $rootScope, $routeParams, $location, $timeout, FirebaseIO, UserService, ProjectService) {
     $scope.projectId = $routeParams.projectId;
     $scope.pid = $routeParams.userId;
+    $scope.isAbleEdit = ($scope.pid == UserService.profile.id || UserService.auth.isStaff) ? true : false; // Boolean that determines whether the user can edit this profile or not
     
     ProjectService.read( $scope.pid, $scope.projectId, function( data ) {
         $scope.project = data;
@@ -32,5 +33,26 @@ angular.module('myhonorsUser').controller('ProjectViewCtrl', function EventBrows
             
         return false;
     };
+    
+    
+    if ( $scope.isAbleEdit ) {
+		$scope.modalOpts = {
+			backdropFade: true,
+			dialogFade: true
+		};
+
+		$scope.confirmDelete = function() {
+			$scope.showDeleteConfirmation = true;
+		};
+
+		$scope.cancelDelete = function() {
+			$scope.showDeleteConfirmation = false;
+		};
+
+		$scope.doDelete = function() {
+			$scope.showDeleteConfirmation = false; // Close the deletion confirmation modal
+			$location.path( 'profile/' + $scope.pid );
+		};
+	}	
 
 });

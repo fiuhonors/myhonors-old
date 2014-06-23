@@ -610,12 +610,21 @@ td.day {
 }
 
 /* xEditable CSS */
-.inherit-color, .inherit-color:hover{
-	color: inherit;
+.inherit-color, .inherit-color:hover, .editable-empty, .editable-empty:hover, .editable-empty:focus {
+	color: inherit !important;
 }
 
 .disable-editable, .disable-editable:hover {
 	color: inherit;
     text-decoration: none;
     cursor: default;
+}
+
+
+
+
+.modal {
+    /* new custom width */
+    width: 100%;
+    height: 100%;
 }

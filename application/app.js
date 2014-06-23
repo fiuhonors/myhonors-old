@@ -20,7 +20,7 @@ angular.module('myhonors', [
 	'myhonorsCareer',
 	'myhonorsArch',
 	'ngTouch',
-	'angular-carousel'
+	'angular-carousel',
 ]);
 
 angular.module('myhonorsConfig', []);

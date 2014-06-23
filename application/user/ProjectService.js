@@ -38,6 +38,8 @@ angular.module('myhonorsUser').factory('ProjectService', function($q, $http, $ti
             ref.setPriority(projectObject.createdAt);
             
             FirebaseIO.child( 'projects/' + userId + "/" + ref.name() ).set( projectObject );
+            
+            return ref.name();
         },
         
         list: function( userId ) {
@@ -50,6 +52,10 @@ angular.module('myhonorsUser').factory('ProjectService', function($q, $http, $ti
             FirebaseIO.child( 'user_profiles/' + userId + '/profile/projects/' + id ).update( projectObject );
             FirebaseIO.child( 'projects/' + userId + "/" + id ).update( projectObject );
         },
+        
+        remove: function( userId, projectId ) {
+			
+		},
         
         getCategories: function( ) { 
             return projectCategories;
@@ -67,8 +73,18 @@ angular.module('myhonorsUser').factory('ProjectService', function($q, $http, $ti
         },
         
         removeAsset: function( userId, projectId, assetIndex, pathToAsset ) {
-            FirebaseIO.child( 'user_profiles/' + userId + '/profile/projects/' + projectId + '/assets/' + assetIndex ).remove();
             
+            var data = $.param( { 'pathToAsset' : pathToAsset } );
+            
+            $http.post('application/user/file-remove.php', data , { headers: { 'Content-Type' : 'application/x-www-form-urlencoded' } } ).success( function( result ) {
+                if ( result.success === true ) {
+					FirebaseIO.child( 'user_profiles/' + userId + '/profile/projects/' + projectId + '/assets/' + assetIndex ).remove();
+					FirebaseIO.child( 'projects/' + userId + "/" + projectId + '/assets/' + assetIndex ).remove();
+				}
+				else {
+					alert(result.error);
+				}
+            });
         }
     }
 });
