@@ -27,10 +27,16 @@ angular.module('myhonorsUser').config(['$routeProvider', function($routeProvider
 			requireLogin: true, 
 			resolve: appResolve
 			}).
+        when('/profile/:userId/profilepictureedit', {
+            templateUrl: 'application/user/profile-picture-edit.html', 
+            controller: 'ProfilePictureEditCtrl', 
+            requireLogin: true, 
+            resolve: appResolve
+        }).
 		when('/profile/:userId/projects/:projectId', {
-        templateUrl: 'application/user/project-view.html', 
-        controller: 'ProjectViewCtrl', 
-        requireLogin: true, 
-        resolve: appResolve
+            templateUrl: 'application/user/project-view.html', 
+            controller: 'ProjectViewCtrl', 
+            requireLogin: true, 
+            resolve: appResolve
         });
 }]);

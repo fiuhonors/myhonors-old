@@ -1,12 +1,17 @@
 'use strict';
 
-angular.module('myhonorsUser').controller('ProjectViewCtrl', function EventBrowseCtrl($scope, $rootScope, $routeParams, $location, $timeout, FirebaseIO, UserService, ProjectService) {
+angular.module('myhonorsUser').controller('ProjectViewCtrl', ['$scope', '$routeParams', '$location', '$timeout', 'UserService', 'ProjectService', function EventBrowseCtrl($scope, $routeParams, $location, $timeout, UserService, ProjectService) {
     $scope.projectId = $routeParams.projectId;
     $scope.pid = $routeParams.userId;
     $scope.isAbleEdit = ($scope.pid == UserService.profile.id || UserService.auth.isStaff) ? true : false; // Boolean that determines whether the user can edit this profile or not
     
     ProjectService.read( $scope.pid, $scope.projectId, function( data ) {
         $scope.project = data;
+        
+        if ( $scope.project.video && $scope.project.video.embed.length ) {
+            var embedCode = $scope.project.video.embed;
+            $scope.project.assets.push( { 'embed': embedCode } );
+        }
     });
     
     // Load the student's info and profile    
@@ -19,6 +24,7 @@ angular.module('myhonorsUser').controller('ProjectViewCtrl', function EventBrows
     });
     
     
+    
     /**
      * Get the appropiate CSS class for a project depending on its category
      */
@@ -29,6 +35,13 @@ angular.module('myhonorsUser').controller('ProjectViewCtrl', function EventBrows
     
     $scope.hasAssets = function( project ) {
         if( project.hasOwnProperty( "assets" ) )
+            return true;
+            
+        return false;
+    };
+    
+    $scope.hasFiles = function( project ) {
+        if( project.hasOwnProperty( "files" ) )
             return true;
             
         return false;
@@ -55,4 +68,4 @@ angular.module('myhonorsUser').controller('ProjectViewCtrl', function EventBrows
 		};
 	}	
 
-});
+}]);

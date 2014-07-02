@@ -558,6 +558,11 @@ td.day {
 .example-repeat-move-setup { }
 .example-repeat-move-setup.example-repeat-move-start { }
 
+.profile-picture {
+    width: 140px;
+    height: 140px;
+}
+
 
 /* Misc */
 
@@ -621,10 +626,3 @@ td.day {
 }
 
 
-
-
-.modal {
-    /* new custom width */
-    width: 100%;
-    height: 100%;
-}

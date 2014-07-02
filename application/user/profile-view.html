@@ -1,27 +1,10 @@
-<!--
-<div class="row">
-	<div style="width:420px; height:420px">
-		<div croppic id="cropContainerModal" style="width:100%;height:100%; position: relative; border:1px solid #ccc;"></div>
-	</div>
-</div>
--->
-
-<div class="alert alert-danger" style="margin-bottom: 10px" ng-show="form.error" ng-bind-html-unsafe="form.error"></div>
-<form class="form" name="profilePictureForm">
-    <input type="hidden" name="coordinates" value="{{ cropImgCoordinates }}">
-    <input type='file' ng-model="profilePic" id="imgInp" onchange="angular.element(this).scope().showPreviewImg(this)">
-    <jcrop src="{{ previewImgSrc }}"  after-selection='setCropImgCoordinates(cords)'></jcrop>
-    
-    <button type="submit" class="btn btn-primary" ng-click="submitCroppedImg(profilePictureForm,cropImgCoordinates)"> Submit Crop </button>
-<!--    <button type="submit" class="btn btn-primary"> Submit Crop </button>-->
-</form>
-
 <div class="row-fluid">
 	<div class="span12">
 		<div class="hero-unit clearfix" style="padding: 15px;">
-            <div style="position:relative;">
-                <img ng-src="{{ user.profile.picture.url || 'http://placehold.it/140'}}" class="pull-left img-rounded img-polaroid"         style="width:140px;height:140px;margin-top:15px;">
-			</div>
+                
+                <a href="#/profile/{{ pid }}/profilepictureedit"> 
+                   <img ng-src="{{ user.profile.picture.url || 'http://placehold.it/140'}}" class="pull-left img-rounded img-polaroid profile-picture">
+                </a>
             <div class="pull-right">
 				<h1 class="no-wrap">{{user.fname}} {{user.lname}}</h1>
 
@@ -46,61 +29,72 @@
 </div>
 
 <div class="row-fluid">
-	<div class="span12 well">
-		<h4>About Me</h4>
-		<a xeditable="updateProfile()" ng-model="user.profile.about" data-type="textarea" ng-class="{'inherit-color': isAbleEdit, 'disable-editable': !isAbleEdit}">{{user.profile.about}}</a>
+	<div class="span12">
+        <div class="box">
+            <div class="box-content padded">
+                <h4> <i class="fa fa-user"></i> About Me </h4>
+                <a xeditable="updateProfile()" ng-model="user.profile.about" data-type="textarea" ng-class="{'inherit-color': isAbleEdit, 'disable-editable': !isAbleEdit}">{{user.profile.about}} </a>
+            </div>
+        </div>
 	</div>
 </div>
 
 <div class="row-fluid">
 	<div class="span4">
 		<div class="row-fluid">
-			<div class="span12 well">
-				<h4 class="hover-icon">
-					Interests
-				</h4> 
-				
-				<div ng-repeat="(category,list) in user.profile.interests">
-					<div class="hover-icon">
-						<b> {{category}}
-							<a href class="icon" ng-show="isAbleEdit" ng-click="addItemToList(user.profile.interests[category])">
-							<i class="fa fa-plus"></i>
-							</a>
-						</b>
-					</div>
-					<ul>
-						<li ng-repeat="object in list" class="hover-icon">
-							<a xeditable="updateProfile()" ng-model="user.profile.interests[category][$index].value" ng-class="{'inherit-color': isAbleEdit, 'disable-editable': !isAbleEdit}">
-								{{object.value}} 
-							</a>
-							<a href class="icon" ng-show="isAbleEdit" ng-click="removeItemAtIndex(user.profile.interests[category], $index)">
-								<i class="fa fa-minus"></i>
-							</a>
-						</li>
-					</ul>
+			<div class="span12">
+                <div class="box">
+                    <div class="box-content padded">
+                        <h4 class="hover-icon"> <i class="fa fa-globe"></i> Interests </h4> 
+
+                        <div ng-repeat="(category,list) in user.profile.interests">
+                            <div class="hover-icon">
+                                <b> {{category}}
+                                    <a href class="icon" ng-show="isAbleEdit" ng-click="addItemToList(user.profile.interests[category])">
+                                    <i class="fa fa-plus"></i>
+                                    </a>
+                                </b>
+                            </div>
+                            <ul>
+                                <li ng-repeat="object in list" class="hover-icon">
+                                    <a xeditable="updateProfile()" ng-model="user.profile.interests[category][$index].value" ng-class="{'inherit-color': isAbleEdit, 'disable-editable': !isAbleEdit}">
+                                        {{object.value}} 
+                                    </a>
+                                    <a href class="icon" ng-show="isAbleEdit" ng-click="removeItemAtIndex(user.profile.interests[category], $index)">
+                                        <i class="fa fa-minus"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
 				</div>
-				
 			</div>
 		</div>
 		
 		<div class="row-fluid">
-			<div class="span12 well">
-				<h4 class="hover-icon">
-					Organizations
-					<a href class="icon" ng-show="isAbleEdit" ng-click="addItemToList(user.profile.organizations)">
-						<i class="fa fa-plus"></i>
-					</a>
-				</h4>
-				<ul>
-					<li ng-repeat="object in user.profile.organizations" class="hover-icon">
-						<a xeditable="updateProfile()" ng-model="user.profile.organizations[$index].value" ng-class="{'inherit-color': isAbleEdit, 'disable-editable': !isAbleEdit}">
-							{{object.value}} 
-						</a>
-						<a href class="icon" ng-show="isAbleEdit" ng-click="removeItemAtIndex(user.profile.organizations, $index)">
-							<i class="fa fa-minus"></i>
-						</a>
-					</li>
-				</ul>
+			<div class="span12">
+                <div class="box">
+                    <div class="box-content padded">
+                        <h4 class="hover-icon">
+                            <i class="fa fa-university">
+                            </i>
+                            Organizations
+                            <a href class="icon" ng-show="isAbleEdit" ng-click="addItemToList(user.profile.organizations)">
+                                <i class="fa fa-plus"></i>
+                            </a>
+                        </h4>
+                        <ul>
+                            <li ng-repeat="object in user.profile.organizations" class="hover-icon">
+                                <a xeditable="updateProfile()" ng-model="user.profile.organizations[$index].value" ng-class="{'inherit-color': isAbleEdit, 'disable-editable': !isAbleEdit}">
+                                    {{object.value}} 
+                                </a>
+                                <a href class="icon" ng-show="isAbleEdit" ng-click="removeItemAtIndex(user.profile.organizations, $index)">
+                                    <i class="fa fa-minus"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
 			</div>
 		</div>
 	</div>
@@ -108,31 +102,40 @@
 	
 	<div class="span8">
 		<div class="row-fluid">
-			<div class="span12 well">
-				<h4>Projects</h4>
+			<div class="span12">
+                <div class="box">
+                    <div class="box-content padded">
+				        <h4> <i class="fa fa-cubes"></i> Projects and Achievements </h4>
+                    </div>
+                </div>
 			</div>
 		</div>
+        
 		<div class="row-fluid">
-			<div class="span12 well">
-				<ul class="thumbnails projects">
-					<li ng-repeat="project in projects | orderBy:'createdAt':true" class="span3">
-						<div class="thumbnail word-wrap hover-icon" style="position:relative;" ng-click="goToProject(project)">
-							<span ng-class="chooseLabel(project.category)" style="position:absolute;"> {{ project.category }} </span>
-							<a><i class="icon fa fa-pencil" style="position:absolute;right:0;" ng-click="editProject($event,project)" ng-show="isAbleEdit"></i></a>
-							<a><img ng-src="{{project.picture || 'http://placehold.it/150'}}"  alt="Project picture" class="img-rounded"></a>
-							<b> {{ project.title | truncate:30 }}</b>
-							<br>
-							<div style="font-size:85%;"> {{ project.description | truncate:70 }}</div>
-						</div>
-					</li>
-					
-					<li class="span3" ng-show="isAbleEdit">
-						<a role="button" data-toggle="modal" class="thumbnail" ng-click="newProjectModal()">
-							<i class="fa fa-plus-circle fa-5x"></i>
-							<h5>Add a New Project</h5>
-						</a>
-					</li>
-				</ul>
+			<div class="span12">
+                <div class="box">
+                    <div class="box-content padded">
+                        <ul class="thumbnails projects">
+                            <li ng-repeat="project in projects | orderBy:'createdAt':true" class="span3">
+                                <div class="thumbnail word-wrap hover-icon" style="position:relative;" ng-click="goToProject(project)">
+                                    <span ng-class="chooseLabel(project.category)" style="position:absolute;"> {{ project.category }} </span>
+                                    <a><i class="icon fa fa-pencil" style="position:absolute;right:0;" ng-click="editProject($event,project.$index)" ng-show="isAbleEdit"></i></a>
+                                    <a><img ng-src="{{project.assets[0].url || 'http://placehold.it/150'}}"  alt="Project picture" class="img-rounded" style="width:150px;height:150px;"></a>
+                                    <b> {{ project.title | truncate:30 }}</b>
+                                    <br>
+                                    <div style="font-size:85%;"> {{ project.description | truncate:70 }}</div>
+                                </div>
+                            </li>
+
+                            <li class="span3" ng-show="isAbleEdit">
+                                <a role="button" data-toggle="modal" class="thumbnail" ng-click="newProjectModal()">
+                                    <i class="fa fa-plus-circle fa-5x"></i>
+                                    <h5>Add a New Project</h5>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
 			</div>
 		</div>
 	</div>
@@ -155,9 +158,9 @@
 </div>
 
 <!-- Modal for creating/editing project-->
-<div modal="showProjectModal" close="closeModal('project')" options="modalOpts" ng-show="showProjectModal">
+<div modal="showProjectModal" close="closeModal()" options="modalOpts" ng-show="showProjectModal">
 	<div class="modal-header">
-		<button type="button" class="close" aria-hidden="true" ng-click="closeModal('project')">×</button>
+		<button type="button" class="close" aria-hidden="true" ng-click="closeModal()">×</button>
 		<h3 id="myModalLabel" ng-show="newProject">Add Project</h3>
 		<h3 id="myModalLabel" ng-show="!newProject">Edit Project</h3>
 	</div>
@@ -182,55 +185,105 @@
 					<textarea type="text" rows="3" cols="10" ng-model="currentProject.description" placeholder="Description of your project" style="width: 70%" required></textarea>
 				</div>
 				
-				<div class="control-group space-below">
-                    <label>Documents uploaded: </label>
-                    <ul>
-                        <li ng-repeat="asset in currentProject.assets" class="hover-icon">
-                            {{ asset.filename }} uploaded on {{ asset.createdAt | date:'medium' }}
-                            <a href class="icon icon-remove" ng-click="removeAsset( currentProject, $index, asset.url )">
-                            </a>
-                        </li>
-                    </ul>
-                </div>
 				
 				<br>
+            
+                <div class="btn-group space-below" data-toggle="buttons-radio">
+<!--
+                    <label class="btn btn-default" ng-click="showPictureUpload()">
+                        <input type="radio" id="picture">
+                        <i class="fa fa-picture-o"></i> Pictures
+                    </label>
+                    <label class="btn btn-default" ng-click="showDocumentUpload()">
+                        <input type="radio" id="documents">
+                        <i class="fa fa-pencil-square-o"></i> Documents
+                    </label>
+-->
+                    <button class="btn btn-mini" ng-click="showPictureUpload()" ng-class="{'active': showPictureUploadForm}"> <i class="fa fa-picture-o"></i> Pictures </button>
+                    <button class="btn btn-mini" ng-click="showVideoInput()" ng-class="{'active': showVideoInputForm}"> <i class="fa fa-video-camera"></i> Videos </button>
+                    <button class="btn btn-mini" ng-click="showDocumentUpload()" ng-class="{'active': showDocumentUploadForm}"> <i class="fa fa-pencil-square-o"></i> Documents </button>
+                </div>
+                
 				
-				<div class="control-group space-below">
-					<label>Please upload the files:</label>
-					<span class="btn btn-success fileinput-button" ng-disabled="uploader.queue.length == 4">
+				<div class="control-group space-below" ng-show="showPictureUploadForm || showDocumentUploadForm" >
+                    
+                    <div class="control-group space-below" ng-show="showPictureUploadForm && hasAssets(currentProject)">
+                        Pictures uploaded:
+                        <ul>
+                            <li ng-repeat="(index,asset) in currentProject.assets" class="hover-icon">
+                                {{ asset.filename }} uploaded on {{ asset.createdAt | date:'medium' }}
+                                <a href class="icon icon-remove" ng-click="removeAsset( currentProject, index, asset.url )">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="control-group space-below" ng-show="showDocumentUploadForm && hasFiles(currentProject)">
+                        Documents uploaded:
+                        <ul>
+                            <li ng-repeat="(index,file) in currentProject.files" class="hover-icon">
+                                {{ file.filename }} uploaded on {{ file.createdAt | date:'medium' }}
+                                <a href class="icon icon-remove" ng-click="removeFile( currentProject, index, file.url )">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    
+					<label>
+                        Please upload your 
+                        <span ng-show="showPictureUploadForm"> pictures: </span>
+                        <span ng-show="showDocumentUploadForm"> documents: </span>
+                    </label>
+					<span class="btn btn-small btn-success fileinput-button space-below" ng-disabled="uploader.queue.length == 4">
 		                    <i class="glyphicon glyphicon-plus"></i>
 		                    <span>Add file...</span>
 							<input ng-file-select type="file" >                
 					</span>
-				</div>
 				
-				<div class="alert alert-danger" style="margin-bottom: 10px" ng-show="form.error" ng-bind-html-unsafe="form.error"></div>
 				
-				<table class="table">
-	                        <thead>
-	                            <tr>
-	                                <th width="50%">Name</th>
-	                                <th ng-show="uploader.isHTML5">Size</th>
-	                                <th>Actions</th>
-	                            </tr>
-	                        </thead>
-	                        <tbody>
-	                            <tr ng-repeat="item in uploader.queue">
-	                                <td><strong>{{ item.file.name }}</strong></td>
-	                                <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
-	
-	                                <td nowrap>
-	                                    <button type="button" class="btn btn-danger btn-small" ng-click="item.remove()">
-	                                        <span class="glyphicon glyphicon-trash"></span> Remove
-	                                    </button>
-	                                </td>
-	                            </tr>
-	                        </tbody>
-	              </table>
+                    <div class="alert alert-danger" style="margin-bottom: 10px" ng-show="form.error" ng-bind-html-unsafe="form.error"></div>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th width="50%">Name</th>
+                                <th ng-show="uploader.isHTML5">Size</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in uploader.queue">
+                                <td><strong>{{ item.file.name }}</strong></td>
+                                <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+
+                                <td nowrap>
+                                    <button type="button" class="btn btn-danger btn-small" ng-click="item.remove()">
+                                        <span class="glyphicon glyphicon-trash"></span> Remove
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="control-group space-below">
+	                   <button class="btn btn-small btn-primary" ng-disabled="!uploader.getNotUploadedItems().length" ng-click="uploadSubmittedFiles()">
+	                       <span class="glyphicon glyphicon-upload" ng-show="showPictureUploadForm"> Upload Pictures </span>
+                           <span class="glyphicon glyphicon-upload" ng-show="showDocumentUploadForm"> Upload Documents </span>
+	                   </button>
+				    </div>
+                    
+                </div>
+            
+                <div class="control-group space-below" ng-show="showVideoInputForm" >
+                    Please input the YouTube URL of the video you wish to add:
+                    <input type="text" ng-model="currentProject.video.url" ng-change="currentProject.video.embed=createEmbedCode( currentProject.video.url )">
+                    <button > Add </button>
+                </div>
 		</form>
 	</div>
 	<div class="modal-footer">
-		<button class="btn" data-dismiss="modal" aria-hidden="true" ng-click="closeModal('project')">Cancel</button>
+		<button class="btn" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()">Cancel</button>
 	    <button type="submit" class="btn btn-primary" form="form" ng-click="addProject(form)" ng-show="newProject">
 			Add Project
 		</button>
@@ -239,25 +292,3 @@
 		</button>
 	</div>
 </div>
-
-<!-- Modal for changing the profile picture -->
-<div modal="showProfilePicModal" close="closeModal('profilePic')" options="modalOpts">
-	<div class="modal-header">
-		<button type="button" class="close" ng-click="closeModal('profilePic')">×</button>
-		<h3>Change Your Profile Picture</h3>
-	</div>
-	<div class="modal-body">
-        <div class="alert alert-danger" style="margin-bottom: 10px" ng-show="form.error" ng-bind-html-unsafe="form.error"></div>
-        <form class="form" name="profilePictureForm">
-            <input type="hidden" name="coordinates" value="{{ cropImgCoordinates }}">
-            <input type='file' ng-model="profilePic" id="imgInp" onchange="angular.element(this).scope().showPreviewImg(this)">
-            <jcrop src="{{ previewImgSrc }}"  after-selection='setCropImgCoordinates(cords)'></jcrop>
-        </form>
-    </div>
-	<div class="modal-footer">
-        <button type="submit" class="btn btn-primary" form="form" ng-click="submitCroppedImg(profilePictureForm,cropImgCoordinates)"> Submit Crop </button>
-		<button class="btn cancel" ng-click="closeModal('profilePic')">Cancel</button>
-	</div>
-</div>
-
-

@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('myhonorsUser').factory('ProjectService', function($q, $http, $timeout, FirebaseIO, FirebaseCollection) {
+angular.module('myhonorsUser').factory('ProjectService', ['$q', '$http', '$timeout', 'FirebaseIO', 'FirebaseCollection', function($q, $http, $timeout, FirebaseIO, FirebaseCollection) {
     
 	var categoriesRef = FirebaseIO.child( 'system_settings/projectCategories' );
  	var projectCategories = FirebaseCollection( categoriesRef );
@@ -37,7 +37,7 @@ angular.module('myhonorsUser').factory('ProjectService', function($q, $http, $ti
             var ref =  FirebaseIO.child( 'user_profiles/' + userId + '/profile/projects/').push(projectObject);
             ref.setPriority(projectObject.createdAt);
             
-            FirebaseIO.child( 'projects/' + userId + "/" + ref.name() ).set( projectObject );
+            FirebaseIO.child( 'projects/' + userId + "/" + ref.name() ).push( projectObject );
             
             return ref.name();
         },
@@ -72,14 +72,15 @@ angular.module('myhonorsUser').factory('ProjectService', function($q, $http, $ti
 			return "label label-" + label;     
         },
         
-        removeAsset: function( userId, projectId, assetIndex, pathToAsset ) {
+        // Precondition: fileCategory is 'assets' or 'files'
+        removeFile: function( userId, projectId, fileIndex, fileCategory, pathToFile ) {
             
-            var data = $.param( { 'pathToAsset' : pathToAsset } );
+            var data = $.param( { 'pathToFile' : pathToFile } );
             
             $http.post('application/user/file-remove.php', data , { headers: { 'Content-Type' : 'application/x-www-form-urlencoded' } } ).success( function( result ) {
                 if ( result.success === true ) {
-					FirebaseIO.child( 'user_profiles/' + userId + '/profile/projects/' + projectId + '/assets/' + assetIndex ).remove();
-					FirebaseIO.child( 'projects/' + userId + "/" + projectId + '/assets/' + assetIndex ).remove();
+					FirebaseIO.child( 'user_profiles/' + userId + '/profile/projects/' + projectId + '/' + fileCategory + '/' + fileIndex ).remove();
+					FirebaseIO.child( 'projects/' + userId + "/" + projectId + '/' + fileCategory + '/' + fileIndex ).remove();
 				}
 				else {
 					alert(result.error);
@@ -87,4 +88,4 @@ angular.module('myhonorsUser').factory('ProjectService', function($q, $http, $ti
             });
         }
     }
-});
+}]);

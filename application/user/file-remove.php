@@ -11,24 +11,26 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] !== 'POST' ) {
     die();
 }
 
-if ( !isset( $_POST[ 'pathToAsset' ] ) ) {
+if ( !isset( $_POST[ 'pathToFile' ] ) ) {
     $result = array( 'success' => false, 'error' => "The path to the file is not defined." );
     echo json_encode( $result );
     die();
 }
 
-$pathToAsset = $_POST[ 'pathToAsset' ];
+$pathToFile = $_POST[ 'pathToFile' ];
 
-if ( !startsWith( $pathToAsset, '/uploads/' ) ) {
+if ( !startsWith( $pathToFile, '/uploads/' ) ) {
     $result = array( 'success' => false, 'error' => "The path to the file is not properly formatted." );
     echo json_encode( $result );
     die();
 }
 
-$pathToAsset = $_SERVER[ 'DOCUMENT_ROOT' ] . $pathToAsset;
+$pathToFile = $_SERVER[ 'DOCUMENT_ROOT' ] . $pathToFile;
 
-if ( is_readable( $pathToAsset ) ) 
-	$file_deleted = unlink( $pathToAsset );
+$file_deleted = NULL;
+
+if ( is_readable( $pathToFile ) ) 
+	$file_deleted = unlink( $pathToFile );
 	
 if ( $file_deleted ) {
 	$result = array( 'success' => true );
