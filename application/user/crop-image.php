@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * The following script crops part of an image by the specified coordinates and saves it to the specified path.
+ */
+
 require_once "../../config.php"; // Include all the necessary Firebase config variables
 include_once "../../auth/FirebaseToken.php";
 require_once '../lib/firebaseLib/firebaseLib.php';

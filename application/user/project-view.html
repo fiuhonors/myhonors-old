@@ -53,18 +53,11 @@
                 <h3 class="text-center"> {{ project.title }} </h3>
 
                 <ul rn-carousel rn-carousel-indicator rn-carousel-control class="image text-center" ng-if="hasAssets( project ) || project.video.embed.length">
-<!--
-                    <li ng-bind-html-unsafe="project.video.embed">
-                    </li>
--->
                     <li ng-repeat="asset in project.assets">
                         {{ asset.url }}
                         <img ng-src="{{ asset.url }}" ng-show="asset.url.length">
                         <span ng-bind-html-unsafe="asset.embed" ng-show="asset.embed.length"></span>
                     </li>
-                    
-                    
-                    
                 </ul>
 
 
@@ -85,7 +78,7 @@
 		<p>This will <strong>permanently</strong> erase all data related to this project. Are you sure you want to do this?</p>
 	</div>
 	<div class="modal-footer">
-		<button class="btn btn-danger" ng-click="doDelete()">Yes, DELETE the Project</button>
+		<button class="btn btn-danger" ng-click="deleteProject()">Yes, DELETE the Project</button>
 		<button class="btn cancel" ng-click="cancelDelete()">Cancel</button>
 	</div>
 </div>

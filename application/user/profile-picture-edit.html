@@ -1,12 +1,14 @@
 <div class="row">
     <div class="span12 well">
         <h3> <i class="fa fa-picture-o"></i> Change Your Profile Picture </h3>
-        <div class="alert alert-danger" style="margin-bottom: 10px" ng-show="form.error" ng-bind-html-unsafe="form.error">
+        Please upload a picture and then select the area of the picture you wish to make your profile pictue.
+        
+        <div class="alert alert-danger" style="margin: 7px 0px;" ng-show="form.error" ng-bind-html-unsafe="form.error">
         </div>
         
         <form class="form" name="profilePictureForm">
             <input type="hidden" name="coordinates" value="{{ cropImgCoordinates }}">
-            <input type='file' ng-model="profilePic" id="imgInp" onchange="angular.element(this).scope().showPreviewImg(this)">
+            <input type='file' ng-model="profilePic" id="imgInput" onchange="angular.element(this).scope().showPreviewImg(this)">
             
             <div style="width: 100%">
                 <jcrop src="{{ previewImgSrc }}"  jcrop-center-image after-selection='setCropImgCoordinates(cords)'></jcrop>
@@ -16,7 +18,7 @@
         <button type="submit" form="form" class="btn btn-primary" ng-click="submitCroppedImg(profilePictureForm,cropImgCoordinates)"> 
             <i class="fa fa-upload">
             </i>
-            Submit Crop 
+            Update Profile Picture 
         </button>
     </div>
 </div>

@@ -16,26 +16,34 @@ angular.module('myhonorsUser').controller('ProfilePictureEditCtrl', ['$scope', '
     };
     
     $scope.showPreviewImg = function( input ) {
-        readURL( input );   
+        $scope.readURL( input );   
     }
         
     /*
      * Accepts an input element from a form that contains a file (which should be an image), read its data and store the URL representing 
      * the images's data as base64 encoded string
      */
-    function readURL( input ) {
+    $scope.readURL = function( input ) {
         if ( input.files && input.files[ 0 ] ) {
             
-            $scope.picUpload = input.files[ 0 ];
+            // Verify whether the file uploaded is a valid image
+            $scope.form.error = "";
+            var fileType = input.files[ 0 ].name.split('.').pop();
+            if (fileType !== 'jpg' && fileType !== 'jpeg' && fileType !== 'png' && fileType !== 'gif')
+                $scope.form.error = "<strong>Sorry!</strong> You can only upload JPG, GIF, PDF and PNG file formats.";
             
-            var reader = new FileReader();
+            // Store the uploaded picture
+            $scope.uploadedPicture = input.files[ 0 ];
             
+            
+            // Set up the FIleReader so that the uploaded image can read and a preview of it can be shown
+            var reader = new FileReader();            
             reader.onload = function ( e ) {
                 $scope.previewImgSrc = e.target.result;
                 $scope.$apply();
             }
             
-            reader.readAsDataURL( input.files[ 0 ] );
+            reader.readAsDataURL( $scope.uploadedPicture );
         }
     }
     
@@ -47,7 +55,7 @@ angular.module('myhonorsUser').controller('ProfilePictureEditCtrl', ['$scope', '
             alert( "Please crop part of the picture before uploading it." );
         
         // Add the File object to the uploader queue as well as its info
-        $scope.uploader.addToQueue( $scope.picUpload, { name: $scope.picUpload.name , size:  $scope.picUpload.size, type:  $scope.picUpload.type } );
+        $scope.uploader.addToQueue( $scope.uploadedPicture, { name: $scope.uploadedPicture.name , size:  $scope.uploadedPicture.size, type:  $scope.uploadedPicture.type } );
         $scope.uploader.formData[ 0 ].coordinates = JSON.stringify( coordinates ); // Pass the cropping coordinates as a JSON string
         $scope.uploader.uploadAll();
     };
@@ -66,38 +74,15 @@ angular.module('myhonorsUser').controller('ProfilePictureEditCtrl', ['$scope', '
                 coordinates: ''
             }
         ],
-        removeAfterUpload: true,
-        filters: [
-            // This filter determines that the file uploaded is the correct type and file size
-            function (item) {
-
-                $scope.form.error = "";
-
-                var fileType = item.name.split('.').pop();
-
-                if (fileType !== 'jpg' && fileType !== 'jpeg' && fileType !== 'png' && fileType !== 'gif') {
-                    $scope.form.error = "<strong>Sorry!</strong> You can only upload JPG, GIF, PDF and PNG file formats.";
-                    return false;
-                }
-
-                else if (item.size > 8388608) {
-                    $scope.form.error = "<strong>Sorry!</strong> The limit file size is 8 megabytes.";
-                    return false;
-                }
-
-                return true;
-            }
-        ]
+        removeAfterUpload: true
     });
     
     // If the file upload is sucessful redirect the user back to his profile
     uploader.bind( 'success', function( event, xhr, item, result ) {
-        if ( result.success === true ) {
-                $location.path( 'profile/' + $scope.pid );
-        } 
-        else {
-                $scope.form.error = "<strong>Sorry!</strong> " + result.error;
-        }
+        if ( result.success === true )
+            $location.path( 'profile/' + $scope.pid );
+        else 
+            $scope.form.error = "<strong>Sorry!</strong> " + result.error;
     } ); 
     
     /*

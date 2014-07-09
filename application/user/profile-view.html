@@ -120,7 +120,7 @@
                                 <div class="thumbnail word-wrap hover-icon" style="position:relative;" ng-click="goToProject(project)">
                                     <span ng-class="chooseLabel(project.category)" style="position:absolute;"> {{ project.category }} </span>
                                     <a><i class="icon fa fa-pencil" style="position:absolute;right:0;" ng-click="editProject($event,project.$index)" ng-show="isAbleEdit"></i></a>
-                                    <a><img ng-src="{{project.assets[0].url || 'http://placehold.it/150'}}"  alt="Project picture" class="img-rounded" style="width:150px;height:150px;"></a>
+                                    <a><img ng-src="{{getFirstAssetUrl(project) || 'http://placehold.it/150'}}"  alt="Project picture" class="img-rounded" style="width:150px;height:150px;"></a>
                                     <b> {{ project.title | truncate:30 }}</b>
                                     <br>
                                     <div style="font-size:85%;"> {{ project.description | truncate:70 }}</div>
@@ -267,9 +267,21 @@
                     </table>
                     
                     <div class="control-group space-below">
-	                   <button class="btn btn-small btn-primary" ng-disabled="!uploader.getNotUploadedItems().length" ng-click="uploadSubmittedFiles()">
-	                       <span class="glyphicon glyphicon-upload" ng-show="showPictureUploadForm"> Upload Pictures </span>
-                           <span class="glyphicon glyphicon-upload" ng-show="showDocumentUploadForm"> Upload Documents </span>
+	                   <button class="btn btn-small btn-primary" ng-show="uploader.getNotUploadedItems().length" ng-click="uploadSubmittedFiles()">
+                           <i class="fa fa-upload">
+                           </i>
+	                       <span class="glyphicon glyphicon-upload" ng-show="showPictureUploadForm && uploader.getNotUploadedItems().length == 1"> 
+                               Upload Picture 
+                           </span>
+                           <span class="glyphicon glyphicon-upload" ng-show="showPictureUploadForm && uploader.getNotUploadedItems().length > 1"> 
+                               Upload Pictures 
+                           </span>
+                           <span class="glyphicon glyphicon-upload" ng-show="showDocumentUploadForm && uploader.getNotUploadedItems().length == 1"> 
+                               Upload Document 
+                           </span>
+                           <span class="glyphicon glyphicon-upload" ng-show="showDocumentUploadForm && uploader.getNotUploadedItems().length > 1"> 
+                               Upload Documents 
+                           </span>
 	                   </button>
 				    </div>
                     

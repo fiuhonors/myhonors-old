@@ -104,23 +104,31 @@ angular.module('myhonorsUser').controller('ProfileViewCtrl', ['$scope', '$rootSc
             $scope.showModal();
         };
 
+        /*
+         * Besides creating a new project, this method must make another check: the user is able to upload files to his project before he actually 
+         * creates a new project. For this reason, this method must check whether the project has already been created during the 'Add Project' modal.
+         * If it has, then simply update the project in Firebase with any changes that the user might have made to the project info after uploading 
+         * the file(s). Otherwise, simply create the project.
+         */
         $scope.addProject = function( form ) {
             if ( form.$invalid ) {
                 return;
             }
 
-            $scope.currentProject.createdAt = Date.now(); // Store the time when the project was created
-            var projectId = ProjectService.add($scope.pid, $scope.currentProject); // Add the project 
+            // Transform the project object to JSON and then parse it into an object again to delete files like $id, etc. that cause problems with Firebase
+            var project = JSON.parse( angular.toJson( $scope.currentProject ) );
             
-//            $scope.updateUploadUrl( "application/user/file-upload.php" );
-//            $scope.updateUploadPath( $scope.pid + '/profile/projects/' + projectId + '/assets/' );
-            $scope.uploadSubmittedFiles();
+            if ( ! $scope.currentProject.hasOwnProperty( "$id" ) ) {
+                project.createdAt = Date.now(); // Store the time when the project was created
+                var projectId = ProjectService.add( $scope.pid, project ); // Add the project 
+            }
+            else
+                ProjectService.update($scope.pid, $scope.currentProject.$id, project);
             
             $scope.closeModal();
         };
 
         $scope.editProject = function( $event, projectIndex ) {
-//            $scope.currentProject = project;
             $scope.currentProjectIndex = projectIndex;
             $scope.currentProject = $scope.projects[ projectIndex ]; // Get the selected project's info
 
@@ -140,10 +148,6 @@ angular.module('myhonorsUser').controller('ProfileViewCtrl', ['$scope', '$rootSc
             var projectId = $scope.currentProject.$id;
             ProjectService.update($scope.pid, projectId, project);
             
-//            $scope.updateUploadUrl( "application/user/file-upload.php" );
-//            $scope.updateUploadPath( $scope.pid + '/profile/projects/' + projectId + '/assets/' );
-            $scope.uploadSubmittedFiles();
-
             $scope.closeModal();
         };
         
@@ -163,7 +167,19 @@ angular.module('myhonorsUser').controller('ProfileViewCtrl', ['$scope', '$rootSc
             return false;
         };
         
-        // The following variables are used to keep track whether the use is uploading a picture, a document or inputting a video URL
+        /*
+         * Returns a project' first asset's url. This is used when iterating through the user's projects so that their projects thumbnails 
+         * show one of his or her pictures ( if any exists )
+         */
+        $scope.getFirstAssetUrl = function( project ) {
+            if ( ! project.hasOwnProperty( "assets" ) ) 
+                return null;
+            
+            for ( var assetId in project.assets )
+                   return project.assets[ assetId ].url;
+        };
+        
+        // The following variables are used to keep track whether the user is uploading a picture, a document or inputting a video URL
         $scope.showPictureUploadForm = false;
         $scope.showDocumentUploadForm = false;
         $scope.showVideoInputForm = false;
@@ -197,8 +213,6 @@ angular.module('myhonorsUser').controller('ProfileViewCtrl', ['$scope', '$rootSc
             $scope.showDocumentUploadForm = false;
             $scope.form.error = "";
         };
-        
-        
     
         /*
          * This function is able to parse a variety of different YouTube links and extract the video's id
@@ -253,6 +267,7 @@ angular.module('myhonorsUser').controller('ProfileViewCtrl', ['$scope', '$rootSc
 
                     $scope.form.error = "";
 
+                        // This code will used to limit the number of files and assets a user can do per project
 //	                    if ( $scope.currentProject.hasOwnProperty( "assets" ) && $scope.currentProject.assets.length == $scope.numFilesAllowed ) {
 //	                        $scope.form.error = "<strong>Sorry!</strong> You can only upload a total of " + $scope.numFilesAllowed + " files per project.";
 //	                        return false;
@@ -295,13 +310,8 @@ angular.module('myhonorsUser').controller('ProfileViewCtrl', ['$scope', '$rootSc
         uploader.bind( 'beforeupload', function( event, item ) {
             item.formData = uploader.formData; // Set the item's formData to be the same to the 
             item.url = uploader.url;           // Set the item's upload URL to be the same as the uploader's
-            var itemIndex = ( item.index - 1 );
-
-            if ( $scope.showPictureUploadForm )
-                itemIndex += ( $scope.currentProject.hasOwnProperty( "assets" ) ) ? $scope.currentProject.assets.length : 0;
-            else if ( $scope.showDocumentUploadForm )
-                itemIndex += ( $scope.currentProject.hasOwnProperty( "files" ) ) ? $scope.currentProject.files.length : 0;
-
+ 
+            var itemIndex = Date.now();
             item.formData[ 0 ].itemIndex =  itemIndex; 
         } ); 
 
@@ -309,24 +319,36 @@ angular.module('myhonorsUser').controller('ProfileViewCtrl', ['$scope', '$rootSc
           * Check to see whether the PHP upload file was succesful or not by what it returned.
           */
          uploader.bind( 'success', function( event, xhr, item, result ) {
-            if ( result.success === true ) {
-                //alert( "The files has been succesfully submitted." );
+            if ( result.success === true ) {                
+                // TODO find better way to determine if the file being added is an asset or a general file
+                var fileCategory;
+                if ( $scope.showPictureUploadForm )
+                    fileCategory = 'assets';
+                else if ( $scope.showDocumentUploadForm )
+                    fileCategory = 'files';
+                
+                // Update Firebase so that it holds the reference to this new uploaded file
+                ProjectService.addFile( $scope.pid, $scope.currentProject.$id, result.fileId, fileCategory, JSON.parse( result.fileObject ) );
             } 
-            else {
+            else 
                 $scope.form.error = "<strong>Sorry!</strong> " + result.error;
-            }
-
-
          } ); 
 
-
-         uploader.bind( 'completeall', function( event, items ) {
-            $scope.uploader._nextIndex = 0;
-         } );
-
-
-
+         /*
+          * Besides uploading all the files in the queue this method must do another check: it is possible that the user uploads a file or asset
+          * during the creation of a project. In such a case, the project must first be created in Firebase and the files would then be uploaded.
+          */
          $scope.uploadSubmittedFiles = function() {
+             if ( ! $scope.currentProject.hasOwnProperty( "$id" ) ) {
+                 $scope.currentProject.createdAt = Date.now(); // Store the time when the project was created
+                 var projectId = ProjectService.add($scope.pid, $scope.currentProject); // Add the project 
+
+                 $scope.updateUploadPath( $scope.pid + '/profile/projects/' + projectId + '/assets/' );
+                 ProjectService.read( $scope.pid, projectId, function( data ) {
+                     $scope.currentProject = data;
+                 } );
+             }
+
              if ( $scope.uploader.queue.length > 0 )
                  $scope.uploader.uploadAll();
          };
@@ -339,14 +361,14 @@ angular.module('myhonorsUser').controller('ProfileViewCtrl', ['$scope', '$rootSc
               $scope.uploader.url = newUrl;
          };
 
-         $scope.removeAsset = function( project, assetIndex, pathToAsset ) {
-             project.assets.splice( assetIndex, 1 );
-             ProjectService.removeFile( $scope.pid, project.$id, assetIndex, 'assets', pathToAsset );
+         $scope.removeAsset = function( project, assetId, pathToAsset ) {
+             delete project.assets[ assetId ];
+             ProjectService.removeFile( $scope.pid, project.$id, assetId, 'assets', pathToAsset );
          };
 
-        $scope.removeFile = function( project, fileIndex, pathToFile ) {
-             project.files.splice( fileIndex, 1 );
-             ProjectService.removeFile( $scope.pid, project.$id, fileIndex, 'files', pathToFile );
+        $scope.removeFile = function( project, fileId, pathToFile ) {
+             delete project.files[ fileId ];
+             ProjectService.removeFile( $scope.pid, project.$id, fileId, 'files', pathToFile );
          };
 
     }

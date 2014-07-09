@@ -8,9 +8,17 @@ angular.module('myhonorsUser').controller('ProjectViewCtrl', ['$scope', '$routeP
     ProjectService.read( $scope.pid, $scope.projectId, function( data ) {
         $scope.project = data;
         
+        /*
+         * Below a small hack is made so that the uploaded video can be shown with ng-carousel. To do this, a property to the assets object of 
+         * the project is added that includes the video url
+         */
         if ( $scope.project.video && $scope.project.video.embed.length ) {
             var embedCode = $scope.project.video.embed;
-            $scope.project.assets.push( { 'embed': embedCode } );
+            
+            if ( ! $scope.project.hasOwnProperty( "assets" ) ) // In case there is no assets object, create it
+                $scope.project.assets = {};
+            
+            $scope.project.assets[ 'video' ] = { 'embed': embedCode };
         }
     });
     
@@ -25,7 +33,7 @@ angular.module('myhonorsUser').controller('ProjectViewCtrl', ['$scope', '$routeP
     
     
     
-    /**
+    /*
      * Get the appropiate CSS class for a project depending on its category
      */
     $scope.chooseLabel = function( category ) {
@@ -62,8 +70,9 @@ angular.module('myhonorsUser').controller('ProjectViewCtrl', ['$scope', '$routeP
 			$scope.showDeleteConfirmation = false;
 		};
 
-		$scope.doDelete = function() {
+		$scope.deleteProject = function() {
 			$scope.showDeleteConfirmation = false; // Close the deletion confirmation modal
+            ProjectService.remove( $scope.pid, $scope.projectId, $scope.project );
 			$location.path( 'profile/' + $scope.pid );
 		};
 	}	
