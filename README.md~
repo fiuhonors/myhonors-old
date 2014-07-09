@@ -14,7 +14,7 @@ All necessary files are already included in the repository, so you can get start
 3. Rename `config.sample.php` to `config.php`. Edit the file with the appropriate Firebase info.
 4. Rename `application/config.sample.js` to `application/config.js`.
 5. If you haven't already, install LDAP support for your server (e.g. *apt-get install php5-ldap*).
-6. That's it! Login with your LDAP username/password and have fun.
+6. That's it! Login with your LDAP username/password.
 
 ## Development
 
@@ -40,7 +40,7 @@ All necessary files are already included in the repository, so you can get start
 |         | X.x | User-created groups |
 |         | X.x | Integration with main Honors College website |
 |         | X.x | Tagging events, posts, profiles, etc. |
-|         | X.x | Gamification **[IN PROGRESS]** |
+|         | X.x | Gamification |
 |         | X.x | Analytics system for attendance, activity, etc. |
 |		  | X.x | Responsive site for multi-platform use, upgrade to Bootstrap 3 **[IN PROGRESS]** |
 |         | X.x | Universal Angular-PHP sessions (login to myHonors, automatic logins to others) **[IN PROGRESS]** |

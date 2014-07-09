@@ -18,7 +18,9 @@ angular.module('myhonors', [
 	'myhonorsEvents',
 	'myhonorsInternal',
 	'myhonorsCareer',
-	'myhonorsArch'
+	'myhonorsArch',
+	'ngTouch',
+	'angular-carousel',
 ]);
 
 angular.module('myhonorsConfig', []);

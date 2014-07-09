@@ -116,25 +116,25 @@
 				<div class="alert alert-danger" style="margin-bottom: 10px" ng-show="form.error" ng-bind-html-unsafe="form.error"></div>
 				
 				<table class="table">
-	                        <thead>
-	                            <tr>
-	                                <th width="50%">Name</th>
-	                                <th ng-show="uploader.isHTML5">Size</th>
-	                                <th>Actions</th>
-	                            </tr>
-	                        </thead>
-	                        <tbody>
-	                            <tr ng-repeat="item in uploader.queue">
-	                                <td><strong>{{ item.file.name }}</strong></td>
-	                                <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
-	
-	                                <td nowrap>
-	                                    <button type="button" class="btn btn-danger btn-small" ng-click="item.remove()">
-	                                        <span class="glyphicon glyphicon-trash"></span> Remove
-	                                    </button>
-	                                </td>
-	                            </tr>
-	                        </tbody>
+                    <thead>
+                        <tr>
+                            <th width="50%">Name</th>
+                            <th ng-show="uploader.isHTML5">Size</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in uploader.queue">
+                            <td><strong>{{ item.file.name }}</strong></td>
+                            <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+
+                            <td nowrap>
+                                <button type="button" class="btn btn-danger btn-small" ng-click="item.remove()">
+                                    <span class="glyphicon glyphicon-trash"></span> Remove
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
 	              </table>
 	              
 				<div class="control-group space-below">
