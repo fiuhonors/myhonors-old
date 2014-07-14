@@ -52,9 +52,9 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 	<title>Volunteer Hours Confirmation</title>
 	</head>
 	<body>
-	<p>Dear Volunteer Event Supervisor</p>
+	<p>Dear Volunteer Event Supervisor,</p>
 	
-	<p>'. $date_message . ', ' . $_POST[ 'userName' ] . ' participated in the following event and specified number of hours as part of their citizen requirement for The Honors College at Florida International University:
+	<p>'. $date_message . ', ' . $_POST[ 'userName' ] . ' participated in the following event for the specified number of hours as part of their citizenship requirement for The Honors College at Florida International University:
 	
 	<p><b>Agency/Organization:</b> ' . $_POST[ 'agency' ] . '</p>
 	<p><b>Event description:</b> ' . $_POST[ 'activity' ] . '</p>
