@@ -1,9 +1,14 @@
 <?php
 
-require_once "../../config.php"; //Include all the necessary Firebase config variables
-include_once "../../auth/FirebaseToken.php";
+/*
+ * The following script sends a confirmation email to the specified Honors College staff to accept or decline the newly added internship.
+ * This is necessary because the internship-adding page is public facing, meaning that anyone can add an internship.
+ */
 
-define( "DISABLE_EMAIL", true );	//Enable for testing purposes
+require_once "../../config.php"; // Include all the necessary Firebase config variables
+require_once "../../auth/FirebaseToken.php";
+
+define( "DISABLE_EMAIL", true );	// Enable for testing purposes
 
 
 if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' ) {
@@ -22,7 +27,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' ) {
 	
 	
 	// email fields: to, from, subject, and so on
-	$to = "Adam Gorelick <agorelic@fiu.edu>";
+	$to = "Isabel Green <igreen@fiu.edu>";
 	$from = "fiuhonorstechteam@gmail.com"; 
 	$subject ="myHonors: New Intership Added"; 
 	$message = '
