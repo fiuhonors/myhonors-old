@@ -6,24 +6,23 @@
  * 		- Student's id
  * 		- Internship/job ID, called the position ID
  * 		- The student's uploaded resume
- *  This is then used to retrieve the necessary data is and then send an email is sent to Adam Gorelick with all the info (and resume)  included
+ *  This is then used to retrieve the necessary data is and then send an email is sent to the specified Honors College staff contact with all the info
+ *  (and resume) included
  */
 
 require_once "../../config.php"; //Include all the necessary Firebase config variables
-include_once "../../auth/FirebaseToken.php";
+require_once "../../auth/FirebaseToken.php";
 
 define("DISABLE_EMAIL", true);	//Enable for testing purposes
 
 $formInfo = $_REQUEST;
 
-if (!isset($_REQUEST["userID"]) ||
-	!isset($_REQUEST["positionID"])
-	) {
-			
-		$result = array('success' => false, 'error' => "All the form fields must be completed.");
-		echo json_encode($result);
-		die();
-	}
+if (!isset($_REQUEST["userID"] ) ||
+	!isset($_REQUEST["positionID"]) ) {
+        $result = array('success' => false, 'error' => "All the form fields must be completed.");
+        echo json_encode($result);
+        die();
+}
 
 $userID = $_REQUEST["userID"];
 $positionID = $_REQUEST["positionID"];
@@ -80,8 +79,8 @@ $timeAvailability .= "</tbody>
 				</table>";
 
 	
-// email fields: to, from, subject, and so on
-$to = "Adam Gorelick <agorelic@fiu.edu>";
+// Set up the email fields
+$to = "Isabel Green <igreen@fiu.edu>";
 $from = "fiuhonorstechteam@gmail.com"; 
 $subject ="myHonors: Application to Internship/Job"; 
 $message = '
@@ -116,22 +115,22 @@ $message = '
 
 <p>myHonors Automated System</p>
 </body>
-</html>
-';
+</html>';
+
 $headers = "From: $from";
 
-// boundary 
+// Boundary 
 $semi_rand = md5(time()); 
 $mime_boundary = "==Multipart_Boundary_x{$semi_rand}x"; 
 
-// headers for attachment 
+// Headers for attachment 
 $headers .= "\nMIME-Version: 1.0\n" . "Content-Type: multipart/mixed;\n" . " boundary=\"{$mime_boundary}\""; 
 
-// multipart boundary 
+// Multipart boundary 
 $message = "This is a multi-part message in MIME format.\n\n" . "--{$mime_boundary}\n" . "Content-Type: text/html; charset=\"iso-8859-1\"\n" . "Content-Transfer-Encoding: 7bit\n\n" . $message . "\n\n"; 
 $message .= "--{$mime_boundary}\n";
 
-//Attachment
+// Attachment
 $file = $_FILES["file"]["tmp_name"];
 $filename = $_FILES["file"]["name"];
 $fileReader = fopen($file,"rb");

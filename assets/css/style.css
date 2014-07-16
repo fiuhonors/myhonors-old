@@ -6171,11 +6171,11 @@ a.thumbnail:hover {
   background-color: #00baff;
   height: 100%; }
 
-.hover-icon-remove > .icon-remove {
+.hover-icon .icon {
 	display: none;
 }
 
-.hover-icon-remove:hover > .icon-remove {
+.hover-icon:hover .icon {
 	display: inline;
 	margin-left: 3px;
 }
@@ -6312,7 +6312,7 @@ td.day {
   text-shadow: 1px 1px 1px black; }
 
 /* PROFILE */
-.hero-unit {
+.jumbotron.profile {
   border: 1px solid #aaa;
   background-image: url(../img/gplaypattern.png); }
 
@@ -6382,6 +6382,11 @@ td.day {
   opacity: 0;
   line-height: 0; }
 
+.profile-picture {
+    width: 140px;
+    height: 140px;
+}
+
 /* Misc */
 .disabled {
   opacity: 0.5; }
@@ -6390,7 +6395,12 @@ td.day {
   margin-bottom: 15px; }
 
 .word-wrap {
-  word-wrap: break-word; }
+    word-wrap: break-word;
+}
+
+.no-wrap {
+	white-space: nowrap;
+}
 
 /* 
  * File Input button styling.
@@ -6418,6 +6428,17 @@ td.day {
   .fileinput-button input {
     filter: alpha(opacity=0);
     font-size: 100%;
-    height: 100%; } }
+    height: 100%;
+  }
+}
 
-/*# sourceMappingURL=style.css.map */
+/* xEditable CSS */
+.inherit-color, .inherit-color:hover, .editable-empty, .editable-empty:hover, .editable-empty:focus {
+	color: inherit !important;
+}
+
+.disable-editable, .disable-editable:hover {
+	color: inherit;
+    text-decoration: none;
+    cursor: default;
+}

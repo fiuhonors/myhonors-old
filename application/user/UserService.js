@@ -33,9 +33,9 @@ angular.module('myhonorsUser').factory('UserService', function($http, $location,
 						var ref = FirebaseIO.child('/user_profiles/' + authObject.auth.id);
 
 						ref.once('value', function(snapshot) {
-							// If the user profile doesn't exist then that means 
+							// If the user profile doesn't exist then that means the student is not a Honors college member
 							if (snapshot.val() === null) {
-								alert("You must be an Honors student if you wish to login.");
+								alert("You must be an Honors student if you wish to login. If you are a new Honors student, please wait until the Fall semester starts before you attempt to log in.");
 								$timeout(function() {
 									self.profile = null;
 									self.status.loading = false;
