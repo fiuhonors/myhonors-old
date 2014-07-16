@@ -1,6 +1,6 @@
 <?php
 /* Config settings */
-
+session_start();
 define("SERVER_ADDRESS", "");
 define("BEFORE_USERNAME", "");
 define("AFTER_USERNAME", "");
@@ -38,6 +38,13 @@ function getData($username, $data) {
 	// create firebase token for user and include additional security info
 	$user_token = $tokenGen->createToken($auth_payload);
 	
+	// Set PHP session so that we can catch it if they try to login on a PHP-powered project and automatically
+	// log them in. We're following some security tips from http://blog.teamtreehouse.com/how-to-create-bulletproof-sessions
+	// and http://stackoverflow.com/questions/5081025/php-session-fixation-hijacking
+	
+	session_name('HonorsAuth_Session');
+	$_SESSION['ip_address'] = $_SERVER['REMOTE_ADDR'];
+	$_SESSION['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
 	$_SESSION['user_identifier'] = $username; // Store user's ID in SESSION if verified.
 	$_SESSION['user_token'] = $user_token; // Store user's Firebase token if verified.
 	
@@ -45,18 +52,7 @@ function getData($username, $data) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
-{
-	// Set PHP session so that we can catch it if they try to login on a PHP-powered project and automatically
-	// log them in. We're following some security tips from http://blog.teamtreehouse.com/how-to-create-bulletproof-sessions
-	// and http://stackoverflow.com/questions/5081025/php-session-fixation-hijacking
-	session_name('HonorsAuth_Session');
-	session_set_cookie_params(0, '/', '', false, true);
-	session_start();
-	$_SESSION['ip_address'] = $_SERVER['REMOTE_ADDR'];
-	$_SESSION['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
-	$_SESSION['user_identifier'] = "000000";
-	
-	
+{		
 	// all output after POSTing will be delivered in JSON format
 	header('Content-Type: application/json');
 
