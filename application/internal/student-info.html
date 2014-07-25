@@ -1,96 +1,100 @@
-<div class="span3">
-	<div class="box">
-		<div class="box-header">Student Information</div>
-		<div class="box-content padded word-wrap">
-			
-		<div class="text-center space-below">
-			<img class="img-rounded img-polaroid space-below" ng-src="{{'http://placehold.it/135'}}">
-		</div>
-		
-		<div class="space-below">
-			<b>Name: </b> {{user.fname + " " + user.lname}}
-		</div>
-		
-		<div class="space-below">
-			<b>PID: </b> {{user.pid}}
-		</div>
-		
-		<div class="space-below">
-			<b>Email: </b> {{user.email}}
-		</div>
+<div class="row">
+    <div class="col-md-3">
+        <div class="box">
+            <div class="box-header">Student Information</div>
+            <div class="box-content padded word-wrap">
 
-			
-		</div>
-	</div>
+                <div class="text-center space-below">
+                    <img class="img-rounded img-polaroid space-below" ng-src="{{'http://placehold.it/135'}}">
+                </div>
+
+                <div class="space-below">
+                    <b>Name: </b> {{user.fname + " " + user.lname}}
+                </div>
+
+                <div class="space-below">
+                    <b>PID: </b> {{user.pid}}
+                </div>
+
+                <div class="space-below">
+                    <b>Email: </b> {{user.email}}
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">		
+        <div class="box">
+            <div class="box-header">Volunteer Hours ({{hoursCompleted}}/20) </div>
+            <div class="box-content padded clearfix">
+                <div class="mh-progress">
+                    <!-- We multiply: (Student's hours/20)*100 = (Student's hours * 5) -->
+                    <!-- Then if the resulting percentage is less than 100%, we use the first div below. If it is bigger than 100%, we use the second div below, that has a width of 100% -->
+                    <div class="bar" ng-if="hoursCompleted * 5 <= 100" style="width: {{hoursCompleted * 5}}%;"></div>
+                    <div class="bar" ng-if="hoursCompleted * 5 > 100" style="width: 100%;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="box" >
+            <div class="box-header">Volunteer Activity</div>
+            <div class="box-content" ng-if="volunteerHours.length > 0">
+                <ul class="block-hover">
+                    <li ng-repeat="volunteer in volunteerHours" class="hover-icon" style="word-wrap: break-word;">
+                        {{ $index + 1}}.
+                        <label class="label label-info" ng-show="volunteer.status != 'accepted'" style="margin-right: 2px">WAITING FOR VERIFICATION</label> 
+                        <label class="label label-success" ng-show="volunteer.status == 'accepted'" ng-init="countVolunteerHours(volunteer)" style="margin-right: 2px">ACCEPTED</label> 
+                        {{volunteer.agency}} - {{volunteer.activity}} <a href="" class="icon icon-remove" ng-click="removeVolunteerHours(volunteer)"></a>
+                        <br>
+                        Hours: {{volunteer.hours}} <span ng-show="!volunteer.hours">N/A</span>  <br>
+                        Reference Name: {{volunteer.referenceName}} <span ng-show="!volunteer.referenceName">N/A</span> <br>
+                        Reference Title: {{volunteer.referenceTitle}} <span ng-show="!volunteer.referenceTitle">N/A</span> <br>
+                        Reference Email: {{volunteer.referenceEmail}} <span ng-show="!volunteer.referenceEmail">N/A</span> <br>
+                        Reference Phone Number: {{volunteer.referencePhone}} <span ng-show="!volunteer.referencePhone">N/A</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="box-content padded" ng-if="!volunteerHours.length">
+                <div class="alert alert-info" style="margin-bottom: 0">
+                    No pending submissions.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="box">
+            <div class="box-header">Events Attended</div>
+            <div class="box-content padded" ng-show="eventsAttended.length">
+                <div class="accordion" id="accordion2" style="margin-bottom: 0px;">
+                    <div class="accordion-group" ng-repeat="(eventType, collection) in eventTypeCollections">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href=".{{$index}}">
+                                <b> {{eventType}} </b>
+                            </a>
+                        </div>
+                        <div class="{{$index}} accordion-body collapse">
+                            <div class="accordion-inner">
+                                <ul class="block-hover">
+                                    <li ng-repeat="(name,event) in collection | orderBy: 'date.starts' " class="hover-icon">
+                                        {{name}}<a href="" class="icon icon-remove" ng-click="removeAttendance(collection, event)"></a>
+                                    </li>
+                                </ul>		
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box-content padded" ng-show="!eventsAttended.length">
+                <div class="alert alert-info" style="margin-bottom: 0">
+                    No events attended.
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="span6">		
-	<div class="box">
-			<div class="box-header">Volunteer Hours ({{hoursCompleted}}/20) </div>
-			<div class="box-content padded clearfix">
-				<div class="mh-progress">
-					<!-- We multiply: (Student's hours/20)*100 = (Student's hours * 5) -->
-					<!-- Then if the resulting percentage is less than 100%, we use the first div below. If it is bigger than 100%, we use the second div below, that has a width of 100% -->
-					<div class="bar" ng-if="hoursCompleted*5 <= 100" style="width: {{hoursCompleted*5}}%;"></div>
-					<div class="bar" ng-if="hoursCompleted*5 > 100" style="width: 100%;"></div>
-					</div>
-			</div>
-		</div>
-		<div class="box" >
-			<div class="box-header">Volunteer Activity</div>
-			<div class="box-content" ng-if="volunteerHours.length > 0">
-				<ul class="block-hover">
-					<li ng-repeat="volunteer in volunteerHours" class="hover-icon-remove" style="word-wrap: break-word;">
-						{{ $index + 1 }}.
-						<label class="label label-info" ng-show="volunteer.status != 'accepted'" style="margin-right: 2px">WAITING FOR VERIFICATION</label> 
-						<label class="label label-success" ng-show="volunteer.status == 'accepted'" " ng-init="countVolunteerHours(volunteer)" style="margin-right: 2px">ACCEPTED</label> 
-						{{volunteer.agency}} - {{volunteer.activity}} <a href="" class="icon-remove" ng-click="removeVolunteerHours(volunteer)"></a>
-						<br>
-						Hours: {{volunteer.hours}} <span ng-show="!volunteer.hours">N/A</span>  <br>
-						Reference Name: {{volunteer.referenceName}} <span ng-show="!volunteer.referenceName">N/A</span> <br>
-						Reference Title: {{volunteer.referenceTitle}} <span ng-show="!volunteer.referenceTitle">N/A</span> <br>
-						Reference Email: {{volunteer.referenceEmail}} <span ng-show="!volunteer.referenceEmail">N/A</span> <br>
-						Reference Phone Number: {{volunteer.referencePhone}} <span ng-show="!volunteer.referencePhone">N/A</span>
-					</li>
-				</ul>
-			</div>
-			<div class="box-content padded" ng-if="!volunteerHours.length">
-				<div class="alert alert-info" style="margin-bottom: 0">
-					No pending submissions.
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-		
-<div class="span3">
-	<div class="box">
-		<div class="box-header">Events Attended</div>
-			<div class="accordion" id="accordion2" style="margin-bottom: 0px;" ng-show="eventsAttended.length">
-				<div class="accordion-group" ng-repeat="(eventType, collection) in eventTypeCollections">
-					<div class="accordion-heading">
-						<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href=".{{$index}}">
-							<b> {{eventType}} </b>
-						</a>
-					</div>
-					<div class="{{$index}} accordion-body collapse">
-						<div class="accordion-inner">
-							<ul class="block-hover">
-								<li ng-repeat="(name,event) in collection | orderBy: 'date.starts' " class="hover-icon-remove">
-									{{name}}<a href="" class="icon-remove" ng-click="removeAttendance(collection,event)"></a>
-								</li>
-							</ul>		
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="box-content padded" ng-show="!eventsAttended.length">
-				<div class="alert alert-info" style="margin-bottom: 0">
-					No events attended.
-				</div>
-			</div>
-		</div>
-	</div>
 </div>
 
 
