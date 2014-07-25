@@ -95,25 +95,24 @@ $screen-md-upto: "(max-width: #{$screen-md-max})"; // Style old desktop/laptops 
 }
 /* End Vertical Align Fix =================================================== */
 
-//Sticky footer solution
-html, body{
+//Sticky footer solution - http://geekgirllife.com/responsive-sticky-footer-woes-and-fixes/
+html{
     height: 100%;
     padding:0;
     margin:0;
     overflow:hidden;
 }
 body{
-    display:table;
-    width:100%;
-}
-
-
-html{
+    height: 100%;
     overflow-y: scroll;
-}
-body{
+    overflow-x: hidden;
     background: url(../img/body-bg.png);
     color: #494949;
+}
+#wrapper{
+    display: table;
+    height: 100%;
+    width: 100%;
 }
 h1,h2,h3,h4,h5,h6, .opensans{
     font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;

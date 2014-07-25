@@ -12,12 +12,6 @@
     }
 }
 
-#main{
-    display:table;
-    height:100%;
-    margin-bottom:30px;
-}
-
 @media #{$screen-xs}{
     #homeImage{
         display:none;
