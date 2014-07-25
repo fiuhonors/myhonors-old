@@ -90,201 +90,163 @@
             <div class="box-content padded">
                 <h4> <i class="fa fa-cubes"></i> Projects and Achievements </h4>
             </div>
-        </div>
-        <div class="box clearfix">
             <div class="box-content padded">
-                <ul class="projects">
-                    <li ng-repeat="project in projects| orderBy:'createdAt':true" class="col-md-3">
+                <div class="row projects">
+                    <div ng-repeat="project in projects| orderBy:'createdAt':true" class="col-md-3 col-xs-6">
                         <div class="thumbnail word-wrap hover-icon" style="position:relative;" ng-click="goToProject(project)">
-                            <span ng-class="chooseLabel(project.category)" style="position:absolute;"> {{ project.category}} </span>
+                            <span ng-class="chooseLabel(project.category)" style="position:absolute;top:0;left:0;"> {{ project.category}} </span>
                             <a><i class="icon fa fa-pencil" style="position:absolute;right:0;" ng-click="editProject($event, project.$index)" ng-show="isAbleEdit"></i></a>
                             <a><img ng-src="{{getFirstAssetUrl(project) || 'http://placehold.it/150'}}"  alt="Project picture" class="img-rounded" style="width:150px;height:150px;"></a>
                             <b> {{ project.title | truncate:30 }}</b>
                             <br>
                             <div style="font-size:85%;"> {{ project.description | truncate:70 }}</div>
                         </div>
-                    </li>
-                    <li class="col-md-3" ng-show="isAbleEdit">
+                    </div>
+                    <div class="col-md-3 col-xs-6" ng-show="isAbleEdit">
                         <a role="btn" data-toggle="modal" class="thumbnail" ng-click="newProjectModal()">
                             <i class="fa fa-plus-circle fa-5x"></i>
                             <h5>Add a New Project</h5>
                         </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-
-<!-- Modal for choosing the profile picture-->
-<div modal="showProjectModal" close="cancelDelete()" options="modalOpts">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" aria-hidden="true" ng-click="closeModal()">×</button>
-            </div>
-            <div class="modal-body">
-            </div>
-            <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()">Cancel</button>
-                <button type="submit" class="btn btn-primary" form="form">
-                    Add Project
-                </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Modal for creating/editing project-->
-<div modal="showProjectModal" close="cancelDelete()" options="modalOpts" ng-show="showProjectModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-             <div class="modal-header">
-                <button type="button" class="close" aria-hidden="true" ng-click="closeModal()">×</button>
-                <h3 id="myModalLabel" ng-show="newProject">Add Project</h3>
-                <h3 id="myModalLabel" ng-show="!newProject">Edit Project</h3>
-            </div>
-            <div class="modal-body">
-                <form name="form" id="form" class="form form-inline" validate>
-                    <div class="form-group space-below">
-                        <label for="title">Title: </label>
-                        <input type="text" ng-model="currentProject.title" placeholder="Title of your project" required >
-                    </div>
-
-                    <br>
-
-                    <div class="form-group space-below">
-                        <label for="description">Category: </label>
-                        <select type="text" ng-model="currentProject.category" ng-options="category.name as category.name for category in projectCategories" required></select>
-                    </div>
-
-                    <br>
-
-                    <div class="form-group space-below">
-                        <label for="description">Description: </label>
-                        <textarea type="text" rows="3" cols="10" ng-model="currentProject.description" placeholder="Description of your project" style="width: 70%" required></textarea>
-                    </div>
 
 
-                    <br>
-
-                    <div class="btn-group space-below" data-toggle="buttons-radio">
-                        <!--
-                                            <label class="btn btn-default" ng-click="showPictureUpload()">
-                                                <input type="radio" id="picture">
-                                                <i class="fa fa-picture-o"></i> Pictures
-                                            </label>
-                                            <label class="btn btn-default" ng-click="showDocumentUpload()">
-                                                <input type="radio" id="documents">
-                                                <i class="fa fa-pencil-square-o"></i> Documents
-                                            </label>
-                        -->
-                        <button class="btn btn-xs btn-default" ng-click="showPictureUpload()" ng-class="{'active': showPictureUploadForm}"> <i class="fa fa-picture-o"></i> Pictures </button>
-                        <button class="btn btn-xs btn-default" ng-click="showVideoInput()" ng-class="{'active': showVideoInputForm}"> <i class="fa fa-video-camera"></i> Videos </button>
-                        <button class="btn btn-xs btn-default" ng-click="showDocumentUpload()" ng-class="{'active': showDocumentUploadForm}"> <i class="fa fa-pencil-square-o"></i> Documents </button>
-                    </div>
-
-
-                    <div class="form-group space-below" ng-show="showPictureUploadForm || showDocumentUploadForm" >
-
-                        <div class="form-group space-below" ng-show="showPictureUploadForm && hasAssets(currentProject)">
-                            Pictures uploaded:
-                            <ul>
-                                <li ng-repeat="(index,asset) in currentProject.assets" class="hover-icon">
-                                    {{ asset.filename}} uploaded on {{ asset.createdAt | date:'medium' }}
-                                    <a href class="glyphicon glyphicon-remove" ng-click="removeAsset(currentProject, index, asset.url)">
-                                    </a>
-                                </li>
-                            </ul>
+    <!-- Modal for creating/editing project-->
+    <div modal="showProjectModal" close="cancelDelete()" options="modalOpts" ng-show="showProjectModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" aria-hidden="true" ng-click="closeModal()">×</button>
+                    <h3 id="myModalLabel" ng-show="newProject">Add Project</h3>
+                    <h3 id="myModalLabel" ng-show="!newProject">Edit Project</h3>
+                </div>
+                 <!-- .form-horizontal on modal-content http://stackoverflow.com/questions/18292173/twitter-bootstrap-form-horizontal-inside-a-modal -->
+                <div class="modal-body">
+                    <form name="form" id="form" validate>
+                        <div class="form-group">
+                            <label class="control-label" for="title">Title: </label>
+                            <input type="text" class="form-control" ng-model="currentProject.title" placeholder="Title of your project" required >
                         </div>
 
-                        <div class="form-group space-below" ng-show="showDocumentUploadForm && hasFiles(currentProject)">
-                            Documents uploaded:
-                            <ul>
-                                <li ng-repeat="(index,file) in currentProject.files" class="hover-icon">
-                                    {{ file.filename}} uploaded on {{ file.createdAt | date:'medium' }}
-                                    <a href class="glyphicon glyphicon-remove" ng-click="removeFile(currentProject, index, file.url)">
-                                    </a>
-                                </li>
-                            </ul>
+                        <div class="form-group">
+                            <label class="control-label" for="description">Category: </label>
+                            <select class="form-control" ng-model="currentProject.category" ng-options="category.name as category.name for category in projectCategories" required></select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Description: </label>
+                            <textarea class="form-control" type="text" rows="3" cols="10" ng-model="currentProject.description" placeholder="Description of your project" style="width: 70%" required></textarea>
+                        </div>
+
+                        <div class="btn-group space-below" data-toggle="buttons-radio">
+                            <button class="btn btn-default" ng-click="showPictureUpload()" ng-class="{'active': showPictureUploadForm}"> <i class="fa fa-picture-o"></i> Pictures </button>
+                            <button class="btn btn-default" ng-click="showVideoInput()" ng-class="{'active': showVideoInputForm}"> <i class="fa fa-video-camera"></i> Videos </button>
+                            <button class="btn btn-default" ng-click="showDocumentUpload()" ng-class="{'active': showDocumentUploadForm}"> <i class="fa fa-pencil-square-o"></i> Documents </button>
                         </div>
 
 
-                        <label>
-                            Please upload your 
-                            <span ng-show="showPictureUploadForm"> pictures: </span>
-                            <span ng-show="showDocumentUploadForm"> documents: </span>
-                        </label>
-                        <span class="btn btn-sm btn-success fileinput-button space-below" ng-disabled="uploader.queue.length == 4">
-                            <i class="glyphicon glyphicon-plus"></i>
-                            <span>Add file...</span>
-                            <input ng-file-select type="file" >                
-                        </span>
+                        <div class="form-group space-below" ng-show="showPictureUploadForm || showDocumentUploadForm" >
+
+                            <div class="form-group space-below" ng-show="showPictureUploadForm && hasAssets(currentProject)">
+                                Pictures uploaded:
+                                <ul>
+                                    <li ng-repeat="(index,asset) in currentProject.assets" class="hover-icon">
+                                        {{ asset.filename}} uploaded on {{ asset.createdAt | date:'medium' }}
+                                        <a href class="glyphicon glyphicon-remove" ng-click="removeAsset(currentProject, index, asset.url)">
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="form-group" ng-show="showDocumentUploadForm && hasFiles(currentProject)">
+                                Documents uploaded:
+                                <ul>
+                                    <li ng-repeat="(index,file) in currentProject.files" class="hover-icon">
+                                        {{ file.filename}} uploaded on {{ file.createdAt | date:'medium' }}
+                                        <a href class="glyphicon glyphicon-remove" ng-click="removeFile(currentProject, index, file.url)">
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
 
 
-                        <div class="alert alert-danger" style="margin-bottom: 10px" ng-show="form.error" ng-bind-html-unsafe="form.error"></div>
+                            <label>
+                                Please upload your 
+                                <span ng-show="showPictureUploadForm"> pictures: </span>
+                                <span ng-show="showDocumentUploadForm"> documents: </span>
+                            </label>
+                            <span class="btn btn-sm btn-success fileinput-button space-below" ng-disabled="uploader.queue.length == 4">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                <span>Add file...</span>
+                                <input ng-file-select type="file" >                
+                            </span>
 
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th width="50%">Name</th>
-                                    <th ng-show="uploader.isHTML5">Size</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="item in uploader.queue">
-                                    <td><strong>{{ item.file.name}}</strong></td>
-                                    <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size / 1024 / 1024|number:2 }} MB</td>
 
-                                    <td nowrap>
-                                        <button type="button" class="btn btn-danger btn-sm" ng-click="item.remove()">
-                                            <span class="glyphicon glyphicon-trash"></span> Remove
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                            <div class="alert alert-danger" style="margin-bottom: 10px" ng-show="form.error" ng-bind-html-unsafe="form.error"></div>
 
-                        <div class="form-group space-below">
-                            <button class="btn btn-sm btn-primary" ng-show="uploader.getNotUploadedItems().length" ng-click="uploadSubmittedFiles()">
-                                <i class="fa fa-upload">
-                                </i>
-                                <span class="glyphicon glyphicon-upload" ng-show="showPictureUploadForm && uploader.getNotUploadedItems().length == 1"> 
-                                    Upload Picture 
-                                </span>
-                                <span class="glyphicon glyphicon-upload" ng-show="showPictureUploadForm && uploader.getNotUploadedItems().length > 1"> 
-                                    Upload Pictures 
-                                </span>
-                                <span class="glyphicon glyphicon-upload" ng-show="showDocumentUploadForm && uploader.getNotUploadedItems().length == 1"> 
-                                    Upload Document 
-                                </span>
-                                <span class="glyphicon glyphicon-upload" ng-show="showDocumentUploadForm && uploader.getNotUploadedItems().length > 1"> 
-                                    Upload Documents 
-                                </span>
-                            </button>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th width="50%">Name</th>
+                                        <th ng-show="uploader.isHTML5">Size</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in uploader.queue">
+                                        <td><strong>{{ item.file.name}}</strong></td>
+                                        <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size / 1024 / 1024|number:2 }} MB</td>
+
+                                        <td nowrap>
+                                            <button type="button" class="btn btn-danger btn-sm" ng-click="item.remove()">
+                                                <span class="glyphicon glyphicon-trash"></span> Remove
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="form-group space-below">
+                                <button class="btn btn-sm btn-primary" ng-show="uploader.getNotUploadedItems().length" ng-click="uploadSubmittedFiles()">
+                                    <i class="fa fa-upload"></i>
+                                    <span ng-show="showPictureUploadForm && uploader.getNotUploadedItems().length == 1"> 
+                                        Upload Picture 
+                                    </span>
+                                    <span ng-show="showPictureUploadForm && uploader.getNotUploadedItems().length > 1"> 
+                                        Upload Pictures 
+                                    </span>
+                                    <span ng-show="showDocumentUploadForm && uploader.getNotUploadedItems().length == 1"> 
+                                        Upload Document 
+                                    </span>
+                                    <span ng-show="showDocumentUploadForm && uploader.getNotUploadedItems().length > 1"> 
+                                        Upload Documents 
+                                    </span>
+                                </button>
+                            </div>
+
                         </div>
 
-                    </div>
-
-                    <div class="form-group space-below" ng-show="showVideoInputForm" >
-                        Please input the YouTube URL of the video you wish to add:
-                        <input type="text" ng-model="currentProject.video.url" ng-change="currentProject.video.embed = createEmbedCode(currentProject.video.url)">
-                        <button > Add </button>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()">Cancel</button>
-                <button type="submit" class="btn btn-primary" form="form" ng-click="addProject(form)" ng-show="newProject">
-                    Add Project
-                </button>
-                <button type="submit" class="btn btn-primary" form="form" ng-click="updateProject(form)" ng-show="!newProject">
-                    Edit Project
-                </button>
+                        <div class="form-group space-below" ng-show="showVideoInputForm" >
+                            Please input the YouTube URL of the video you wish to add:
+                            <input type="text" ng-model="currentProject.video.url" ng-change="currentProject.video.embed = createEmbedCode(currentProject.video.url)">
+                            <button > Add </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary" form="form" ng-click="addProject(form)" ng-show="newProject">
+                        Add Project
+                    </button>
+                    <button type="submit" class="btn btn-primary" form="form" ng-click="updateProject(form)" ng-show="!newProject">
+                        Edit Project
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>

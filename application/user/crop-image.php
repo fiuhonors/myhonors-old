@@ -43,7 +43,7 @@ $thumbnail_width = $thumbnail_height = 140; // Set the target width and height f
 $jpeg_quality = 80; // Indicates the JPED quality of the thumbnail to be created
 
 // Set the upload path where the thumnail will be stored
-$upload_path = $_SERVER[ 'DOCUMENT_ROOT' ] . '/uploads/' . $path . $file_name;
+$upload_path = PROJECT_ROOT_PATH . '/uploads/' . $path . $file_name;
 
 // Create a new image from the uploaded image given its mime type
 switch ( strtolower( $file_mimetype ) )

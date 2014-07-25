@@ -33,7 +33,7 @@ if ( !startsWith( $pathToFile, '/uploads/' ) ) {
 }
 
 // Get the absolute path to the file in the server
-$pathToFile = $_SERVER[ 'DOCUMENT_ROOT' ] . $pathToFile;
+$pathToFile = PROJECT_ROOT_PATH . $pathToFile;
 
 $file_deleted = NULL;
 

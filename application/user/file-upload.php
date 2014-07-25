@@ -37,7 +37,7 @@ function uploadFile( $userId, $path, $file_name, $tmp_name, $file_mimetype ) {
     }
     
     // Store the path were the file will be stored in the system
-    $upload_path = $_SERVER[ 'DOCUMENT_ROOT' ] . '/uploads/' . $path;
+    $upload_path = PROJECT_ROOT_PATH . '/uploads/' . $path;
 
     // If the upload path does not exist, create the necessary folders
     if ( ! file_exists( $upload_path ) && ! is_dir( $upload_path ) ) {
