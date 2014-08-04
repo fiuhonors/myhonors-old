@@ -69,7 +69,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 	
 	<p>Sincerely,</p>
 	
-	<p>Dominick Giombetti<br />
+	<p>Umer Rahman<br />
 	Coordinator of Student Programs<br />
 	The Honors College</p>
 	</body>
@@ -82,7 +82,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 	
 	// Additional headers
 	$headers .= 'To: ' . $_POST[ 'referenceName' ] . ' <' . $_POST[ 'referenceEmail' ] . '>' . "\r\n";
-	$headers .= 'From: Dominick Giombetti <dgiombet@fiu.edu>' . "\r\n";
+	$headers .= 'From: Umer Rahman <urahman@fiu.edu>' . "\r\n";
 	
 	// Mail it
 	$email_sent = mail( $to, $subject, $message, $headers );
