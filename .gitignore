@@ -26,3 +26,7 @@ devops/*
 logs/
 access.log
 error.log
+
+# Server-possible directories (Portfolio, CRS, etc)
+portfolio/
+crs/
