@@ -6,7 +6,13 @@ angular.module('myhonorsUser').factory('UserService', function($http, $location,
 		this.status.loading = true;
 
 		var self = this;
-		var defer = $q.defer();	
+		var defer = $q.defer();
+		
+		if(username.length === 0 || password.length === 0){
+			defer.reject("No username and/or password provided");
+			return defer.promise;
+		}
+		
 		var data = 'pid=' + username + '&password=' + password;
 		$http.post('auth/auth.php', data, {headers: {'Content-Type' : 'application/x-www-form-urlencoded'}}).success(function(result) {
 			var loginSuccess = false;
