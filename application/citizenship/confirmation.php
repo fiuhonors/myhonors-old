@@ -85,7 +85,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 	$headers .= 'From: Umer Rahman <urahman@fiu.edu>' . "\r\n";
 	
 	// Mail it
-	$email_sent = mail( $to, $subject, $message, $headers );
+	$email_sent = mail( $to, $subject, $message, $headers, '-f urahman@fiu.edu' );
 	
 	if ( !$email_sent ) {
 		$result = array( 'success' => false, 'error' => "A problem ocurred when attemtping to send the confirmation email." );
