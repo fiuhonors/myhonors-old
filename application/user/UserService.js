@@ -10,6 +10,8 @@ angular.module('myhonorsUser').factory('UserService', function($http, $location,
 		
 		if(username.length === 0 || password.length === 0){
 			defer.reject("No username and/or password provided");
+			this.profile = null;
+			this.status.loading = false;
 			return defer.promise;
 		}
 		
