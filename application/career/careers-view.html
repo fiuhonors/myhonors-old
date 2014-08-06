@@ -25,6 +25,11 @@
 			<div class="space-below">
 				<b>Description: </b> {{position.description}}
 			</div>
+            <div class="space-below">
+				<b>Created at: </b> 
+                <span ng-show="position.createdAt">{{position.createdAt | date:'medium'}}</span>
+                <span ng-show="!position.createdAt">N/A</span>
+			</div>
 			
 			<hr style="margin-top: 10px; margin-bottom: 10px" ng-show="user.auth.isAdmin || user.auth.isStaff" />
 			<div class="row-fluid" ng-show="user.auth.isAdmin || user.auth.isStaff">

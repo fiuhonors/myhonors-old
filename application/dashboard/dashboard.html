@@ -18,7 +18,7 @@
 			<div class="box-header"><a href="#/career" class="no-decoration-link">New Jobs & Internships</a></div>
 				<div class="box-content" ng-show="careers.length">
 					<ul class="block-hover block-clickable">
-						<li ng-repeat="career in careers | orderBy:'date.starts'" ng-click="goToCareer(career.$id)" class="clearfix" ng-show="career.status == 'active'">
+						<li ng-repeat="career in careers" ng-click="goToCareer(career.$id)" class="clearfix" ng-show="career.status == 'active'">
 							<img class="pull-left span2 img-rounded img-polaroid" ng-src="{{career.thumbURL || 'http://placehold.it/75'}}">
 							<div class="pull-left span8">
 								<div>

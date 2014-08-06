@@ -30,10 +30,12 @@ angular.module('myhonorsCareer').factory('CareerService', function($q, FirebaseI
 				alert("Invalid  form");
 				return;
 			}
-
-			var ref = FirebaseIO.child('careers').push(careerObject);
-			// Setting the priority to the date.starts value allows us to show the most recent internships/jobs in the dashboard
-			ref.setPriority(careerObject.date.starts);
+            
+            careerObject.createdAt = Date.now();
+            
+            var ref = FirebaseIO.child('careers/' + careerObject.createdAt);
+            // Setting the priority to -(current time) causes the list to be ordered from newest added to oldest
+            ref.setWithPriority(careerObject, -careerObject.createdAt);
 
 			return ref.name();	// Return the ID of the newly created position
 		},
@@ -65,9 +67,9 @@ angular.module('myhonorsCareer').factory('CareerService', function($q, FirebaseI
 			var eventsRef = FirebaseIO.child('careers');
 
 			var options = options || {};
-			if (options.startAt) eventsRef = eventsRef.startAt(options.startAt);
-			if (options.endAt)   eventsRef = eventsRef.endAt(options.endAt);
-			if (options.limit)   eventsRef = eventsRef.limit(options.limit);
+			if (options.hasOwnProperty('startAt')) eventsRef = eventsRef.startAt(options.startAt);
+			if (options.hasOwnProperty('endAt'))   eventsRef = eventsRef.endAt(options.endAt);
+			if (options.hasOwnProperty('limit'))   eventsRef = eventsRef.limit(options.limit);
 
 			return FirebaseCollection(eventsRef, {metaFunction: function(doAdd, snapshot) {
 				var extraData = {
@@ -121,19 +123,20 @@ angular.module('myhonorsCareer').factory('CareerService', function($q, FirebaseI
 
 		update: function(careerID, careerObject) {
 			if (!checkConditions(careerObject)) {
-				// invalid input, do nothing
 				alert("Invalid  form");
 				return false;
 			}
+            
+            careerObject.editedAt = Date.now();
 			
 			// Go through each property in the object and add that specifically, this prevents
 			// us from overwriting the entire career object in Firebase
 			angular.forEach(careerObject, function(value, key) {
 				FirebaseIO.child('careers/' + careerID + '/' + key).set(value);
 			});
-
-			// Setting the priority to the date.ends value allows us to show the most recent internships/jobs in the dashboard
-			FirebaseIO.child('careers/' + careerID).setPriority(careerObject.date.ends);
+            
+            // Setting the priority to -(current time) causes the list to be ordered from newest added to oldest
+			FirebaseIO.child('careers/' + careerID).setPriority(-careerObject.editedAt);
 			
 			return true;
 			
