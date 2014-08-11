@@ -174,7 +174,7 @@
 				<br>
 				
 				<div class="control-group space-below">
-					<label for="description">Category: </label>
+					<label for="category">Category: </label>
 					<select type="text" ng-model="currentProject.category" ng-options="category.name as category.name for category in projectCategories" required></select>
 				</div>
 				
@@ -189,16 +189,6 @@
 				<br>
             
                 <div class="btn-group space-below" data-toggle="buttons-radio">
-<!--
-                    <label class="btn btn-default" ng-click="showPictureUpload()">
-                        <input type="radio" id="picture">
-                        <i class="fa fa-picture-o"></i> Pictures
-                    </label>
-                    <label class="btn btn-default" ng-click="showDocumentUpload()">
-                        <input type="radio" id="documents">
-                        <i class="fa fa-pencil-square-o"></i> Documents
-                    </label>
--->
                     <button class="btn btn-mini" ng-click="showPictureUpload()" ng-class="{'active': showPictureUploadForm}"> <i class="fa fa-picture-o"></i> Pictures </button>
                     <button class="btn btn-mini" ng-click="showVideoInput()" ng-class="{'active': showVideoInputForm}"> <i class="fa fa-video-camera"></i> Videos </button>
                     <button class="btn btn-mini" ng-click="showDocumentUpload()" ng-class="{'active': showDocumentUploadForm}"> <i class="fa fa-pencil-square-o"></i> Documents </button>

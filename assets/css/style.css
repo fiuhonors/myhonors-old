@@ -256,6 +256,10 @@ h1,h2,h3,h4,h5,h6, .opensans {
   border-left: 0;
 }
 
+input[type="radio"] {
+    vertical-align: baseline;
+}
+
 /* end fix */
 
 h1 small,
@@ -581,7 +585,6 @@ td.day {
 .no-wrap {
 	white-space: nowrap;
 }
-
 
 /* 
  * File Input button styling.

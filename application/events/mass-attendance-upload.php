@@ -13,6 +13,7 @@ include_once "../../auth/FirebaseToken.php";
 require_once '../lib/firebaseLib/firebaseLib.php';
 include_once '../lib/PHPExcel/PHPExcel/IOFactory.php';
 
+set_time_limit(0); // By setting it to 0, no time limit is imposed for this script (i.e. it will run until the script finishes)
 
 if (!isset($_REQUEST["eventId"]) ||
 	!isset($_FILES["file"])

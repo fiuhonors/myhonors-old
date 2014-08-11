@@ -67,7 +67,8 @@
 				
 				<div class="control-group space-below">
 					<label for="hasTransportation" style="margin-right:5px;">Do you have your own form of transportation?</label>
-					<input id="hasTransportation" type="checkbox" ng-model="formInfo.hasTransporation">
+                    <label><input type="radio" name="hasTransportation" ng-click="formInfo.hasTransportation = true">Yes</label>
+                    <label><input type="radio" name="hasTransportation" ng-click="formInfo.hasTransportation = false">No</label>
 				</div>
 				
 				<hr>
