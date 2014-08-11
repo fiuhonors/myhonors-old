@@ -51,8 +51,10 @@ angular.module('myhonorsUser').controller('ProfilePictureEditCtrl', ['$scope', '
      * Submits the uploaded picture along with its info to the uploader and upload the image to be processed.
      */
     $scope.submitCroppedImg = function( form, coordinates ) {
-        if ( coordinates == null )
+        if ( coordinates == null ) {
             alert( "Please crop part of the picture before uploading it." );
+            return;
+        }
         
         // Add the File object to the uploader queue as well as its info
         $scope.uploader.addToQueue( $scope.uploadedPicture, { name: $scope.uploadedPicture.name , size:  $scope.uploadedPicture.size, type:  $scope.uploadedPicture.type } );

@@ -42,8 +42,13 @@ if( ! $isImgValid ) {
 $thumbnail_width = $thumbnail_height = 140; // Set the target width and height for the thumbnail to be created
 $jpeg_quality = 80; // Indicates the JPED quality of the thumbnail to be created
 
-// Set the upload path where the thumnail will be stored
-$upload_path = $_SERVER[ 'DOCUMENT_ROOT' ] . '/uploads/' . $path . $file_name;
+// Set the upload path where the thumbnail will be stored
+$upload_path = PROJECT_ROOT_PATH . 'uploads/' . $path;
+
+// If the upload path does not exist, create the necessary folders
+if ( ! file_exists( $upload_path ) && ! is_dir( $upload_path ) ) {
+    mkdir( $upload_path, 0777, true );         
+} 
 
 // Create a new image from the uploaded image given its mime type
 switch ( strtolower( $file_mimetype ) )
@@ -79,7 +84,7 @@ imagecopyresampled( $thumbnail,
                     $coordinates['h'] );
 
 // Save the image to the specified upload path
-$upload_success = imagejpeg( $thumbnail, $upload_path, $jpeg_quality);
+$upload_success = imagejpeg( $thumbnail, $upload_path . $file_name, $jpeg_quality);
 
 // Check if the save was succesful
 if ( ! $upload_success ) {
@@ -89,7 +94,7 @@ if ( ! $upload_success ) {
 }
 
 // Update Firebase to store the relative path to the thumbnail
-updateFirebase( $path, '/uploads/' . $path , $file_name );
+updateFirebase( $path, 'uploads/' . $path , $file_name );
 
 $result = array( 'success' => true );
 echo json_encode( $result );
