@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('myhonorsUser').factory('UserService', function($http, $location, $timeout, FirebaseIO, webStorage) {
+angular.module('myhonorsUser').factory('UserService', function($http, $location, $timeout, $q, $rootScope, FirebaseIO, webStorage) {
 	var login = function(username, password) {
 		// used to show "Loading..." status after clicking Login button
 		this.status.loading = true;
@@ -111,6 +111,26 @@ angular.module('myhonorsUser').factory('UserService', function($http, $location,
 			}
 		});
 	};
+    
+    /**
+     * Method that accepts a student's username and returns a promise containing that student's PID
+     */
+    var getPIDFromUsername = function( username ) {
+        var deferred = $q.defer();
+        
+        $timeout(function() {
+            FirebaseIO.child( 'usernames/' + username ).once( 'value', function( snapshot ) {
+                if ( snapshot.val() === null )
+                    deferred.reject( "No student with that username was found" );
+                else
+                    deferred.resolve( snapshot.val().toString()  ); 
+                $rootScope.$apply();
+            });
+        });
+        
+        
+        return deferred.promise;
+    };
 
 	return {
 		profile: null,
@@ -119,6 +139,7 @@ angular.module('myhonorsUser').factory('UserService', function($http, $location,
 		status: {loading: false}, // used to show "Loading..." status after clicking Login button
 		login: login,
 		logout: logout,
-		exists: exists
+		exists: exists,
+        getPIDFromUsername: getPIDFromUsername
 	};
 });

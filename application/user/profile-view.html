@@ -2,7 +2,7 @@
 	<div class="span12">
 		<div class="hero-unit clearfix" style="padding: 15px;">
                 
-                <a href="#/profile/{{ pid }}/profilepictureedit"> 
+                <a href="#/profiles/{{ user.username }}/profilepictureedit"> 
                    <img ng-src="{{ user.profile.picture.url || 'http://placehold.it/140'}}" class="pull-left img-rounded img-polaroid profile-picture">
                 </a>
             <div class="pull-right">
@@ -142,21 +142,6 @@
 </div>
 
 
-<!-- Modal for choosing the profile picture-->
-<div modal="showProjectModal" close="closeModal()" options="modalOpts">
-	<div class="modal-header">
-		<button type="button" class="close" aria-hidden="true" ng-click="closeModal()">×</button>
-	</div>
-	<div class="modal-body">
-	</div>
-	<div class="modal-footer">
-		<button class="btn" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()">Cancel</button>
-	    <button type="submit" class="btn btn-primary" form="form">
-			Add Project
-		</button>
-	</div>
-</div>
-
 <!-- Modal for creating/editing project-->
 <div modal="showProjectModal" close="closeModal()" options="modalOpts" ng-show="showProjectModal">
 	<div class="modal-header">
@@ -189,16 +174,6 @@
 				<br>
             
                 <div class="btn-group space-below" data-toggle="buttons-radio">
-<!--
-                    <label class="btn btn-default" ng-click="showPictureUpload()">
-                        <input type="radio" id="picture">
-                        <i class="fa fa-picture-o"></i> Pictures
-                    </label>
-                    <label class="btn btn-default" ng-click="showDocumentUpload()">
-                        <input type="radio" id="documents">
-                        <i class="fa fa-pencil-square-o"></i> Documents
-                    </label>
--->
                     <button class="btn btn-mini" ng-click="showPictureUpload()" ng-class="{'active': showPictureUploadForm}"> <i class="fa fa-picture-o"></i> Pictures </button>
                     <button class="btn btn-mini" ng-click="showVideoInput()" ng-class="{'active': showVideoInputForm}"> <i class="fa fa-video-camera"></i> Videos </button>
                     <button class="btn btn-mini" ng-click="showDocumentUpload()" ng-class="{'active': showDocumentUploadForm}"> <i class="fa fa-pencil-square-o"></i> Documents </button>

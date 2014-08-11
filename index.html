@@ -77,7 +77,6 @@
 	<script src="application/user/UserService.js"></script>
 	<script src="application/user/LoginCtrl.js"></script>
 	<script src="application/user/ProfileViewCtrl.js"></script>
-	<script src="application/user/ProfileEditCtrl.js"></script>
     <script src="application/user/ProfilePictureEditCtrl.js"></script>
 	<script src="application/user/ProfileService.js"></script>
 	<script src="application/user/xEditableDirective.js"></script>
@@ -173,9 +172,8 @@
 					<li class="dropdown" data-ng-show="user.profile">
 						<a href="#" class="dropdown-toggle"><i class="icon-user icon-white"></i> {{user.profile.fname}} {{user.profile.lname}}</a>
 						<ul class="dropdown-menu" role="menu">
-							<li ng-show="user.auth.isAdmin"><a href="#/profile/{{user.profile.id}}">View Profile</a></li>
-							<li ng-show="user.auth.isAdmin"><a href="#/profile/{{user.profile.id}}/edit">Update Profile</a></li>
-							<li ng-show="user.auth.isAdmin" class="divider"></li>
+							<li ng-show="user.auth.isStaff"><a href="#/profiles/{{user.profile.username}}">View Profile</a></li>
+							<li ng-show="user.auth.isStaffOP" class="divider"></li>
 							<li ng-show="user.auth.isAdmin"><a href="#/admin">Admin Panel</a></li>
 							<li ng-show="user.auth.isStaff"><a href="#/internal">Staff Panel</a></li>
 							<li ng-show="user.auth.isAdmin || user.auth.isStaff" class="divider"></li>

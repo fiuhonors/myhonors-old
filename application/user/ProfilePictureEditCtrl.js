@@ -1,12 +1,22 @@
 'use strict';
 
 angular.module('myhonorsUser').controller('ProfilePictureEditCtrl', ['$scope', '$routeParams', '$location', '$timeout', '$fileUploader', 'UserService', 'ProfileService', function EventBrowseCtrl($scope, $routeParams, $location, $timeout, $fileUploader, UserService, ProfileService) {
-    $scope.pid = $routeParams.userId;
+    $scope.pid = "";
     $scope.form = {};
     
     $scope.cropImgCoordinates; // Hold the coordinates of the crop section
     $scope.previewImgSrc = ""; // Hold the URL representing the images's data as base64 encoded string. This is used to show a preview of it.
     $scope.picUpload;          // Hold the File object ( which is the image added to the uploader )
+    
+    
+    UserService.getPIDFromUsername( $routeParams.username ).then( function( pid ) {
+        $scope.pid = pid; 
+       
+        // After the PID of the student is returned, the properties of the uploader's formData must be updated
+        $scope.uploader.formData[ 0 ].userId = $scope.pid;
+        $scope.uploader.formData[ 0 ].path = $scope.pid + '/profile/picture/';
+    });
+    
     
     /*
      * This method is called by the jCrop directive to store the crop coordinates
@@ -71,8 +81,9 @@ angular.module('myhonorsUser').controller('ProfilePictureEditCtrl', ['$scope', '
         url: 'application/user/crop-image.php',
         formData: [
             {
-                userId: $scope.pid,		// Send the user pid along with the file
-                path: $scope.pid + '/profile/picture/', // Relative path where the user's profile picture will be stored,
+                // All these properties are asynchronously updated once the PID of the student is received (see above)
+                userId: '',		// Send the user pid along with the file
+                path: '', // Relative path where the user's profile picture will be stored,
                 coordinates: ''
             }
         ],
@@ -82,7 +93,7 @@ angular.module('myhonorsUser').controller('ProfilePictureEditCtrl', ['$scope', '
     // If the file upload is sucessful redirect the user back to his profile
     uploader.bind( 'success', function( event, xhr, item, result ) {
         if ( result.success === true )
-            $location.path( 'profile/' + $scope.pid );
+            $location.path( 'profiles/' + $routeParams.username );
         else 
             $scope.form.error = "<strong>Sorry!</strong> " + result.error;
     } ); 
