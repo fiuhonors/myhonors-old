@@ -54,9 +54,9 @@ angular.module('myhonorsUser').controller('ProfileViewCtrl', ['$scope', '$rootSc
         /* Methods that handle the Interests and Organizations list */
 
         $scope.addItemToList = function(array) {
-            array.push({
+            array.push( {
                 value: "New item"
-            });
+            } );
             $scope.updateProfile();
         };
 
@@ -73,13 +73,14 @@ angular.module('myhonorsUser').controller('ProfileViewCtrl', ['$scope', '$rootSc
 
         
         /*
-         * Watch the projects collection. If it changes, if the user is currently browsing a project, that project is updated with the new info.
-         * This is done so that when the user uploads documents or pictures to a project, they appear on the 'Edit Project' listings in real-time.
+         * Watch the projects collection. If the user updates a project, the changes are automatically retrived by the Firebase collection. 
+         * The currentProject variable must then be updated by assigning it the updated version of the project. This is done so that when 
+         * the user uploads documents or pictures to a project, they appear on the project modal listings in real-time.
          */
         $scope.$watchCollection( 'projects', function() {
-            if ( $scope.currentProjectIndex )
+            if ( $scope.currentProjectIndex != null  )
                 $scope.currentProject = $scope.projects[ $scope.currentProjectIndex ];
-        } );
+        });
 
         // Modal options
         $scope.modalOpts = {
@@ -96,7 +97,8 @@ angular.module('myhonorsUser').controller('ProfileViewCtrl', ['$scope', '$rootSc
         $scope.closeModal = function() {
             $scope.showProjectModal = false;
             $scope.currentProject = {};
-            $scope.newProject = false
+            $scope.currentProjectIndex = null;
+            $scope.newProject = false;
         };
 
         $scope.newProjectModal = function() {
@@ -122,7 +124,7 @@ angular.module('myhonorsUser').controller('ProfileViewCtrl', ['$scope', '$rootSc
                 project.createdAt = Date.now(); // Store the time when the project was created
                 var projectId = ProjectService.add( $scope.pid, project ); // Add the project 
             }
-            else
+            else // The project was already created
                 ProjectService.update($scope.pid, $scope.currentProject.$id, project);
             
             $scope.closeModal();

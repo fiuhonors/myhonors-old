@@ -6,6 +6,35 @@ angular.module('myhonorsUser').factory('ProjectService', ['$q', '$http', '$timeo
 	var categoriesRef = FirebaseIO.child( 'system_settings/projectCategories' );
  	var projectCategories = FirebaseCollection( categoriesRef );
     
+    // Checks to see whether the project object has the necessary properties with the correct types
+    function isProjectValid( projectObject ) {
+        if ( !angular.isString( projectObject.title ) ||
+             !angular.isString( projectObject.description ) ||
+             !angular.isString( projectObject.category )
+           ) {
+                return false;
+             }
+        
+        // Check to see that all the project's assets are valid objects
+        if ( projectObject.hasOwnProperty( 'assets' ) )
+            for ( var id in projectObject.assets )
+                if ( !angular.isString( projectObject.assets[ id ].filename ) ||
+                     !angular.isString( projectObject.assets[ id ].url )
+                   ) {
+                        return false;
+                     }
+         // Check to see that all the project's files are valid objects
+         if ( projectObject.hasOwnProperty( 'files' ) )
+            for ( var id in projectObject.files )
+                if ( !angular.isString( projectObject.files[ id ].filename ) ||
+                     !angular.isString( projectObject.files[ id ].url )
+                   ) {
+                        return false;
+                     }
+        
+        return true;
+    }
+    
     return {
         /*
          * Returns a promise containing the data for a particular user's [roject
@@ -33,17 +62,15 @@ angular.module('myhonorsUser').factory('ProjectService', ['$q', '$http', '$timeo
         
         /*
          * Add a project to the specified user's profile
+         * @return The id of the Firebase node containing the project
          */
         add: function( userId, projectObject ) {
-            // TODO expand projectObject validation
-            if ( !angular.isString(projectObject.title) ||
-                !angular.isString(projectObject.description)
-               ) {
-                return false;
-            }
+            if ( ! isProjectValid( projectObject ) )
+                alert( 'The project you are trying to create is not valid.' );
+                
             
             var ref =  FirebaseIO.child( 'user_profiles/' + userId + '/profile/projects/').push(projectObject);
-            ref.setPriority(projectObject.createdAt);
+            ref.setPriority( projectObject.createdAt );
             
             FirebaseIO.child( 'projects/' + userId + "/" + ref.name() ).push( projectObject );
             
@@ -61,7 +88,9 @@ angular.module('myhonorsUser').factory('ProjectService', ['$q', '$http', '$timeo
          * Update the specified user's project with the new data passed
          */
         update: function( userId, projectId, projectObject ) {
-            // TODO add projectObject validation
+            if ( ! isProjectValid( projectObject ) )
+                alert( 'The project you are trying to create is not valid.' );
+            
             var id = projectId;
             
             FirebaseIO.child( 'user_profiles/' + userId + '/profile/projects/' + id ).update( projectObject );

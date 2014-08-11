@@ -37,7 +37,7 @@ function uploadFile( $userId, $path, $file_name, $tmp_name, $file_mimetype ) {
     }
     
     // Store the path were the file will be stored in the system
-    $upload_path = $_SERVER[ 'DOCUMENT_ROOT' ] . '/uploads/' . $path;
+    $upload_path = PROJECT_ROOT_PATH . 'uploads/' . $path;
 
     // If the upload path does not exist, create the necessary folders
     if ( ! file_exists( $upload_path ) && ! is_dir( $upload_path ) ) {
@@ -58,7 +58,7 @@ function uploadFile( $userId, $path, $file_name, $tmp_name, $file_mimetype ) {
 
     
     // Store the file's info into an array
-    $file_info = array( "filename" => $file_name, "url" => '/uploads/' . $path .$file_name, "createdAt" => round( microtime( true ) * 1000 ) );
+    $file_info = array( "filename" => $file_name, "url" => 'uploads/' . $path .$file_name, "createdAt" => round( microtime( true ) * 1000 ) );
     $fileObject = json_encode( $file_info );
     
     $result = array( 'success' => true, 'fileObject' => $fileObject, 'fileId' => $_REQUEST[ "itemIndex" ] );
