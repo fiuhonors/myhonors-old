@@ -35,7 +35,7 @@ angular.module('myhonorsUser').directive('jcrop', function() {
                         // Once the user selects a crop section, sent the coordinates to whatever function was passed to afterSelection
                         onSelect: function(x) {            
                           scope.$apply(function() {
-                            scope.afterSelection({cords: x});
+                            scope.afterSelection( { cords: x, img: myImg.next() });
                           });
                         },
                         // Minimum size for the cropping must be 140 x 140

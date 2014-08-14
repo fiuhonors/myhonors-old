@@ -2,7 +2,7 @@
 	<div class="span12">
 		<div class="hero-unit clearfix" style="padding: 15px;">
                 
-                <a href="#/profile/{{ pid }}/profilepictureedit"> 
+                <a href="#/profiles/{{ user.username }}/profilepictureedit"> 
                    <img ng-src="{{ user.profile.picture.url || 'http://placehold.it/140'}}" class="pull-left img-rounded img-polaroid profile-picture">
                 </a>
             <div class="pull-right">
@@ -141,21 +141,6 @@
 	</div>
 </div>
 
-
-<!-- Modal for choosing the profile picture-->
-<div modal="showProjectModal" close="closeModal()" options="modalOpts">
-	<div class="modal-header">
-		<button type="button" class="close" aria-hidden="true" ng-click="closeModal()">×</button>
-	</div>
-	<div class="modal-body">
-	</div>
-	<div class="modal-footer">
-		<button class="btn" data-dismiss="modal" aria-hidden="true" ng-click="closeModal()">Cancel</button>
-	    <button type="submit" class="btn btn-primary" form="form">
-			Add Project
-		</button>
-	</div>
-</div>
 
 <!-- Modal for creating/editing project-->
 <div modal="showProjectModal" close="closeModal()" options="modalOpts" ng-show="showProjectModal">
