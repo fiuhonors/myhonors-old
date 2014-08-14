@@ -11,7 +11,7 @@
             <input type='file' ng-model="profilePic" id="imgInput" onchange="angular.element(this).scope().showPreviewImg(this)">
             
             <div style="width: 100%">
-                <jcrop src="{{ previewImgSrc }}"  jcrop-center-image after-selection='setCropImgCoordinates(cords)'></jcrop>
+                <jcrop src="{{ previewImgSrc }}"  jcrop-center-image after-selection='setCropImgCoordinates(cords, img)'></jcrop>
             </div>
         </form>
         

@@ -5,6 +5,7 @@ angular.module('myhonorsUser').controller('ProfilePictureEditCtrl', ['$scope', '
     $scope.form = {};
     
     $scope.cropImgCoordinates; // Hold the coordinates of the crop section
+    $scope.resizedImgSize;            // Store the ( possibly resized by the browser ) size of the uploaded image
     $scope.previewImgSrc = ""; // Hold the URL representing the images's data as base64 encoded string. This is used to show a preview of it.
     $scope.picUpload;          // Hold the File object ( which is the image added to the uploader )
     
@@ -21,8 +22,9 @@ angular.module('myhonorsUser').controller('ProfilePictureEditCtrl', ['$scope', '
     /*
      * This method is called by the jCrop directive to store the crop coordinates
      */
-    $scope.setCropImgCoordinates = function( coordinates ) {
+    $scope.setCropImgCoordinates = function( coordinates, img ) {
         $scope.cropImgCoordinates = coordinates;
+        $scope.resizedImgSize = { width: $( img ).width(), height: $( img ).height() };
     };
     
     $scope.showPreviewImg = function( input ) {
@@ -69,6 +71,7 @@ angular.module('myhonorsUser').controller('ProfilePictureEditCtrl', ['$scope', '
         // Add the File object to the uploader queue as well as its info
         $scope.uploader.addToQueue( $scope.uploadedPicture, { name: $scope.uploadedPicture.name , size:  $scope.uploadedPicture.size, type:  $scope.uploadedPicture.type } );
         $scope.uploader.formData[ 0 ].coordinates = JSON.stringify( coordinates ); // Pass the cropping coordinates as a JSON string
+        $scope.uploader.formData[ 0 ].resizedImgSize = JSON.stringify( $scope.resizedImgSize ); // Pass the size of the resized image as a JSON string
         $scope.uploader.uploadAll();
     };
     

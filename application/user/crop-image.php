@@ -2,18 +2,24 @@
 
 /*
  * The following script crops part of an image by the specified coordinates and saves it to the specified path.
+ * 
+ * @author Alberto Mizrahi
+ * @version 08/14/2014
  */
 
 require_once "../../config.php"; // Include all the necessary Firebase config variables
-include_once "../../auth/FirebaseToken.php";
+require_once "../../auth/FirebaseToken.php";
 require_once '../lib/firebaseLib/firebaseLib.php';
 require_once 'file-validation.php';
+
+error_log( print_r( $_REQUEST, true ) );
 
 // Check that the image was uploaded without errors and all the required data was sent
 if ( empty( $_FILES[ 'file' ] ) || $_FILES[ 'file' ][ 'error' ] != UPLOAD_ERR_OK 
     || !isset( $_REQUEST[ 'userId' ] ) 
     || !isset( $_REQUEST[ 'path' ] )
-    || !isset( $_REQUEST[ 'coordinates' ] ) ) {
+    || !isset( $_REQUEST[ 'coordinates' ] )
+    || !isset( $_REQUEST[ 'resizedImgSize' ] ) ) {
     error_log( print_r( $_FILES , true ) );
     error_log( print_r( $_REQUEST, true ) );
 	$result = array( 'success' => false, 'error' => 'A problem ocurred when uploading the picture.' );
@@ -24,7 +30,8 @@ if ( empty( $_FILES[ 'file' ] ) || $_FILES[ 'file' ][ 'error' ] != UPLOAD_ERR_OK
 
 $userId = $_REQUEST[ 'userId' ];
 $path = $_REQUEST[ 'path' ];
-$coordinates = json_decode( $_REQUEST[ 'coordinates' ], true );
+$coordinates = json_decode( $_REQUEST[ 'coordinates' ], true ); // Gives us the coordinates, size and height of the cropping area
+$resized_img_size = json_decode( $_REQUEST[ 'resizedImgSize' ], true );
 
 $file_name = $_FILES[ "file" ][ "name" ];
 $tmp_name = $_FILES[ "file" ][ "tmp_name" ];
@@ -38,9 +45,32 @@ if( ! $isImgValid ) {
     die();
 }
 
+/*
+ * Using jCrop with very big image files causes a problem. When a big image is uploaded to the browser and a preview is shown so that the user can crop 
+ * part of it, the preview will be automatically resized by the browser to fir the screen. This throws off the x,y coordinates and the crop section 
+ * width and height returned by jCrop. To fix this, the width and height ratio between the original image and the resized image in the browser must 
+ * first be obtained. Using this, the true x,y coordinates along with the crop section size can be calculated for the original image and it can then be 
+ * processed.
+ * This idea was taken from Alastair Paragas' script at: https://gist.github.com/alastairparagas/1e4c229a55ec089f5c38
+ */
+
+// Get the original image size
+$original_img_size = getimagesize( $tmp_name );
+
+// Find the width and height ratio between the original size of the image and the resized image shwon in the browser
+$img_width_ratio = $original_img_size[ 0 ] / $resized_img_size[ 'width' ];
+$img_height_ratio = $original_img_size[ 1 ] / $resized_img_size[ 'height' ];
+
+// Using the ratios, calculate the true x and y coordinate of the top left corner of the crop section
+$true_x_coordinate = $coordinates[ 'x' ] * $img_width_ratio;
+$true_y_coordinate = $coordinates[ 'y' ] * $img_height_ratio;
+
+// Usign the ratios, calculate the true width and height of the crop section
+$true_width = $coordinates[ 'w' ] * $img_width_ratio;
+$true_height = $coordinates[ 'h' ] * $img_height_ratio;
 
 $thumbnail_width = $thumbnail_height = 140; // Set the target width and height for the thumbnail to be created
-$jpeg_quality = 80; // Indicates the JPED quality of the thumbnail to be created
+$jpeg_quality = 80; // Indicates the JPEG quality of the thumbnail to be created
 
 // Set the upload path where the thumbnail will be stored
 $upload_path = PROJECT_ROOT_PATH . 'uploads/' . $path;
@@ -76,15 +106,15 @@ imagecopyresampled( $thumbnail,
                     $image,
                     0,
                     0,
-                    $coordinates['x'],
-                    $coordinates['y'],
+                    $true_x_coordinate,
+                    $true_y_coordinate,
                     $thumbnail_width,
                     $thumbnail_height,
-                    $coordinates['w'],
-                    $coordinates['h'] );
+                    $true_width,
+                    $true_height );
 
 // Save the image to the specified upload path
-$upload_success = imagejpeg( $thumbnail, $upload_path . $file_name, $jpeg_quality);
+$upload_success = imagejpeg( $thumbnail, $upload_path . $file_name, $jpeg_quality );
 
 // Check if the save was succesful
 if ( ! $upload_success ) {
@@ -99,6 +129,8 @@ updateFirebase( $path, 'uploads/' . $path , $file_name );
 $result = array( 'success' => true );
 echo json_encode( $result );
 
+
+/******* Helper functions *******/
 
 function updateFirebase( $firebase_path, $upload_path, $file_name ) {
     $tokenGen   = new Services_FirebaseTokenGenerator( FIREBASE_SECRET );
