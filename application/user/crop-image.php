@@ -47,7 +47,7 @@ if( ! $isImgValid ) {
 
 /*
  * Using jCrop with very big image files causes a problem. When a big image is uploaded to the browser and a preview is shown so that the user can crop 
- * part of it, the preview will be automatically resized by the browser to fir the screen. This throws off the x,y coordinates and the crop section 
+ * part of it, the preview will be automatically resized by the browser to fit the screen. This throws off the x,y coordinates and the crop section 
  * width and height returned by jCrop. To fix this, the width and height ratio between the original image and the resized image in the browser must 
  * first be obtained. Using this, the true x,y coordinates along with the crop section size can be calculated for the original image and it can then be 
  * processed.
