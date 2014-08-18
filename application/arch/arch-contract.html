@@ -1,219 +1,214 @@
-<div class="row">
-	<div class="span12">
-		<div class="box">
-			<div class="box-header">ARCH Agreement</div>
-			<div class="box-content padded">I agree that during the ARCH 2012-2013 term <strong>{{advisor.fname + ' ' + advisor.lname}}</strong> and <strong>{{student.fname + ' ' + student.lname}}</strong> will serve together as 'advisor' and 'student' (respectively) as outlined below.</div>
-		</div>
-	</div>
+
+<div class="box">
+    <div class="box-header">ARCH Agreement</div>
+    <div class="box-content padded">I agree that during the 
+        ARCH 2012-2013 term <strong>{{advisor.fname + ' ' + advisor.lname}}</strong> 
+        and <strong>{{student.fname + ' ' + student.lname}}</strong> will serve 
+        together as 'advisor' and 'student' (respectively) as outlined below.</div>
 </div>
 
 <div class="row">
-	<!-- begin student section -->
-	<div class="span6">
-		<div class="box">
-			<div class="box-header">Students</div>
-			<div class="box-content padded">
-				<p>I understand that the purpose of the Advanced Research and Creativity in Honors Program at the FIU Honors College is to prepare students for graduate study through active participation in undergraduate research and I subscribe to that purpose. I understand that I am committed to the following responsibilities listed below:</p>
-				
-				<ol>
-					<li>Turn in all assignments in accordance with the ARCH Scholar Timeline and the ARCH syllabus.</li>
-					<li>Attend all workshops during the fall and spring semesters.</li>
-					<li>Prepare a final proposal and draft abstract in the fall semester.</li>
-					<li>Prepare an academic poster and a thesis or its equivalent in the spring semester.</li>
-					<li>Meet with the research advisor on a regular basis.</li>
-					<li>Check blackboard and FIU e-mail regularly.</li>
-					<li>Present work at the ARCH Conference on March 19-20, 2013.</li>
-					<li>Encourage my research advisor and peers to attend the conference.</li>
-					<li>Communicate any questions or problems to the ARCH office</li>
-				</ol>
-				
-				<p class="text-center"><strong>ARCH Scholar Timeline</strong></p>
-				
-				<strong>August</strong>
-				<ul>
-					<li>August 21 – First Workshop – ARCH Introduction and Research Ethics</li>
-				</ul>
-				<strong>September</strong>
-				<ul>
-					<li>September 18 – Second Workshop – Creating the Proposal and Abstract</li>
-				</ul>
-				<strong>October</strong>
-				<ul>
-					<li>October 2 – Draft Proposal Due</li>
-					<li>October 26 – Approval of Final Proposal must be submitted by Advisor</li>
-					<li>October 30 – Final Proposal Due</li>
-				</ul>
-				<strong>November</strong>
-				<ul>
-					<li>November 6 – Third Workshop – Research Across the Fields</li>
-					<li>November 6 – Draft Proposal Abstract Due</li>
-					<li>November 13 – Applying for Research Funding (Optional Workshop)</li>
-					<li>November 30 – Approval of Proposal Abstract by Advisor</li>
-				</ul>
-				<strong>December</strong>
-				<ul>
-					<li>December 4 – Final Fall Abstract Due</li>
-				</ul>
+    <!-- begin student section -->
+    <div class="col-md-6">
+        <div class="box">
+            <div class="box-header">Students</div>
+            <div class="box-content padded">
+                <p>I understand that the purpose of the Advanced Research and Creativity in Honors Program at the FIU Honors College is to prepare students for graduate study through active participation in undergraduate research and I subscribe to that purpose. I understand that I am committed to the following responsibilities listed below:</p>
+                <ol>
+                    <li>Turn in all assignments in accordance with the ARCH Scholar Timeline and the ARCH syllabus.</li>
+                    <li>Attend all workshops during the fall and spring semesters.</li>
+                    <li>Prepare a final proposal and draft abstract in the fall semester.</li>
+                    <li>Prepare an academic poster and a thesis or its equivalent in the spring semester.</li>
+                    <li>Meet with the research advisor on a regular basis.</li>
+                    <li>Check blackboard and FIU e-mail regularly.</li>
+                    <li>Present work at the ARCH Conference on March 19-20, 2013.</li>
+                    <li>Encourage my research advisor and peers to attend the conference.</li>
+                    <li>Communicate any questions or problems to the ARCH office</li>
+                </ol>
+                <p class="text-center"><strong>ARCH Scholar Timeline</strong></p>
+                <strong>August</strong>
+                <ul>
+                    <li>August 21 – First Workshop – ARCH Introduction and Research Ethics</li>
+                </ul>
+                <strong>September</strong>
+                <ul>
+                    <li>September 18 – Second Workshop – Creating the Proposal and Abstract</li>
+                </ul>
+                <strong>October</strong>
+                <ul>
+                    <li>October 2 – Draft Proposal Due</li>
+                    <li>October 26 – Approval of Final Proposal must be submitted by Advisor</li>
+                    <li>October 30 – Final Proposal Due</li>
+                </ul>
+                <strong>November</strong>
+                <ul>
+                    <li>November 6 – Third Workshop – Research Across the Fields</li>
+                    <li>November 6 – Draft Proposal Abstract Due</li>
+                    <li>November 13 – Applying for Research Funding (Optional Workshop)</li>
+                    <li>November 30 – Approval of Proposal Abstract by Advisor</li>
+                </ul>
+                <strong>December</strong>
+                <ul>
+                    <li>December 4 – Final Fall Abstract Due</li>
+                </ul>
+                <p><em>Any changes to the deadlines, approval dates, and workshop dates for the spring semester will be sent via email in the Fall semester before the commencement of the spring semester.</em></p>
+                <strong>January</strong>
+                <ul>
+                    <li>Construct Poster</li>
+                </ul>
+                <strong>February</strong>
+                <ul>
+                    <li>Prepare ARCH Poster and Presentation</li>
+                    <li>February 26 – Approval of Final Thesis Abstract</li>
+                </ul>
+                <strong>March</strong>
+                <ul>
+                    <li>Prepare ARCH Poster and Presentation</li>
+                    <li>March 4 – Approval of Final Poster Submission</li>
+                    <li>March 19 & 20 - ARCH Conference</li>
+                </ul>
+                <strong>April</strong>
+                <ul>
+                    <li>April 19 – Approval of Final Thesis Submission by Advisor</li>
+                </ul>
+            </div>
+        </div>
+        <div class="box">
+            <div class="box-header">Student Signature</div>
+            <div class="box-content padded">
+                <form ng-show="isStudent() && !project.contract.signedByStudent" ng-submit="signContract()">
+                    <p>To accept the agreement, please enter your name in the box below, then click the "Accept Agreement" button.</p>
+                    <label for="studentName">Your Name</label>
+                    <input type="text" id="studentName" /><br />
+                    <p><strong>Today's Date</strong>: {{now| date:'fullDate'}}</p>
+                    <button class="btn btn-primary btn-lg">Accept Agreement</button>
+                </form>
+                <div ng-show="isStudent() && project.contract.signedByStudent" class="alert alert-block alert-success">
+                    <h4>Success!</h4>
+                    <p style="margin: 1px 0 10px">Thank you for signing the ARCH Agreement.</p>
+                    <a href="#/arch" class="btn btn-success">Go Back to Main Page</a>
+                </div>
+                <div ng-show="isAdvisor() && !project.contract.signedByStudent" class="alert alert-block alert-info">
+                    <h4>Pending Signature</h4>
+                    We are still waiting for your student, {{student.fname + ' ' + student.lname}}, to sign the agreement. Feel free to send him or her a friendly reminder!
+                </div>
+                <div ng-show="isAdvisor() && project.contract.signedByStudent" class="alert alert-block alert-success">
+                    <h4>Success!</h4>
+                    Your student, {{student.fname + ' ' + student.lname}}, successfully signed the agreement on {{project.contract.signedByStudent| date:'fullDate'}}.
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end student section -->
 
-				<p><em>Any changes to the deadlines, approval dates, and workshop dates for the spring semester will be sent via email in the Fall semester before the commencement of the spring semester.</em></p>
+    <!-- begin advisor section -->
+    <div class="col-md-6">
+        <div class="box">
+            <div class="box-header">Advisors</div>
+            <div class="box-content padded">
+                <p>I accept the invitation to participate in the Advanced Research and Creativity in Honors Program at the FIU Honors College as a Faculty Research Advisor. I understand that the purpose of the program is to prepare students for graduate study through active participation in undergraduate research and I subscribe to that purpose.</p>
+                <p>I understand that my acceptance commits me to the following responsibilities:</p>
+                <ol>
+                    <li>Serve as an advisor and mentor to the student, guiding the identification, design, and completion of appropriate research resulting in a thesis or its equivalent by the end of the academic year.</li>
+                    <li>Give constructive and critical review of the student’s work, including a research proposal, abstract, academic poster, oral presentation, thesis or its creative equivalent.</li>
+                    <li>Abide by program guidelines and deadlines.</li>
+                    <li>Assess the student’s progress in relation to their research on a regular basis.</li>
+                    <li>Submit a letter grade for the student at the end of each semester through Panthersoft.</li>
+                    <li>ist the student in preparing proposals for appropriate presentation of research work at conferences, workshops and other venues for academic exchange.</li>
+                    <li>Assist in identifying potential graduate schools for the student.</li>
+                    <li>Assist student in the development of a personal statement and/or letter of application.</li>
+                    <li>Provide regular progress reports on the work submitted by the student.</li>
+                    <li>Communicate any questions or problems to the ARCH office.</li>
+                    <li>Thoroughly review and approve all work submitted to the ARCH office through the approval form that will be sent to you through FIU email. Please note the student will not receive credit for his/her work without this approval. The student will also not receive credit for his/her participation grade from the Honors College.</li>
+                    <li>Attend the ARCH Conference and, more specifically, the student's oral and poster presentation.</li>
+                </ol>
 
-				<strong>January</strong>
-				<ul>
-					<li>Construct Poster</li>
-				</ul>
-				<strong>February</strong>
-				<ul>
-					<li>Prepare ARCH Poster and Presentation</li>
-					<li>February 26 – Approval of Final Thesis Abstract</li>
-				</ul>
-				<strong>March</strong>
-				<ul>
-					<li>Prepare ARCH Poster and Presentation</li>
-					<li>March 4 – Approval of Final Poster Submission</li>
-					<li>March 19 & 20 - ARCH Conference</li>
-				</ul>
-				<strong>April</strong>
-				<ul>
-					<li>April 19 – Approval of Final Thesis Submission by Advisor</li>
-				</ul>
-			</div>
-		</div>
-		<div class="box">
-			<div class="box-header">Student Signature</div>
-			<div class="box-content padded">
-				<form ng-show="isStudent() && !project.contract.signedByStudent" ng-submit="signContract()">
-					<p>To accept the agreement, please enter your name in the box below, then click the "Accept Agreement" button.</p>
-					<label for="studentName">Your Name</label>
-					<input type="text" id="studentName" /><br />
-					<p><strong>Today's Date</strong>: {{now | date:'fullDate'}}</p>
-					<button class="btn btn-primary btn-large">Accept Agreement</button>
-				</form>
-				<div ng-show="isStudent() && project.contract.signedByStudent" class="alert alert-block alert-success">
-					<h4>Success!</h4>
-					<p style="margin: 1px 0 10px">Thank you for signing the ARCH Agreement.</p>
-					<a href="#/arch" class="btn btn-success">Go Back to Main Page</a>
-				</div>
-				<div ng-show="isAdvisor() && !project.contract.signedByStudent" class="alert alert-block alert-info">
-					<h4>Pending Signature</h4>
-					We are still waiting for your student, {{student.fname + ' ' + student.lname}}, to sign the agreement. Feel free to send him or her a friendly reminder!
-				</div>
-				<div ng-show="isAdvisor() && project.contract.signedByStudent" class="alert alert-block alert-success">
-					<h4>Success!</h4>
-					Your student, {{student.fname + ' ' + student.lname}}, successfully signed the agreement on {{project.contract.signedByStudent | date:'fullDate'}}.
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- end student section -->
+                <p class="text-center"><strong>Faculty Advisor Timeline</strong></p>
 
-	<!-- begin advisor section -->
-	<div class="span6">
-		<div class="box">
-			<div class="box-header">Advisors</div>
-			<div class="box-content padded">
-				<p>I accept the invitation to participate in the Advanced Research and Creativity in Honors Program at the FIU Honors College as a Faculty Research Advisor. I understand that the purpose of the program is to prepare students for graduate study through active participation in undergraduate research and I subscribe to that purpose.</p>
-				<p>I understand that my acceptance commits me to the following responsibilities:</p>
-				<ol>
-					<li>Serve as an advisor and mentor to the student, guiding the identification, design, and completion of appropriate research resulting in a thesis or its equivalent by the end of the academic year.</li>
-					<li>Give constructive and critical review of the student’s work, including a research proposal, abstract, academic poster, oral presentation, thesis or its creative equivalent.</li>
-					<li>Abide by program guidelines and deadlines.</li>
-					<li>Assess the student’s progress in relation to their research on a regular basis.</li>
-					<li>Submit a letter grade for the student at the end of each semester through Panthersoft.</li>
-					<li>ist the student in preparing proposals for appropriate presentation of research work at conferences, workshops and other venues for academic exchange.</li>
-					<li>Assist in identifying potential graduate schools for the student.</li>
-					<li>Assist student in the development of a personal statement and/or letter of application.</li>
-					<li>Provide regular progress reports on the work submitted by the student.</li>
-					<li>Communicate any questions or problems to the ARCH office.</li>
-					<li>Thoroughly review and approve all work submitted to the ARCH office through the approval form that will be sent to you through FIU email. Please note the student will not receive credit for his/her work without this approval. The student will also not receive credit for his/her participation grade from the Honors College.</li>
-					<li>Attend the ARCH Conference and, more specifically, the student's oral and poster presentation.</li>
-				</ol>
+                <strong>August</strong>
+                <ul>
+                    <li>Make sure the student appears on your student roster on Panthersoft.</li>
+                </ul>
+                <strong>September</strong>
+                <ul>
+                    <li>Attend the Advisor Reception/Orientation</li>
+                    <li>Review Rough Draft Proposal</li>
+                    <li>September 4 – Review and Approve Rough Draft Proposal</li>
+                    <li>Aid student in applying for research scholarships</li>
+                </ul>
+                <strong>October</strong>
+                <ul>
+                    <li>October 2 – Final Proposal Due</li>
+                    <li>Aid student in applying to external conferences</li>
+                    <li>Aid student in applying for research scholarships</li>
+                    <li>Review Rough Draft Abstract</li>
+                </ul>
+                <strong>November</strong>
+                <ul>
+                    <li>November 6 – Rough Draft Abstract Due</li>
+                    <li>Aid student in applying to external conferences</li>
+                    <li>Aid student in applying for research scholarships</li>
+                    <li>Review Final Fall Abstract</li>
+                    <li>November 30 – Review and Approve Final Fall Abstract</li>
+                </ul>
+                <strong>December</strong>
+                <ul>
+                    <li>December 4 – Final Fall Abstract Due</li>
+                    <li>Assign a grade to the student at the end of the semester.</li>
+                    <li>Aid student in applying to external conferences</li>
+                    <li>Aid student in applying for research scholarships</li>
+                </ul>
 
-				<p class="text-center"><strong>Faculty Advisor Timeline</strong></p>
-				
-				<strong>August</strong>
-				<ul>
-					<li>Make sure the student appears on your student roster on Panthersoft.</li>
-				</ul>
-				<strong>September</strong>
-				<ul>
-					<li>Attend the Advisor Reception/Orientation</li>
-					<li>Review Rough Draft Proposal</li>
-					<li>September 4 – Review and Approve Rough Draft Proposal</li>
-					<li>Aid student in applying for research scholarships</li>
-				</ul>
-				<strong>October</strong>
-				<ul>
-					<li>October 2 – Final Proposal Due</li>
-					<li>Aid student in applying to external conferences</li>
-					<li>Aid student in applying for research scholarships</li>
-					<li>Review Rough Draft Abstract</li>
-				</ul>
-				<strong>November</strong>
-				<ul>
-					<li>November 6 – Rough Draft Abstract Due</li>
-					<li>Aid student in applying to external conferences</li>
-					<li>Aid student in applying for research scholarships</li>
-					<li>Review Final Fall Abstract</li>
-					<li>November 30 – Review and Approve Final Fall Abstract</li>
-				</ul>
-				<strong>December</strong>
-				<ul>
-					<li>December 4 – Final Fall Abstract Due</li>
-					<li>Assign a grade to the student at the end of the semester.</li>
-					<li>Aid student in applying to external conferences</li>
-					<li>Aid student in applying for research scholarships</li>
-				</ul>
+                <p><em>Any changes to the deadlines, approval dates, and workshop dates for the spring semester will be sent via email in the Fall semester before the commencement of the spring semester.</em></p>
 
-				<p><em>Any changes to the deadlines, approval dates, and workshop dates for the spring semester will be sent via email in the Fall semester before the commencement of the spring semester.</em></p>
-
-				<strong>January</strong>
-				<ul>
-					<li>Aid student in applying to external conferences</li>
-					<li>Review Poster</li>
-				</ul>
-				<strong>February</strong>
-				<ul>
-					<li>Aid student in applying to external conferences</li>
-					<li>February 26 – Review and Approve Final Abstract</li>
-					<li>Aid student in preparing and presenting ARCH Poster and Presentation</li>
-				</ul>
-				<strong>March</strong>
-				<ul>
-					<li>March 4 – Review and Approve Final Poster Submission</li>
-					<li>Aid student in preparing and presenting ARCH Poster and Presentation</li>
-					<li>March 19 & 20 – Attend the ARCH Conference, more specifically, your student's oral and poster presentation</li>
-				</ul>
-				<strong>April</strong>
-				<ul>
-					<li>April 19 – Review and Approve Final Thesis Submission</li>
-				</ul>
-			</div>
-		</div>
-		<div class="box">
-			<div class="box-header">Advisor Signature</div>
-			<div class="box-content padded">
-				<form ng-show="isAdvisor() && !project.contract.signedByAdvisor" ng-submit="signContract()">
-					<p>To accept the agreement, please enter your name in the box below, then click the "Accept Agreement" button.</p>
-					<label for="advisorName">Your Name</label>
-					<input type="text" id="advisorName" /><br />
-					<p><strong>Today's Date</strong>: {{now | date:'fullDate'}}</p>
-					<button class="btn btn-primary btn-large">Accept Agreement</button>
-				</form>
-				<div ng-show="isAdvisor() && project.contract.signedByAdvisor" class="alert alert-block alert-success">
-					<h4>Success!</h4>
-					<p style="margin: 1px 0 10px">Thank you for signing the ARCH Agreement.</p>
-					<a href="#/arch" class="btn btn-success">Go Back to Main Page</a>
-				</div>
-				<div ng-show="isStudent() && !project.contract.signedByAdvisor" class="alert alert-block alert-info">
-					<h4>Pending Signature</h4>
-					We are still waiting for your advisor, {{advisor.fname + ' ' + advisor.lname}}, to sign the agreement. Feel free to send him or her a friendly reminder!
-				</div>
-				<div ng-show="isStudent() && project.contract.signedByAdvisor" class="alert alert-block alert-success">
-					<h4>Success!</h4>
-					Your advisor, {{advisor.fname + ' ' + advisor.lname}}, successfully signed the agreement on {{project.contract.signedByAdvisor | date:'fullDate'}}.
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- end advisor section -->
+                <strong>January</strong>
+                <ul>
+                    <li>Aid student in applying to external conferences</li>
+                    <li>Review Poster</li>
+                </ul>
+                <strong>February</strong>
+                <ul>
+                    <li>Aid student in applying to external conferences</li>
+                    <li>February 26 – Review and Approve Final Abstract</li>
+                    <li>Aid student in preparing and presenting ARCH Poster and Presentation</li>
+                </ul>
+                <strong>March</strong>
+                <ul>
+                    <li>March 4 – Review and Approve Final Poster Submission</li>
+                    <li>Aid student in preparing and presenting ARCH Poster and Presentation</li>
+                    <li>March 19 & 20 – Attend the ARCH Conference, more specifically, your student's oral and poster presentation</li>
+                </ul>
+                <strong>April</strong>
+                <ul>
+                    <li>April 19 – Review and Approve Final Thesis Submission</li>
+                </ul>
+            </div>
+        </div>
+        <div class="box">
+            <div class="box-header">Advisor Signature</div>
+            <div class="box-content padded">
+                <form ng-show="isAdvisor() && !project.contract.signedByAdvisor" ng-submit="signContract()">
+                    <p>To accept the agreement, please enter your name in the box below, then click the "Accept Agreement" button.</p>
+                    <label for="advisorName">Your Name</label>
+                    <input type="text" id="advisorName" /><br />
+                    <p><strong>Today's Date</strong>: {{now| date:'fullDate'}}</p>
+                    <button class="btn btn-primary btn-lg">Accept Agreement</button>
+                </form>
+                <div ng-show="isAdvisor() && project.contract.signedByAdvisor" class="alert alert-success">
+                    <h4>Success!</h4>
+                    <p style="margin: 1px 0 10px">Thank you for signing the ARCH Agreement.</p>
+                    <a href="#/arch" class="btn btn-success">Go Back to Main Page</a>
+                </div>
+                <div ng-show="isStudent() && !project.contract.signedByAdvisor" class="alert alert-info">
+                    <h4>Pending Signature</h4>
+                    We are still waiting for your advisor, {{advisor.fname + ' ' + advisor.lname}}, to sign the agreement. Feel free to send him or her a friendly reminder!
+                </div>
+                <div ng-show="isStudent() && project.contract.signedByAdvisor" class="alert alert-success">
+                    <h4>Success!</h4>
+                    Your advisor, {{advisor.fname + ' ' + advisor.lname}}, successfully signed the agreement on {{project.contract.signedByAdvisor| date:'fullDate'}}.
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end advisor section -->
 </div>

@@ -3,16 +3,15 @@
 <head>
 	<title>MyHonors</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" />
 	<link rel="stylesheet" type="text/css" href="assets/css/font-awesome.css" />
-	<link rel="stylesheet" type="text/css" href="assets/css/style.css" />
 	<link rel="stylesheet" type="text/css" href="assets/css/leaflet.css" />
 	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap-datepicker.css" />
 	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap-timepicker.css" />
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css" />
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800">
 	<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> <!-- Font Awesome -->
-	<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet"/> <!-- xEditable jQuery -->
+	<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
 	<link rel="stylesheet" type="text/css" href="assets/css/angular-carousel.min.css"> <!-- Angular Image Carousel -->
 	<link rel="stylesheet" type="text/css" href="assets/css/jquery.Jcrop.css">
 
@@ -20,29 +19,22 @@
 		<link rel="stylesheet" type="text/css" href="assets/css/leaflet.ie.css" />
 	<![endif]-->
 
-	<!-- this is for the Sticky Footer Solution -->
-	<!--[if !IE 7]>
-	<style type="text/css">
-		#wrap {display:table;height:100%}
-	</style>
-	<![endif]-->
-	
-
 	<!-- load our libraries! these make all the real magic happen -->
 	<script src="assets/lib/jquery.min.js"></script>
 	<script src="assets/lib/angular.js"></script>
-	<script src='https://cdn.firebase.com/v0/firebase.js'></script>
-	<script src='https://cdn.firebase.com/v0/firebase-auth-client.js'></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+	<script src="https://cdn.firebase.com/v0/firebase.js"></script>
+	<script src="https://cdn.firebase.com/v0/firebase-auth-client.js"></script>
 	<script src="assets/lib/chart.min.js"></script>
 	<script src="assets/lib/moment.min.js"></script>
 	<script src="assets/lib/leaflet.min.js"></script>
 	<script src="assets/lib/bootstrap-datepicker.js"></script>
 	<script src="assets/lib/bootstrap-timepicker.js"></script>
+        <script src="assets/lib/bootstrap.min.js"></script>
 	<script src="assets/lib/showdown.min.js"></script>
 	<script src="assets/lib/angular-file-upload.min.js"></script> 
 	<script src="http://underscorejs.org/underscore-min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap-editable/js/bootstrap-editable.min.js"></script> <!-- xEditable jQuery -->
+	<!--[if lt IE 9]><script src="dist/html5shiv.js"></script><![endif]-->
+	<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 	<script src="assets/lib/angular-touch.min.js"></script> <!-- ngTouch directive -->
 	<script src="assets/lib/angular-carousel.min.js"></script> <!-- Angular Image Carousel -->
 	<script src="assets/lib/jquery.Jcrop.js"></script>
@@ -78,10 +70,10 @@
 	<script src="application/user/LoginCtrl.js"></script>
 	<script src="application/user/ProfileViewCtrl.js"></script>
 	<script src="application/user/ProfileEditCtrl.js"></script>
-    <script src="application/user/ProfilePictureEditCtrl.js"></script>
+        <script src="application/user/ProfilePictureEditCtrl.js"></script>
 	<script src="application/user/ProfileService.js"></script>
 	<script src="application/user/xEditableDirective.js"></script>
-    <script src="application/user/ProjectViewCtrl.js"></script>
+        <script src="application/user/ProjectViewCtrl.js"></script>
 	<script src="application/user/ProjectService.js"></script>
 	<script src="application/user/jCropDirective.js"></script>
 	
@@ -148,75 +140,73 @@
 	<!-- end loading our app files -->
 </head>
 <body data-ng-controller="AppCtrl">
+<div id="wrapper">
+    <!-- header -->
+    <nav class="navbar navbar-static-top navbar-inverse" role="navigation" data-ng-show="showPanels" style="display: none">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button class="navbar-toggle" data-toggle="collapse" data-target="#collapsibleMenu">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#/">&nbsp;</a>
+                </div>
+                <div class="collapse navbar-collapse" id="collapsibleMenu">
+                    <ul class="nav navbar-nav" data-ng-show="user.profile">
+                        <li class="dropdown" ng-show="user.auth.isMiddleCircle">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Courses <i class="glyphicon glyphicon-chevron-down"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#/courses/middlecircle">The Middle Circle: Integrating Ideas & Knowledge</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#/events">Events</a></li>
+                        <li><a href="#/citizenship">Citizenship</a></li>
+                        <li><a href="#/career">Internships</a></li>
+                        <li><a href="#/arch">ARCH</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav pull-right">
+                        <li class="dropdown" data-toggle="dropdown" data-ng-show="user.profile">
+                            <a href="#" class="dropdown-toggle"><i class="glyphicon glyphicon-user icon-white"></i> {{user.profile.fname}} {{user.profile.lname}}</a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li ng-show="user.auth.id"><a href="#/profile/{{user.profile.id}}">View Profile</a></li>
+                                <li ng-show="user.auth.isAdmin" class="divider"></li>
+                                <li ng-show="user.auth.isAdmin"><a href="#/admin">Admin Panel</a></li>
+                                <li ng-show="user.auth.isStaff"><a href="#/internal">Staff Panel</a></li>
+                                <li ng-show="user.auth.isAdmin || user.auth.isStaff" class="divider"></li>
+                                <li><a href="#/login" ng-click="user.logout()">Logout</a></li>
+                            </ul>
+                        </li>
+                        <li data-ng-show="!user.profile">
+                            <a href="#/login">Login</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+    </nav>
 
-<!-- we use these two div's for the sticky footer -->
-<div id="wrap">
+    <div class="container" id="main" data-ng-view>
 
-	<!-- header -->
-	<div class="navbar navbar-static-top navbar-inverse" data-ng-show="showPanels" style="display: none">
-		<div class="navbar-inner">
-			<div class="container-fluid">
-				<a class="brand" href="#/">&nbsp;</a>
-				<ul class="nav" data-ng-show="user.profile">
-					<li class="dropdown" ng-show="user.auth.isMiddleCircle">
-						<a href="#" class="dropdown-toggle">Courses <i class="icon-caret-down"></i></a>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="#/courses/middlecircle">The Middle Circle: Integrating Ideas & Knowledge</a></li>
-						</ul>
-					</li>
-					<li><a href="#/events">Events</a></li>
-					<li><a href="#/citizenship">Citizenship</a></li>
-					<li><a href="#/career">Internships</a></li>
-					<li><a href="#/arch">ARCH</a></li>
-				</ul>
-				<ul class="nav pull-right">
-					<li class="dropdown" data-ng-show="user.profile">
-						<a href="#" class="dropdown-toggle"><i class="icon-user icon-white"></i> {{user.profile.fname}} {{user.profile.lname}}</a>
-						<ul class="dropdown-menu" role="menu">
-							<li ng-show="user.auth.isAdmin"><a href="#/profile/{{user.profile.id}}">View Profile</a></li>
-							<li ng-show="user.auth.isAdmin"><a href="#/profile/{{user.profile.id}}/edit">Update Profile</a></li>
-							<li ng-show="user.auth.isAdmin" class="divider"></li>
-							<li ng-show="user.auth.isAdmin"><a href="#/admin">Admin Panel</a></li>
-							<li ng-show="user.auth.isStaff"><a href="#/internal">Staff Panel</a></li>
-							<li ng-show="user.auth.isAdmin || user.auth.isStaff" class="divider"></li>
-							<li><a href="#/login" ng-click="user.logout()">Logout</a></li>
-						</ul>
-					</li>
-					<li data-ng-show="!user.profile">
-						<a href="#/login">Login</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</div>
+    </div>
 
-	<!-- content -->
-	<div class="container-fluid" style="padding-bottom: 20px">
-		<div class="row-fluid" data-ng-view>
-
-		</div>
-	</div>
-
-	<!-- this is needed for the sticky footer -->
-	<div id="push"></div>
-
+    <!-- footer -->
+    <footer>
+        <div class="container container-sm-height">
+            <div class="row row-sm-height">
+                <div class="col-sm-6 col-sm-height col-middle">
+                    <img src="assets/img/honors-logo.jpg" alt="Honors College - Florida International University" />
+                </div>
+                <div class="col-sm-6 col-sm-height col-middle">
+                    <p>
+                        <small>The Honors College (DM 233), 11200 SW 8th Street, Miami, FL 33199</small><br/>
+                        <small>Phone: (305) 348-4100 &#8226; Fax: (305) 348-2118 &#8226; Email: <a href="mailto:honors@fiu.edu">honors@fiu.edu</a></small>
+                    </p>
+                    </div>
+            </div>
+        </div>
+    </footer>
 </div>
-
-<!-- footer -->
-<div id="footer">
-	<div class="container-fluid">
-		<div class="row-fluid">
-			<div class="span6 pagination-right" id="footer-image">
-				<img src="assets/img/honors-logo.jpg" alt="Honors College - Florida International University" />
-			</div>
-			<div class="span6" id="footer-content">
-				<address><small>The Honors College (DM 233), 11200 SW 8th Street, Miami, FL 33199</small></address>
-				<small>Phone: (305) 348-4100 &#8226; Fax: (305) 348-2118 &#8226; Email: <a href="mailto:honors@fiu.edu">honors@fiu.edu</a></small>
-			</div>
-		</div>
-	</div>
-</div>
-
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

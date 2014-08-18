@@ -1,0 +1,138 @@
+/* Media Query variables ==================================================== */
+// Individual breakpoints
+$screen-xs-max: 767px;
+$screen-sm-min: 768px;
+$screen-sm-max: 991px;
+$screen-md-min: 992px;
+$screen-md-max: 1199px;
+$screen-lg-min: 1200px;
+
+// Breakpoints for device/screen specific---------------------------------------
+$screen-xs-only: "(max-width: #{$screen-xs-max})"; // Phones-specific breakpoint
+$screen-sm-only: "(min-width: #{$screen-sm-min}) and (max-width: #{$screen-sm-max})"; // Tablet-specific breakpoint
+$screen-md-only: "(min-width: #{$screen-md-min}) and (max-width: #{$screen-md-max})"; // Old desktop/laptop breakpoint
+$screen-lg-only: "(min-width: #{$screen-lg-min})"; // Modern desktop/laptop breakpoint
+
+// Breakpoints that style on top of previous breakpoints as size changes--------
+$screen-xs: "(min-width: 0px)"; // Style phones and up
+$screen-sm: "(min-width: #{$screen-sm-min})"; // Style tablets and up
+$screen-md: "(min-width: #{$screen-md-min})"; // Style old desktop/laptops and up
+$screen-lg: "(min-width: #{$screen-lg-min})"; // Style modern desktop/laptops and up
+
+// Breakpoint that style elements up to a certain size--------------------------
+$screen-xs-upto: "(max-width: #{$screen-xs-max})"; // Style anything below tablets
+$screen-sm-upto: "(max-width: #{$screen-sm-max})"; // Style tablets and below
+$screen-md-upto: "(max-width: #{$screen-md-max})"; // Style old desktop/laptops and below
+/* End Media Query variables ================================================ */
+
+
+/* Vertical align fix for Bootstrap 3 
+    http://www.minimit.com/articles/solutions-tutorials/bootstrap-3-responsive-columns-of-same-height
+============================================================================= */
+.container-xs-height {
+    display:table;
+    padding-left:0px;
+    padding-right:0px;
+}
+.row-xs-height {
+    display:table-row;
+}
+.col-xs-height {
+    display:table-cell;
+    float:none;
+}
+@media #{$screen-sm} {
+    .container-sm-height {
+        display:table;
+        padding-left:0px;
+        padding-right:0px;
+    }
+    .row-sm-height {
+        display:table-row;
+    }
+    .col-sm-height {
+        display:table-cell;
+        float:none;
+    }
+}
+@media #{$screen-md} {
+    .container-md-height {
+        display:table;
+        padding-left:0px;
+        padding-right:0px;
+    }
+    .row-md-height {
+        display:table-row;
+    }
+    .col-md-height {
+        display:table-cell;
+        float:none;
+    }
+}
+@media #{$screen-lg} {
+    .container-lg-height {
+        display:table;
+        padding-left:0px;
+        padding-right:0px;
+    }
+    .row-lg-height {
+        display:table-row;
+    }
+    .col-lg-height {
+        display:table-cell;
+        float:none;
+    }
+}
+/* vertical alignment styles */
+.col-top {
+    vertical-align:top;
+}
+.col-middle {
+    vertical-align:middle;
+}
+.col-bottom {
+    vertical-align:bottom;
+}
+/* End Vertical Align Fix =================================================== */
+
+//Sticky footer solution - http://geekgirllife.com/responsive-sticky-footer-woes-and-fixes/
+html{
+    height: 100%;
+    padding:0;
+    margin:0;
+    overflow:hidden;
+}
+body{
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background: url(../img/body-bg.png);
+    color: #494949;
+}
+#wrapper{
+    display: table;
+    height: 100%;
+    width: 100%;
+}
+h1,h2,h3,h4,h5,h6, .opensans{
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight:bold;
+}
+/* Fix for IE9 displaying #wrap as table */
+#wrap{
+    display: block !important;
+}
+
+.border-box{
+    -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.btn{
+    max-width:100%;
+}
+
+img{
+    max-width:100%;
+}

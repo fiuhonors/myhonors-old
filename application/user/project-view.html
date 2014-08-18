@@ -1,67 +1,59 @@
-<div class="row-fluid">
-    <div class="span4">
-        <div class="row-fluid">
-            <div class="span12">
-                <div class="box">
-                    <div class="box-header"> From The Portfolio Of </div>
-					<div class="box-content padded  word-wrap">
-                        <img ng-src="{{user.profile.picture.url || 'http://placehold.it/90'}}" class="pull-left img-rounded img-polaroid">
+<div class="row">
+    <div class="col-md-4">
+        <div class="box">
+            <div class="box-header"> From The Portfolio Of </div>
+            <div class="box-content padded  word-wrap">
+                <img ng-src="{{user.profile.picture.url|| 'http://placehold.it/90'}}" class="pull-left img-rounded img-polaroid">
 
-                        <div class="pull-left" style="margin:5% 0 0 2%;">
-                            <a href="#/profile/{{ pid }}"> <b> {{ user.fname }} {{ user.lname }} </b> </a> <br>
-                            <b> Major: </b> {{ user.profile.major }} <br>
-                            <b> Year: </b> {{ user.profile.year }} <br>
-                        </div>
+                <div class="pull-left" style="margin:5% 0 0 2%;">
+                    <a href="#/profile/{{ pid}}"> <b> {{ user.fname}} {{ user.lname}} </b> </a> <br>
+                    <b> Major: </b> {{ user.profile.major}} <br>
+                    <b> Year: </b> {{ user.profile.year}} <br>
+                </div>
 
-                        <div class="clearfix"></div>
+                <div class="clearfix"></div>
 
-                        <hr style="margin-top: 10px; margin-bottom: 10px">
-                        <div class="row-fluid" ng-show="isAbleEdit">
-                            <button class="btn btn-danger span4" ng-click="confirmDelete()" style="width:100%;"> Delete Project </button>
-                        </div>
-                    </div>
+                <hr style="margin-top: 10px; margin-bottom: 10px">
+                <div class="row-fluid" ng-show="isAbleEdit">
+                    <button class="btn btn-danger span4" ng-click="confirmDelete()" style="width:100%;"> Delete Project </button>
                 </div>
             </div>
         </div>
-        
-        <div class="row-fluid">
-            <div class="span12">
-                <div class="box">
-                    <div class="box-header"> Project Documents </div>
-					<div class="box-content padded  word-wrap">
-                        <div>
-                            <ul class="image" ng-if="hasFiles( project )">
-                                <li ng-repeat="file in project.files">
-                                    <a href="{{ file.url }}"> {{ file.filename }} </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="alert alert-info padded-medium" style="margin-bottom: 7px;" ng-show="!hasFiles( project )">
-				            There are no documents associated with this project.
-				        </div>
-                    </div>
+
+        <div class="box">
+            <div class="box-header"> Project Documents </div>
+            <div class="box-content padded  word-wrap">
+                <div>
+                    <ul class="image" ng-if="hasFiles(project)">
+                        <li ng-repeat="file in project.files">
+                            <a href="{{ file.url}}"> {{ file.filename}} </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="alert alert-info padded-medium" style="margin-bottom: 7px;" ng-show="!hasFiles(project)">
+                    There are no documents associated with this project.
                 </div>
             </div>
         </div>
     </div>
-    
-    <div class="span8">
+
+    <div class="col-md-8">
         <div class="box">
             <div class="box-content padded">
-                <span ng-class="chooseLabel(project.category)"> {{ project.category }} </span>
+                <span ng-class="chooseLabel(project.category)"> {{ project.category}} </span>
 
-                <h3 class="text-center"> {{ project.title }} </h3>
+                <h3 class="text-center"> {{ project.title}} </h3>
 
-                <ul rn-carousel rn-carousel-indicator rn-carousel-control class="image text-center" ng-if="hasAssets( project ) || project.video.embed.length">
+                <ul rn-carousel rn-carousel-indicator rn-carousel-control class="image text-center" ng-if="hasAssets(project) || project.video.embed.length">
                     <li ng-repeat="asset in project.assets">
-                        {{ asset.url }}
-                        <img ng-src="{{ asset.url }}" ng-show="asset.url.length">
+                        {{ asset.url}}
+                        <img ng-src="{{ asset.url}}" ng-show="asset.url.length">
                         <span ng-bind-html-unsafe="asset.embed" ng-show="asset.embed.length"></span>
                     </li>
                 </ul>
 
 
-                <p> {{ project.description }} </p>  
+                <p> {{ project.description}} </p>  
             </div>
         </div>
     </div>
@@ -70,15 +62,19 @@
 
 <!-- Modal -->
 <div modal="showDeleteConfirmation" close="cancelDelete()" options="modalOpts">
-	<div class="modal-header">
-		<button type="button" class="close" ng-click="cancelDelete()">×</button>
-		<h3>Are you sure you want to DELETE?</h3>
-	</div>
-	<div class="modal-body">
-		<p>This will <strong>permanently</strong> erase all data related to this project. Are you sure you want to do this?</p>
-	</div>
-	<div class="modal-footer">
-		<button class="btn btn-danger" ng-click="deleteProject()">Yes, DELETE the Project</button>
-		<button class="btn cancel" ng-click="cancelDelete()">Cancel</button>
-	</div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="cancelDelete()">×</button>
+                <h3>Are you sure you want to DELETE?</h3>
+            </div>
+            <div class="modal-body">
+                <p>This will <strong>permanently</strong> erase all data related to this project. Are you sure you want to do this?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" ng-click="deleteProject()">Yes, DELETE the Project</button>
+                <button class="btn cancel" ng-click="cancelDelete()">Cancel</button>
+            </div>
+        </div>
+    </div>
 </div>

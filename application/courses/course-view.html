@@ -1,150 +1,137 @@
-<div ng-if="user.auth.isMiddleCircle">
-<div class="span3">
+<div class="row" ng-if="user.auth.isMiddleCircle">
+    <div class="col-md-3">
 
-	<div class="row-fluid">
-		<div class="span12">
-			<div class="box">
-				<div class="box-header">Course Details</div>
-				<div class="box-content padded">
-					<div class="media">
-						<a href="#" class="pull-left"><img src="http://placehold.it/64" class="media-object img-rounded" /></a>
-						<div class="media-body">
-							<strong class="media-heading">{{course.name}}</strong>
-							<div class="muted" style="text-transform: uppercase; font-size: 10px; line-height: 1.2em">{{course.subtitle}}</div>
-							<p><a href="#" ng-pluralize count="course.members" when="{
-								'0': 'No members',
-								'one': '1 member',
-								'other': '{} members'
-							}"></a></p>
-						</div>
-					</div>
-					<p>{{course.desc | truncate:200}}</p>
-					<a href="{{course.syllabus}}" class="btn btn-small btn-success">View Syllabus</a>
-				</div>
-			</div>
-		</div>
-	</div>
+        <div class="box">
+            <div class="box-header">Course Details</div>
+            <div class="box-content padded">
+                <div class="media">
+                    <a href="#" class="pull-left"><img src="http://placehold.it/64" class="media-object img-rounded" /></a>
+                    <div class="media-body">
+                        <strong class="media-heading">{{course.name}}</strong>
+                        <div class="text-muted" style="text-transform: uppercase; font-size: 10px; line-height: 1.2em">{{course.subtitle}}</div>
+                        <p><a href="#" ng-pluralize count="course.members" when="{
+                              '0': 'No members',
+                              'one': '1 member',
+                              'other': '{} members'
+                              }"></a></p>
+                    </div>
+                </div>
+                <p>{{course.desc| truncate:200}}</p>
+                <a href="{{course.syllabus}}" class="btn btn-sm btn-success">View Syllabus</a>
+            </div>
+        </div>
 
-<!-- 	<div class="row-fluid">
-		<div class="span12">
-			<div class="box">
-				<div class="box-content padded">
+        <!-- 	
+                                <div class="box">
+                                        <div class="box-content padded">
+        
+                                                <input type="text" placeholder="Search for anything..." ng-model="searchName" />
+                                                <ul class="list-group">
+                                                        <li class="list-group-item">View by Small Group</li>
+                                                        <li class="list-group-item clickable" ng-click="searchBySubgroup('')"><a>All Small Groups</a></li>
+                                                        <li class="list-group-item clickable" ng-click="searchBySubgroup(subgroup.name)" ng-repeat="subgroup in group.subgroups"><a ng-class="{'nav-list-active': searchType == subgroup.name}">{{subgroup.name}} <span class="pull-right event-{{type.color || 'blue'}}">&bull;</span></a></li>
+                                                </ul>
+                                                <ul class="list-group">
+                                                        <li class="list-group-item">View by Type</li>
+                                                        <li class="list-group-item clickable" ng-click="searchByType('')"><a>All Types</a></li>
+                                                        <li class="list-group-item clickable" ng-click="searchByType('Announcements')"><a ng-class="{'nav-list-active': searchType == 'Announcements'}">Announcements <span class="pull-right event-{{type.color || 'blue'}}">&bull;</span></a></li>
+                                                        <li class="list-group-item clickable" ng-click="searchByType('Assignments')"><a ng-class="{'nav-list-active': searchType == 'Assignments'}">Assignments <span class="pull-right event-{{type.color || 'blue'}}">&bull;</span></a></li>
+                                                        <li class="list-group-item clickable" ng-click="searchByType('Discussions')"><a ng-class="{'nav-list-active': searchType == 'Discussions'}">Discussions <span class="pull-right event-{{type.color || 'blue'}}">&bull;</span></a></li>
+                                                        <li class="list-group-item clickable" ng-click="searchByType('Group Events')"><a ng-class="{'nav-list-active': searchType == 'Group Events'}">Group Events <span class="pull-right event-{{type.color || 'blue'}}">&bull;</span></a></li>
+                                                </ul>
+        
+                                        </div>
+                                </div>
+        -->
 
-					<input class="span12" type="text" placeholder="Search for anything..." ng-model="searchName" />
-					<ul class="nav nav-list">
-						<li class="nav-header">View by Small Group</li>
-						<li class="clickable" ng-click="searchBySubgroup('')"><a>All Small Groups</a></li>
-						<li class="clickable" ng-click="searchBySubgroup(subgroup.name)" ng-repeat="subgroup in group.subgroups"><a ng-class="{'nav-list-active': searchType == subgroup.name}">{{subgroup.name}} <span class="pull-right event-{{type.color || 'blue'}}">&bull;</span></a></li>
-					</ul>
-					<ul class="nav nav-list">
-						<li class="nav-header">View by Type</li>
-						<li class="clickable" ng-click="searchByType('')"><a>All Types</a></li>
-						<li class="clickable" ng-click="searchByType('Announcements')"><a ng-class="{'nav-list-active': searchType == 'Announcements'}">Announcements <span class="pull-right event-{{type.color || 'blue'}}">&bull;</span></a></li>
-						<li class="clickable" ng-click="searchByType('Assignments')"><a ng-class="{'nav-list-active': searchType == 'Assignments'}">Assignments <span class="pull-right event-{{type.color || 'blue'}}">&bull;</span></a></li>
-						<li class="clickable" ng-click="searchByType('Discussions')"><a ng-class="{'nav-list-active': searchType == 'Discussions'}">Discussions <span class="pull-right event-{{type.color || 'blue'}}">&bull;</span></a></li>
-						<li class="clickable" ng-click="searchByType('Group Events')"><a ng-class="{'nav-list-active': searchType == 'Group Events'}">Group Events <span class="pull-right event-{{type.color || 'blue'}}">&bull;</span></a></li>
-					</ul>
+    </div>
 
-				</div>
-			</div>
-		</div>
-	</div> -->
+    <div class="col-md-9">
 
-</div>
+        <div class="box">
+            <div class="box-header">
+                Announcements
+                <div class="pull-right" ng-show="user.auth.isMiddleCircleAdmin"><button class="btn btn-default btn-xs" ng-click="showAddAnnouncement = true"><i class="glyphicon glyphicon-plus"></i> Add</button></div>
+            </div>
+            <div class="box-content padded-medium">
 
-<div class="span9">
+                <div style="max-height: 200px; overflow-y: auto;">
+                    <div class="alert alert-{{announce.color}}" style="margin-bottom: 5px" ng-repeat="announce in course.announcements">
+                        <strong>{{announce.title}}</strong> <span style="font-size: 85%; padding: 3px">&#8226;</span> <em>{{announce.date| timeAgo}}</em>
+                        <div class="comment" markdown="announce.content"></div>
+                    </div>
 
-	<div class="row-fluid">
-		<div class="span12">
-			<div class="box">
-				<div class="box-header">
-					Announcements
-					<div class="pull-right" ng-show="user.auth.isMiddleCircleAdmin"><button class="btn btn-mini" ng-click="showAddAnnouncement = true"><i class="icon-plus"></i> Add</button></div>
-				</div>
-				<div class="box-content padded-medium">
+                    <div class="text-center" ng-show="!course.announcements.length">There are no announcements.</div>
+                </div>
 
-					<div style="max-height: 200px; overflow-y: auto;">
-						<div class="alert alert-{{announce.color}}" style="margin-bottom: 5px" ng-repeat="announce in course.announcements">
-							<strong>{{announce.title}}</strong> <span style="font-size: 85%; padding: 3px">&#8226;</span> <em>{{announce.date | timeAgo}}</em>
-							<div class="comment" markdown="announce.content"></div>
-						</div>
+            </div>
+            <!-- <div class="overflow-gradient" style="height: 15px; bottom: 8px"></div> -->
+        </div>
 
-						<div class="text-center" ng-show="!course.announcements.length">There are no announcements.</div>
-					</div>
 
-				</div>
-				<!-- <div class="overflow-gradient" style="height: 15px; bottom: 8px"></div> -->
-			</div>
-		</div>
-	</div>
+        <div class="box">
+            <div class="box-header">Discussions</div>
+            <div class="box-content">
+                <discussion collection="comments"
+                            reference="courses/{{course.id}}/comments"
+                            max-depth="0">
+                </discussion>
+            </div>
+        </div>
 
-	<div class="row-fluid">
-		<div class="span12">
-			<div class="box">
-				<div class="box-header">Discussions</div>
-				<div class="box-content">
-					<discussion collection="comments"
-					            reference="courses/{{course.id}}/comments"
-					            max-depth="0">
-					</discussion>
-				</div>
-			</div>
-		</div>
-	</div>
+    </div>
 
-</div>
+    <!-- 
+        <div class="col-md-3">
+            <div class="box">
+                <div class="box-header">Assignments</div>
+                <div class="box-content padded-medium text-center">Coming soon.</div>
+            </div>
+        </div> 
+    -->
 
-<!-- <div class="span3">
+    <!-- Modal -->
+    <div modal="showAddAnnouncement" close="showAddAnnouncement = false" options="modalOpts">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="showAddAnnouncement = false">×</button>
+                    <h3>New Announcement</h3>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="title">Title</label><br />
+                                <input type="text" id="title" ng-model="newAnnounce.title" /><br />
+                            </div>
+                            <div class="col-md-6">
+                                <label for="color">Color</label><br />
+                                <span class="clickable" style="inline-block; float: left; height: 30px; width: 20%; background-color: #3a87ad; border-right: 1px solid white" ng-click="newAnnounce.color = 'info'"></span>
+                                <span class="clickable" style="inline-block; float: left; height: 30px; width: 20%; background-color: #b94a48; border-right: 1px solid white" ng-click="newAnnounce.color = 'error'"></span>
+                                <span class="clickable" style="inline-block; float: left; height: 30px; width: 20%; background-color: #468847; border-right: 1px solid white" ng-click="newAnnounce.color = 'success'"></span>
+                                <span class="clickable" style="inline-block; float: left; height: 30px; width: 20%; background-color: gold; border-right: 1px solid white" ng-click="newAnnounce.color = ''"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="content" style="margin-top: 15px" class="control-label">Content</label>
+                            <textarea class="input-block-level" id="content" ng-model="newAnnounce.content"></textarea>
+                        </div>
+                    </form>
 
-	<div class="row-fluid">
-		<div class="span12">
-			<div class="box">
-				<div class="box-header">Assignments</div>
-				<div class="box-content padded-medium text-center">
-					Coming soon.
-				</div>
-			</div>
-		</div>
-	</div>
+                    <hr />
 
-</div> -->
-
-<!-- Modal -->
-<div modal="showAddAnnouncement" close="showAddAnnouncement = false" options="modalOpts">
-	<div class="modal-header">
-		<button type="button" class="close" ng-click="showAddAnnouncement = false">×</button>
-		<h3>New Announcement</h3>
-	</div>
-	<div class="modal-body">
-		<form class="form-inline">
-			<div class="row-fluid">
-				<div class="span6">
-					<label for="title">Title</label><br />
-					<input type="text" id="title" ng-model="newAnnounce.title" /><br />
-				</div>
-				<div class="span6">
-					<label for="color">Color</label><br />
-					<span class="clickable" style="inline-block; float: left; height: 30px; width: 20%; background-color: #3a87ad; border-right: 1px solid white" ng-click="newAnnounce.color = 'info'"></span>
-					<span class="clickable" style="inline-block; float: left; height: 30px; width: 20%; background-color: #b94a48; border-right: 1px solid white" ng-click="newAnnounce.color = 'error'"></span>
-					<span class="clickable" style="inline-block; float: left; height: 30px; width: 20%; background-color: #468847; border-right: 1px solid white" ng-click="newAnnounce.color = 'success'"></span>
-					<span class="clickable" style="inline-block; float: left; height: 30px; width: 20%; background-color: gold; border-right: 1px solid white" ng-click="newAnnounce.color = ''"></span>
-				</div>
-			</div>
-			<label for="content" style="margin-top: 15px">Content</label><br />
-			<textarea class="input-block-level" id="content" ng-model="newAnnounce.content"></textarea><br />
-		</form>
-
-		<hr />
-
-		<p>Preview:</p>
-		<div class="alert alert-{{newAnnounce.color}}" style="margin-bottom: 0px">
-			<strong>{{newAnnounce.title}}</strong> <span style="font-size: 85%; padding: 3px">&#8226;</span> <em>a few seconds ago</em>
-			<div class="comment" markdown="newAnnounce.content"></div>
-		</div>
-	</div>
-	<div class="modal-footer">
-		<button class="btn btn-primary" ng-click="doAddAnnouncement()">Add Announcement</button>
-		<button class="btn cancel" ng-click="showAddAnnouncement = false">Cancel</button>
-	</div>
-</div>
+                    <p>Preview:</p>
+                    <div class="alert alert-{{newAnnounce.color}}" style="margin-bottom: 0px">
+                        <strong>{{newAnnounce.title}}</strong> <span style="font-size: 85%; padding: 3px">&#8226;</span> <em>a few seconds ago</em>
+                        <div class="comment" markdown="newAnnounce.content"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" ng-click="doAddAnnouncement()">Add Announcement</button>
+                    <button class="btn cancel" ng-click="showAddAnnouncement = false">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

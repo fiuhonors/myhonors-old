@@ -1,0 +1,34 @@
+footer{
+    height:1px; // Sticky Footer solution
+    display:table-row; // Sticky Footer solution
+    background-color: white;
+    img{
+        max-width:90%;
+        display:block;
+        max-height:100px;
+        z-index:0;
+        margin:0 auto;
+    }
+    p{
+        margin-top:15px;
+        margin-bottom:15px;
+        margin-left:15px;
+    }
+    @media #{$screen-xs-only}{
+        p{
+            text-align:center;
+            margin-left:0px;
+        }
+    }
+    @media #{$screen-md}{
+        p{
+            margin-top:10px;
+            margin-bottom:10px;
+        }
+        img{
+            margin-top:10px;
+            margin-bottom:10px;
+        }
+    }
+    
+}

@@ -3,7 +3,7 @@
 	<div class="box-content padded ">
 		
 		<a href="" class="btn btn-success" style="margin-bottom: 4px;" ng-click="exportExcel()" >Export to Excel</a>
-		<a href="" class="btn" style="margin-bottom: 4px;" ng-click="exportCSV()" >Export as CSV</a>
+		<a href="" class="btn btn-default" style="margin-bottom: 4px;" ng-click="exportCSV()" >Export as CSV</a>
 
 		<table class="table table-bordered table-hover text-center">
 			<thead>
@@ -27,7 +27,7 @@
 					<td ng-show="event.options.requirePhone">{{rsvp.phone}}</td>
 					<td ng-show="rsvp.time">{{rsvp.time | date:'short'}}</td><td ng-show="!rsvp.time">N/A</td>
 					<td ng-show="event.attendance">{{checkAttendance(rsvp.pid)}}</td>
-					<td><a href="" class="icon-remove" ng-click="removeRSVP(rsvp)"></a></td>
+					<td><a href="" class="glyphicon glyphicon-remove" ng-click="removeRSVP(rsvp)"></a></td>
 				</tr>
 			</tbody>
 		</table>

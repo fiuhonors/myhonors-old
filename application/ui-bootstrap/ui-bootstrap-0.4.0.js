@@ -1062,6 +1062,8 @@ dialogModule.provider("$dialog", function(){
       if(controller){
         options.controller = controller;
       }
+      
+      this.modalEl.addClass('modalShow');
 
       if(!(options.template || options.templateUrl)) {
         throw new Error('Dialog.open expected template or templateUrl, neither found. Use options or open method to specify them.');
@@ -1096,6 +1098,7 @@ dialogModule.provider("$dialog", function(){
     // closes the dialog and resolves the promise returned by the `open` method with the specified result.
     Dialog.prototype.close = function(result){
       var self = this;
+      this.modalEl.removeClass('modalShow');
       var fadingElements = this._getFadingElements();
 
       if(fadingElements.length > 0){

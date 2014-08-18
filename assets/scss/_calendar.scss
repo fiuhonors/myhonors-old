@@ -1,0 +1,93 @@
+// Responsive calendar http://www.searchdiscovery.com/blog/tutorial-creating-a-responsive-calendar/
+
+.calendar{
+    margin:0 auto;
+    display:block;
+    width:100%;
+    margin-top:10px;
+    margin-bottom:10px;
+    
+    // Controls for the Calendar
+    .row{
+        margin-bottom:10px;
+    }
+    
+    ul{
+        list-style:none;
+        padding:0;
+        margin:0;
+        width:100%;
+        display:table;
+        li{
+            display: table-cell;
+            width: 14.2857142857%;
+            padding: 5px;
+            box-sizing: border-box;
+            border: 1px solid #eee;
+            margin-right: -1px;
+            margin-bottom: -1px;
+            text-align:center;
+            
+            a{
+                .label{
+                    word-break:break-all;
+                    word-wrap:break-word;
+                }
+            }
+            
+            &.calendar-week{
+                width:100%;
+            }
+            
+            // Day and Month boxes disappear when calendar is expressed at its maximum, open space form-factor
+            .day{
+                display:none;
+            }
+            .month{
+                display:none;
+            }
+            
+        }
+    }
+    
+}
+
+@media #{$screen-xs-upto} {
+    
+    .calendar{
+        ul{
+            li{
+                display:block;
+                height: auto!important;
+                border: 1px solid #ededed;
+                width: 100%;
+                padding: 10px;
+                margin-bottom: -1px;
+                overflow:auto;
+                a{
+                    float:left;
+                    width:15%;
+                    margin-left:2.5%;
+                    margin-right:2.5%;
+                    .label{
+                       padding-top:10px;
+                       padding-bottom:10px;
+                    }
+                }
+                .day{
+                    display:inline;
+                }
+                .month{
+                    display:inline;
+                }
+                .out_of_range{
+                    display:none;
+                }
+            } 
+        }
+        .btn{
+            margin-bottom:5px;
+        }
+    }
+    
+}

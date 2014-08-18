@@ -1,7 +1,6 @@
 <?php
-
 /* Config settings */
-
+session_start();
 define("SERVER_ADDRESS", "");
 define("BEFORE_USERNAME", "");
 define("AFTER_USERNAME", "");
@@ -11,7 +10,7 @@ define("ERROR_STATEMENT", "");
 
 // Warning: only disable LDAP for development. This is useful when you're developing
 // off-site and can't access the LDAP server due to security restrictions
-define("DISABLE_LDAP", false);
+define("DISABLE_LDAP", true);
 
 /* DO NOT EDIT BELOW THIS LINE */
 require_once "../config.php"; // Include all the necessary Firebase config variables
@@ -36,16 +35,24 @@ function getData($username, $data) {
 		'isMiddleCircleAdmin' => (!empty($access_levels['isMiddleCircleAdmin']) && array_key_exists($username, $access_levels['isMiddleCircleAdmin'])) ? true : false
 	);
 	
-
 	// create firebase token for user and include additional security info
 	$user_token = $tokenGen->createToken($auth_payload);
-
-
+	
+	// Set PHP session so that we can catch it if they try to login on a PHP-powered project and automatically
+	// log them in. We're following some security tips from http://blog.teamtreehouse.com/how-to-create-bulletproof-sessions
+	// and http://stackoverflow.com/questions/5081025/php-session-fixation-hijacking
+	
+	session_name('HonorsAuth_Session');
+	$_SESSION['ip_address'] = $_SERVER['REMOTE_ADDR'];
+	$_SESSION['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+	$_SESSION['user_identifier'] = $username; // Store user's ID in SESSION if verified.
+	$_SESSION['user_token'] = $user_token; // Store user's Firebase token if verified.
+	
 	return array('success' => true, 'pid' => $username, "fname" => $data[0]["givenname"][0], "lname" => $data[0]["sn"][0], "auth" => $auth_payload, "token" => $user_token);
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
-{
+{		
 	// all output after POSTing will be delivered in JSON format
 	header('Content-Type: application/json');
 
@@ -84,7 +91,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 			$data = ldap_get_entries($ldapconn, $search);
 
 			$result = getData($_POST['pid'], $data);
-
 			ldap_unbind($ldapconn);
 		}
 		else

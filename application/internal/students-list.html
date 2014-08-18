@@ -1,11 +1,16 @@
 <div class="box">
 	<div class="box-header">Event Stats</div>
 	<div class="box-content padded">
-		
-		<a href="" class="btn btn-success" style="margin-bottom: 4px;" ng-click="exportExcel()" >Export to Excel</a>
-		<a href="" class="btn" style="margin-bottom: 4px;" ng-click="exportCSV()" >Export as CSV</a>
-
-		<input type="text" placeholder="Search" ng-model="student.search" class="pull-right">
+                <div class="btn-group">
+                    <a href="" class="btn btn-success" style="margin-bottom: 4px;" ng-click="exportExcel()" >Export to Excel</a>
+                    <a href="" class="btn btn-default" style="margin-bottom: 4px;" ng-click="exportCSV()" >Export as CSV</a>
+                </div>
+            
+                <form class="form-inline pull-right">
+                    <div class="form-group">
+                        <input class="form-control" type="text" placeholder="Search" ng-model="student.search">
+                    </div>
+                </form>
 		
 		<table class="table table-bordered table-hover text-center">
 			<thead>

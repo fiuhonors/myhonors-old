@@ -28,7 +28,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' ) {
 	
 	// email fields: to, from, subject, and so on
 	$to = "Isabel Green <igreen@fiu.edu>";
-	$from = "fiuhonorstechteam@gmail.com"; 
+	$from = "Honors College <honors@fiu.edu>"; 
 	$subject ="myHonors: New Intership Added"; 
 	$message = '
 	<html>
@@ -59,7 +59,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' ) {
 		
 	} 
 	else {
-		$email_sent = mail( $to, $subject, $message, $headers ); 
+		$email_sent = mail( $to, $subject, $message, $headers, '-f honors@fiu.edu' ); 
 		
 		if ( !$email_sent ) {
 			$result = array( 'success' => false, 'error' => "A problem ocurred when attemtping to submit your application." );
