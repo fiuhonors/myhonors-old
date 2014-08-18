@@ -1,7 +1,12 @@
 'use strict';
 
-angular.module('myhonorsEvents').controller('EventAddCtrl', ['$scope', '$location', 'EventService', function($scope, $location, EventService) {
+angular.module('myhonorsEvents').controller('EventAddCtrl', ['$scope', '$location', 'EventService', 'ClubService', function($scope, $location, EventService, ClubService) {
 	$scope.eventTypes = EventService.getTypes();
+    $scope.clubs = ClubService.list();
+    
+    $scope.$watchCollection( 'clubs', function( clubs ) {
+       console.log( clubs ); 
+    });
 
 	/**
 	 * @param   string    time in the format of 'hh:mm A'
@@ -58,7 +63,12 @@ angular.module('myhonorsEvents').controller('EventAddCtrl', ['$scope', '$locatio
 		var endMin = getMinute($scope.newItem.date.ends.time);
 		newItem.date.ends = moment($scope.newItem.date.ends.date, "MM-DD-YYYY").hour(endHour).minute(endMin).valueOf();
 
-		EventService.create(newItem);
+		var newEventId = EventService.create(newItem);
+        
+        // If the event creation was succesful and the evtn belongs to a club, update the club's node to have this event
+        if ( newEventId && newItem.hasOwnProperty( "club" ) && newItem.club.length )
+            ClubService.addEventToClub( newItem.club, newEventId );
+        
 		$location.path('events');
 	};
 

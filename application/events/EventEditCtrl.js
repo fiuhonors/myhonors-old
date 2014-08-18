@@ -1,6 +1,9 @@
 'use strict';
 
-angular.module('myhonorsEvents').controller('EventEditCtrl', ['$scope', '$location', '$routeParams', '$timeout', 'EventService', 'WaitingListService', function($scope, $location, $routeParams, $timeout, EventService, WaitingListService) {
+angular.module('myhonorsEvents').controller('EventEditCtrl', ['$scope', '$location', '$routeParams', '$timeout', 'EventService', 'WaitingListService', 'ClubService', function($scope, $location, $routeParams, $timeout, EventService, WaitingListService, ClubService) {
+    
+    $scope.eventTypes = EventService.getTypes();
+    $scope.clubs = ClubService.list();
 	
 	// temporary location to initialize the map
 	$scope.event = {
@@ -52,7 +55,6 @@ angular.module('myhonorsEvents').controller('EventEditCtrl', ['$scope', '$locati
 			};
 		});
 	});
-	$scope.eventTypes = EventService.getTypes();
 
 	/**
 	 * @param   string    time in the format of 'hh:mm A'
@@ -93,6 +95,7 @@ angular.module('myhonorsEvents').controller('EventEditCtrl', ['$scope', '$locati
 				lng: $scope.event.location.lng
 			},
 			types: $scope.event.types || [],
+            club: $scope.event.club,
 			options: $scope.event.options
 		});
 

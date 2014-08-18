@@ -22,7 +22,11 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
             
 			// setting the priority to the date.ends value allows us to show an event that is currently
 			// taking place in any 'Upcoming Events' section
-			FirebaseIO.child('events').push(eventObject).setPriority(eventObject.date.ends);
+			var ref = FirebaseIO.child('events').push(eventObject);
+            
+            ref.setPriority(eventObject.date.ends);
+            
+            return ref.name();
 		},
 		read: function(eventId, onComplete) {
 			var deferred = $q.defer();

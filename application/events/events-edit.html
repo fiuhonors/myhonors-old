@@ -24,7 +24,7 @@
 
 						<div class="row-fluid">
 							<div class="span6">
-								<div class="row-fluid" style="margin-bottom: 15px">
+								<div class="row-fluid space-below">
 									<div class="span6 control-group input-append">
 										<label for="date" class="control-label">Starts on</label><br />
 										<input type="text" id="date" name="date" class="input-small" placeholder="Date..." ng-model="event.date.starts.date" ng-change="updateEnds('date')" data-date-format="mm/dd/yyyy" date-type="string" bs-datepicker>
@@ -36,7 +36,7 @@
 										<button type="button" class="btn" data-toggle="timepicker"><i class="icon-time"></i></button>
 									</div>
 								</div>
-								<div class="row-fluid">
+								<div class="row-fluid space-below">
 									<div class="span6 control-group input-append">
 										<label for="date" class="control-label">Ends on</label><br />
 										<input type="text" id="date" name="date" class="input-small" placeholder="Date..." ng-model="event.date.ends.date" data-date-format="mm/dd/yyyy" date-type="string" bs-datepicker>
@@ -55,6 +55,14 @@
 								<span class="help-block" style="margin-top: 5px">Tip: Hold Ctrl to select multiple types.</span>
 							</div>
 						</div>
+                        <div class="row-fluid">
+                            <div class="span12 control-group input-append">
+                                <label for="clubs" class="control-label">Clubs</label><br />
+                                <select ng-model="event.club" ng-options="club.$id as club.name for club in clubs" style="width: 100%">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                        </div>
 
 						<hr />
 

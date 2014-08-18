@@ -24,6 +24,7 @@
 				</p>
 				<hr style="margin-top: 10px; margin-bottom: 10px" />
 				<p>
+                    <strong ng-if="event.club">Club: </strong> {{event.club}} <br />
 					<strong>Date: </strong> {{event.date.starts | date:"EEE, MMMM d 'at' h:mm a"}}<br />
 					<strong>Location: </strong> {{event.location.name}}
 				</p>
