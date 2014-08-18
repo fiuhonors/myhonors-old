@@ -1,41 +1,54 @@
 'use strict';
 
 angular.module('myhonorsUser').controller('ProfileViewCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$timeout', '$fileUploader', 'UserService', 'ProfileService', 'ProjectService', function EventBrowseCtrl($scope, $rootScope, $routeParams, $location, $timeout, $fileUploader, UserService, ProfileService, ProjectService) {
-        $scope.pid = "";
-        $scope.isAbleEdit = ($scope.pid == UserService.profile.id || UserService.auth.isStaff) ? true : false; // Boolean that determines whether the user can edit this profile or not. Only the staff and the owner of the profile can do so
-        $scope.projects = ''; // Collection of the sudent's projects
-        $scope.projectCategories = ProjectService.getCategories();
-        $scope.user = {
-            profile: {
-                phone: "",
-                interests: {
-                    personal: [],
-                    academic: [],
-                    research: []
-                },
-                organizations: [],
-            }
-        };
-        $scope.form = {};
-
-        // Load the student's info and profile. The student's PID must first be obtained using the student's username
-        UserService.getPIDFromUsername($routeParams.username).then(function(pid) {
-            $scope.pid = pid;
-            UserService.exists(pid, function(exists, result) {
-                $timeout(function() {
-                    if (exists) {
-                        $scope.user = jQuery.extend(true, $scope.user, result);
-
-                        $scope.isAbleEdit = ($scope.pid == UserService.profile.id || UserService.auth.isStaff) ? true : false;
-                        $scope.projects = ProjectService.list($scope.pid); // Collection of the sudent's projects
-
-                        // After the PID of the student is returned, the properties of the uploader's formData must be updated
-                        if ($scope.isAbleEdit)
-                            $scope.uploader.formData[ 0 ].userId = $scope.pid;
-                    }
-                });
+    $scope.pid = "";
+    $scope.isAbleEdit = ($scope.pid == UserService.profile.id || UserService.auth.isStaff) ? true : false; // Boolean that determines whether the user can edit this profile or not. Only the staff and the owner of the profile can do so
+    $scope.projects = ''; // Collection of the sudent's projects
+    $scope.projectCategories = ProjectService.getCategories();
+    $scope.user = {
+        profile: {
+            phone: "",
+            interests: {
+                personal: [],
+                academic: [],
+                research: []
+            },
+            organizations: [],
+        }
+    };
+    $scope.form = {};
+    
+    // Load the student's info and profile. The student's PID must first be obtained using the student's username
+    UserService.getPIDFromUsername( $routeParams.username ).then( function( pid ) {
+        $scope.pid = pid;
+        UserService.exists( pid, function(exists, result) {
+            $timeout(function() {
+                if (exists) {
+                    $scope.user = jQuery.extend(true, $scope.user, result);
+                    
+                    $scope.isAbleEdit = ($scope.pid == UserService.profile.id || UserService.auth.isStaff) ? true : false;
+                    $scope.projects = ProjectService.list($scope.pid); // Collection of the sudent's projects
+                    
+                    // After the PID of the student is returned, the properties of the uploader's formData must be updated
+                    if ( $scope.isAbleEdit )
+                        $scope.uploader.formData[ 0 ].userId = $scope.pid;
+                }
             });
         });
+    });
+    
+
+    /**
+     * Get the appropiate CSS class for a project depending on its category
+     */
+    $scope.chooseLabel = function( category ) {
+        return ProjectService.getLabel( category )
+    };
+    
+    
+    $scope.goToProject = function( project ) {
+        $location.path( '/profiles/' + $routeParams.username + '/projects/' +  project.$id );
+    };
 
         /**
          * Get the appropiate CSS class for a project depending on its category
@@ -65,7 +78,7 @@ angular.module('myhonorsUser').controller('ProfileViewCtrl', ['$scope', '$rootSc
 
 
         $scope.addItemToList = function(array) {
-            array.push({value: "New item"});
+            array.push( { value: "New item" } );
             $scope.updateProfile();
         };
 
