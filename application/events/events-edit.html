@@ -1,118 +1,136 @@
-<div class="span12">
-	<div class="box">
-		<div class="box-header">Edit Event</div>
-		<div class="box-content padded">
-			<form name="theForm" class="form-inline" novalidate>
-				<div class="row-fluid">
-					<div class="span7">
-						<div class="control-group" ng-class="{error: theForm.name.$invalid}">
-							<label for="name" class="control-label">Event Name</label><br />
-							<input type="text" id="name" name="name" class="input-block-level" ng-model="event.name" required /><br />
-						</div>
-						
-						<div class="control-group">
-							<label for="flyerURL">Event Flyer URL</label><br />
-							<input type="url" id="flyerURL" name="name" class="input-block-level" ng-model="event.thumbURL"><br />
-						</div>
 
-						<hr />
+<div class="box">
+    <div class="box-header">Edit Event</div>
+    <div class="box-content padded">
+        <form name="theForm" novalidate>
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="form-group" ng-class="{'has-error': theForm.name.$invalid}">
+                        <label for="name" class="control-label">Event Name</label>
+                        <input type="text" id="name" name="name" class="form-control" ng-model="event.name" required />
+                    </div>
 
-						<label for="desc">Description</label><br />
-						<textarea id="desc" class="input-block-level" style="height: 100px" ng-model="event.desc"></textarea>
+                    <div class="form-group">
+                        <label for="flyerURL" class="control-label">Event Flyer URL</label>
+                        <input type="url" id="flyerURL" name="name" class="form-control" ng-model="event.thumbURL">
+                    </div>
 
-						<hr />
-
-						<div class="row-fluid">
-							<div class="span6">
-								<div class="row-fluid space-below">
-									<div class="span6 control-group input-append">
-										<label for="date" class="control-label">Starts on</label><br />
-										<input type="text" id="date" name="date" class="input-small" placeholder="Date..." ng-model="event.date.starts.date" ng-change="updateEnds('date')" data-date-format="mm/dd/yyyy" date-type="string" bs-datepicker>
-										<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
-									</div>
-									<div class="span6 control-group input-append">
-										<label for="date" class="control-label">&nbsp;</label><br />
-										<input type="text" id="date" name="date" class="input-small" placeholder="at Time..." ng-model="event.date.starts.time" ng-change="updateEnds('time')" bs-timepicker>
-										<button type="button" class="btn" data-toggle="timepicker"><i class="icon-time"></i></button>
-									</div>
-								</div>
-								<div class="row-fluid space-below">
-									<div class="span6 control-group input-append">
-										<label for="date" class="control-label">Ends on</label><br />
-										<input type="text" id="date" name="date" class="input-small" placeholder="Date..." ng-model="event.date.ends.date" data-date-format="mm/dd/yyyy" date-type="string" bs-datepicker>
-										<button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
-									</div>
-									<div class="span6 control-group input-append">
-										<label for="date" class="control-label">&nbsp;</label><br />
-										<input type="text" id="date" name="date" class="input-small" placeholder="at Time..." ng-model="event.date.ends.time" bs-timepicker>
-										<button type="button" class="btn" data-toggle="timepicker"><i class="icon-time"></i></button>
-									</div>
-								</div>
-							</div>
-							<div class="span5 offset1 control-group" ng-class="{error: theForm.name.$invalid}">
-								<label for="name" class="control-label">Event Type</label><br />
-								<select multiple="multiple" ng-model="event.types" ng-options="type.$id as type.name group by ((type.citizenship && 'Citizenship') || 'General') for type in eventTypes" required></select>
-								<span class="help-block" style="margin-top: 5px">Tip: Hold Ctrl to select multiple types.</span>
-							</div>
-						</div>
-                        <div class="row-fluid">
-                            <div class="span12 control-group input-append">
-                                <label for="clubs" class="control-label">Clubs</label><br />
-                                <select ng-model="event.club" ng-options="club.$id as club.name for club in clubs" style="width: 100%">
-                                    <option value=""></option>
-                                </select>
+                    <hr />
+                    <div class="form-group">
+                        <label for="desc" class="control-label">Description</label>
+                        <textarea id="desc" class="form-control" style="height: 100px" ng-model="event.desc"></textarea>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row" style="margin-bottom: 15px">
+                                <div class="col-md-12">
+                                    <label for="date" class="control-label">Starts on</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group input-group">        
+                                        <input type="text" id="date" name="date" class="form-control" placeholder="Date..." ng-model="event.date.starts.date" ng-change="updateEnds('date')" data-date-format="mm/dd/yyyy" date-type="string" bs-datepicker>
+                                        <span class="input-group-btn" data-toggle="datepicker">
+                                            <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group input-group">
+                                        <input type="text" id="date" name="date" class="form-control" placeholder="at Time..." ng-model="event.date.starts.time" ng-change="updateEnds('time')" bs-timepicker>
+                                        <span class="input-group-btn" data-toggle="timepicker">
+                                            <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-time"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="date" class="control-label">Ends on</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group input-group">
+                                        <input type="text" id="date" name="date" class="form-control" placeholder="Date..." ng-model="event.date.ends.date" data-date-format="mm/dd/yyyy" date-type="string" bs-datepicker>
+                                        <span class="input-group-btn" data-toggle="datepicker">
+                                            <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group input-group">
+                                        <input type="text" id="date" name="date" class="form-control" placeholder="at Time..." ng-model="event.date.ends.time" bs-timepicker>
+                                        <span class="input-group-btn" data-toggle="timepicker">
+                                            <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-time"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        <div class="col-md-5 col-md-offset-1 form-group" ng-class="{'has-error': theForm.name.$invalid}">
+                            <label for="name" class="control-label">Event Type</label><br />
+                            <select multiple="multiple" ng-model="event.types" ng-options="type.$id as type.name group by ((type.citizenship && 'Citizenship') || 'General') for type in eventTypes" required></select>
+                            <span class="help-block" style="margin-top: 5px">Tip: Hold Ctrl to select multiple types.</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="clubs" class="control-label">Clubs</label><br />
+                            <select ng-model="event.club" ng-options="club.$id as club.name for club in clubs" style="width: 100%">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <label for="maxRSVPs">Max RSVPs</label><span class="help-block">(0 for no limit)</span><br />
+                        <input type="number" id="maxRSVPs" name="maxRSVPs" class="input-medium" min="0" step="1" ng-model="event.options.maxRSVPs" placeholder="0" />
+                    </div>
+                    <label class="checkbox" style="margin-left: 20px">
+                        <input type="checkbox" ng-model="event.options.waitingList" ng-disabled="!event.options.maxRSVPs"> Allow waiting list
+                    </label>
+                    <label class="checkbox" style="margin-left: 20px">
+                        <input type="checkbox" ng-model="event.options.requirePhone"> Require Phone Number to RSVP
+                    </label>
+                </div>
+                <div class="col-md-5">
 
-						<hr />
+                    <!-- map -->
+                    <leaflet class="well" center="event.location" marker="event.location" defaults="defaults" height="300px" style="margin-bottom: 15px"></leaflet>
 
-						<label for="maxRSVPs">Max RSVPs</label><span class="help-inline">(0 for no limit)</span><br />
-						<input type="number" id="maxRSVPs" name="maxRSVPs" class="input-medium" min="0" step="1" ng-model="event.options.maxRSVPs" placeholder="0" />
-						<label class="checkbox" style="margin-left: 20px">
-							<input type="checkbox" ng-model="event.options.waitingList" ng-disabled="!event.options.maxRSVPs"> Allow waiting list
-						</label>
-						<label class="checkbox" style="margin-left: 20px">
-							<input type="checkbox" ng-model="event.options.requirePhone"> Require Phone Number to RSVP
-						</label>
-					</div>
-					<div class="span5">
-						<div class="row-fluid">
+                    <div class="form-group" ng-class="{error: theForm.locationName.$invalid}">
+                        <label for="locationName" class="control-label">Location Name</label>
+                        <input type="text" id="locationName" name="locationName" class="form-control" ng-model="event.location.name" required /><br />
+                    </div>
 
-							<!-- map -->
-							<leaflet class="well" center="event.location" marker="event.location" defaults="defaults" height="300px" style="margin-bottom: 15px"></leaflet>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="locationName" class="control-label">Latitude</label>
+                                <input type="text" id="locationName" name="locationName" class="form-control" ng-model="event.location.lat" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="locationName" class="control-label">Longitude</label>
+                                <input type="text" id="locationName" name="locationName" class="form-control" ng-model="event.location.lng" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="popover right in" style="display: block; top: 18px; position: relative">
+                                <div class="arrow" style=""></div>
+                                <div class="popover-inner">
+                                    <div class="popover-content text-center">Drag the marker to change!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-							<div class="control-group" ng-class="{error: theForm.locationName.$invalid}">
-								<label for="locationName" class="control-label">Location Name</label><br />
-								<input type="text" id="locationName" name="locationName" class="input-block-level" ng-model="event.location.name" required /><br />
-							</div>
-						</div>
-						<div class="row-fluid">
-							<div class="span3">
-								<label for="locationName" class="control-label">Latitude</label><br />
-								<input type="text" id="locationName" name="locationName" class="input-block-level" ng-model="event.location.lat" /><br />
-							</div>
-							<div class="span3">
-								<label for="locationName" class="control-label">Longitude</label><br />
-								<input type="text" id="locationName" name="locationName" class="input-block-level" ng-model="event.location.lng" /><br />
-							</div>
-							<div class="span6">
-								<div class="popover right in" style="display: block; top: 18px; position: relative">
-									<div class="arrow" style=""></div>
-									<div class="popover-inner">
-										<div class="popover-content text-center">Drag the marker to change!</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row-fluid">
-					<hr />
-					<button class="btn btn-primary" ng-disabled="theForm.$invalid" ng-click="doSaveChanges(theForm)">Save Changes</button>
-					<button class="btn" ng-click="undoChanges()">Undo Changes</button>
-					<a href="#/events/{{event.id}}" class="btn btn-link">Go Back</a>
-				</div>
-			</form>
-		</div>
-	</div>
+                </div>
+            </div>
+            <hr />
+            <button class="btn btn-primary" ng-disabled="theForm.$invalid" ng-click="doSaveChanges(theForm)">Save Changes</button>
+            <button class="btn btn-default" ng-click="undoChanges()">Undo Changes</button>
+            <a href="#/events/{{event.id}}" class="btn btn-link">Go Back</a>
+        </form>
+    </div>
 </div>

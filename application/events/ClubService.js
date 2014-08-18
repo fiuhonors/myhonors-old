@@ -5,7 +5,11 @@ angular.module( 'myhonorsEvents' ).factory( 'ClubService', [ '$http', '$q', 'Fir
         create: function( ) { },
         
         addEventToClub: function( clubId, eventId ) {
-            FirebaseIO.child( 'clubs/' + clubId + "/events/" ).push( eventId );
+            FirebaseIO.child( 'clubs/' + clubId + '/events/' + eventId ).set( eventId );
+        },
+        
+        removeEventFromClub: function( clubId, eventId ) {
+            FirebaseIO.child( 'clubs/' + clubId + '/events/' + eventId ).remove();  
         },
         
         read: function( ) { },
@@ -29,6 +33,8 @@ angular.module( 'myhonorsEvents' ).factory( 'ClubService', [ '$http', '$q', 'Fir
         
         update: function( ) { },
         
-        delete: function( ) { }
+        delete: function( clubdId, eventId ) { 
+            
+        }
     }
 }]);

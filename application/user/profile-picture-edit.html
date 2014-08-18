@@ -1,24 +1,29 @@
 <div class="row">
-    <div class="span12 well">
-        <h3> <i class="fa fa-picture-o"></i> Change Your Profile Picture </h3>
-        Please upload a picture and then select the area of the picture you wish to make your profile pictue.
-        
-        <div class="alert alert-danger" style="margin: 7px 0px;" ng-show="form.error" ng-bind-html-unsafe="form.error">
-        </div>
-        
-        <form class="form" name="profilePictureForm">
-            <input type="hidden" name="coordinates" value="{{ cropImgCoordinates }}">
-            <input type='file' ng-model="profilePic" id="imgInput" onchange="angular.element(this).scope().showPreviewImg(this)">
-            
-            <div style="width: 100%">
-                <jcrop src="{{ previewImgSrc }}"  jcrop-center-image after-selection='setCropImgCoordinates(cords, img)'></jcrop>
+    <div class="col-md-12">
+        <div class="well">
+            <h3> <i class="fa fa-picture-o"></i> Change Your Profile Picture </h3>
+            Please upload a picture and then select the area of the picture you wish to make your profile picture.
+
+            <div class="alert alert-danger" style="margin: 7px 0px;" ng-show="form.error" ng-bind-html-unsafe="form.error">
             </div>
-        </form>
-        
-        <button type="submit" form="form" class="btn btn-primary" ng-click="submitCroppedImg(profilePictureForm,cropImgCoordinates)"> 
-            <i class="fa fa-upload">
-            </i>
-            Update Profile Picture 
-        </button>
+
+            <form class="form" name="profilePictureForm">
+                <div class="form-group">
+                    <input class="form-control" type="hidden" name="coordinates" value="{{ cropImgCoordinates }}">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type='file' ng-model="profilePic" id="imgInput" onchange="angular.element(this).scope().showPreviewImg(this)">
+                </div>
+                <div class="form-group">
+                    <jcrop class="center-block" src="{{ previewImgSrc}}" jcrop-center-image after-selection='setCropImgCoordinates(cords,img)'></jcrop>
+                </div>
+            </form>
+
+            <button type="submit" form="form" class="btn btn-primary" ng-click="submitCroppedImg(profilePictureForm, cropImgCoordinates)"> 
+                <i class="fa fa-upload">
+                </i>
+                Update Profile Picture 
+            </button>
+        </div>
     </div>
 </div>

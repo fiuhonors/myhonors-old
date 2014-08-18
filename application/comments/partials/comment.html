@@ -6,7 +6,7 @@
 		<span style="color: rgba(30,55,70,0.4); font-size: 11px; margin-left: 4px">{{comment.date | timeAgo}}</span>
 
 		<div class="pull-right">
-			<button class="btn btn-small btn-link" ng-show="user.auth.isCommentMod || comment.author.id === user.profile.id" ng-click="deleteComment()"><i class="icon-trash icon-white"></i></button>
+			<button class="btn btn-sm btn-link" ng-show="user.auth.isCommentMod || comment.author.id === user.profile.id" ng-click="deleteComment()"><i class="glpyhicon glyphicon-trash icon-white"></i></button>
 		</div>
 
 		<div ng-if="depth == 0" class="comment" style="font-size: 13px; line-height: 1.38em; color: #42474a; font-weight: 300" markdown="comment.content"></div>
@@ -20,10 +20,10 @@
 			      popover-placement="bottom"
 			      popover-trigger="mouseenter"
 			      popover="Sorry! You can't upvote your own comments.">
-				<i class="icon-star-empty"></i> {{comment.points || 0}}
+				<i class="glyphicon glyphicon-star-empty"></i> {{comment.points || 0}}
 			</span>
-			<a class="clickable" style="color: rgba(30,55,70,0.4); font-size: 11px" ng-click="addPoint()" ng-if="!isAuthor() && !hasVoted()"><i class="icon-star-empty"></i> {{comment.points || 0}}</a>
-			<a class="clickable" style="color: rgba(30,55,70,0.4); font-size: 11px" ng-click="removePoint()" ng-if="!isAuthor() && hasVoted()"><i class="icon-star"></i> {{comment.points || 0}}</a>
+			<a class="clickable" style="color: rgba(30,55,70,0.4); font-size: 11px" ng-click="addPoint()" ng-if="!isAuthor() && !hasVoted()"><i class="glyphicon glyphicon-star-empty"></i> {{comment.points || 0}}</a>
+			<a class="clickable" style="color: rgba(30,55,70,0.4); font-size: 11px" ng-click="removePoint()" ng-if="!isAuthor() && hasVoted()"><i class="glyphicon glpyhicon-star"></i> {{comment.points || 0}}</a>
 			<!-- <a class="clickable" ng-click="reply.showReply = true" style="margin-left: 4px; color: rgba(30,55,70,0.4)">reply</a> -->
 			<!-- <a href="{{reply.getPermalink()}}" style="color: rgba(30,55,70,0.4); margin-left: 4px">permalink</a> -->
 		</div>
@@ -35,12 +35,12 @@
 			      popover-placement="bottom"
 			      popover-trigger="mouseenter"
 			      popover="Sorry! You can't upvote your own comments.">
-				<i class="icon-star-empty"></i> {{comment.points || 0}}
+				<i class="glyphicon glyphicon-star-empty"></i> {{comment.points || 0}}
 			</span>
-			<a class="clickable" style="color: rgba(30,55,70,0.4); font-size: 11px" ng-click="addPoint()" ng-if="!isAuthor() && !hasVoted()"><i class="icon-star-empty"></i> {{comment.points || 0}}</a>
-			<a class="clickable" style="color: rgba(30,55,70,0.4); font-size: 11px" ng-click="removePoint()" ng-if="!isAuthor() && hasVoted()"><i class="icon-star"></i> {{comment.points || 0}}</a>
+			<a class="clickable" style="color: rgba(30,55,70,0.4); font-size: 11px" ng-click="addPoint()" ng-if="!isAuthor() && !hasVoted()"><i class="glyphicon glyphicon-star-empty"></i> {{comment.points || 0}}</a>
+			<a class="clickable" style="color: rgba(30,55,70,0.4); font-size: 11px" ng-click="removePoint()" ng-if="!isAuthor() && hasVoted()"><i class="glpyhicon glyphicon-star"></i> {{comment.points || 0}}</a>
 			<a href="{{reply.getPermalink()}}" style="margin-left: 4px; color: rgba(30,55,70,0.4)">
-				<i class="icon-signout"></i>
+				<i class="glyphicon glyphicon-log-out"></i>
 				<span ng-pluralize count="comment.children" when="{
 					'0': '0 comments',
 					'one': '1 comment',
@@ -53,7 +53,7 @@
 			<a class="pull-left" href="#"><img class="media-object img-rounded" src="http://placehold.it/48" /></a>
 			<div class="media-body">
 				<textarea class="input-block-level" style="height: 72px; font-size: 13px; line-height: 1.38em; color: #42474a; font-weight: 300" ng-model="reply.replyContent"></textarea>
-				<button class="btn btn-mini" ng-click="reply.addReply()">Post</button> <button class="btn btn-mini" ng-click="reply.showReply = false">Cancel</button>
+				<button class="btn btn-default btn-xs" ng-click="reply.addReply()">Post</button> <button class="btn btn-default btn-xs" ng-click="reply.showReply = false">Cancel</button>
 			</div>
 		</div>
 

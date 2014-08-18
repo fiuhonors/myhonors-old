@@ -6,6 +6,7 @@ assets/img/honorshours
 assets/json
 .gitignore~
 .README.md~
+assets/.sass-cache
 nbproject
 desktop.ini
 uploads/
@@ -28,4 +29,6 @@ logs/
 access.log
 error.log
 
-
+# Server-possible directories (Portfolio, CRS, etc)
+portfolio/
+crs/

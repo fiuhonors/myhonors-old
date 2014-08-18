@@ -1,9 +1,9 @@
-<div class="row-fluid">
-	<div ng-class="{span9: user.auth.isArchMod, span12: !user.auth.isArchMod}">
+<div class="row">
+	<div ng-class="{'col-md-9': user.auth.isArchMod, 'col-md-12': !user.auth.isArchMod}">
 		<div class="box">
 			<div class="box-header">Your ARCH Projects</div>
 			<div class="box-content">
-				<ul ng-show="projects.length && !user.auth.isArchMod" class="unstyled block-hover block-clickable">
+				<ul ng-show="projects.length && !user.auth.isArchMod" class="list-unstyled block-hover block-clickable">
 					<li ng-repeat="project in projects | filter:searchText" ng-click="goToContract(project.$id)" style="padding: 20px">
 						<strong>Project Title:</strong> {{project.name}}
 						<span ng-show="!project.contract.signedByStudent" class="label label-warning" style="margin-left: 10px">Pending Student Signature</span>
@@ -54,14 +54,14 @@
 		</div>
 	</div>
 
-	<div class="span3" ng-show="user.auth.isArchMod">
+	<div class="col-md-3" ng-show="user.auth.isArchMod">
 		<div class="box">
 			<div class="box-header">ARCH Administration Panel</div>
 			<div class="box-content padded">
-				<input id="search" type="text" ng-model="searchText" placeholder="Search for..." />
+				<input id="search" class="form-control" type="text" ng-model="searchText" placeholder="Search for..." />
 				<span class="help-block">You can search by PID, name, major, email address, etc.</span>
-				<hr>
-				<a href="#/arch/add" class="btn btn-primary input-block-level">Add New Project</a>
+				<hr/>
+				<a href="#/arch/add" class="btn btn-primary">Add New Project</a>
 			</div>
 		</div>
 	</div>

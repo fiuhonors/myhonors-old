@@ -103,6 +103,10 @@ angular.module('myhonorsEvents').controller('EventEditCtrl', ['$scope', '$locati
 		
 		if ($scope.event.options.waitingList)
 			$scope.checkWaitingList();
+        
+        // U
+        updateClubChanges( $scope.originalEvent, $scope.event ); 
+            
 		
 		$location.path('events/' + $routeParams.eventId);
 	};
@@ -127,6 +131,33 @@ angular.module('myhonorsEvents').controller('EventEditCtrl', ['$scope', '$locati
 			WaitingListService.transferFromWaitingListToRSVP($routeParams.eventId, newMaxRSVPs - oldMaxRSVPs);
 		}
 	};
+    
+    /**
+     * Checks whether the club associated with the event has changed
+     * @param originalEvent The copy of the event object before any edit changes were made
+     * @param newEvent      The event object after the edit changes were made
+     */
+    function updateClubChanges( originalEvent, newEvent ) {
+        
+        // If the the original event object did not have the club property and the new event object did, that means the user associated a club to the event
+        if ( !originalEvent.hasOwnProperty( 'club' ) &&
+             newEvent.hasOwnProperty( 'club' ) ) {
+            ClubService.addEventToClub( newEvent.club, newEvent.id );  
+        }   
+        // If the the original event object has the club property but the new event object doesn't, that means the event had a club but it was removed
+        else if ( originalEvent.hasOwnProperty( 'club' ) && 
+                  newEvent.hasOwnProperty( 'club' ) &&
+                  newEvent.club == null ) {
+            ClubService.removeEventFromClub( originalEvent.club, newEvent.id );
+        }
+        // If the the original event object has the club property and the new event object also has it but they are different, that means that the club associated with the event was changed
+        else if( originalEvent.hasOwnProperty( 'club' ) && 
+                 newEvent.hasOwnProperty( 'club' ) &&
+                 originalEvent.club !== newEvent.club ) {
+            ClubService.addEventToClub( newEvent.club, newEvent.id );
+            ClubService.removeEventFromClub( originalEvent.club, newEvent.id ); 
+        }
+    }
 	
 
 }]);

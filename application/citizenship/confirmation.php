@@ -65,11 +65,11 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 	<p>Please confirm their attendance claim by clicking on the accept link: <a href="https://myhonors.fiu.edu/application/citizenship/confirmation.php?volunteerHoursID=' . $_POST[ 'volunteerHoursID' ] . '&userID=' . $_POST[ 'userID' ] .'">Accept</a></p>
 	
 	
-	<p>If you feel that this Honors College student has not served the claimed hours, please contact me at <a href="dgiombet@fiu.edu">dgiombet@fiu.edu</a>.</p>
+	<p>If you feel that this Honors College student has not served the claimed hours, please contact me at <a href="urahman@fiu.edu">urahman@fiu.edu</a>.</p>
 	
 	<p>Sincerely,</p>
 	
-	<p>Dominick Giombetti<br />
+	<p>Umer Rahman<br />
 	Coordinator of Student Programs<br />
 	The Honors College</p>
 	</body>
@@ -82,10 +82,10 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 	
 	// Additional headers
 	$headers .= 'To: ' . $_POST[ 'referenceName' ] . ' <' . $_POST[ 'referenceEmail' ] . '>' . "\r\n";
-	$headers .= 'From: Dominick Giombetti <dgiombet@fiu.edu>' . "\r\n";
+	$headers .= 'From: Umer Rahman <urahman@fiu.edu>' . "\r\n";
 	
 	// Mail it
-	$email_sent = mail( $to, $subject, $message, $headers );
+	$email_sent = mail( $to, $subject, $message, $headers, '-f urahman@fiu.edu' );
 	
 	if ( !$email_sent ) {
 		$result = array( 'success' => false, 'error' => "A problem ocurred when attemtping to send the confirmation email." );

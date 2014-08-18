@@ -2,9 +2,11 @@
 			<div class="media padded">
 				<a class="pull-left" href="#"><img class="media-object img-rounded" src="http://placehold.it/48" /></a>
 				<div class="media-body">
-					<form class="form-inline" style="margin: 0" ng-submit="addComment()">
-						<input type="text" ng-model="userComment" class="input-block-level" style="height: 48px; padding: 0px 10px" placeholder="Leave a comment..." />
-					</form>
+					<form style="margin: 0" ng-submit="addComment()">
+                                            <div class="form-group">
+						<input type="text" ng-model="userComment" class="form-control" style="height: 48px; padding: 0px 10px" placeholder="Leave a comment..." />
+                                            </div>
+                                        </form>
 				</div>
 			</div>
 			<div class="padded-small text-center" style="position: relative">
@@ -33,7 +35,7 @@
 							<span style="font-size: 85%; padding: 3px">&#8226;</span> {{comment.date | timeAgo}}
 						</span>
 						<div class="pull-right">
-							<button class="btn btn-small btn-link" ng-show="0 && (user.auth.isCommentMod || comment.author.id === user.profile.id)" ng-click="deleteComment(comment.id)"><i class="icon-trash icon-white"></i></button>
+							<button class="btn btn-sm btn-link" ng-show="0 && (user.auth.isCommentMod || comment.author.id === user.profile.id)" ng-click="deleteComment(comment.id)"><i class="glyphicon glyphicon-trash icon-white"></i></button>
 						</div>
 						<p style="font-size: 15px; color: #42474a; font-weight: 300">{{comment.content}}</p>
 					</div>

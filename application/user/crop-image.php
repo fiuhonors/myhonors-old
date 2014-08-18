@@ -78,7 +78,7 @@ $upload_path = PROJECT_ROOT_PATH . 'uploads/' . $path;
 // If the upload path does not exist, create the necessary folders
 if ( ! file_exists( $upload_path ) && ! is_dir( $upload_path ) ) {
     mkdir( $upload_path, 0777, true );         
-} 
+}
 
 // Create a new image from the uploaded image given its mime type
 switch ( strtolower( $file_mimetype ) )

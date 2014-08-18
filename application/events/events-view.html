@@ -1,176 +1,182 @@
-<div class="row-fluid">
-	<div class="span12 box padded-small" style="position: relative">
-		<leaflet center="center" markers="markers" defaults="defaults" height="150px"></leaflet>
-		<div class="mapoverlay">
-			<div>
-				<h1 style="margin-bottom: 0">{{event.name | truncate:25}}</h1>
-				<p class="smalltext">{{event.date.starts | date:"EEEE, MMMM d 'at' h:mma"}}. {{event.location.name}}</p>
-			</div>
-		</div>
-	</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box padded-small" style="position: relative">
+            <leaflet center="center" markers="markers" defaults="defaults" height="150px"></leaflet>
+            <div class="mapoverlay hidden-xs hidden-sm">
+                <div>
+                    <h1 style="margin-bottom: 0">{{event.name| truncate:25}}</h1>
+                    <p class="smalltext">{{event.date.starts| date:"EEEE, MMMM d 'at' h:mma"}}. {{event.location.name}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-<div class="row-fluid">
-	<div class="span3">
-		<div class="box">
-			<div class="box-header">Event Details</div>
-			<div class="box-content padded">
-				<div class=""><strong>{{event.name}}</strong></div>
-				<hr style="margin-top: 10px; margin-bottom: 10px" />
-				<p>
-					{{event.desc | truncate: truncateDesc}}
-					<a class="clickable" ng-show="event.desc.length >= truncateDesc && truncateDesc !== 0" ng-click="truncateDesc = 0">read more</a>
-					<a class="clickable" ng-show="truncateDesc === 0" ng-click="truncateDesc = 200">read less</a>
-				</p>
-				<hr style="margin-top: 10px; margin-bottom: 10px" />
-				<p>
+<div class="row">
+    <div class="col-md-3">
+        <div class="box">
+            <div class="box-header">Event Details</div>
+            <div class="box-content padded">
+                <div class=""><strong>{{event.name}}</strong></div>
+                <hr style="margin-top: 10px; margin-bottom: 10px" />
+                <p>
+                    {{event.desc| truncate: truncateDesc}}
+                    <a class="clickable" ng-show="event.desc.length >= truncateDesc && truncateDesc !== 0" ng-click="truncateDesc = 0">read more</a>
+                    <a class="clickable" ng-show="truncateDesc === 0" ng-click="truncateDesc = 200">read less</a>
+                </p>
+                <hr style="margin-top: 10px; margin-bottom: 10px" />
+                <p>
                     <strong ng-if="event.club">Club: </strong> {{event.club}} <br />
-					<strong>Date: </strong> {{event.date.starts | date:"EEE, MMMM d 'at' h:mm a"}}<br />
-					<strong>Location: </strong> {{event.location.name}}
-				</p>
-				<hr style="margin-top: 10px; margin-bottom: 10px" ng-show="user.auth.isEventMod" />
-				<div class="row-fluid" ng-show="user.auth.isEventMod">
-					<a href="#/events/{{event.id}}/swipe" class="btn span4">Swipe</a>
-					<a href="#/events/{{event.id}}/edit" class="btn span4">Edit</a>
-					<button class="btn span4" ng-click="confirmDelete()">Delete</button>
-				</div>
-			</div>
-		</div>
+                    <strong>Date: </strong> {{event.date.starts| date:"EEE, MMMM d 'at' h:mm a"}}<br />
+                    <strong>Location: </strong> {{event.location.name}}
+                </p>
+                <hr style="margin-top: 10px; margin-bottom: 10px" ng-show="user.auth.isEventMod" />
+                <div ng-show="user.auth.isEventMod">
+                    <a href="#/events/{{event.id}}/swipe" class="btn btn-link">Swipe</a>
+                    <a href="#/events/{{event.id}}/edit" class="btn btn-link">Edit</a>
+                    <button class="btn btn-link" ng-click="confirmDelete()">Delete</button>
+                </div>
+            </div>
+        </div>
+        
+        <div ng-include src="'application/events/comments-template.html'" ng-show="event.thumbURL"></div>
 
-		<div ng-include src="'application/events/comments-template.html'" ng-show="event.thumbURL"></div>
-			
-	</div>
-	<div class="span6">
-		<div class="box" ng-show="event.thumbURL">
-			<img class="img-rounded" ng-src="{{event.thumbURL}}">
-		</div>
-		
-		<div ng-include src="'application/events/comments-template.html'" ng-show="!event.thumbURL"></div>
-		
-	</div>
-	<div class="span3" ng-show="!attendance.length">
-		<div class="box">
-			<div class="box-header text-center" ng-show='!event.options.waitingList || event.rsvps < event.options.maxRSVPs || hasRSVP()'> RSVP
-				<span class="muted">
-					<span ng-show="getRemainingSeats() == 1">({{getRemainingSeats()}}/{{event.options.maxRSVPs}} seat available)</span>
-					<span ng-show="event.options.maxRSVPs && getRemainingSeats() !== 1">({{getRemainingSeats()}}/{{event.options.maxRSVPs}} seats available)</span>
-				</span>
-			</div>
-			<div class="box-content padded" style="position: relative" ng-show='!event.options.waitingList || event.rsvps < event.options.maxRSVPs || hasRSVP()'>
-				<div class="rsvp">
-					<button class="btn btn-large input-block-level" ng-click="preRSVP = true" ng-show="!hasRSVP()" ng-disabled="preRSVP" >I'm Going</button>
-					<button class="btn btn-large input-block-level btn-primary" ng-click="removeRSVP()" ng-show="hasRSVP()">I'm Going</button>
-					<div ng-show="hasRSVP() || preRSVP" ng-animate="{hide: 'slide-hide'}" style="margin-top: 10px">
-						<div class="input-prepend input-append input-block-level" ng-show="!event.options.disallowGuests">
-							<span class="add-on">+</span>
-							<input type="number" min="0" placeholder="0" ng-model="rsvp.guests">
-							<span class="add-on">Guests</span>
-						</div>
-						<div class="input-prepend input-block-level" ng-show="event.options.requirePhone">
-							<span class="add-on">Phone Number</span>
-							<input type="tel" placeholder="305-999-9999" ng-model="rsvp.phone">
-						</div>
-						<div class="alert alert-info" style="margin-bottom: 10px" ng-show="rsvp.error" ng-bind-html-unsafe="rsvp.error"></div>
-						<div class="text-center" ng-show="!preRSVP && hasRSVPChanges()" ng-animate="{show: 'slide-show', hide: 'slide-hide'}">
-							<button class="btn btn-mini btn-success" ng-click="addRSVP()">Save Changes</button>
-						</div>
-					</div>
-					<div class="text-center" ng-show="preRSVP" ng-animate="{hide: 'slide-hide'}">
-						<button class="btn btn-mini btn-primary" ng-click="addRSVP()">Save RSVP</button>
-						<button class="btn btn-mini btn-link" ng-click="preRSVP = false; rsvp.error = false">Cancel</button>
-					</div>
-					</div>
-				</div>
-				<div class="box-header text-center" ng-show='event.options.waitingList && event.rsvps >= event.options.maxRSVPs && !hasRSVP()'> Waiting List </div>
-					<div class="box-content padded" style="position: relative" ng-show='event.options.waitingList && event.rsvps >= event.options.maxRSVPs && !hasRSVP()'>
-						<div class="waiting-list">
-							<div class="alert alert-info padded-medium" style="margin-bottom: 7px;" ng-show="!isInWaitingList()">
-								The event attendance is full. You can join the waiting list and we will notify you if a spot opens up!
-							</div>
-							<button class="btn btn-large input-block-level" ng-click="handleJoin()" ng-show="!isInWaitingList()">Join Waiting List</button>
-							<button class="btn btn-large btn-primary input-block-level" ng-click="removeFromWaitingList()" ng-show="isInWaitingList()">Leave Waiting List</button>
-							<div ng-show="event.options.requirePhone && (isInWaitingList() || preWaitingList)">
-								<div class="input-prepend input-block-level" style="margin-top:10px">
-									<span class="add-on">Phone Number</span>
-									<input type="tel" placeholder="305-999-9999" ng-model="waitingList.phone">
-								</div>
-								
-								<div class="alert alert-info" style="margin-bottom: 10px" ng-show="waitingList.error" ng-bind-html-unsafe="waitingList.error"></div>
-								<div class="text-center" ng-show="!preWaitingList && hasWaitingListChanges()" ng-animate="{show: 'slide-show', hide: 'slide-hide'}">
-									<button class="btn btn-mini btn-success" ng-click="addToWaitingList()">Save Changes</button>
-								</div>
-								<div class="text-center" ng-show="preWaitingList">
-									<button class="btn btn-mini btn-primary" ng-click="addToWaitingList()">Join</button>
-									<button class="btn btn-mini btn-link" ng-click="preWaitingList = false; waitingList.error = false">Cancel</button>
-								</div>							
-							</div>
-						</div>
+    </div>
+    <div class="col-md-6">
+        <div class="box" ng-show="event.thumbURL">
+            <img class="img-rounded" ng-src="{{event.thumbURL}}">
+        </div>
+        <div ng-include src="'application/events/comments-template.html'" ng-show="!event.thumbURL"></div>
 
-			</div>
-		</div>
-		<div class="box">
-			<div class="box-header text-center">{{event.rsvps}} <span ng-show="event.rsvps === 1">person</span><span ng-show="event.rsvps !== 1">people</span> attending</div>
-			<div class="box-content clearfix">
-				<div ng-show="!eventRSVPs.length" class="padded">
-					<div class="alert alert-info padded-medium" style="margin-bottom: 0">
-						<strong>Be the first to RSVP!</strong> Just click the huge "I'm Going" button above and others will follow.
-					</div>
-				</div>
-				<ul ng-show="eventRSVPs.length" class="unstyled block-hover">
-					<li ng-repeat="rsvp in eventRSVPs | limitTo:showAttendanceLimit" class="clearfix">
-						<img class="pull-left img-rounded" src="http://placehold.it/36">
-						<div class="pull-left" style="margin-left: 10px; line-height: 36px" ng-init="updateTotalRSVPs(1+rsvp.guests)">
-							<strong>{{rsvp.fname}}</strong> is going <span class="muted" ng-show="rsvp.guests > 0">[+{{rsvp.guests}}]</span>
-						</div>
-					</li>
-				</ul>
-				<div class="pull-right" style="padding: 5px;" ng-show="eventRSVPs.length > 6">
-					<a href="" ng-show="showAttendanceLimit == 6" ng-click="showRSVPs()">Show all</a>
-					<a href="" ng-show="showAttendanceLimit > 6"  ng-click="showRSVPs()">Show less</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<div class="span3" ng-show="attendance.length">
-		<div class="box" ng-show="userAttended">
-			<div class="box-content padded-medium">
-				<div class="alert alert-success padded-medium" style="margin-bottom: 0">
-					<strong>Thanks for coming!</strong> You have officially received credit for this event. We hope to see you at the next one.
-				</div>
-			</div>
-		</div>
-		<div class="box">
-			<div class="box-header text-center">{{event.attendance}} <span ng-show="event.attendance === 1">person</span><span ng-show="event.attendance !== 1">people</span> attended</div>
-			<div class="box-content clearfix">
-				<ul class="unstyled block-hover">
-					<li ng-repeat="person in attendance | limitTo:showAttendanceLimit" class="clearfix">
-						<img class="pull-left img-rounded" src="http://placehold.it/36">
-						<div class="pull-left" style="margin-left: 10px; line-height: 36px">
-							<strong>{{person.fname}}</strong> attended
-						</div>
-					</li>
-				</ul>
-				<div class="pull-right" style="padding: 5px;" ng-show="event.attendance > 6">
-					<a href="" ng-show="showAttendanceLimit == 6" ng-click="showAttendants()">Show all</a>
-					<a href="" ng-show="showAttendanceLimit > 6"  ng-click="showAttendants()">Show less</a>
-				</div>
-			</div>
-		</div>
-	</div>
+    </div>
+    <div class="col-md-3" ng-show="!attendance.length">
+        <div class="box">
+            <div class="box-header text-center" ng-show='!event.options.waitingList || event.rsvps < event.options.maxRSVPs || hasRSVP()'> RSVP
+                <span class="muted">
+                    <span ng-show="getRemainingSeats() == 1">({{getRemainingSeats()}}/{{event.options.maxRSVPs}} seat available)</span>
+                    <span ng-show="event.options.maxRSVPs && getRemainingSeats() !== 1">({{getRemainingSeats()}}/{{event.options.maxRSVPs}} seats available)</span>
+                </span>
+            </div>
+            <div class="box-content padded" style="position: relative" ng-show='!event.options.waitingList || event.rsvps < event.options.maxRSVPs || hasRSVP()'>
+                <div class="rsvp">
+                    <button class="btn btn-lg btn-block" ng-click="preRSVP = true" ng-show="!hasRSVP()" ng-disabled="preRSVP" >I'm Going</button>
+                    <button class="btn btn-lg btn-block btn-primary" ng-click="removeRSVP()" ng-show="hasRSVP()">I'm Going</button>
+                    <div ng-show="hasRSVP() || preRSVP" ng-animate="{hide: 'slide-hide'}" style="margin-top:10px; margin-bottom:10px;">
+                        <div class="input-group" ng-show="!event.options.disallowGuests">
+                            <span class="input-group-addon">+</span>
+                            <input class="form-control" type="number" min="0" placeholder="0" ng-model="rsvp.guests">
+                            <span class="input-group-addon">Guests</span>
+                        </div>
+                        <div class="input-group" ng-show="event.options.requirePhone">
+                            <span class="input-group-addon">Phone Number</span>
+                            <input type="tel" placeholder="305-999-9999" ng-model="rsvp.phone">
+                        </div>
+                        <div class="alert alert-info" style="margin-bottom: 10px" ng-show="rsvp.error" ng-bind-html-unsafe="rsvp.error"></div>
+                        <div class="text-center" ng-show="!preRSVP && hasRSVPChanges()" ng-animate="{show: 'slide-show', hide: 'slide-hide'}">
+                            <button class="btn btn-xs btn-success" ng-click="addRSVP()">Save Changes</button>
+                        </div>
+                    </div>
+                    <div class="text-center" ng-show="preRSVP" ng-animate="{hide: 'slide-hide'}">
+                        <button class="btn btn-xs btn-primary" ng-click="addRSVP()">Save RSVP</button>
+                        <button class="btn btn-xs btn-link" ng-click="preRSVP = false;
+                                    rsvp.error = false">Cancel</button>
+                    </div>
+                </div>
+            </div>
+            <div class="box-header text-center" ng-show='event.options.waitingList && event.rsvps >= event.options.maxRSVPs && !hasRSVP()'> Waiting List </div>
+            <div class="box-content padded" style="position: relative" ng-show='event.options.waitingList && event.rsvps >= event.options.maxRSVPs && !hasRSVP()'>
+                <div class="waiting-list">
+                    <div class="alert alert-info padded-medium" style="margin-bottom: 7px;" ng-show="!isInWaitingList()">
+                        The event attendance is full. You can join the waiting list and we will notify you if a spot opens up!
+                    </div>
+                    <button class="btn btn-lg btn-block" ng-click="handleJoin()" ng-show="!isInWaitingList()">Join Waiting List</button>
+                    <button class="btn btn-lg btn-primary btn-block" ng-click="removeFromWaitingList()" ng-show="isInWaitingList()">Leave Waiting List</button>
+                    <div ng-show="event.options.requirePhone && (isInWaitingList() || preWaitingList)">
+                        <div class="input-group" style="margin-top:10px">
+                            <span class="input-group-addon">Phone Number</span>
+                            <input type="tel" placeholder="305-999-9999" ng-model="waitingList.phone">
+                        </div>
+
+                        <div class="alert alert-info" style="margin-bottom: 10px" ng-show="waitingList.error" ng-bind-html-unsafe="waitingList.error"></div>
+                        <div class="text-center" ng-show="!preWaitingList && hasWaitingListChanges()" ng-animate="{show: 'slide-show', hide: 'slide-hide'}">
+                            <button class="btn btn-xs btn-success" ng-click="addToWaitingList()">Save Changes</button>
+                        </div>
+                        <div class="text-center" ng-show="preWaitingList">
+                            <button class="btn btn-xs btn-primary" ng-click="addToWaitingList()">Join</button>
+                            <button class="btn btn-xs btn-link" ng-click="preWaitingList = false;
+                                        waitingList.error = false">Cancel</button>
+                        </div>							
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="box">
+            <div class="box-header text-center">{{event.rsvps}} <span ng-show="event.rsvps === 1">person</span><span ng-show="event.rsvps !== 1">people</span> attending</div>
+            <div class="box-content clearfix">
+                <div ng-show="!eventRSVPs.length" class="padded">
+                    <div class="alert alert-info padded-medium" style="margin-bottom: 0">
+                        <strong>Be the first to RSVP!</strong> Just click the huge "I'm Going" button above and others will follow.
+                    </div>
+                </div>
+                <ul ng-show="eventRSVPs.length" class="unstyled block-hover">
+                    <li ng-repeat="rsvp in eventRSVPs| limitTo:showAttendanceLimit" class="clearfix">
+                        <img class="pull-left img-rounded" src="http://placehold.it/36">
+                        <div class="pull-left" style="margin-left: 10px; line-height: 36px" ng-init="updateTotalRSVPs(1 + rsvp.guests)">
+                            <strong>{{rsvp.fname}}</strong> is going <span class="muted" ng-show="rsvp.guests > 0">[+{{rsvp.guests}}]</span>
+                        </div>
+                    </li>
+                </ul>
+                <div class="pull-right" style="padding: 5px;" ng-show="eventRSVPs.length > 6">
+                    <a href="" ng-show="showAttendanceLimit == 6" ng-click="showRSVPs()">Show all</a>
+                    <a href="" ng-show="showAttendanceLimit > 6"  ng-click="showRSVPs()">Show less</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3" ng-show="attendance.length">
+        <div class="box" ng-show="userAttended">
+            <div class="box-content padded-medium">
+                <div class="alert alert-success padded-medium" style="margin-bottom: 0">
+                    <strong>Thanks for coming!</strong> You have officially received credit for this event. We hope to see you at the next one.
+                </div>
+            </div>
+        </div>
+        <div class="box">
+            <div class="box-header text-center">{{event.attendance}} <span ng-show="event.attendance === 1">person</span><span ng-show="event.attendance !== 1">people</span> attended</div>
+            <div class="box-content">
+                <ul class="block-hover block-clickable">
+                    <li ng-repeat="person in attendance| limitTo:showAttendanceLimit" class="clearfix">
+                        <img class="pull-left img-rounded" src="http://placehold.it/36">
+                        <div class="pull-left" style="margin-left: 10px; line-height: 36px">
+                            <strong>{{person.fname}}</strong> attended
+                        </div>
+                    </li>
+                </ul>
+                <div class="pull-right" style="padding: 5px;" ng-show="event.attendance > 6">
+                    <a href="" ng-show="showAttendanceLimit == 6" ng-click="showAttendants()">Show all</a>
+                    <a href="" ng-show="showAttendanceLimit > 6"  ng-click="showAttendants()">Show less</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Modal -->
 <div modal="showDeleteConfirmation" close="cancelDelete()" options="modalOpts">
-	<div class="modal-header">
-		<button type="button" class="close" ng-click="cancelDelete()">×</button>
-		<h3>Are you sure you want to DELETE?</h3>
-	</div>
-	<div class="modal-body">
-		<p>This will <strong>permanently</strong> erase all data related to this event. Are you sure you want to do this?</p>
-	</div>
-	<div class="modal-footer">
-		<button class="btn btn-danger" ng-click="doDelete()">Yes, DELETE the Event</button>
-		<button class="btn cancel" ng-click="cancelDelete()">Cancel</button>
-	</div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="cancelDelete()">×</button>
+                <h3>Are you sure you want to DELETE?</h3>
+            </div>
+            <div class="modal-body">
+                <p>This will <strong>permanently</strong> erase all data related to this event. Are you sure you want to do this?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" ng-click="doDelete()">Yes, DELETE the Event</button>
+                <button class="btn cancel" ng-click="cancelDelete()">Cancel</button>
+            </div>
+        </div>
+    </div>
 </div>

@@ -81,12 +81,12 @@ $timeAvailability .= "</tbody>
 	
 // Set up the email fields
 $to = "Isabel Green <igreen@fiu.edu>";
-$from = "fiuhonorstechteam@gmail.com"; 
+$from = "Honors College <honors@fiu.edu>"; 
 $subject ="myHonors: Application to Internship/Job"; 
 $message = '
 <html>
 <head>
-<title>Applitcation to Internship/Job</title>
+<title>Application to Internship/Job</title>
 </head>
 <body>
 <p>Dear Honors College Staff,</p>
@@ -161,7 +161,7 @@ for($x=0;$x<count($files);$x++){
 } */
 
 if (!DISABLE_EMAIL) {
-	$email_sent = mail($to, $subject, $message, $headers); 
+	$email_sent = mail($to, $subject, $message, $headers, '-f honors@fiu.edu'); 
 	
 	if (!$email_sent) {
 		$result = array('success' => false, 'error' => "A problem ocurred when attemtping to submit your application.");
