@@ -9,13 +9,13 @@
 
             <form class="form" name="profilePictureForm">
                 <div class="form-group">
-                    <input class="form-control" type="hidden" name="coordinates" value="{{ cropImgCoordinates}}">
+                    <input class="form-control" type="hidden" name="coordinates" value="{{ cropImgCoordinates }}">
                 </div>
                 <div class="form-group">
                     <input class="form-control" type='file' ng-model="profilePic" id="imgInput" onchange="angular.element(this).scope().showPreviewImg(this)">
                 </div>
                 <div class="form-group">
-                    <jcrop class="center-block" src="{{ previewImgSrc}}" jcrop-center-image after-selection='setCropImgCoordinates(cords)'></jcrop>
+                    <jcrop class="center-block" src="{{ previewImgSrc}}" jcrop-center-image after-selection='setCropImgCoordinates(cords,img)'></jcrop>
                 </div>
             </form>
 

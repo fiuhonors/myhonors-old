@@ -38,111 +38,69 @@ angular.module('myhonorsUser').controller('ProfileViewCtrl', ['$scope', '$rootSc
     });
     
 
+
     /**
      * Get the appropiate CSS class for a project depending on its category
      */
-    $scope.chooseLabel = function( category ) {
-        return ProjectService.getLabel( category )
-    };
-    
-    
-    $scope.goToProject = function( project ) {
-        $location.path( '/profiles/' + $routeParams.username + '/projects/' +  project.$id );
+    $scope.chooseLabel = function(category) {
+        return ProjectService.getLabel(category)
     };
 
-        /**
-         * Get the appropiate CSS class for a project depending on its category
-         */
-        $scope.chooseLabel = function(category) {
-            return ProjectService.getLabel(category)
+
+    $scope.goToProject = function(project) {
+        $location.path('/profiles/' + $routeParams.username + '/projects/' + project.$id);
+    };
+
+    /*
+     * Returns a project' first asset's url. This is used when iterating through the user's projects so that their projects thumbnails 
+     * show one of his or her pictures ( if any exists )
+     */
+    $scope.getFirstAssetUrl = function(project) {
+        if (!project.hasOwnProperty("assets")) {
+            return null;
+        }
+
+        for (var assetId in project.assets) {
+            return project.assets[ assetId ].url;
+        }
+    };
+    
+
+    /* Below are methods used to edit the profile. There use is restricted to the appropiate users */
+    if ($scope.isAbleEdit) {
+
+        $scope.updateProfile = function() {
+            // Pass a copy of the profile object to eliminate the $$hashKey property that cause ng-repeat to stop working
+            ProfileService.update($scope.pid, angular.copy($scope.user.profile));
         };
 
-
-        $scope.goToProject = function(project) {
-            $location.path('/profiles/' + $routeParams.username + '/projects/' + project.$id);
-        };
-
-        /*
-         * Returns a project' first asset's url. This is used when iterating through the user's projects so that their projects thumbnails 
-         * show one of his or her pictures ( if any exists )
-         */
-        $scope.getFirstAssetUrl = function(project) {
-            if (!project.hasOwnProperty("assets")) {
-                return null;
-            }
-
-            for (var assetId in project.assets) {
-                return project.assets[ assetId ].url;
-            }
-        };
-
+        /* Methods that handle the Interests and Organizations list */
 
         $scope.addItemToList = function(array) {
-            array.push( { value: "New item" } );
+            array.push({
+                value: "New item"
+            });
             $scope.updateProfile();
         };
 
-        /* Below are methods used to edit the profile. There use is restricted to the appropiate users */
-        if ($scope.isAbleEdit) {
+        $scope.removeItemAtIndex = function(array, index) {
+            array.splice(index, 1);
+            $scope.updateProfile();
+        };
 
-            $scope.updateProfile = function() {
-                // Pass a copy of the profile object to eliminate the $$hashKey property that cause ng-repeat to stop working
-                ProfileService.update($scope.pid, angular.copy($scope.user.profile));
-            };
+        $scope.currentProject = {}; // Holds the project object that is being added or edited
+        $scope.currentProjectIndex = null; // Holds the index of the project's collection that stores the current project being edited
 
-            /* Methods that handle the Interests and Organizations list */
+        /*
+         * Watch the projects collection. If the user updates a project, the changes are automatically retrived by the Firebase collection. 
+         * The currentProject variable must then be updated by assigning it the updated version of the project. This is done so that when 
+         * the user uploads documents or pictures to a project, they appear on the project modal listings in real-time.
+         */
+        $scope.$watchCollection('projects', function() {
+            if ($scope.currentProjectIndex != null)
+                $scope.currentProject = $scope.projects[ $scope.currentProjectIndex ];
+        });
 
-            $scope.addItemToList = function(array) {
-                array.push({
-                    value: "New item"
-                });
-                $scope.updateProfile();
-            };
-
-
-            /*
-             * Watch the projects collection. If the user updates a project, the changes are automatically retrived by the Firebase collection. 
-             * The currentProject variable must then be updated by assigning it the updated version of the project. This is done so that when 
-             * the user uploads documents or pictures to a project, they appear on the project modal listings in real-time.
-             */
-            $scope.$watchCollection('projects', function() {
-                if ($scope.currentProjectIndex != null)
-                    $scope.currentProject = $scope.projects[ $scope.currentProjectIndex ];
-            });
-
-            // Modal options
-            $scope.modalOpts = {
-                backdropFade: true,
-                dialogFade: true,
-                windowClass: 'dynamic-modal'
-            };
-
-
-            // Close the modal and reset the necessary options
-            $scope.closeModal = function() {
-                $scope.showProjectModal = false;
-                $scope.currentProject = {};
-                $scope.currentProjectIndex = null;
-                $scope.newProject = false;
-            };
-
-            $scope.currentProject = {}; // Holds the project object that is being added or edited
-            $scope.currentProjectIndex = null; // Holds the index of the project's collection that stores the current project being edited
-
-
-            // Transform the project object to JSON and then parse it into an object again to delete files like $id, etc. that cause problems with Firebase
-            var project = JSON.parse(angular.toJson($scope.currentProject));
-
-            if (!$scope.currentProject.hasOwnProperty("$id")) {
-                project.createdAt = Date.now(); // Store the time when the project was created
-                var projectId = ProjectService.add($scope.pid, project); // Add the project 
-            }
-            else // The project was already created
-                ProjectService.update($scope.pid, $scope.currentProject.$id, project);
-
-            $scope.closeModal();
-        }
-        ;
 
         // Modal options
         $scope.modalOpts = {
@@ -319,10 +277,10 @@ angular.module('myhonorsUser').controller('ProfileViewCtrl', ['$scope', '$rootSc
                     $scope.form.error = "";
 
                     // This code will used to limit the number of files and assets a user can do per project
-//	                    if ( $scope.currentProject.hasOwnProperty( "assets" ) && $scope.currentProject.assets.length == $scope.numFilesAllowed ) {
-//	                        $scope.form.error = "<strong>Sorry!</strong> You can only upload a total of " + $scope.numFilesAllowed + " files per project.";
-//	                        return false;
-//	                    }
+    //	                    if ( $scope.currentProject.hasOwnProperty( "assets" ) && $scope.currentProject.assets.length == $scope.numFilesAllowed ) {
+    //	                        $scope.form.error = "<strong>Sorry!</strong> You can only upload a total of " + $scope.numFilesAllowed + " files per project.";
+    //	                        return false;
+    //	                    }
 
 
                     var fileType = item.name.split('.').pop(); // Extract the file extension from the file's name
@@ -421,7 +379,7 @@ angular.module('myhonorsUser').controller('ProfileViewCtrl', ['$scope', '$rootSc
             delete project.files[ fileId ];
             ProjectService.removeFile($scope.pid, project.$id, fileId, 'files', pathToFile);
         };
-
+        
     }
 
-    }]);
+}]);

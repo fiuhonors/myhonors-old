@@ -40,9 +40,14 @@ angular.module('myhonorsUser').controller('ProfilePictureEditCtrl', ['$scope', '
             
             // Verify whether the file uploaded is a valid image
             $scope.form.error = "";
+            
             var fileType = input.files[ 0 ].name.split('.').pop();
+            
             if (fileType !== 'jpg' && fileType !== 'jpeg' && fileType !== 'png' && fileType !== 'gif')
                 $scope.form.error = "<strong>Sorry!</strong> You can only upload JPG, GIF, PDF and PNG file formats.";
+            
+            if (input.files[ 0 ].size > 8388608)
+                $scope.form.error = "<strong>Sorry!</strong> The limit file size is 8 megabytes.";
             
             // Store the uploaded picture
             $scope.uploadedPicture = input.files[ 0 ];
@@ -90,27 +95,7 @@ angular.module('myhonorsUser').controller('ProfilePictureEditCtrl', ['$scope', '
                 coordinates: ''
             }
         ],
-        removeAfterUpload: true,
-        filters: [
-                // Use this filter to determine that the file uploaded is the correct type and file size
-                function (item) {
-
-                    $scope.form.error = "";
-
-                    if ( fileType != "jpg" && fileType != "jpeg" && fileType != "gif" && fileType != "png" ) {
-                        $scope.form.error = "<strong>Sorry!</strong> Only JPG, GIF and PNG pciture formats are allowed.";
-                        return false;
-                    }
-                    
-
-                    if (item.size > 8388608) {
-                        $scope.form.error = "<strong>Sorry!</strong> The limit file size is 8 megabytes.";
-                        return false;
-                    }
-
-                    return true;
-                }
-            ]
+        removeAfterUpload: true
     });
     
     // If the file upload is sucessful redirect the user back to his profile
