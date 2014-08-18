@@ -90,7 +90,27 @@ angular.module('myhonorsUser').controller('ProfilePictureEditCtrl', ['$scope', '
                 coordinates: ''
             }
         ],
-        removeAfterUpload: true
+        removeAfterUpload: true,
+        filters: [
+                // Use this filter to determine that the file uploaded is the correct type and file size
+                function (item) {
+
+                    $scope.form.error = "";
+
+                    if ( fileType != "jpg" && fileType != "jpeg" && fileType != "gif" && fileType != "png" ) {
+                        $scope.form.error = "<strong>Sorry!</strong> Only JPG, GIF and PNG pciture formats are allowed.";
+                        return false;
+                    }
+                    
+
+                    if (item.size > 8388608) {
+                        $scope.form.error = "<strong>Sorry!</strong> The limit file size is 8 megabytes.";
+                        return false;
+                    }
+
+                    return true;
+                }
+            ]
     });
     
     // If the file upload is sucessful redirect the user back to his profile
