@@ -1,14 +1,23 @@
 'use strict'
 
-angular.module('myhonorsUser').factory('UserService', function($http, $location, $timeout, FirebaseIO, webStorage) {
+angular.module('myhonorsUser').factory('UserService', function($http, $location, $timeout, $q, $rootScope, FirebaseIO, webStorage) {
 	var login = function(username, password) {
 		// used to show "Loading..." status after clicking Login button
 		this.status.loading = true;
 
 		var self = this;
-
+		var defer = $q.defer();
+		
+		if(username.length === 0 || password.length === 0){
+			defer.reject("No username and/or password provided");
+			this.profile = null;
+			this.status.loading = false;
+			return defer.promise;
+		}
+		
 		var data = 'pid=' + username + '&password=' + password;
 		$http.post('auth/auth.php', data, {headers: {'Content-Type' : 'application/x-www-form-urlencoded'}}).success(function(result) {
+			var loginSuccess = false;
 			if (result.success === true && angular.isDefined(result.token))
 			{
 				FirebaseIO.auth(result.token, function(error, authObject) {
@@ -25,6 +34,8 @@ angular.module('myhonorsUser').factory('UserService', function($http, $location,
 						// user successfully logged in. save token to localStorage (or cookies if browser doesn't support it)
 						// so we can auth on every page load via appResolve
 						webStorage.add('auth_token', result.token);
+						loginSuccess = true;
+						defer.resolve( loginSuccess );
 
 						// then check if the user has a profile. if not, create it
 						var ref = FirebaseIO.child('/user_profiles/' + authObject.auth.id);
@@ -64,7 +75,7 @@ angular.module('myhonorsUser').factory('UserService', function($http, $location,
 								})
 
 								// redirect to homepage
-								$location.path('');
+								//$location.path('');
 								self.status.loading = false;
 							}
 						});
@@ -84,10 +95,15 @@ angular.module('myhonorsUser').factory('UserService', function($http, $location,
 				alert(result.error);
 				self.status.loading = false;
 			}
+			
 		});
+		
+		return defer.promise;
+		
 	};
 
 	var logout = function() {
+		$http.get('auth/un_auth.php', {headers: {'Content-Type' : 'application/x-www-form-urlencoded'}});
 		webStorage.remove('auth_token');
 		FirebaseIO.unauth(); 
 		this.profile = null;
@@ -111,6 +127,26 @@ angular.module('myhonorsUser').factory('UserService', function($http, $location,
 			}
 		});
 	};
+    
+    /**
+     * Method that accepts a student's username and returns a promise containing that student's PID
+     */
+    var getPIDFromUsername = function( username ) {
+        var deferred = $q.defer();
+        
+        $timeout(function() {
+            FirebaseIO.child( 'usernames/' + username ).once( 'value', function( snapshot ) {
+                if ( snapshot.val() === null )
+                    deferred.reject( "No student with that username was found" );
+                else
+                    deferred.resolve( snapshot.val().toString()  ); 
+                $rootScope.$apply();
+            });
+        });
+        
+        
+        return deferred.promise;
+    };
 
 	return {
 		profile: null,
@@ -119,6 +155,7 @@ angular.module('myhonorsUser').factory('UserService', function($http, $location,
 		status: {loading: false}, // used to show "Loading..." status after clicking Login button
 		login: login,
 		logout: logout,
-		exists: exists
+		exists: exists,
+        getPIDFromUsername: getPIDFromUsername
 	};
 });

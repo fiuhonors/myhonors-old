@@ -1,0 +1,54 @@
+#loginBox{
+    margin-top:0px;
+    @media #{$screen-xs}{
+        margin-top:0px;
+    }
+    @media #{$screen-md}{
+        margin-top:100px;
+    }
+    
+    img{
+        z-index:10;
+    }
+}
+
+#main{
+    margin-bottom: 50px;
+}
+
+@media #{$screen-xs}{
+    #homeImage{
+        display:none;
+    }
+}
+@media #{$screen-md}{
+    // Homepage login image animation
+    #homeImage{
+        display:block;
+        img{
+            width:100%;
+        }
+    }
+}
+
+@media #{$screen-md-only}{
+    // Citizenship (Honors Hours, Colloquia, lectures, etc - on dashboard)
+    .citizenship .box .pull-right{
+        float:none !important;
+        text-align:center;
+        h2{
+            margin:0;
+        }
+    }
+}
+
+.citizenship .box canvas{
+    max-width:60px !important;
+    height:auto !important;
+    min-width:20px !important;
+}
+
+.clear{
+    clear:both;
+}
+

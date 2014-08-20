@@ -1,98 +1,100 @@
-<div class="span12">
-	<div class="box">
-		<div class="box-header">View ARCH Project</div>
-		<div class="box-content padded">
-			<form class="form-inline">
-				<label for="name">Project Name</label><br />
-				<strong>{{project.name || 'N/A'}}</strong>
+<div class="box">
+    <div class="box-header">View ARCH Project</div>
+    <div class="box-content padded">
+        <form>
+            <label for="name">Project Name</label>
+            <strong>{{project.name|| 'N/A'}}</strong>
 
-				<hr />
+            <hr />
 
-				<label for="name">Contract Status: </label>
-				<span ng-show="!project.contract.signedByStudent" class="label label-warning" style="margin-left: 10px">Pending Student Signature</span>
-				<span ng-show="project.contract.signedByStudent" class="label label-success" style="margin-left: 10px">Signed By Student</span>
-				<span ng-show="!project.contract.signedByAdvisor" class="label label-warning" style="margin-left: 10px">Pending Advisor Signature</span>
-				<span ng-show="project.contract.signedByAdvisor" class="label label-success" style="margin-left: 10px">Signed By Advisor</span>
+            <label for="name">Contract Status: </label>
+            <span ng-show="!project.contract.signedByStudent" class="label label-warning" style="margin-left: 10px">Pending Student Signature</span>
+            <span ng-show="project.contract.signedByStudent" class="label label-success" style="margin-left: 10px">Signed By Student</span>
+            <span ng-show="!project.contract.signedByAdvisor" class="label label-warning" style="margin-left: 10px">Pending Advisor Signature</span>
+            <span ng-show="project.contract.signedByAdvisor" class="label label-success" style="margin-left: 10px">Signed By Advisor</span>
 
-				<hr />
+            <hr />
 
-				<h4>Student Information</h4>
-				<div class="row-fluid" style="margin-bottom: 20px">
-					<div class="span3">
-						<label for="studentId">Panther ID</label><br />
-						<strong>{{project.student.id || 'N/A'}}</strong>
-					</div>
-					<div class="span3">
-						<label for="studentFname">First Name</label><br />
-						<strong>{{project.student.fname || 'N/A'}}</strong>
-					</div>
-					<div class="span3">
-						<label for="studentLname">Last Name</label><br />
-						<strong>{{project.student.lname || 'N/A'}}</strong>
-					</div>
-					<div class="span3">
-						<label for="studentEmail">Email Address</label><br />
-						<strong>{{project.otherInfo.studentEmail || 'N/A'}}</strong>
-					</div>
-				</div>
-				<div class="row-fluid">
-					<div class="span3">
-						<label for="studentPhone">Phone Number</label><br />
-						<strong>{{project.otherInfo.studentPhone || 'N/A'}}</strong>
-					</div>
-					<div class="span3">
-						<label for="studentMajor1">Major 1</label><br />
-						<strong>{{project.otherInfo.studentMajor1 || 'N/A'}}</strong>
-					</div>
-					<div class="span3">
-						<label for="studentMajor2">Major 2</label><br />
-						<strong>{{project.otherInfo.studentMajor2 || 'N/A'}}</strong>
-					</div>
-				</div>
+            <h4>Student Information</h4>
+            <div class="row" style="margin-bottom: 20px">
+                <div class="col-md-3">
+                    <label for="studentId">Panther ID</label><br />
+                    <strong>{{project.student.id|| 'N/A'}}</strong>
+                </div>
+                <div class="col-md-3">
+                    <label for="studentFname">First Name</label><br />
+                    <strong>{{project.student.fname|| 'N/A'}}</strong>
+                </div>
+                <div class="col-md-3">
+                    <label for="studentLname">Last Name</label><br />
+                    <strong>{{project.student.lname|| 'N/A'}}</strong>
+                </div>
+                <div class="col-md-3">
+                    <label for="studentEmail">Email Address</label><br />
+                    <strong>{{project.otherInfo.studentEmail|| 'N/A'}}</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="studentPhone">Phone Number</label><br />
+                    <strong>{{project.otherInfo.studentPhone|| 'N/A'}}</strong>
+                </div>
+                <div class="col-md-3">
+                    <label for="studentMajor1">Major 1</label><br />
+                    <strong>{{project.otherInfo.studentMajor1|| 'N/A'}}</strong>
+                </div>
+                <div class="col-md-3">
+                    <label for="studentMajor2">Major 2</label><br />
+                    <strong>{{project.otherInfo.studentMajor2|| 'N/A'}}</strong>
+                </div>
+            </div>
 
-				<hr />
+            <hr />
 
-				<h4>Advisor Information</h4>
-				<div class="row-fluid">
-					<div class="span3">
-						<label for="advisorId">Panther ID</label><br />
-						<strong>{{project.advisor.id || 'N/A'}}</strong>
-					</div>
-					<div class="span3">
-						<label for="advisorFname">First Name</label><br />
-						<strong>{{project.advisor.fname || 'N/A'}}</strong>
-					</div>
-					<div class="span3">
-						<label for="advisorLname">Last Name</label><br />
-						<strong>{{project.advisor.lname || 'N/A'}}</strong>
-					</div>
-					<div class="span3">
-						<label for="advisorEmail">Email Address</label><br />
-						<strong>{{project.otherInfo.advisorEmail || 'N/A'}}</strong>
-					</div>
-				</div>
+            <h4>Advisor Information</h4>
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="advisorId">Panther ID</label><br />
+                    <strong>{{project.advisor.id|| 'N/A'}}</strong>
+                </div>
+                <div class="col-md-3">
+                    <label for="advisorFname">First Name</label><br />
+                    <strong>{{project.advisor.fname|| 'N/A'}}</strong>
+                </div>
+                <div class="col-md-3">
+                    <label for="advisorLname">Last Name</label><br />
+                    <strong>{{project.advisor.lname|| 'N/A'}}</strong>
+                </div>
+                <div class="col-md-3">
+                    <label for="advisorEmail">Email Address</label><br />
+                    <strong>{{project.otherInfo.advisorEmail|| 'N/A'}}</strong>
+                </div>
+            </div>
 
-				<hr />
+            <hr />
 
-				<a href="#/arch/{{project.$id}}/edit" class="btn btn-primary">Edit Project Info</a>
-				<button class="btn btn-danger" ng-click="confirmDelete()">Delete Project</button>
-				<a href="#/arch" class="btn btn-link">Go Back</a>
-			</form>
-		</div>
-	</div>
+            <a href="#/arch/{{project.$id}}/edit" class="btn btn-primary">Edit Project Info</a>
+            <button class="btn btn-danger" ng-click="confirmDelete()">Delete Project</button>
+            <a href="#/arch" class="btn btn-link">Go Back</a>
+        </form>
+    </div>
 </div>
 
 <!-- Modal -->
 <div modal="showDeleteConfirmation" close="cancelDelete()" options="modalOpts">
-	<div class="modal-header">
-		<button type="button" class="close" ng-click="cancelDelete()">×</button>
-		<h3>Are you sure you want to DELETE?</h3>
-	</div>
-	<div class="modal-body">
-		<p>This will <strong>permanently</strong> erase all data related to this ARCH Project. Are you sure you want to do this?</p>
-	</div>
-	<div class="modal-footer">
-		<button class="btn btn-danger" ng-click="doDelete()">Yes, DELETE the Project</button>
-		<button class="btn cancel" ng-click="cancelDelete()">Cancel</button>
-	</div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="cancelDelete()">×</button>
+                <h3>Are you sure you want to DELETE?</h3>
+            </div>
+            <div class="modal-body">
+                <p>This will <strong>permanently</strong> erase all data related to this ARCH Project. Are you sure you want to do this?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" ng-click="doDelete()">Yes, DELETE the Project</button>
+                <button class="btn cancel" ng-click="cancelDelete()">Cancel</button>
+            </div>
+        </div>
+    </div>
 </div>

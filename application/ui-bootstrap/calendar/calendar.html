@@ -1,36 +1,33 @@
-<table class="table table-bordered" style="margin-bottom: 0; border: 0">
-  <thead>
-    <tr class="text-center">
-      <th class="no-border-left">
-        <button class="btn btn-primary btn-block pull-left" ng-click="move(-1)" ng-switch="mode">
-          <i class="icon-chevron-left icon-white"></i> Prev 
-          <span ng-switch-when="day">Month</span>
-          <span ng-switch-when="month">Year</span>
-          <span ng-switch-when="year">Score</span>
-        </button>
-      </th>
-      <th colspan="{{rows[0].length - 2 + showWeekNumbers}}"><button class="btn btn-primary btn-block" ng-click="toggleMode()"><strong>{{title}}</strong></button></th>
-      <th>
-        <button class="btn btn-primary btn-block pull-right" ng-click="move(1)" ng-switch="mode">Next
-          <span ng-switch-when="day">Month</span>
-          <span ng-switch-when="month">Year</span>
-          <span ng-switch-when="year">Score</span>
-          <i class="icon-chevron-right icon-white"></i>
-        </button>
-      </th>
-    </tr>
-    <tr class="text-center" ng-show="labels.length > 0">
-      <th class="no-border-left" ng-show="showWeekNumbers">#</th>
-      <th ng-class="{'no-border-left': !showWeekNumbers && $first}" ng-repeat="label in labels" style="text-align: center">{{label}}</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr ng-repeat="row in rows" style="height: 100px">
-      <td class="text-center no-border-left" ng-show="showWeekNumbers"><em>{{ getWeekNumber(row) }}</em></td>
-      <td ng-repeat="dt in row" ng-click="select(dt.date)" class="{{mode}}" ng-class="{'no-border-left': !showWeekNumbers && $first}" style="text-align: center">
-        <h3 style="margin-top: -10px; margin-bottom: 0"><span ng-class="{muted: ! dt.isCurrent}">{{dt.label}}</span></h3>
-        <a href="#/events/{{event.id}}" ng-repeat="event in getEvents(dt.date)"><div class="label event-{{event.color || 'blue'}}" style="display: block; margin-bottom: 1px" >{{event.name}}</div></a>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="container-fluid calendar">
+    <div class="row">
+        <div class="col-sm-2 col-xs-6">
+            <button class="btn btn-primary btn-block" ng-click="move(-1)" ng-switch="mode">
+                <i class="glyphicon glyphicon-chevron-left icon-white"></i> Prev
+                <span ng-switch-when="day">Month</span>
+                <span ng-switch-when="month">Year</span>
+                <span ng-switch-when="year">Score</span>
+            </button>
+        </div>
+        <div class="col-sm-8 hidden-xs">
+            <button class="btn btn-primary btn-block" ng-click="toggleMode()"><strong>{{title}}</strong></button>
+        </div>
+        <div class="col-sm-2 col-xs-6">
+            <button class="btn btn-primary btn-block" ng-click="move(1)" ng-switch="mode">Next
+                <span ng-switch-when="day">Month</span>
+                <span ng-switch-when="month">Year</span>
+                <span ng-switch-when="year">Score</span>
+                <i class="glyphicon glyphicon-chevron-right icon-white"></i>
+            </button>
+        </div>
+    </div>
+    <ul class="weekdays hidden-xs" ng-show="labels.length > 0">
+        <li ng-repeat="label in labels">{{label}}</li>
+    </ul>
+    <ul class="days" ng-repeat="row in rows">
+        <li class="calendar-week" ng-show="showWeekNumbers"><em>{{getWeekNumber(row)}}</em></li>
+        <li class="calendar-day" ng-repeat="dt in row" ng-click="select(dt.date)" class="{{mode}}">
+            <div class="date"><span class="day" ng-show="labels[$index]!=null">{{labels[$index]}},</span> <span class="month">{{title.split(" ")[0]}}</span> {{dt.label}}</div>
+            <a href="#/events/{{event.id}}" ng-repeat="event in getEvents(dt.date)"><div class="label event-{{event.color || 'blue'}}" style="display: block; margin-bottom: 1px" >{{event.name}}</div></a>
+        </li>
+    </ul>
+</div>

@@ -1,47 +1,44 @@
-<div class="span8 offset2" style="margin-top: 100px">
-
-	<div class="row-fluid">
-		<div class="span7" img-rotate delay="4000">
+	<div class="row" id="loginBox">
+		<div class="col-md-5 col-md-offset-1" id="homeImage" img-rotate delay="4000">
 			<img src="assets/img/frontpage-1.jpg" class="img-polaroid img-rounded" />
 			<img src="assets/img/frontpage-2.jpg" class="img-polaroid img-rounded" />
 			<img src="assets/img/frontpage-3.jpg" class="img-polaroid img-rounded" />
 		</div>
 
-		<div class="span5" style="margin-top: 60px; position: relative;">
+		<div class="col-md-4">
 			<div class="btn-primary login-header" data-ng-switch="currentPage">
 				<strong ng-switch-when="loginPage">Login to FIU MyHonors</strong>
 				<strong ng-switch-when="forgotPass">Forgot your password?</strong>
 			</div>
 
-			<div class="well well-large" style="padding-top: 70px" data-ng-switch="currentPage">
+			<div class="well well-lg" style="padding-top: 70px" data-ng-switch="currentPage">
 				<div ng-switch-when="loginPage">
 					<form ng-submit="doLogin()">
-						
+                                            <div class="form-group">
 						<label for="email">Panther ID</label>
-						<input type="text" id="email" placeholder="1234567" ng-model="loginForm.pid" />
-						
+						<input type="text" class="form-control" id="email" placeholder="1234567" ng-model="loginForm.pid" />
+                                            </div>
+                                            <div class="form-group">
 						<label for="password">MyAccounts Password</label>
-						<input type="password" id="password" name="password" ng-model="loginForm.password" />
-						
+						<input type="password" class="form-control" id="password" name="password" ng-model="loginForm.password" />
+                                            </div>
+                                            <div class="form-group">
 						<button ng-show="!status.loading" class="btn btn-primary" type="submit" >Login</button>
 						<button ng-show="status.loading" class="btn btn-primary disabled">Loading...</button>
-
 						<button class="btn btn-link" ng-click="$parent.currentPage = 'forgotPass'">Forgot Password?</button>
-						
+                                            </div>
 					</form>
 				</div>
 				<div ng-switch-when="forgotPass">
 					<p>To reset your MyAccounts password, please visit the <a target="_blank" href="https://myaccounts.fiu.edu/itim/self/reset-password/">Password Reset</a> page.</p>
 					<p>Don't forget to come back! :)</p>
-					<button class="btn btn-primary" ng-click="$parent.currentPage = 'loginPage'"><i class="icon-chevron-left icon-white"></i> Go back</button>
+					<button class="btn btn-primary" ng-click="$parent.currentPage = 'loginPage'"><i class="glyphicon glyphicon-chevron-left icon-white"></i> Go back</button>
 				</div>
 			</div>
 
-			<div class="pagination-centered">
+			<div class="text-center">
 				<p>Don't have an account? <a href="http://admissions.fiu.edu/how/apply.php">Apply to FIU</a></p>
 			</div>
 
 		</div>
 	</div>
-
-</div>

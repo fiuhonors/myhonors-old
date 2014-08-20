@@ -1,9 +1,5 @@
 # MyHonors
 
-Developed for [The Honors College at Florida International University](http://honors.fiu.edu/).
-
-MyHonors currently features an Events Calendar, Attendance Tracker, Citizenship Tracker, and a complete interface for [ARCH](http://honors.fiu.edu/research/conference/). It's **fast**. It's **modern**. And it's designed to be **100% responsive for use on phones, tablets, and other mobile devices**. To get a taste of what we're planning, see our Roadmap in the Development section below.
-
 We use [Firebase](https://www.firebase.com/) to handle real-time data from the backend and [AngularJS](http://angularjs.org/)--an amazing Javascript framework from Google--to power the frontend. Our HTML & CSS code is based on [Twitter Bootstrap](twitter.github.com/bootstrap/).
 
 ## Installation
@@ -44,3 +40,4 @@ All necessary files are already included in the repository, so you can get start
 |         | X.x | Analytics system for attendance, activity, etc. |
 |		  | X.x | Responsive site for multi-platform use, upgrade to Bootstrap 3 **[IN PROGRESS]** |
 |         | X.x | Universal Angular-PHP sessions (login to myHonors, automatic logins to others) **[IN PROGRESS]** |
+
