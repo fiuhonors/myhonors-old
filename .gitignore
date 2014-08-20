@@ -4,6 +4,7 @@
 .zedstate
 assets/img/honorshours
 assets/json
+assets/.sass-cache/
 .gitignore~
 .README.md~
 nbproject
