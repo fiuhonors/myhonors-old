@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <div class="jumbotron profile clearfix" style="padding: 15px;">
 
-            <a href="#/profiles/{{ user.username }}/profilepictureedit"> 
+            <a ng-click="goToEditProfilePicture()"> 
                 <img ng-src="{{ user.profile.picture.url || 'http://placehold.it/140'}}" class="pull-left img-rounded img-polaroid profile-picture">
             </a>
             <div class="pull-right">
@@ -10,9 +10,9 @@
 
                 <div class="pull-right">
                     <b>Year:</b>
-                    <a xeditable="updateProfile()" ng-model="user.profile.year" ng-class="{'inherit-color': isAbleEdit, 'disable-editable': !isAbleEdit}">{{user.profile.year}}</a>
+                    <a xeditable="updateProfile()" ng-model="user.profile.year" ng-class="{'inherit-color': isAbleEdit, 'disable-editable': !isAbleEdit}">{{user.profile.year || 'N/A'}}</a>
                     <b>Major:</b> 
-                    <a xeditable="updateProfile()" ng-model="user.profile.major" ng-class="{'inherit-color': isAbleEdit, 'disable-editable': !isAbleEdit}">{{user.profile.major}}</a>
+                    <a xeditable="updateProfile()" ng-model="user.profile.major" ng-class="{'inherit-color': isAbleEdit, 'disable-editable': !isAbleEdit}">{{user.profile.major || 'N/A'}}</a>
                 </div>
                 <div class="clearfix"></div>
 
@@ -21,7 +21,7 @@
                     <a href="mailto:{{user.email}}" class="inherit-color"><i class="fa fa-envelope-square fa-2x"></i></a>
                     <a href="{{user.profile.links.facebook}}" ng-model="user.profile.links.facebook" xeditable="updateProfile()" ng-class="{'inherit-color': isAbleEdit, 'disable-editable': !isAbleEdit}"><i class="fa fa-facebook-square fa-2x"></i></a>
                     <a href="{{user.profile.links.twitter}}" ng-model="user.profile.links.twitter" xeditable="updateProfile()" ng-class="{'inherit-color': isAbleEdit, 'disable-editable': !isAbleEdit}"><i class="fa fa-twitter-square fa-2x"></i></a>
-                    <a href="{{user.profile.links.linkedin}}" ng-model="user.profile.links.l" xeditable="updateProfile()" ng-class="{'inherit-color': isAbleEdit, 'disable-editable': !isAbleEdit}"><i class="fa fa-linkedin-square fa-2x"></i></a>
+                    <a href="{{user.profile.links.linkedin}}" ng-model="user.profile.links.linkedin" xeditable="updateProfile()" ng-class="{'inherit-color': isAbleEdit, 'disable-editable': !isAbleEdit}"><i class="fa fa-linkedin-square fa-2x"></i></a>
                 </p>
             </div>
         </div>

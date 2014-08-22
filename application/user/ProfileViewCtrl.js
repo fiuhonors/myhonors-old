@@ -2,7 +2,6 @@
 
 angular.module('myhonorsUser').controller('ProfileViewCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$timeout', '$fileUploader', 'UserService', 'ProfileService', 'ProjectService', function EventBrowseCtrl($scope, $rootScope, $routeParams, $location, $timeout, $fileUploader, UserService, ProfileService, ProjectService) {
     $scope.pid = "";
-    $scope.isAbleEdit = ($scope.pid == UserService.profile.id || UserService.auth.isStaff) ? true : false; // Boolean that determines whether the user can edit this profile or not. Only the staff and the owner of the profile can do so
     $scope.projects = ''; // Collection of the sudent's projects
     $scope.projectCategories = ProjectService.getCategories();
     $scope.user = {
@@ -26,7 +25,7 @@ angular.module('myhonorsUser').controller('ProfileViewCtrl', ['$scope', '$rootSc
                 if (exists) {
                     $scope.user = jQuery.extend(true, $scope.user, result);
                     
-                    $scope.isAbleEdit = ($scope.pid == UserService.profile.id || UserService.auth.isStaff) ? true : false;
+                    $scope.isAbleEdit = $scope.pid == UserService.profile.id || UserService.auth.isStaff; // Boolean that determines whether the user can edit this profile or not. Only the staff and the owner of the profile can do so
                     $scope.projects = ProjectService.list($scope.pid); // Collection of the sudent's projects
                     
                     // After the PID of the student is returned, the properties of the uploader's formData must be updated
@@ -66,8 +65,11 @@ angular.module('myhonorsUser').controller('ProfileViewCtrl', ['$scope', '$rootSc
     };
     
 
-    /* Below are methods used to edit the profile. There use is restricted to the appropiate users */
-    if ($scope.isAbleEdit) {
+    $scope.$watch( 'isAbleEdit', function() {
+        /* Below are methods used to edit the profile. There use is restricted to the appropiate users */
+        if (!$scope.isAbleEdit) {
+            return;
+        }
 
         $scope.updateProfile = function() {
             // Pass a copy of the profile object to eliminate the $$hashKey property that cause ng-repeat to stop working
@@ -86,6 +88,11 @@ angular.module('myhonorsUser').controller('ProfileViewCtrl', ['$scope', '$rootSc
         $scope.removeItemAtIndex = function(array, index) {
             array.splice(index, 1);
             $scope.updateProfile();
+        };
+
+        $scope.goToEditProfilePicture = function() {
+            if ( UserService.profile.pid == $scope.pid )
+                $location.path( '/profiles/' + $scope.user.username + '/profilepictureedit' );
         };
 
         $scope.currentProject = {}; // Holds the project object that is being added or edited
@@ -379,7 +386,6 @@ angular.module('myhonorsUser').controller('ProfileViewCtrl', ['$scope', '$rootSc
             delete project.files[ fileId ];
             ProjectService.removeFile($scope.pid, project.$id, fileId, 'files', pathToFile);
         };
-        
-    }
+    });
 
 }]);

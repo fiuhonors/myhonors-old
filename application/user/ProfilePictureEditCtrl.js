@@ -73,6 +73,11 @@ angular.module('myhonorsUser').controller('ProfilePictureEditCtrl', ['$scope', '
             return;
         }
         
+        if ( UserService.profile.id != $scope.pid ) {
+            alert( "You can't edit another user's profile picture." );
+            return;
+        }
+        
         // Add the File object to the uploader queue as well as its info
         $scope.uploader.addToQueue( $scope.uploadedPicture, { name: $scope.uploadedPicture.name , size:  $scope.uploadedPicture.size, type:  $scope.uploadedPicture.type } );
         $scope.uploader.formData[ 0 ].coordinates = JSON.stringify( coordinates ); // Pass the cropping coordinates as a JSON string
