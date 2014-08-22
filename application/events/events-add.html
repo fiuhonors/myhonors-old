@@ -19,8 +19,6 @@
                     <label for="desc">Description</label><br />
                     <textarea class="form-control" id="desc" style="height: 100px" ng-model="newItem.desc"></textarea>
 
-                    <hr />
-
                     <div class="row">
                         <div class="col-md-6">
                             <div class="row">
@@ -70,6 +68,14 @@
                             <label for="name" class="control-label">Event Type</label><br />
                             <select multiple="multiple" ng-model="newItem.types" class="form-control" ng-options="type.$id as type.name group by ((type.citizenship && 'Citizenship') || 'General') for type in eventTypes"></select>
                             <span class="help-block" style="margin-top: 5px">Tip: Hold Ctrl to select multiple types.</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="clubs" class="control-label">Clubs</label><br />
+                            <select ng-model="newItem.club" ng-options="club.$id as club.name for club in clubs" style="width: 100%">
+                                <option value=""></option>
+                            </select>
                         </div>
                     </div>
 
