@@ -21,7 +21,6 @@
                         <textarea id="desc" class="form-control" style="height: 100px" ng-model="event.desc"></textarea>
                     </div>
                     <hr />
-
                     <div class="row">
                         <div class="col-md-6">
                             <div class="row" style="margin-bottom: 15px">
@@ -73,7 +72,14 @@
                             <span class="help-block" style="margin-top: 5px">Tip: Hold Ctrl to select multiple types.</span>
                         </div>
                     </div>
-
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="clubs" class="control-label">Clubs</label><br />
+                            <select ng-model="event.club" ng-options="club.$id as club.name for club in clubs" style="width: 100%">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
                     <hr />
                     <div class="form-group">
                         <label for="maxRSVPs">Max RSVPs</label><span class="help-block">(0 for no limit)</span><br />

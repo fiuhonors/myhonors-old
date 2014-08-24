@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO, FirebaseCollection, UserService) {
+angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO, FirebaseCollection, UserService, ClubService) {
  	// since we don't need to execute this every time getTypes() is called, we can
  	// create a single collection (that lives with the singleton service) here
  	var typesRef = FirebaseIO.child('system_settings/eventTypes');
@@ -22,8 +22,17 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
             
 			// setting the priority to the date.ends value allows us to show an event that is currently
 			// taking place in any 'Upcoming Events' section
-			FirebaseIO.child('events').push(eventObject).setPriority(eventObject.date.ends);
+			var ref = FirebaseIO.child('events').push(eventObject);
+            
+            ref.setPriority(eventObject.date.ends);
+            
+            var eventId = ref.name();
+            
+            // If the event creation was succesful and the event is associated to a club, update the club's node to have this event
+            if ( eventId && eventObject.hasOwnProperty( "club" ) && eventObject.club.length )
+                ClubService.addEventToClub( eventObject.club, eventId );
 		},
+        
 		read: function(eventId, onComplete) {
 			var deferred = $q.defer();
 
@@ -127,8 +136,11 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
 			FirebaseIO.child('events/' + eventId).setPriority(eventObject.date.ends);
 		},
 
-		delete: function(eventId) {
-			FirebaseIO.child('events/' + eventId).remove();
+		delete: function( eventObject ) {
+            if ( eventObject.hasOwnProperty( 'club' ) )
+                ClubService.removeEventFromClub( eventObject.club, eventObject.id );
+        
+			FirebaseIO.child( 'events/' + eventObject.id ).remove();
 		},
 
 		/**

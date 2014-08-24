@@ -25,12 +25,11 @@ angular.module('myhonorsUser').directive('xeditable', function($timeout, $compil
 				
             };
             
-            $timeout(function() {
-				// Only load X-Editable if the user has permission to edit
-				if (scope.isAbleEdit) {
+            scope.$watch(function() { return scope.isAbleEdit; }, function() {
+               if (scope.isAbleEdit) {
 					loadXeditable();
-				}
-            }, 10);
+				} 
+            });
         }
     };
 });

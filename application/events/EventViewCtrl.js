@@ -243,7 +243,7 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 		};
 
 		$scope.doDelete = function() {
-			EventService.delete($routeParams.eventId); // delete event
+			EventService.delete( $scope.event ); // delete event
 			$scope.showDeleteConfirmation = false; // close deletion confirmation modal
 			$location.path('dashboard'); // redirect to main page
 		};
