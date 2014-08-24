@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$timeout', 'FirebaseIO', 'SwipeService', 'UserService', 'VolunteerService', function($scope, $timeout, FirebaseIO, SwipeService, UserService, VolunteerService) {
+angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', 'FirebaseIO', 'UserService', 'VolunteerService', 'CitizenshipService', function($scope, FirebaseIO, UserService, VolunteerService, CitizenshipService) {
+    
 	$scope.submissions = VolunteerService.list(UserService.profile.pid);
 	
 	$scope.submit = function(volunteerHoursForm) {
@@ -10,10 +11,6 @@ angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$time
 			$scope.newData = {};
 		}
 	};
-	
-	$scope.honorsHours = [];
-	$scope.colloquiums = [];
-	$scope.excellenceLectures = [];
 
 	
 	$scope.hoursCompleted = 0;	
@@ -21,7 +18,7 @@ angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$time
 		if (submission.status == "accepted" && submission.hours) {
 			$scope.hoursCompleted += submission.hours;
 		}
-	}
+	};
 	
 	$scope.removeVolunteerHours = function(volunteerHour) {	
 		// We ask the user for a double confirmation before deleting the volunteer hours
@@ -38,33 +35,21 @@ angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$time
 			$scope.hoursCompleted = 0;	//Reset the total volunteer hours counter
 			$scope.submissions = VolunteerService.list(UserService.profile.pid);	//Reload the volunteer hours list
 		}
-	}
+	};
 
-	UserService.ref.child('attendance').on('value', function(snapshot) {
-
-		angular.forEach(snapshot.val(), function(value, key)
-		{
-			// grab the type of the event (key is the eventID)
-			FirebaseIO.child('events/' + key).once('value', function(snapshot) {
-				$timeout(function() {
-					var eventType = snapshot.val().types.toString();
-					var eventName = snapshot.val().name;
-					
-					switch (eventType) {
-						case "Honors Hour":
-							$scope.honorsHours.push(eventName);
-							break;
-						case "Colloquium":
-							$scope.colloquiums.push(eventName);
-							break;
-						case "Excellence Lecture":
-							$scope.excellenceLectures.push(eventName);
-							break;
-						default:
-							break;
-					}
-				});
-			});
-		});
-	});
+    
+    $scope.citizenshipTypes = CitizenshipService.getTypes();
+    
+    $scope.citizenshipUserPoints = 0;
+    $scope.citizenshipUserEventsCount = 0;
+    CitizenshipService.getUser().then(function (promise) {
+        $scope.citizenshipUserEvents = promise.events;
+        $scope.citizenshipUserEventsCount = Object.keys(promise.events).length;
+        $scope.citizenshipUserPoints = promise.points;
+        $scope.citizenshipRoomswipe= promise.roomswipe;
+        $scope.citizenshipRoomswipeCount = Object.keys(promise.roomswipe).length;
+    });
+    
+    
+    
 }]);
