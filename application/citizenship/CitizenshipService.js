@@ -112,7 +112,9 @@
                         angular.forEach(roomswipeTypes, function (swipeDetails, swipeType) {
                             var individualEventDefer = $q.defer();
                             FirebaseIO.child('events/' + swipeType + '/attendance/' + pantherId).once('value', function (snapshot) {
-                                roomswipeEvents[swipeDetails] = snapshot.val() || {};
+                                if (snapshot.val() !== null) {
+                                    roomswipeEvents[swipeDetails] = snapshot.val();
+                                }
                                 individualEventDefer.resolve();
                             });
                             individualEventsDefer.push(individualEventDefer.promise);
@@ -125,12 +127,15 @@
                                     maxPointsForEventType = eventTypes[eventType].maxPoints;
                                 citizenshipPoints += (maxPointsForEventType !== 0 && pointsForEventType > maxPointsForEventType) ? maxPointsForEventType : pointsForEventType;
                             });
-                            angular.forEach(roomswipeEvents, function (roomswipeId, roomswipeType) {
-                                roomswipePoints += Object.keys(roomswipeEvents[roomswipeType]).length * 1;
-                                if (roomswipePoints === 10) {
-                                    citizenshipPoints += 1;
+                            for (var roomswipeType in roomswipeEvents) {
+                                if (roomswipeEvents.hasOwnProperty(roomswipeType)){
+                                    roomswipePoints += Object.keys(roomswipeEvents[roomswipeType]).length;
+                                    if (roomswipePoints >= 10) {
+                                        citizenshipPoints += 1;
+                                        break;
+                                    }
                                 }
-                            });
+                            }
                             citizenship = { points: citizenshipPoints, events: userEvents, roomswipe: roomswipeEvents };
                             defer.resolve(citizenship);
                         });
