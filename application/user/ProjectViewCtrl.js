@@ -79,9 +79,9 @@ angular.module('myhonorsUser').controller('ProjectViewCtrl', ['$scope', '$routeP
 		};
 
 		$scope.deleteProject = function() {
-			$scope.showDeleteConfirmation = false; // Close the deletion confirmation modal
-            ProjectService.remove( $scope.pid, $scope.projectId, $scope.project );
-			$location.path( 'profiles/' + UserService.profile.username );
+                    $scope.showDeleteConfirmation = false; // Close the deletion confirmation modal
+                    ProjectService.remove( $scope.pid, $scope.projectId, $scope.project );
+                    $location.path( 'profiles/' + $routeParams.username );
 		};
 	}	
 
