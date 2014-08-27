@@ -47,7 +47,7 @@ angular.module('myhonorsUser').controller('ProfileViewCtrl', ['$scope', '$rootSc
 
 
     $scope.goToProject = function(project) {
-        $location.path('/profiles/' + $routeParams.username + '/projects/' + project.$id);
+        $location.path('profiles/' + $routeParams.username + '/projects/' + project.$id);
     };
 
     /*
@@ -92,7 +92,7 @@ angular.module('myhonorsUser').controller('ProfileViewCtrl', ['$scope', '$rootSc
 
         $scope.goToEditProfilePicture = function() {
             if ( UserService.profile.pid == $scope.pid )
-                $location.path( '/profiles/' + $scope.user.username + '/profilepictureedit' );
+                $location.path( 'profiles/' + $scope.user.username + '/profilepictureedit' );
         };
 
         $scope.currentProject = {}; // Holds the project object that is being added or edited

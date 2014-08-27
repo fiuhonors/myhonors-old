@@ -17,8 +17,8 @@
             <div class="box-header">Event Details</div>
             <div class="box-content padded">
                 <div class=""><strong>{{event.name}}</strong></div>
-                <hr style="margin-top: 10px; margin-bottom: 10px" />
-                <p>
+                <hr style="margin-top: 10px; margin-bottom: 10px" ng-if="event.desc" />
+                <p ng-if="event.desc">
                     {{event.desc| truncate: truncateDesc}}
                     <a class="clickable" ng-show="event.desc.length >= truncateDesc && truncateDesc !== 0" ng-click="truncateDesc = 0">read more</a>
                     <a class="clickable" ng-show="truncateDesc === 0" ng-click="truncateDesc = 200">read less</a>

@@ -104,8 +104,7 @@ angular.module('myhonorsEvents').controller('EventEditCtrl', ['$scope', '$locati
 		if ($scope.event.options.waitingList)
 			$scope.checkWaitingList();
         
-        // U
-        updateClubChanges( $scope.originalEvent, $scope.event ); 
+            updateClubChanges( $scope.originalEvent, $scope.event ); 
             
 		
 		$location.path('events/' + $routeParams.eventId);

@@ -245,7 +245,7 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 		$scope.doDelete = function() {
 			EventService.delete( $scope.event ); // delete event
 			$scope.showDeleteConfirmation = false; // close deletion confirmation modal
-			$location.path('dashboard'); // redirect to main page
+			$location.path('events'); // redirect to main page
 		};
 	}	
 }]);

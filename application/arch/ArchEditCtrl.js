@@ -73,7 +73,7 @@ angular.module('myhonorsArch').controller('ArchEditCtrl', ['$scope', '$routePara
 
 		/* end todo ------------------------- */
 
-		$location.path('#/arch/' + $routeParams.projectId);
+		$location.path('arch/' + $routeParams.projectId);
 	};
 
 	$scope.undoChanges = function() {

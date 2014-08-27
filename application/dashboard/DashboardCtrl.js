@@ -16,11 +16,11 @@ angular.module('myhonorsDashboard').controller('DashboardCtrl', ['$scope', '$loc
 
 
 	$scope.goToEvent = function (eid) {
-		$location.path('/events/' + eid);
+		$location.path('events/' + eid);
 	};
 	
 	$scope.goToCareer = function (careerID) {
-		$location.path('/career/' + careerID);
+		$location.path('career/' + careerID);
 	};
 
 	$scope.addRSVP = function (eventId, $event) {
