@@ -5,7 +5,7 @@
             <div class="box-content padded  word-wrap">
                 <img ng-src="{{user.profile.picture.url|| 'http://placehold.it/90'}}" class="pull-left img-rounded img-polaroid">
                 <div class="pull-left" style="margin:5% 0 0 2%;">
-                    <a href="#/profile/{{ pid}}"> <b> {{ user.fname}} {{ user.lname}} </b> </a> <br>
+                    <a href="#/profiles/{{ user.profile.username }}"> <b> {{ user.fname}} {{ user.lname}} </b> </a> <br>
                     <b> Major: </b> {{ user.profile.major }} <br>
                     <b> Year: </b> {{ user.profile.year }} <br>
                 </div>
