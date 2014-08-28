@@ -68,7 +68,7 @@
                         </div>
                         <div class="input-group" ng-show="event.options.requirePhone">
                             <span class="input-group-addon">Phone Number</span>
-                            <input type="tel" placeholder="305-999-9999" ng-model="rsvp.phone">
+                            <input class="form-control" type="tel" placeholder="305-999-9999" ng-model="rsvp.phone">
                         </div>
                         <div class="alert alert-info" style="margin-bottom: 10px" ng-show="rsvp.error" ng-bind-html-unsafe="rsvp.error"></div>
                         <div class="text-center" ng-show="!preRSVP && hasRSVPChanges()" ng-animate="{show: 'slide-show', hide: 'slide-hide'}">

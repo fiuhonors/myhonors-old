@@ -107,7 +107,7 @@ angular.module('myhonorsEvents').controller('EventEditCtrl', ['$scope', '$locati
             updateClubChanges( $scope.originalEvent, $scope.event ); 
             
 		
-		$location.path('events/' + $routeParams.eventId);
+		$location.path('events');
 	};
 
 	$scope.undoChanges = function() {
