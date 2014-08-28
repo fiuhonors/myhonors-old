@@ -16,7 +16,6 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
 				!angular.isString(eventObject.location.name) ||
 				!angular.isArray(eventObject.types)
 			) {
-				// invalid input, do nothing
 				return;
 			}
             
@@ -24,13 +23,14 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
 			// taking place in any 'Upcoming Events' section
 			var ref = FirebaseIO.child('events').push(eventObject);
             
-            ref.setPriority(eventObject.date.ends);
-            
-            var eventId = ref.name();
-            
-            // If the event creation was succesful and the event is associated to a club, update the club's node to have this event
-            if ( eventId && eventObject.hasOwnProperty( "club" ) && eventObject.club.length )
-                ClubService.addEventToClub( eventObject.club, eventId );
+                        ref.setPriority(eventObject.date.ends);
+
+                        var eventId = ref.name();
+
+                        // If the event creation was succesful and the event is associated to a club, update the club's node to have this event
+                        if ( eventId && eventObject.hasOwnProperty( "club" ) && eventObject.club.length ){
+                            ClubService.addEventToClub( eventObject.club, eventId );
+                        }
 		},
         
 		read: function(eventId, onComplete) {
@@ -128,8 +128,11 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
 			// us from overwriting the entire /events/eventId location (which prevents us from
 			// deleting the RSVPs, attendance, comments, etc.)
 			angular.forEach(eventObject, function(value, key) {
-				FirebaseIO.child('events/' + eventId + '/' + key).set(value);
+                            if(value === null || value === undefined){
+                                delete eventObject[key];
+                            }
 			});
+                        FirebaseIO.child('events/' + eventId).set(eventObject);
 
 			// setting the priority to the date.ends value allows us to show an event that is currently
 			// taking place in any 'Upcoming Events' section
