@@ -90,19 +90,18 @@
                             roomswipeTypes = {'studyroomswipe': 'Study Room Swipe', 'bbclabswipe': 'BBC Lab Swipe'},
                             citizenshipPoints = 0,
                             roomswipePoints = 0;
-                        
                         angular.forEach(snapshot.val(), function (eventDetails, eventId) {
-                            var eventType = eventDetails.eventType[0],
-                                individualEventDefer = $q.defer();
-                            if (!eventTypes[eventType]) {
-                                return;
-                            }
-                            if (userEvents[eventType] === undefined) {
-                                userEvents[eventType] = [];
-                            }
-                            FirebaseIO.child('events/' + eventId + "/name").once('value', function (snapshot) {
+                            var individualEventDefer = $q.defer();
+                            FirebaseIO.child('events/' + eventId).once('value', function (snapshot) {
+                                var eventType = snapshot.val().types[0];
+                                if (!eventTypes[eventType]) {
+                                    return;
+                                }
+                                if (userEvents[eventType] === undefined) {
+                                    userEvents[eventType] = [];
+                                }
                                 userEvents[eventType].push({
-                                    'eventName': snapshot.val(),
+                                    'eventName': snapshot.val().name,
                                     'eventId': eventId
                                 });
                                 individualEventDefer.resolve();
@@ -154,6 +153,35 @@
         return citizenshipFactory;
         
     }]);
+
+    angular.module("myhonorsCitizenship").filter('orderCitizenship', function() {
+        return function(items, field, reverse) {
+            var filtered = [];
+            angular.forEach(items, function(item, keys) {
+                item.keyValue = keys;
+                filtered.push(item);
+            });
+            filtered.sort(function (a, b) {
+                if(a[field] > b[field]){
+                    return 1;
+                }else if(a[field < b[field]]){
+                    return -1;
+                }else{
+                    if(a.keyValue === "HEARTS" && a[field] >= b[field]){
+                        return 1;
+                    }
+                    if(b.keyValue === "HEARTS" && b[field] >= a[field]){
+                        return -1;
+                    }
+                }
+            });
+            if(reverse){
+                filtered.reverse();
+            }
+            return filtered;
+        };
+    });
+
     
     
     
