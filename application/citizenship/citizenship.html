@@ -1,52 +1,69 @@
 <div class="row" ng-controller="CitizenshipCtrl">
-		<div class="col-md-4">
+		<div class="col-md-8">
 			<div class="box">
-				<div class="box-header">Honors Hours</div>
+				<div class="box-header">MyHonors Citizenship Points</div>
 				<div class="box-content padded clearfix">
-					<p class="pull-left">Honors Hours provide seminars, enriching lectures, and workshops to expand your undergraduate experience. These are on Tuesdays and Thursdays from 3:30 PM to 4:45 PM during Fall and Spring.</p>
-					<p><strong>You currently have {{honorsHours.length}}/4 Honors Hours.</strong></p>
-					
-					<ul>
-						<li ng-repeat="honorsHour in honorsHours">
-							{{honorsHour}}
-						</li>
-					</ul>
+					<p>For further citizenship requirement flexibility, FIU Honors College has setup a universal points system active Fall 2014. Each event type below is worth their respective point each time you attend that type of event. It is required of you to satisfy <b>20 points</b> for the Fall-Spring academic year. How you accrue such points is up to you. You currently have <b>{{ citizenship.points }}</b> points.</p>
+					<table class="table">
+                        <thead>
+                            <tr>
+                                <td>Event Type</td>
+                                <td>Points (per attendance)</td>
+                                <td>Maximum Points Possible (Yearly)</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="citizenship in citizenship.types.enabledTypes | orderCitizenship:'points':'true'">
+                                <td>{{ citizenship.keyValue }}</td>
+                                <td>{{ citizenship.points }}</td>
+                                <td ng-if="citizenship.maxPoints > 0">{{ citizenship.maxPoints }}</td>
+                                <td ng-if="citizenship.maxPoints == 0">Unrestricted</td>
+                            </tr>
+                            <tr>
+                                <td>Study Room</td>
+                                <td>10 visits = 1 point</td>
+                                <td>1</td>
+                            </tr>
+                        </tbody>
+                    </table>
 					
 				</div>
 			</div>
 		</div>
-		<div class="col-md-4">
-			<div class="box">
-				<div class="box-header">Colloquia</div>
-				<div class="box-content padded clearfix">
-					<p class="pull-left">Three times a semester we invite Honors College faculty fellow to give a presentation on a topic of interest.  Colloquia occur at the same time as Honors Hours, Tuesday or Thursday at 3:30 PM</p>
-					<p><strong>You currently have {{colloquiums.length}}/2 Colloquia.</strong></p>
-					
-					<ul>
-						<li ng-repeat="colloquium in colloquiums">
-							{{colloquium}}
-						</li>
-					</ul>
-					
-				</div>
-			</div>
-		</div>
-		<div class="col-md-4">
-			<div class="box">
-				<div class="box-header">Excellence Lectures</div>
-				<div class="box-content padded clearfix">
-					<p class="pull-left">Twice a year we invite guests from outside FIU to come address the student body.  Our excellence lectures have brought such noted guests as Senator Bob Graham and noted author Anya Kamenetz.</p>
-					<p><strong>You currently have {{excellenceLectures.length}}/1 Excellence Lecture.</strong></p>
-					
-					<ul>
-						<li ng-repeat="excellenceLecture in excellenceLectures">
-							{{excellenceLecture}}
-						</li>
-					</ul>
-					
-				</div>
-			</div>
-		</div>
+        <div class="col-md-4">
+            <div class="box">
+                <div class="box-header">Events Attended</div>
+                <div class="box-content padded">
+                    <div id="accordion" ng-if="citizenship.events">
+                        <div class="space-below" ng-repeat="(eventType, eventList) in citizenship.events">
+                            <a data-target="#citizenshipEventType-{{$index}}" data-toggle="collapse" style="cursor:pointer;">
+                                <b><i class="fa fa-caret-square-o-down"></i> {{ eventType }}</b>
+                            </a>
+                            <ul class="block-hover collapse" id="citizenshipEventType-{{$index}}">
+                                <li ng-repeat="eventContent in eventList">
+                                        <a ng-href="#/events/{{eventContent.eventId}}" style="cursor:pointer;">{{ eventContent.eventName }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="accordion" ng-if="citizenship.roomswipeCount">
+                        <div class="space-below" ng-repeat="(roomswipeType, roomswipeList) in citizenship.roomswipe">
+                            <a data-target="#citizenshipRoomswipeType-{{$index}}" data-toggle="collapse" style="cursor:pointer;">
+                                <b><i class="fa fa-caret-square-o-down"></i> {{ roomswipeType }}</b>
+                            </a>
+                            <ul class="block-hover collapse" id="citizenshipRoomswipeType-{{$index}}">
+                                <li ng-repeat="roomswipeContent in roomswipeList">
+                                    Visit reason: {{ roomswipeContent.answer }}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="alert alert-info" style="margin-bottom: 0" ng-if="!citizenship.eventsCount && !citizenship.roomswipeCount">
+                        No events attended.
+                    </div>
+                </div>
+            </div>
+        </div>
 </div>
 <div class="row">
 	<div class="col-md-6">

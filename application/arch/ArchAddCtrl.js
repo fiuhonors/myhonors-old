@@ -33,7 +33,7 @@ angular.module('myhonorsArch').controller('ArchAddCtrl', ['$scope', 'FirebaseIO'
 
 		$scope.resetForm();
 
-		$location.path('#/arch');
+		$location.path('arch');
 	};
 
 	$scope.resetForm = function() {

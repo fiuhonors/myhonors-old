@@ -44,6 +44,6 @@ angular.module('myhonorsArch').controller('ArchViewCtrl', ['$scope', '$routePara
 		FirebaseIO.child('user_profiles/' + $scope.project.advisor.id + '/archProjects/' + projectRef.name()).remove();
 		projectRef.remove(); // delete project
 		$scope.showDeleteConfirmation = false; // close deletion confirmation modal
-		$location.path('#/arch'); // redirect to main page
+		$location.path('arch'); // redirect to main page
 	};
 }]);

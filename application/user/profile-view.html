@@ -8,13 +8,28 @@
             <div class="pull-right">
                 <h1 class="no-wrap">{{user.fname}} {{user.lname}}</h1>
 
-                <div class="pull-right">
-                    <b>Year:</b>
-                    <a xeditable="updateProfile()" ng-model="user.profile.year" ng-class="{'inherit-color': isAbleEdit, 'disable-editable': !isAbleEdit}">{{user.profile.year || 'N/A'}}</a>
-                    <b>Major:</b> 
-                    <a xeditable="updateProfile()" ng-model="user.profile.major" ng-class="{'inherit-color': isAbleEdit, 'disable-editable': !isAbleEdit}">{{user.profile.major || 'N/A'}}</a>
+                <div class="pull-right space-below" ng-if="isAbleEdit">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label class="control-label"><b>Year</b></label>
+                            <select ng-model="user.profile.year" class="form-control" ng-change="updateProfile()">
+                                <option ng-repeat="year in possible.years" ng-selected="user.profile.year === year">{{year}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label"><b>Track</b></label>
+                            <select ng-model="user.profile.major" class="form-control" ng-change="updateProfile()">
+                                <option ng-repeat="major in possible.majors" ng-selected="user.profile.major === major">{{major}}</option>
+                            </select>
+                        </div>
+                    </form>
                 </div>
                 <div class="clearfix"></div>
+                
+                <div ng-if="!isAbleEdit" class="space-below text-right">
+                    <b>Year:</b> {{ user.profile.year }}
+                    <b>Track:</b> {{ user.profile.major }}
+                </div>
 
                 <p class="pull-right">
                     <a href="tel:{{user.profile.phone}}" ng-model="user.profile.phone" xeditable="updateProfile()" ng-class="{'inherit-color': isAbleEdit, 'disable-editable': !isAbleEdit}"><i class="fa fa-phone-square fa-2x"></i></a>

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myhonorsUser').controller('ProfileViewCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$timeout', '$fileUploader', 'UserService', 'ProfileService', 'ProjectService', function EventBrowseCtrl($scope, $rootScope, $routeParams, $location, $timeout, $fileUploader, UserService, ProfileService, ProjectService) {
+angular.module('myhonorsUser').controller('ProfileViewCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$timeout', '$fileUploader', 'UserService', 'ProfileService', 'ProjectService', 'FirebaseIO', function EventBrowseCtrl($scope, $rootScope, $routeParams, $location, $timeout, $fileUploader, UserService, ProfileService, ProjectService, FirebaseIO) {
     $scope.pid = "";
     $scope.projects = ''; // Collection of the sudent's projects
     $scope.projectCategories = ProjectService.getCategories();
@@ -16,6 +16,12 @@ angular.module('myhonorsUser').controller('ProfileViewCtrl', ['$scope', '$rootSc
         }
     };
     $scope.form = {};
+    $scope.possible = {years:[], majors:[]};
+    FirebaseIO.child('system_settings').once("value", function (snapshot) {
+        $scope.possible.years = snapshot.val().gradeYearTypes;
+        $scope.possible.majors = snapshot.val().majorTypes;
+    });
+    
     
     // Load the student's info and profile. The student's PID must first be obtained using the student's username
     UserService.getPIDFromUsername( $routeParams.username ).then( function( pid ) {
@@ -47,7 +53,7 @@ angular.module('myhonorsUser').controller('ProfileViewCtrl', ['$scope', '$rootSc
 
 
     $scope.goToProject = function(project) {
-        $location.path('/profiles/' + $routeParams.username + '/projects/' + project.$id);
+        $location.path('profiles/' + $routeParams.username + '/projects/' + project.$id);
     };
 
     /*
@@ -92,7 +98,7 @@ angular.module('myhonorsUser').controller('ProfileViewCtrl', ['$scope', '$rootSc
 
         $scope.goToEditProfilePicture = function() {
             if ( UserService.profile.pid == $scope.pid )
-                $location.path( '/profiles/' + $scope.user.username + '/profilepictureedit' );
+                $location.path( 'profiles/' + $scope.user.username + '/profilepictureedit' );
         };
 
         $scope.currentProject = {}; // Holds the project object that is being added or edited

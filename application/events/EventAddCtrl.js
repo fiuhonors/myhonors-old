@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('myhonorsEvents').controller('EventAddCtrl', ['$scope', '$location', 'EventService', 'ClubService', function($scope, $location, EventService, ClubService) {
-	$scope.eventTypes = EventService.getTypes();
+    $scope.eventTypes = EventService.getTypes();
     $scope.clubs = ClubService.list();
     
     $scope.$watchCollection( 'clubs', function( clubs ) {

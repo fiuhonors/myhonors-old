@@ -36,11 +36,11 @@ angular.module('myhonorsArch').controller('ArchCtrl', ['$scope', '$timeout', '$l
 	}
 
 	$scope.goToProject = function(projectId) {
-		$location.path('/arch/' + projectId);
+		$location.path('arch/' + projectId);
 	};
 
 	$scope.goToContract = function(projectId) {
-		$location.path('/arch/' + projectId + '/contract');
+		$location.path('arch/' + projectId + '/contract');
 	};
 
 }]);

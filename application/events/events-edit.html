@@ -68,14 +68,14 @@
                         </div>
                         <div class="col-md-5 col-md-offset-1 form-group" ng-class="{'has-error': theForm.name.$invalid}">
                             <label for="name" class="control-label">Event Type</label><br />
-                            <select multiple="multiple" ng-model="event.types" ng-options="type.$id as type.name group by ((type.citizenship && 'Citizenship') || 'General') for type in eventTypes" required></select>
+                            <select class="form-control" multiple="multiple" ng-model="event.types" ng-options="type.$id as type.name group by ((type.citizenship && 'Citizenship') || 'General') for type in eventTypes" required></select>
                             <span class="help-block" style="margin-top: 5px">Tip: Hold Ctrl to select multiple types.</span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6 form-group">
                             <label for="clubs" class="control-label">Clubs</label><br />
-                            <select ng-model="event.club" ng-options="club.$id as club.name for club in clubs" style="width: 100%">
+                            <select class="form-control" ng-model="event.club" ng-options="club.$id as club.name for club in clubs" style="width: 100%">
                                 <option value=""></option>
                             </select>
                         </div>
@@ -83,7 +83,7 @@
                     <hr />
                     <div class="form-group">
                         <label for="maxRSVPs">Max RSVPs</label><span class="help-block">(0 for no limit)</span><br />
-                        <input type="number" id="maxRSVPs" name="maxRSVPs" class="input-medium" min="0" step="1" ng-model="event.options.maxRSVPs" placeholder="0" />
+                        <input type="number" class="form-control" id="maxRSVPs" name="maxRSVPs" class="input-medium" min="0" step="1" ng-model="event.options.maxRSVPs" placeholder="0" />
                     </div>
                     <label class="checkbox" style="margin-left: 20px">
                         <input type="checkbox" ng-model="event.options.waitingList" ng-disabled="!event.options.maxRSVPs"> Allow waiting list
