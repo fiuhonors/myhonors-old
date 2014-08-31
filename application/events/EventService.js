@@ -140,7 +140,12 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
             if ( eventObject.hasOwnProperty( 'club' ) )
                 ClubService.removeEventFromClub( eventObject.club, eventObject.id );
         
-			FirebaseIO.child( 'events/' + eventObject.id ).remove();
+              // Iterate through the event's attendance and delete the event from each user's attendance node
+              angular.forEach( eventObject.usersAttended.val(), function( value, userId ) {
+                FirebaseIO.child( 'user_profiles/' + userId + '/attendance/' + eventObject.id ).remove();
+              });
+
+            FirebaseIO.child( 'events/' + eventObject.id ).remove();
 		},
 
 		/**
