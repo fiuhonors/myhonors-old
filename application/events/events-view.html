@@ -48,7 +48,7 @@
         <div ng-include src="'application/events/comments-template.html'" ng-show="!event.thumbURL"></div>
 
     </div>
-    <div class="col-md-3" ng-show="!attendance.length">
+    <div class="col-md-3" ng-show="!attendance.length && !event.options.disableRSVP">
         <div class="box">
             <div class="box-header text-center" ng-show='!event.options.waitingList || event.rsvps < event.options.maxRSVPs || hasRSVP()'> RSVP
                 <span class="muted">
@@ -156,6 +156,19 @@
                 <div class="pull-right" style="padding: 5px;" ng-show="event.attendance > 6">
                     <a href="" ng-show="showAttendanceLimit == 6" ng-click="showAttendants()">Show all</a>
                     <a href="" ng-show="showAttendanceLimit > 6"  ng-click="showAttendants()">Show less</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3" ng-if="event.options.disableRSVP">
+        <div class="box">
+            <div class="box-header text-center">
+                RSVPs Closed
+            </div>
+            <div class="box-content padded-medium">
+                <div class="alert alert-info padded-medium" style="margin-bottom: 0">
+                    <strong> RSVPs are not currently open. </strong> Please check back later!
                 </div>
             </div>
         </div>

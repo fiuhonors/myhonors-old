@@ -80,6 +80,9 @@
                     </div>
 
                     <hr />
+                    <label class="checkbox" style="margin-left: 20px">
+                        <input type="checkbox" ng-model="newItem.options.disableRSVP"> Disable RSVPs
+                    </label>
                     <div class="form-group">
                         <label for="maxRSVPs">Max RSVPs <span class="help-block">(0 for no limit)</span></label><br />
                         <input class="form-control" type="number" id="maxRSVPs" name="maxRSVPs" min="0" step="1" ng-model="newItem.options.maxRSVPs" placeholder="0" style="width:10%" />

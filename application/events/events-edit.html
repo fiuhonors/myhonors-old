@@ -81,12 +81,15 @@
                         </div>
                     </div>
                     <hr />
+                    <label class="checkbox" style="margin-left: 20px">
+                        <input type="checkbox" ng-model="event.options.disableRSVP"> Disable RSVPs
+                    </label>
                     <div class="form-group">
                         <label for="maxRSVPs">Max RSVPs</label><span class="help-block">(0 for no limit)</span><br />
                         <input type="number" class="form-control" id="maxRSVPs" name="maxRSVPs" class="input-medium" min="0" step="1" ng-model="event.options.maxRSVPs" placeholder="0" />
                     </div>
                     <label class="checkbox" style="margin-left: 20px">
-                        <input type="checkbox" ng-model="event.options.waitingList" ng-disabled="!event.options.maxRSVPs"> Allow waiting list
+                        <input type="checkbox" ng-model="event.options.waitingList" ng-disabled="!event.options.maxRSVPs"> Allow Waiting List 
                     </label>
                     <label class="checkbox" style="margin-left: 20px">
                         <input type="checkbox" ng-model="event.options.requirePhone"> Require Phone Number to RSVP

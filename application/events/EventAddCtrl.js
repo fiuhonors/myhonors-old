@@ -99,7 +99,8 @@ angular.module('myhonorsEvents').controller('EventAddCtrl', ['$scope', '$locatio
             options: {
                 maxRSVPs: '',
                 waitingList: false,
-                requirePhone: false
+                requirePhone: false,
+                disableRSVP: false
             }
         };
     };

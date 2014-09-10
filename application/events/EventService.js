@@ -124,15 +124,12 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
 				return;
 			}
 
-			// go through each property in the object and add that specifically, this prevents
-			// us from overwriting the entire /events/eventId location (which prevents us from
-			// deleting the RSVPs, attendance, comments, etc.)
-			angular.forEach(eventObject, function(value, key) {
-                            if(value === null || value === undefined){
-                                delete eventObject[key];
-                            }
-			});
-                        FirebaseIO.child('events/' + eventId).set(eventObject);
+                        // go through each property in the object and add that specifically, this prevents
+                        // us from overwriting the entire /events/eventId location (which prevents us from
+                        // deleting the RSVPs, attendance, comments, etc.)
+                        angular.forEach(eventObject, function(value, key) {
+                            FirebaseIO.child('events/' + eventId + '/' + key).set(value);
+                        }); 
 
 			// setting the priority to the date.ends value allows us to show an event that is currently
 			// taking place in any 'Upcoming Events' section
@@ -142,11 +139,13 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
 		delete: function( eventObject ) {
             if ( eventObject.hasOwnProperty( 'club' ) )
                 ClubService.removeEventFromClub( eventObject.club, eventObject.id );
-        
+            
+            if ( eventObject.usersAttended ) {
               // Iterate through the event's attendance and delete the event from each user's attendance node
-              angular.forEach( eventObject.usersAttended.val(), function( value, userId ) {
-                FirebaseIO.child( 'user_profiles/' + userId + '/attendance/' + eventObject.id ).remove();
-              });
+                angular.forEach( eventObject.usersAttended.val(), function( value, userId ) {
+                    FirebaseIO.child( 'user_profiles/' + userId + '/attendance/' + eventObject.id ).remove();
+                  });
+            }
 
             FirebaseIO.child( 'events/' + eventObject.id ).remove();
 		},
