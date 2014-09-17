@@ -4,28 +4,29 @@ angular.module('myhonorsEvents').controller('EventEditCtrl', ['$scope', '$locati
     
     $scope.eventTypes = EventService.getTypes();
     $scope.clubs = ClubService.list();
-	
+
 	// temporary location to initialize the map
-	$scope.event = {
-		location: {
-			lat: 25.756237234313733,
-			lng: -80.37467569112778,
-			draggable: true,
-			focus: true,
-			zoom: 16
-		}
-	};
+        $scope.event = {
+                location: {
+                        lat: 25.756237234313733,
+                        lng: -80.37467569112778,
+                        draggable: true,
+                        focus: true,
+                        zoom: 16
+                }
+        };
 
 	EventService.read($routeParams.eventId, function(data) {
 		$timeout(function() {
-			// the following properties are just for the visual map, they don't get saved to the database
-			angular.extend(data, {
-				draggable: true,
-				focus: true,
-				zoom: 16
-			});
-			
-			$scope.event = data;
+                        $scope.event.location.lat = data.location.lat;
+                        $scope.event.location.lng = data.location.lng;
+                        $scope.event.location.name = data.location.name;
+
+                        delete data.location;
+
+                        angular.extend( $scope.event, data );
+                        
+			//$scope.event = data;
 
 			// format the starting/ending dates and times
 			var start = moment(data.date.starts);
