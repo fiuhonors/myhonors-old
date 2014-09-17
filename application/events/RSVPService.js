@@ -30,7 +30,9 @@ angular.module('myhonorsEvents').factory('RSVPService', function(FirebaseIO, Fir
 
 			return FirebaseCollection(rsvpsRef, {metaFunction: function(doAdd, data) {
 				FirebaseIO.child('user_profiles/' + data.name()).once('value', function(userSnapshot) {
-					doAdd(data, userSnapshot.val());
+                    var extraData = userSnapshot.val();
+                    extraData.pid = userSnapshot.name();
+					doAdd(data, extraData);
 				});
 			}});
 		},

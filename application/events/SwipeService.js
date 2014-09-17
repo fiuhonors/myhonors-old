@@ -70,7 +70,7 @@ angular.module('myhonorsEvents').factory('SwipeService', function($q, FirebaseIO
 						fname: userSnapshot.child('fname').val(),
 						lname: userSnapshot.child('lname').val(),
 						name: userSnapshot.child('fname').val() + " " + userSnapshot.child('lname').val(),
-						pid: userSnapshot.child('pid').val(),
+						pid: userSnapshot.child('pid').val() || userSnapshot.name(),
 						email: userSnapshot.child('email').val(),
 						greeting: getRandomGreeting(userSnapshot.child('fname').val())
 					};

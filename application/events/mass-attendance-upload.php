@@ -33,7 +33,6 @@ $temp_token = $tokenGen->createToken(array(), array(
 	'admin' => true
 ));
 
-
 $eventInfo = json_decode((file_get_contents(FIREBASE_EVENTS_URL . $eventId . '.json?auth=' . $temp_token)), true);
 
 
@@ -63,7 +62,7 @@ for ($row = 1; $row <= $highestRow; $row++){
      
 
     $pid = $rowData[0][0];
-    
+
     // Make sure that the data we read from the row is an actual Panther ID
     if (!is_numeric($pid) || strlen($pid) != 7) {
 		$result = array('success' => false, 'error' => "The uploaded file is not properly formatted: " . $pid . " is a not a Panther ID");
