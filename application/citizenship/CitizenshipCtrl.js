@@ -49,7 +49,7 @@ angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', 'Fireb
     };
     $scope.eventsAttended = SwipeService.listByUser(UserService.profile.id);
     
-    $scope.$watchCollection('eventsAttended', function() {
+    $scope.$watch('eventsAttended', function() {
 		citizenshipTypes.then( function (promise) {
 			$scope.citizenship.points = 0;
 			$scope.citizenship.eventsCount = $scope.eventsAttended.length;

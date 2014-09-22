@@ -69,7 +69,7 @@ angular.module('myhonorsDashboard').controller('DashboardCtrl', ['$scope', '$loc
     var citizenshipTypes = CitizenshipService.getTypes();
     $scope.eventsAttended = SwipeService.listByUser(UserService.profile.id);
     
-    $scope.$watchCollection('eventsAttended', function() {
+    $scope.$watch('eventsAttended', function() {
 		citizenshipTypes.then( function (promise) {
 			$scope.citizenshipPoints = 0;
 			// Event Names added here just like $scope.citizenship.events. This checks for duplicate swipes in one event and prevents additional points for such.
