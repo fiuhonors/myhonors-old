@@ -1,6 +1,6 @@
 
 
-angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', 'FirebaseIO', 'UserService', 'VolunteerService', 'CitizenshipService', 'SwipeService', function($scope, FirebaseIO, UserService, VolunteerService, CitizenshipService, SwipeService) {
+angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$timeout', 'FirebaseIO', 'UserService', 'VolunteerService', 'CitizenshipService', 'SwipeService', function($scope, $timeout, FirebaseIO, UserService, VolunteerService, CitizenshipService, SwipeService) {
     
     'use strict';
     
@@ -51,7 +51,7 @@ angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', 'Fireb
     };
     $scope.eventsAttended = SwipeService.listByUser(UserService.profile.id);
     
-    $scope.$watch('eventsAttended', function() {
+    $scope.$watchCollection('eventsAttended', function() {
 		citizenshipTypes.then( function (promise) {
 			$scope.citizenship.points = 0;
 			$scope.citizenship.eventsCount = $scope.eventsAttended.length;
@@ -59,8 +59,11 @@ angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', 'Fireb
 			var eventsArray = [];
 			
 			angular.forEach($scope.eventsAttended, function(eventInfo, key) {
-				var eventName = eventInfo.name;
-				var eventType = eventInfo.types[0];
+				if (eventInfo.name == undefined || eventInfo.types == undefined){
+					return;
+				}
+				var eventName = eventInfo.name,
+					eventType = eventInfo.types[0];
 				
 				if (!$scope.citizenship.events[eventType] && promise.enabledTypes.hasOwnProperty(eventType)) {
 					$scope.citizenship.events[eventType] = {};

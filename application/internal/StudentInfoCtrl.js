@@ -26,10 +26,13 @@ angular.module('myhonorsInternal').controller('StudentInfoCtrl', function ($scop
 	 * The overall goal of this function is to sort the events by their type so that the view can show them in categories.
 	 * 
 	 */ 
-	$scope.$watch('eventsAttended', function() {
+	$scope.$watchCollection('eventsAttended', function() {
 		angular.forEach($scope.eventsAttended, function(eventInfo, key) {
-			var eventName = eventInfo.name;
-		    var eventType = eventInfo.types[0];
+			if (eventInfo.name == undefined || eventInfo.types == undefined){
+				return;
+			}
+			var eventName = eventInfo.name, 
+				eventType = eventInfo.types[0];
 		    
 		    // If we don't have a property in the eventTypeCollections object corresponding to that event type, we just add it.
 			if (!$scope.eventTypeCollections[eventType])
