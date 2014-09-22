@@ -1,6 +1,8 @@
-'use strict';
+
 
 angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', 'FirebaseIO', 'UserService', 'VolunteerService', 'CitizenshipService', 'SwipeService', function($scope, FirebaseIO, UserService, VolunteerService, CitizenshipService, SwipeService) {
+    
+    'use strict';
     
 	$scope.submissions = VolunteerService.list(UserService.profile.pid);
 	

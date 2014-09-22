@@ -1,6 +1,9 @@
-'use strict';
+
 
 angular.module('myhonorsDashboard').controller('DashboardCtrl', ['$scope', '$location', 'FirebaseIO', 'EventService', 'RSVPService', 'VolunteerService', 'WaitingListService', 'CareerService', 'UserService', 'CitizenshipService', 'SwipeService', function ($scope, $location, FirebaseIO, EventService, RSVPService, VolunteerService, WaitingListService, CareerService, UserService, CitizenshipService, SwipeService) {
+    
+    'use strict';
+    
 	$scope.events = EventService.list({limit: 3, startAt: Date.now()});
     // Undefined is passed to 'startAt' so that Firebase's query starting point will be the start of the data. This then returns the newest internships
 	$scope.careers = CareerService.list({limit: 3, startAt: undefined});

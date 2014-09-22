@@ -1,6 +1,9 @@
-'use strict'
+
 
 angular.module('myhonorsInternal').controller('StudentInfoCtrl', function ($scope, $http, $timeout, $routeParams, FirebaseIO, SwipeService, VolunteerService, UserService) {
+    
+    'use strict';
+    
 	$scope.pid = $routeParams.pid;
 	$scope.volunteerHours = VolunteerService.list($scope.pid);
 	$scope.eventsAttended = SwipeService.listByUser($scope.pid);	// All the events that the user attended
