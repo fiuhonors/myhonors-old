@@ -33,8 +33,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     
     $index = 1;
-    foreach ($waitingList as $pantherID => $joinTime) {	// Loop through all the users in the waiting list
-		//error_log("Panther ID: " . $pantherID . "   Time: " . $joinTime);
+    
+    // Order waiting list by time registered, earlier timestamps equal earlier place in the waiting list
+    function orderStudentsByTime($student1, $student2){
+        if($student1['time'] == $student2['time']){
+            return 0;
+        }
+        return ($student1['time'] < $student2['time']) ? -1 : 1;
+    }
+    usort($waitingList, "orderStudentsByTime");
+    
+    foreach ($waitingList as $pantherID => $studentInfo) {	// Loop through all the users in the waiting list
+		//error_log("Panther ID: " . $pantherID . "   Time: " . $studentInfo['time']);
 		if ($index <= $openings) {
 			// Delete the user's record in the event's waiting list
 			$fb = new fireBase(FIREBASE_EVENTS_URL, $temp_token);
@@ -43,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			
 			// Set the RSVP for the user in the event's profile
 			$path = $eventId . "/rsvps/" . $pantherID;
-			$fb->set($path, array( "guests" => 0, "time" => $joinTime));			
+			$fb->set($path, array( "guests" => 0, "time" => $studentInfo['time']));			
 			
 			// Delete the user's record in the user's profile waiting list
 			$fb = new fireBase(FIREBASE_USERS_URL, $temp_token);
@@ -53,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			// Set the RSVP for the user in his profile
 			$fb = new fireBase(FIREBASE_USERS_URL, $temp_token);
 			$path = $pantherID . "/rsvps/" . $eventId;
-			$fb->set($path, array( "guests" => 0, "time" => $joinTime));
+			$fb->set($path, array( "guests" => 0, "time" => $studentInfo['time']));
 			
 			// An email notification is sent to the user to inform him that he has been added to the RSVP list
 			$userInfo = getUserInfo($pantherID, $temp_token);

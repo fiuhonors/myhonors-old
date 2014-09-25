@@ -17,7 +17,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="user in waitingList">
+				<tr ng-repeat="user in waitingList | orderWaitingList:'time':false">
 					<td>{{user.fname + " " + user.lname}}</td>
 					<td>{{user.pid}}</td>
 					<td>{{user.email}}</td>
