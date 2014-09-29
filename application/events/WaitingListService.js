@@ -81,19 +81,18 @@ angular.module('myhonorsEvents').factory('WaitingListService', function($http, F
 });
 
 angular.module("myhonorsEvents").filter('orderWaitingList', function() {
-        console.log('hit me harder 2');
-        return function(items, field, reverse) {
-            items.sort(function (a, b) {
-                if(a[field] > b[field]){
-                    return 1;
-                }else if(a[field] < b[field]){
-                    return -1;
-                }
-                console.log(field);
-            });
-            if(reverse){
-                items.reverse();
+    return function(items, field, reverse) {
+        items.sort(function (a, b) {
+            if(a[field] > b[field]){
+                return 1;
+            }else if(a[field] < b[field]){
+                return -1;
             }
-            return items;
-        };
+            console.log(field);
+        });
+        if(reverse){
+            items.reverse();
+        }
+        return items;
+    };
 });
