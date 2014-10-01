@@ -11,6 +11,7 @@ assets/.sass-cache
 nbproject
 desktop.ini
 uploads/
+.brackets.json
 
 #Config variables
 config.php
