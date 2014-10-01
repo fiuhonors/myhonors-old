@@ -88,7 +88,6 @@ angular.module("myhonorsEvents").filter('orderWaitingList', function() {
             }else if(a[field] < b[field]){
                 return -1;
             }
-            console.log(field);
         });
         if(reverse){
             items.reverse();
