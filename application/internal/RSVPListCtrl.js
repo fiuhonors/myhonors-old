@@ -3,7 +3,6 @@
 angular.module('myhonorsInternal').controller('RSVPListCtrl', function($scope, $http, $timeout, $routeParams, RSVPService, EventService, FirebaseIO) {
 	$scope.rsvps = RSVPService.list($routeParams.eventID);	//Get list of RSVP's
 	$scope.eventID = $routeParams.eventID;
-	
 	EventService.read($routeParams.eventID, function(data) {
 		$timeout(function() {
 			$scope.event = data;

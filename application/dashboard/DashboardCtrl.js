@@ -1,6 +1,9 @@
-'use strict';
 
-angular.module('myhonorsDashboard').controller('DashboardCtrl', ['$scope', '$location', 'FirebaseIO', 'EventService', 'RSVPService', 'VolunteerService', 'WaitingListService', 'CareerService', 'UserService', 'CitizenshipService', function ($scope, $location, FirebaseIO, EventService, RSVPService, VolunteerService, WaitingListService, CareerService, UserService, CitizenshipService) {
+
+angular.module('myhonorsDashboard').controller('DashboardCtrl', ['$scope', '$location', 'FirebaseIO', 'EventService', 'RSVPService', 'VolunteerService', 'WaitingListService', 'CareerService', 'UserService', 'CitizenshipService', 'SwipeService', function ($scope, $location, FirebaseIO, EventService, RSVPService, VolunteerService, WaitingListService, CareerService, UserService, CitizenshipService, SwipeService) {
+    
+    'use strict';
+    
 	$scope.events = EventService.list({limit: 3, startAt: Date.now()});
     // Undefined is passed to 'startAt' so that Firebase's query starting point will be the start of the data. This then returns the newest internships
 	$scope.careers = CareerService.list({limit: 3, startAt: undefined});
@@ -66,8 +69,34 @@ angular.module('myhonorsDashboard').controller('DashboardCtrl', ['$scope', '$loc
 	};
     
     $scope.citizenshipPoints = 0;
-    CitizenshipService.getUser().then(function (promise) {
-         $scope.citizenshipPoints = promise.points; 
-    });
+    var citizenshipTypes = CitizenshipService.getTypes();
+    $scope.eventsAttended = SwipeService.listByUser(UserService.profile.id);
+    
+    $scope.$watchCollection('eventsAttended', function() {
+		citizenshipTypes.then( function (promise) {
+			$scope.citizenshipPoints = 0;
+			// Event Names added here just like $scope.citizenship.events. This checks for duplicate swipes in one event and prevents additional points for such.
+			var eventsArray = [];
+			
+			angular.forEach($scope.eventsAttended, function(eventInfo, key) {
+				if (eventInfo.name == undefined || eventInfo.types == undefined){
+					return;
+				}
+				var eventName = eventInfo.name, 
+					eventType = eventInfo.types[0];
+				
+				// Event of such a type is enabled on system_settings
+				if (promise.enabledTypes.hasOwnProperty(eventType)){
+					// Calculate points as necessary
+					if (eventsArray.indexOf(eventName) == -1) {
+						var pointsForEventType = promise.enabledTypes[eventType].points,
+							maxPointsForEventType = promise.enabledTypes[eventType].maxPoints;
+						$scope.citizenshipPoints += (maxPointsForEventType !== 0 && pointsForEventType > maxPointsForEventType) ? maxPointsForEventType : pointsForEventType;
+						eventsArray.push(eventName);
+					}
+				}
+			});
+		});
+	});
 	
 }]);

@@ -1,6 +1,9 @@
-'use strict'
+
 
 angular.module('myhonorsInternal').controller('StudentInfoCtrl', function ($scope, $http, $timeout, $routeParams, FirebaseIO, SwipeService, VolunteerService, UserService) {
+    
+    'use strict';
+    
 	$scope.pid = $routeParams.pid;
 	$scope.volunteerHours = VolunteerService.list($scope.pid);
 	$scope.eventsAttended = SwipeService.listByUser($scope.pid);	// All the events that the user attended
@@ -25,8 +28,11 @@ angular.module('myhonorsInternal').controller('StudentInfoCtrl', function ($scop
 	 */ 
 	$scope.$watchCollection('eventsAttended', function() {
 		angular.forEach($scope.eventsAttended, function(eventInfo, key) {
-			var eventName = eventInfo.name;
-		    var eventType = eventInfo.types[0];
+			if (eventInfo.name == undefined || eventInfo.types == undefined){
+				return;
+			}
+			var eventName = eventInfo.name, 
+				eventType = eventInfo.types[0];
 		    
 		    // If we don't have a property in the eventTypeCollections object corresponding to that event type, we just add it.
 			if (!$scope.eventTypeCollections[eventType])

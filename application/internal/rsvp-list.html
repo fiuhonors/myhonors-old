@@ -19,7 +19,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="rsvp in rsvps">
+				<tr ng-repeat="rsvp in rsvps | orderWaitingList:'time':false">
 					<td>{{rsvp.fname + " " + rsvp.lname}}</td>
 					<td>{{rsvp.pid}}</td>
 					<td>{{rsvp.email}}</td>

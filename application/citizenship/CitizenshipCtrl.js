@@ -1,6 +1,8 @@
-'use strict';
 
-angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', 'FirebaseIO', 'UserService', 'VolunteerService', 'CitizenshipService', function($scope, FirebaseIO, UserService, VolunteerService, CitizenshipService) {
+
+angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$timeout', 'FirebaseIO', 'UserService', 'VolunteerService', 'CitizenshipService', 'SwipeService', function($scope, $timeout, FirebaseIO, UserService, VolunteerService, CitizenshipService, SwipeService) {
+    
+    'use strict';
     
 	$scope.submissions = VolunteerService.list(UserService.profile.pid);
 	
@@ -47,16 +49,41 @@ angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', 'Fireb
         roomswipe: {},
         roomswipeCount: 0
     };
-    CitizenshipService.getUser().then(function (promise) {
-        $scope.citizenship = {
-            types: citizenshipTypes,
-            points: promise.points,
-            events: promise.events,
-            eventsCount: Object.keys(promise.events).length,
-            roomswipe: promise.roomswipe,
-            roomswipeCount: Object.keys(promise.roomswipe).length
-        };
-    });
+    $scope.eventsAttended = SwipeService.listByUser(UserService.profile.id);
+    
+    $scope.$watchCollection('eventsAttended', function() {
+		citizenshipTypes.then( function (promise) {
+			$scope.citizenship.points = 0;
+			$scope.citizenship.eventsCount = $scope.eventsAttended.length;
+			// Event Names added here just like $scope.citizenship.events. This checks for duplicate swipes in one event and prevents additional points for such.
+			var eventsArray = [];
+			
+			angular.forEach($scope.eventsAttended, function(eventInfo, key) {
+				if (eventInfo.name == undefined || eventInfo.types == undefined){
+					return;
+				}
+				var eventName = eventInfo.name,
+					eventType = eventInfo.types[0];
+				
+				if (!$scope.citizenship.events[eventType] && promise.enabledTypes.hasOwnProperty(eventType)) {
+					$scope.citizenship.events[eventType] = {};
+				}	
+				
+				// Event of such a type is enabled on system_settings
+				if (promise.enabledTypes.hasOwnProperty(eventType)){
+					// Put appropriate events in event type, fill with eventInfo from Firebase
+					$scope.citizenship.events[eventType][eventName] = eventInfo;
+					// Calculate points as necessary
+					if (eventsArray.indexOf(eventName) == -1) {
+						var pointsForEventType = promise.enabledTypes[eventType].points,
+							maxPointsForEventType = promise.enabledTypes[eventType].maxPoints;
+						$scope.citizenship.points += (maxPointsForEventType !== 0 && pointsForEventType > maxPointsForEventType) ? maxPointsForEventType : pointsForEventType;
+						eventsArray.push(eventName);
+					}
+				}
+			});
+		});
+	});
     
     
     

@@ -34,14 +34,14 @@
             <div class="box">
                 <div class="box-header">Events Attended</div>
                 <div class="box-content padded">
-                    <div id="accordion" ng-if="citizenship.events">
-                        <div class="space-below" ng-repeat="(eventType, eventList) in citizenship.events">
+                    <div id="accordion" ng-if="citizenship.eventsCount">
+                        <div class="space-below" ng-repeat="(eventType, collection) in citizenship.events">
                             <a data-target="#citizenshipEventType-{{$index}}" data-toggle="collapse" style="cursor:pointer;">
                                 <b><i class="fa fa-caret-square-o-down"></i> {{ eventType }}</b>
                             </a>
                             <ul class="block-hover collapse" id="citizenshipEventType-{{$index}}">
-                                <li ng-repeat="eventContent in eventList">
-                                        <a ng-href="#/events/{{eventContent.eventId}}" style="cursor:pointer;">{{ eventContent.eventName }}</a>
+                                <li ng-repeat="(eventName, event) in collection">
+                                        <a ng-href="#/events/{{event.$id}}" style="cursor:pointer;">{{ eventName }}</a>
                                 </li>
                             </ul>
                         </div>
