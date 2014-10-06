@@ -24,16 +24,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $userId = $info["userId"];
 
     // Get all users in waiting list
-   // $waitingList = json_decode(file_get_contents(FIREBASE_EVENTS_URL . $eventId . '/waitingList.json?auth=' . $temp_token), true);
+    // $waitingList = json_decode(file_get_contents(FIREBASE_EVENTS_URL . $eventId . '/waitingList.json?auth=' . $temp_token), true);
     $eventInfo = json_decode(file_get_contents(FIREBASE_EVENTS_URL . $eventId . '.json?auth=' . $temp_token), true);
     $waitingList = $eventInfo["waitingList"];
+   
+    // Add the PID to each waiting list object because usort() will remove the array indeces (which contain the PID)
+    foreach( $waitingList as $pantherId => $info ) {
+	   $waitingList[ $pantherId ][ "pid" ] = $pantherId;	
+    }
 
-    // Sort waiting list by the time the users joined the list
-    asort($waitingList);
-    
-    
-    $index = 1;
-    
     // Order waiting list by time registered, earlier timestamps equal earlier place in the waiting list
     function orderStudentsByTime($student1, $student2){
         if($student1['time'] == $student2['time']){
@@ -41,11 +40,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         return ($student1['time'] < $student2['time']) ? -1 : 1;
     }
+
     usort($waitingList, "orderStudentsByTime");
     
-    foreach ($waitingList as $pantherID => $studentInfo) {	// Loop through all the users in the waiting list
+    foreach ($waitingList as $index => $info) {	// Loop through all the users in the waiting list
 		//error_log("Panther ID: " . $pantherID . "   Time: " . $studentInfo['time']);
-		if ($index <= $openings) {
+		if ($index + 1 <= $openings) {
+                        $pantherID = $info[ "pid" ];
+                        $time = $info[ "time" ];
+
 			// Delete the user's record in the event's waiting list
 			$fb = new fireBase(FIREBASE_EVENTS_URL, $temp_token);
 			$path = $eventId . "/waitingList/" . $pantherID;
@@ -53,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			
 			// Set the RSVP for the user in the event's profile
 			$path = $eventId . "/rsvps/" . $pantherID;
-			$fb->set($path, array( "guests" => 0, "time" => $studentInfo['time']));			
+			$fb->set($path, array( "guests" => 0, "time" => $time));			
 			
 			// Delete the user's record in the user's profile waiting list
 			$fb = new fireBase(FIREBASE_USERS_URL, $temp_token);
@@ -63,14 +66,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			// Set the RSVP for the user in his profile
 			$fb = new fireBase(FIREBASE_USERS_URL, $temp_token);
 			$path = $pantherID . "/rsvps/" . $eventId;
-			$fb->set($path, array( "guests" => 0, "time" => $studentInfo['time']));
+			$fb->set($path, array( "guests" => 0, "time" => $time));
 			
 			// An email notification is sent to the user to inform him that he has been added to the RSVP list
 			$userInfo = getUserInfo($pantherID, $temp_token);
             sendEmailNotification($userInfo, $eventInfo);
 		} 
-		
-		$index++;
 	}
     
     
