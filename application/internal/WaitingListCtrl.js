@@ -12,12 +12,12 @@ angular.module('myhonorsInternal').controller('WaitingListCtrl', function($scope
 	
 	$scope.exportExcel = function() {
 		//Point the window's location to rsvp-list-export.php with the necessary event variables and the export type "Excel"
-		//window.location = "application/internal/rsvps-list-export.php?exportType=Excel&eventID=" + $routeParams.eventID + "&eventName=" + $scope.event.name;
+		window.location = "application/internal/waiting-list-export.php?exportType=Excel&eventID=" + $routeParams.eventID;
 	};
 	
 	$scope.exportCSV = function() {
 		//Point the window's location to rsvp-list-export.php with the necessary event variables and the export type "CSV"
-		//window.location = "application/internal/rsvps-list-export.php?exportType=CSV&eventID=" + $routeParams.eventID + "&eventName=" + $scope.event.name;
+		window.location = "application/internal/waiting-list-export.php?exportType=CSV&eventID=" + $routeParams.eventID;
 	};
 	
 	$scope.removeFromWaitingList = function(user) {	
