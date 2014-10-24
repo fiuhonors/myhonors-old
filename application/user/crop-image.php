@@ -80,6 +80,13 @@ if ( ! file_exists( $upload_path ) && ! is_dir( $upload_path ) ) {
     mkdir( $upload_path, 0777, true );         
 }
 
+// Explode path to an array of folder names, which are separated by slashes
+$recursiveDirectories = explode("/", $path);
+// For each recursive folder, implode back to a path and CHMOD that folder to 0755
+for($i=1; $i<=count($recursiveDirectories); $i++){
+	chmod(PROJECT_ROOT_PATH . 'uploads/' . implode("/", array_slice($recursiveDirectories, 0, $i)) . "/", 0755);
+};
+
 // Create a new image from the uploaded image given its mime type
 switch ( strtolower( $file_mimetype ) )
 {
@@ -115,6 +122,8 @@ imagecopyresampled( $thumbnail,
 
 // Save the image to the specified upload path
 $upload_success = imagejpeg( $thumbnail, $upload_path . $file_name, $jpeg_quality );
+// CHMOD uploaded file to 0755 so it can be viewed
+chmod($upload_path . $file_name, 0755);
 
 // Check if the save was succesful
 if ( ! $upload_success ) {
