@@ -30,10 +30,12 @@
                     <strong>Location: </strong> {{event.location.name}}
                 </p>
                 <hr style="margin-top: 10px; margin-bottom: 10px" ng-show="user.auth.isEventMod" />
-                <div ng-show="user.auth.isEventMod">
-                    <a href="#/events/{{event.id}}/swipe" class="btn btn-link">Swipe</a>
-                    <a href="#/events/{{event.id}}/edit" class="btn btn-link">Edit</a>
-                    <button class="btn btn-link" ng-click="confirmDelete()">Delete</button>
+                <div ng-show="user.auth.isEventMod || ( event.club && user.auth.isClubMod )">
+                    <a href="#/events/{{event.id}}/swipe" class="btn btn-link" ng-show="user.auth.isEventMod || ( event.club.length && user.auth.isClubMod )">Swipe</a>
+                    <span ng-show="user.auth.isEventMod">
+                        <a href="#/events/{{event.id}}/edit" class="btn btn-link">Edit</a>
+                        <button class="btn btn-link" ng-click="confirmDelete()">Delete</button>
+                    </span>
                 </div>
             </div>
         </div>

@@ -29,6 +29,7 @@ function getData($username, $data) {
 		'id' => $username,
 		'isArchMod' => (!empty($access_levels['isArchMod']) && array_key_exists($username, $access_levels['isArchMod'])) ? true : false,
 		'isEventMod' => (!empty($access_levels['isEventMod']) && array_key_exists($username, $access_levels['isEventMod'])) ? true : false,
+        'isClubMod' => (!empty($access_levels['isClubMod']) && array_key_exists($username, $access_levels['isClubMod'])) ? true : false,
 		'isStaff' => (!empty($access_levels['isStaff']) && array_key_exists($username, $access_levels['isStaff'])) ? true : false,
 		'isAdmin' => (!empty($access_levels['isAdmin']) && array_key_exists($username, $access_levels['isAdmin'])) ? true : false,
 		'isMiddleCircle' => (!empty($access_levels['isMiddleCircle']) && array_key_exists($username, $access_levels['isMiddleCircle'])) ? true : false,
