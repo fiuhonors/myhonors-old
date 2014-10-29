@@ -31,11 +31,6 @@ angular.module('myhonorsUser').factory('UserService', function($http, $location,
 						alert(error);
 					}
 					else if (authObject) {
-						// user successfully logged in. save token to localStorage (or cookies if browser doesn't support it)
-						// so we can auth on every page load via appResolve
-						webStorage.add('auth_token', result.token);
-						loginSuccess = true;
-						defer.resolve( loginSuccess );
 
 						// then check if the user has a profile. if not, create it
 						var ref = FirebaseIO.child('/user_profiles/' + authObject.auth.id);
@@ -78,6 +73,11 @@ angular.module('myhonorsUser').factory('UserService', function($http, $location,
 								//$location.path('');
 								self.status.loading = false;
 							}
+                            // user successfully logged in. save token to localStorage (or cookies if browser doesn't support it)
+                            // so we can auth on every page load via appResolve
+                            webStorage.add('auth_token', result.token);
+                            loginSuccess = true;
+                            defer.resolve( loginSuccess );
 						});
 
 					}

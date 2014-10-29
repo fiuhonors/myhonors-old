@@ -26,7 +26,7 @@ if ( !isset( $_POST[ 'pathToFile' ] ) ) {
 $pathToFile = $_POST[ 'pathToFile' ];
 
 // For security reasons, ensure that the path of the file starts with 'uploads/' so only files in that folder can be deleted
-if ( !startsWith( $pathToFile, '/uploads/' ) ) {
+if ( !startsWith( $pathToFile, 'uploads/' ) ) {
     $result = array( 'success' => false, 'error' => "The path to the file is not properly formatted." );
     echo json_encode( $result );
     die();

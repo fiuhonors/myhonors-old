@@ -43,9 +43,18 @@ function uploadFile( $userId, $path, $file_name, $tmp_name, $file_mimetype ) {
     if ( ! file_exists( $upload_path ) && ! is_dir( $upload_path ) ) {
         mkdir( $upload_path, 0777, true );         
     } 
+    
+    // Explode path to an array of folder names, which are separated by slashes
+    $recursiveDirectories = explode("/", $path);
+    // For each recursive folder, implode back to a path and CHMOD that folder to 0755
+    for($i=1; $i<=count($recursiveDirectories); $i++){
+	chmod(PROJECT_ROOT_PATH . 'uploads/' . implode("/", array_slice($recursiveDirectories, 0, $i)) . "/", 0755);
+    };
 
     // Save the file
     $upload_success = move_uploaded_file( $tmp_name, $upload_path . $file_name );
+    // CHMOD uploaded file to 0755 so it can be viewed
+    chmod($upload_path . $file_name, 0755);
 
     // Check if the save was succesful or not
     if ( ! $upload_success ) {
