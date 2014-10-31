@@ -90,19 +90,6 @@
                             </div>
                             <p class="short-desc">{{(event.desc|| 'No description.') | truncate:75}} <a href="#/events/{{event.id}}" ng-show="event.desc.length > 75">read more</a></p>
                         </div>
-                        <div class="col-sm-3 col-xs-12 text-center event-attending">
-                            <h3>{{event.rsvps}}</h3>
-                            <div ng-show='!event.options.waitingList || event.rsvps < event.options.maxRSVPs || hasRSVP(event.$id)'>
-                                <span class="opensans">ATTENDING</span>
-                                <button class="btn btn-xs btn-default" ng-click="addRSVP(event.$id, $event)" ng-show="!hasRSVP(event.$id)">I'm Going</button>
-                                <button class="btn btn-xs btn-primary" ng-click="removeRSVP(event.$id, $event, event)" ng-show="hasRSVP(event.$id)">I'm Going</button>
-                            </div>
-                            <div ng-show='event.options.waitingList && event.rsvps >= event.options.maxRSVPs && !hasRSVP(event.$id)'>
-                                <span class="opensans">Attendance Full</span>
-                                <button class="btn btn-xs btn-default" ng-click="addToWaitingList(event.$id, $event)" ng-show="!isInWaitingList(event.$id)">Waiting List</button>
-                                <button class="btn btn-xs btn-primary" ng-click="removeFromWaitingList(event.$id, $event)" ng-show="isInWaitingList(event.$id)">Waiting List</button>
-                            </div>
-                        </div>
                     </li>
                 </ul>
             </div>

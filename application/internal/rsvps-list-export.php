@@ -10,6 +10,7 @@ require_once "../../config.php"; // Include all the necessary Firebase config va
 include_once "../../auth/FirebaseToken.php";
 require_once '../lib/PHPExcel/PHPExcel.php'; // Include PHPExcel
 
+date_default_timezone_set('America/New_York');
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 	
@@ -21,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 		exit;
 	}
     
+        
     // We create the temporary Firebase admin token
     $tokenGen   = new Services_FirebaseTokenGenerator(FIREBASE_SECRET);
     $temp_token = $tokenGen->createToken(array(), array(
@@ -36,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $eventJSON = file_get_contents(FIREBASE_EVENTS_URL . $eventID . '.json?auth=' . $temp_token);	// Get the RSVPs list from Firebase in JSON format
     $event = json_decode($eventJSON, true);
     $rsvps = $event['rsvps'];
-    
+
     /*
 	 * In the line below, we get the get the list of all Honors students and decode them into a PHP array. We then use that info
 	 * to find the info of the students who RSVP'ed.
@@ -103,7 +105,7 @@ function exportExcel($event, $rsvps, $studentsInfo) {
 				->setCellValue('E' . $index, $timeOfRegistration);
 				
 		// Check to see whether the student actually attended the event after rsvp'ing
-		if (array_key_exists($pantherID, $event['attendance']))
+		if (isset($event['attendance']) && isset($event['attendance'][$pantherID]))
 			$objPHPExcel->setActiveSheetIndex(0)->setCellValue('F' . $index, "Yes");
 		else
 			$objPHPExcel->setActiveSheetIndex(0)->setCellValue('F' . $index, "No");
@@ -171,7 +173,7 @@ function exportCSV($event, $rsvps, $studentsInfo) {
         $timeOfRegistration = isset($val['time']) ? date("n/j/y h:i A", $val['time']/1000) : "N/A";
 
         // Check to see whether the student actually attended the event after rsvp'ing
-		if (array_key_exists($pantherID, $event['attendance']))
+		if (isset($event['attendance']) && isset($event['attendance'][$pantherID]))
 			$attended = "Yes";
 		else
 			$attended = "No";	

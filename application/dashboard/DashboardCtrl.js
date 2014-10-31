@@ -26,48 +26,11 @@ angular.module('myhonorsDashboard').controller('DashboardCtrl', ['$scope', '$loc
 		$location.path('career/' + careerID);
 	};
 
-	$scope.addRSVP = function (eventId, $event) {
-		$event.stopPropagation();
-		RSVPService.create(eventId, {guests: 0});
-	};
-
-	$scope.removeRSVP = function (eventId, $event, event) {
-		$event.stopPropagation();
-		
-		$scope.rsvp = RSVPService.read(eventId);
-		
-		RSVPService.delete(eventId);
-		
-		if (event.options.waitingList) {
-			WaitingListService.transferFromWaitingListToRSVP(eventId, 1 + $scope.rsvp.guests);
-		}
-	};
-
-	$scope.hasRSVP = function (eventId) {
-		return RSVPService.hasRSVP(eventId);
-	};
-
 	$scope.numGuests = function (eventId) {
 		return RSVPService.read(eventId).guests;
 	};
 	
 	
-	/* WAITING LIST FUNCTIONALITY */
-	
-	$scope.addToWaitingList = function (eventId, $event) {
-		$event.stopPropagation();
-		WaitingListService.create(eventId);
-	};
-	
-	$scope.isInWaitingList = function (eventId) {
-		return WaitingListService.isInWaitingList(eventId);
-	};
-	
-	$scope.removeFromWaitingList = function (eventId, $event) {
-		$event.stopPropagation();
-		return WaitingListService.delete(eventId);
-	};
-    
     $scope.citizenshipPoints = 0;
     var citizenshipTypes = CitizenshipService.getTypes();
     $scope.eventsAttended = SwipeService.listByUser(UserService.profile.id);
