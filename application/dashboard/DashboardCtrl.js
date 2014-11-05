@@ -1,6 +1,4 @@
-
-
-angular.module('myhonorsDashboard').controller('DashboardCtrl', ['$scope', '$location', 'FirebaseIO', 'EventService', 'RSVPService', 'VolunteerService', 'WaitingListService', 'CareerService', 'UserService', 'CitizenshipService', 'SwipeService', function ($scope, $location, FirebaseIO, EventService, RSVPService, VolunteerService, WaitingListService, CareerService, UserService, CitizenshipService, SwipeService) {
+angular.module('myhonorsDashboard').controller('DashboardCtrl', ['$scope', '$location', '$filter', 'FirebaseIO', 'EventService', 'RSVPService', 'VolunteerService', 'WaitingListService', 'CareerService', 'UserService', 'CitizenshipService', 'SwipeService', function ($scope, $location, $filter , FirebaseIO, EventService, RSVPService, VolunteerService, WaitingListService, CareerService, UserService, CitizenshipService, SwipeService) {
     
     'use strict';
     
@@ -17,6 +15,8 @@ angular.module('myhonorsDashboard').controller('DashboardCtrl', ['$scope', '$loc
 		}
 	};
 
+
+    $scope.rsvps = RSVPService.listByUser(UserService.profile.id, {startAt: undefined});
 
 	$scope.goToEvent = function (eid) {
 		$location.path('events/' + eid);
@@ -63,3 +63,30 @@ angular.module('myhonorsDashboard').controller('DashboardCtrl', ['$scope', '$loc
 	});
 	
 }]);
+
+
+/**
+ * This filter is used when listing the events that the user has RSVP'ed in dashboard.html. First, it removes all those events that already ocurred
+ * (this situation can occur when a user RSVPs to an event but doesn't go). Second, it sorsts the events according to the starting time from sooner
+ * to later.
+*/
+angular.module( 'myhonorsDashboard' ).filter( 'filterRSVPs', function() {
+    return function ( events )
+    {
+        var upcomings = [];
+
+        for ( var key in events ) {
+            var eventItem = events[ key ];
+            if ( eventItem.date && eventItem.date.starts > Date.now() )
+                upcomings.push( eventItem );
+        }
+       
+        upcomings.sort( function( a, b ) {
+            return a.date.starts > b.date.starts ? 1 : -1;
+        });
+
+        return upcomings;
+    }
+
+});
+

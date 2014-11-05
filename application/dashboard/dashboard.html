@@ -20,14 +20,14 @@
             <div class="box-content" ng-show="careers.length">
                 <ul class="block-hover block-clickable">
                     <li ng-repeat="career in careers| orderBy:'date.starts'" ng-click="goToCareer(career.$id)" class="clearfix" ng-show="career.status == 'active'">
-                        <img class="pull-left col-xs-2 img-rounded img-polaroid" ng-src="{{career.thumbURL|| 'http://placehold.it/75'}}">
-                        <div class="pull-left col-xs-8">
-                            <div>
-                                <strong>{{career.companyName}}</strong>
-                                <span>from {{career.date.starts}} to {{career.date.ends}}</span>
-                            </div>
-                            <p class="short-desc">{{(career.description|| 'No description.') | truncate:75}} <a href="#/career/{{career.$id}}" ng-show="career.description.length > 75">read more</a></p>
+                    <img class="pull-left col-xs-2 img-rounded img-polaroid" ng-src="{{career.thumbURL|| 'http://placehold.it/75'}}">
+                    <div class="pull-left col-xs-8">
+                        <div>
+                            <strong>{{career.companyName}}</strong>
+                            <span>from {{career.date.starts}} to {{career.date.ends}}</span>
                         </div>
+                        <p class="short-desc">{{(career.description|| 'No description.') | truncate:75}} <a href="#/career/{{career.$id}}" ng-show="career.description.length > 75">read more</a></p>
+                    </div>
                     </li>
                 </ul>
             </div>
@@ -62,7 +62,7 @@
             <div class="box-content padded clearfix">
                 <ul class="block-hover">
                     <li ng-repeat="sub in submissions" style="display: none;">
-                        <label class="" ng-init="addVolunteerHours(sub)" style="display: none;"></label> 
+                    <label class="" ng-init="addVolunteerHours(sub)" style="display: none;"></label> 
                     </li>
                 </ul>
                 <div class="mh-progress">
@@ -78,24 +78,42 @@
             <div class="box-content" ng-show="events.length">
                 <ul class="block-hover block-clickable">
                     <li ng-repeat="event in events| orderBy:'date.starts'" ng-click="goToEvent(event.$id)" class="clearfix">
-                        <img class="col-sm-2 col-xs-3 img-rounded img-polaroid" ng-src="{{event.thumbURL|| 'http://placehold.it/75'}}">
-                        <div class="col-sm-7 col-xs-7">
-                            <div>
-                                <strong>{{event.name}}</strong>
-                                <span>on {{event.date.starts| date:"MMM d 'at' h:mm a"}}</span>
-                            </div>
-                            <div class="event-types">
-                                <span class="muted" ng-repeat="type in event.types" ng-show="event.types">{{type}}<span ng-show="!$last">,&nbsp;</span></span>
-                                <span class="muted" ng-show="!event.types">GENERAL EVENT</span>
-                            </div>
-                            <p class="short-desc">{{(event.desc|| 'No description.') | truncate:75}} <a href="#/events/{{event.id}}" ng-show="event.desc.length > 75">read more</a></p>
+                    <img class="col-sm-2 col-xs-3 img-rounded img-polaroid" ng-src="{{event.thumbURL|| 'http://placehold.it/75'}}">
+                    <div class="col-sm-7 col-xs-7">
+                        <div>
+                            <strong>{{event.name}}</strong>
+                            <span>on {{event.date.starts| date:"MMM d 'at' h:mm a"}}</span>
                         </div>
+                        <div class="event-types">
+                            <span class="muted" ng-repeat="type in event.types" ng-show="event.types">{{type}}<span ng-show="!$last">,&nbsp;</span></span>
+                            <span class="muted" ng-show="!event.types">GENERAL EVENT</span>
+                        </div>
+                        <p class="short-desc">{{(event.desc|| 'No description.') | truncate:75}} <a href="#/events/{{event.id}}" ng-show="event.desc.length > 75">read more</a></p>
+                    </div>
                     </li>
                 </ul>
             </div>
             <div class="box-content padded" ng-show="!events.length">
                 <div class="alert alert-info padded-medium" style="margin-bottom: 0">
                     <strong>No upcoming events.</strong> Check back again soon!
+                </div>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-header">Events I'm Going To</div>
+            <div class="box-content clearfix" ng-show="filteredRSVPs.length">
+                <ul class="block-hover block-clickable">
+                    <li ng-repeat="event in (filteredRSVPs = (rsvps | filterRSVPs))" ng-click="goToEvent(event.$id)" class="clearfix">
+                    <strong>{{event.name}}</strong>
+                    <span>on {{event.date.starts| date:"MMM d 'at' h:mm a"}}</span>
+                    </li>
+                </ul>
+                <a ng-click="showAllRSVPs()" class="pull-right space-right"><b> Show All </b></a>
+            </div>
+            <div class="box-content padded" ng-show="!filteredRSVPs.length">
+                <div class="alert alert-info padded-medium" style="margin-bottom: 0">
+                    <strong>You have no RSVPs.</strong> Check the Events page for upcoming events!
                 </div>
             </div>
         </div>

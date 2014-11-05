@@ -38,6 +38,27 @@ angular.module('myhonorsEvents').factory('RSVPService', function(FirebaseIO, Fir
 		},
 		
 		/**
+		 * Returns a FirebaseCollection of a user's RSVP record
+		 *
+		 * @param userId String     The user ID
+		 * @param options Object    Can have limit, startAt, and endAt properties
+		 */
+		listByUser: function(userId, options) {
+			var userRSVPsRef = FirebaseIO.child('user_profiles/' + userId + '/rsvps');
+
+			var options = options || {};
+			if (options.startAt) userRSVPsRef = userRSVPsRef.startAt(options.startAt);
+			if (options.endAt)   userRSVPsRef = userRSVPsRef.endAt(options.endAt);
+			if (options.limit)   userRSVPsRef = userRSVPsRef.limit(options.limit);
+
+			return FirebaseCollection(userRSVPsRef, {metaFunction: function(doAdd, rsvpSnapshot) {
+				FirebaseIO.child('events/' + rsvpSnapshot.name()).once('value', function(eventSnapshot) {
+					doAdd(eventSnapshot);
+				});
+			}});
+		},
+		
+		/**
 		 * Updates an RSVP. The information gets saved on the event reference (so we can pull the info from
 		 * the event page) and also on the user's reference (so we can pull it from a user profile page).
 		 *
@@ -60,7 +81,9 @@ angular.module('myhonorsEvents').factory('RSVPService', function(FirebaseIO, Fir
 				if (snapshot.val() == null) {
 					//Save the time when the student RSVP'ed and store them in the event's attendance child and in the user's profile
 					var rsvpTime = Date.now();
-					FirebaseIO.child('events/' + eventId + '/rsvps/' + UserService.profile.id + '/time').set(rsvpTime);
+                    var rsvpRef = FirebaseIO.child('events/' + eventId + '/rsvps/' + UserService.profile.id);
+					rsvpRef.child('/time').set(rsvpTime);
+                    rsvpRef.setPriority(-rsvpTime); 
 					UserService.ref.child('rsvps/' + eventId + '/time').set(rsvpTime);
 				}
 			});
