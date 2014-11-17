@@ -12,8 +12,24 @@ angular.module( 'myhonorsEvents' ).factory( 'ClubService', [ '$http', '$q', 'Fir
             FirebaseIO.child( 'clubs/' + clubId + '/events/' + eventId ).remove();  
         },
         
-        read: function( ) { },
-        
+        /********* THIS METHOD HAS NOT BEEN TESTED ************/ 
+		read: function( clubId, onComplete ) {
+			var deferred = $q.defer();
+
+			FirebaseIO.child( 'clubs/' + clubId ).on( 'value', function( snapshot ) {
+				if ( snapshot.val() === null ) {
+					// Club  was deleted, do nothing
+					return;
+				}
+
+				var data = snapshot.val();
+
+				deferred.resolve( data );	
+			});
+
+			return deferred.promise;
+		},
+
         list: function( options ) {
 			var clubsRef = FirebaseIO.child( 'clubs' );
 
@@ -35,6 +51,17 @@ angular.module( 'myhonorsEvents' ).factory( 'ClubService', [ '$http', '$q', 'Fir
         
         delete: function( clubdId, eventId ) { 
             
+        },
+
+        isClubMod: function( clubId, userId ) {
+            var deferred = $q.defer();
+
+            FirebaseIO.child( 'clubs/' + clubId + '/clubMods/' + userId ).once( 'value', function ( snapshot ) {
+                var isMod = ( snapshot.val() != null );
+                deferred.resolve( isMod );
+            });
+
+            return deferred.promise;
         }
     }
 }]);
