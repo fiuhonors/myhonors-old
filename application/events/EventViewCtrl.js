@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeParams', '$timeout', '$location', '$window', 'FirebaseIO', 'FirebaseCollection', 'EventService', 'WaitingListService', 'CommentService', 'RSVPService', 'SwipeService', 'UserService', 'apikey_google', function ($scope, $routeParams, $timeout, $location, $window, FirebaseIO, FirebaseCollection, EventService, WaitingListService, CommentService, RSVPService, SwipeService, UserService, apikey_google) {
+angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeParams', '$timeout', '$location', '$window', 'FirebaseIO', 'FirebaseCollection', 'EventService', 'WaitingListService', 'CommentService', 'RSVPService', 'SwipeService', 'UserService', 'ClubService', 'apikey_google', function ($scope, $routeParams, $timeout, $location, $window, FirebaseIO, FirebaseCollection, EventService, WaitingListService, CommentService, RSVPService, SwipeService, UserService, ClubService, apikey_google) {
 	var discussionRef = FirebaseIO.child('events/' + $routeParams.eventId + '/comments');
 	$scope.rsvp = RSVPService.read($routeParams.eventId) || {guests: 0, error: false};
 	$scope.originalRSVP = angular.copy($scope.rsvp); // Save an original to compare changes with hasRSVPChanges()
@@ -39,6 +39,9 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 				zoom: 17
 			};
 			$scope.markers.push(angular.extend(data.location, {message: data.location.name}));
+
+            // Determine whether this user is a club moderator for this event (if the event has a club)
+            $scope.isClubMod = ClubService.isClubMod( $scope.event.club, UserService.profile.id );
 		}, 0, true);
 	});
 
@@ -248,4 +251,22 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 			$location.path('events'); // redirect to main page
 		};
 	}	
+
+
+    /* CLUB FUNCTIONALITY */
+
+    //function hasClub( event ) {
+        //return event.hasOwnProperty( 'club' );  
+    //}
+
+    //$scope.isClubMod = function ( event ) {
+        //if ( !hasClub( event ) )
+            //return false;
+
+        //ClubService.isClubMod( event.club, UserService.profile.id ).then( function( isMod ) {
+            //return isMod;
+        //});
+
+    //};
+
 }]);
