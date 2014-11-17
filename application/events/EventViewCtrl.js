@@ -252,21 +252,4 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 		};
 	}	
 
-
-    /* CLUB FUNCTIONALITY */
-
-    //function hasClub( event ) {
-        //return event.hasOwnProperty( 'club' );  
-    //}
-
-    //$scope.isClubMod = function ( event ) {
-        //if ( !hasClub( event ) )
-            //return false;
-
-        //ClubService.isClubMod( event.club, UserService.profile.id ).then( function( isMod ) {
-            //return isMod;
-        //});
-
-    //};
-
 }]);
