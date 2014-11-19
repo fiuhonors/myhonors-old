@@ -41,7 +41,7 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 			$scope.markers.push(angular.extend(data.location, {message: data.location.name}));
 
             // Determine whether this user is a club moderator for this event (if the event has a club)
-            $scope.isClubMod = ClubService.isClubMod( $scope.event.club, UserService.profile.id );
+            $scope.isClubMod = UserService.auth.isClubMod && ClubService.isClubMod( $scope.event.club, UserService.profile.id ); 
 		}, 0, true);
 	});
 
