@@ -93,17 +93,18 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
 					extraData.rsvps += childSnapshot.child('guests').val();
 				});
 
-				snapshot.child('types').forEach(function(childSnapshot) {
-					switch (childSnapshot.val()) {
-						case 'Honors Hour':
-						case 'Excellence Lecture':
-						case 'Colloquium':
-							extraData.color = 'gold';
-							break;
-						default: break;
-					}
-				});
 
+                // Determines the color of the label for this event when displayed in
+                // the calendar. This is done by checking the event type.
+                var thisEventType = snapshot.child('types').val();
+                thisEventType = (thisEventType != null) ? thisEventType[0] : '';
+                for ( i = 0; i < eventTypes.length; ++i) {
+                    if (thisEventType === eventTypes[i].name) {
+                        extraData.color = eventTypes[i].color;
+                        break;
+                   }
+                }
+ 
 				doAdd(snapshot, extraData);
 			}});
 		},
