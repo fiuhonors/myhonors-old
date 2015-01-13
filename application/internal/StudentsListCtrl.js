@@ -9,7 +9,6 @@ angular.module('myhonorsInternal').controller('StudentsListCtrl', function($scop
 				var attendance = snapshot.child('attendance').val();
 				var honorsHours = 0;
 				var colloquia = 0;
-				var excellenceLectures = 0;
 				var generalEvents = 0;
 				var heartsEvents = 0;
 
@@ -23,9 +22,6 @@ angular.module('myhonorsInternal').controller('StudentsListCtrl', function($scop
 							break;
 						case "Colloquium":
 							colloquia++;
-							break;
-						case "Excellence Lecture":
-							excellenceLectures++;
 							break;
 						case "General Event":
 							generalEvents++;
@@ -56,11 +52,10 @@ angular.module('myhonorsInternal').controller('StudentsListCtrl', function($scop
 					email: snapshot.child('email').val(),
 					honorsHoursNum: honorsHours,
 					colloquiaNum: colloquia,
-					excellenceLecturesNum: excellenceLectures,
 					generalEventsNum: generalEvents,
 					heartsEventsNum: heartsEvents,
 					volunteerHoursNum: totalVolunteerHours,
-					totalPoints: honorsHours*2 + colloquia*3 + excellenceLectures*4 + generalEvents*1 + heartsEvents*1
+					totalPoints: honorsHours*2 + colloquia*3 + heartsEvents*1
 					
 				};
 				

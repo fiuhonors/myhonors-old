@@ -12,6 +12,7 @@ nbproject
 desktop.ini
 uploads/
 .brackets.json
+rules-backup/
 
 #Config variables
 config.php
