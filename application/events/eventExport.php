@@ -51,36 +51,47 @@ function exportCSV($events) {
     header('Pragma: public'); // HTTP/1.0
     
     
-    $csvFile = fopen('php://output', 'w'); //Open a new file in write mode and write to the output so the user is prompted to download it.
+    $csvFile = fopen('php://output', 'w'); // Open a new file in write mode and write to the output so the user is prompted to download it.
     
+    $columnHeaders = array('Title', 'Description', 'Location', 'Contact', 'Email', 'Phone', 'Url', 'Type', 'Category', 'Start_date_time', 'End_date_time', 'Tags');
+    fputcsv($csvFile, $columnHeaders, ',', chr(0));
+
+    $eventCategoryLectures = array('Honors Hour', 'Leadership Lecture', 'Colloquium');
+    $eventCategoryAcademics = array('ARCH');
+    $eventCategoryStudentLife = array('Club Meeting', 'General Event', 'Sponsored Event');
+    $eventCategoryArts = array('HEARTS');
+
+    $charsToReplace = array(",","\n"); // These are the characters that should be replaced so that the CSV does not show up messed up
     foreach ($events as $eventID => $event) {
-        $eventCategoryLectures = array('Honors Hour', 'Leadership Lecture', 'Colloquium');
-        $eventCategoryAcademics = array('ARCH');
-        $eventCategoryStudentLife = array('Club Meeting', 'General Event', 'Sponsored Event');
-        $eventCategoryArts = array('HEARTS');
-        
-	$eventTitle = empty($event['name']) ? '': str_replace(",", "", $event['name']);
-        $eventDescription = empty($event['description']) ? '': str_replace(",", "", $event['desc']);
+        // Skip Study Room swipes, BBC Lab swipes, and other such "events"
+        if(!empty($event['specialSwipe']) && $event['specialSwipe']) {
+            continue;
+        }
+
+	    $eventTitle = empty($event['name']) ? '': str_replace(",", "", $event['name']);
+        $eventDescription = empty($event['desc']) ? '': str_replace($charsToReplace, "", $event['desc']);
         $eventLocation = empty($event['location']) ? '':  str_replace(",", "", $event['location']['name']);
         $eventContact = "Luli Szeinblum";
         $eventEmail = "honors@fiu.edu";
         $eventPhone = "305-348-4100";
         $eventUrl = empty($event['thumbURL']) ? 'http://myhonors.fiu.edu' : $event['thumbURL'];
-        $eventType = empty($event['types'][0]) ? '': $event['types'][0];
-        if(!empty($eventType)){
-            if(in_array($eventType, $eventCategoryLectures)){
-                $eventCategory = "Lectures & Conferences";
-            }else if(in_array($eventType, $eventCategoryAcademics)){
+        $eventTag = empty($event['types'][0]) ? '': $event['types'][0];
+        $eventType = 'normal';
+        if(!empty($eventTag)){
+            if(in_array($eventTag, $eventCategoryLectures)){
+                $eventCategory = "Lectures and Conferences";
+            }else if(in_array($eventTag, $eventCategoryAcademics)){
                 $eventCategory = "Academics";
-            }else if(in_array($eventType, $eventCategoryStudentLife)){
+            }else if(in_array($eventTag, $eventCategoryStudentLife)){
                 $eventCategory = "Student Life";
-            }else if(in_array($eventType, $eventCategoryArts)){
-                $eventCategory = "Arts & Entertainment";
+            }else if(in_array($eventTag, $eventCategoryArts)){
+                $eventCategory = "Arts and Entertainment";
             }
         }
-        $eventStartTime = empty($event['date']['starts']) ? '' : date('m/d/y A', $event['date']['starts'] / 1000);
-        $eventEndTime = empty($event['date']['ends']) ? '' : date('m/d/y A', $event['date']['ends'] / 1000);
-	fputcsv($csvFile, array($eventTitle, $eventDescription, $eventLocation, $eventContact, $eventEmail, $eventPhone, $eventUrl, $eventType, $eventCategory, $eventStartTime, $eventEndTime, $eventType), ",", chr(0));
+        $eventStartTime = empty($event['date']['starts']) ? '' : date('m/d/y G:i', $event['date']['starts'] / 1000);
+        $eventEndTime = empty($event['date']['ends']) ? '' : date('m/d/y G:i', $event['date']['ends'] / 1000);
+
+	    fputcsv($csvFile, array($eventTitle, $eventDescription, $eventLocation, $eventContact, $eventEmail, $eventPhone, $eventUrl, $eventType, $eventCategory, $eventStartTime, $eventEndTime, $eventTag), ",", chr(0));
 		
     }
 
