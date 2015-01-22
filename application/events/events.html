@@ -10,7 +10,7 @@
                     <ul class="list-group"> 
                         <li class="list-group-item list-group-item-heading">View Events by Type</li>
                         <li class="list-group-item clickable" ng-click="searchBy('')"><a>All Events</a></li>
-                        <li class="list-group-item clickable" ng-click="searchBy(type.name)" ng-repeat="type in eventTypes"><a ng-class="{'nav-list-active': searchType == type.name}">{{type.name}} <span class="pull-right event-{{type.color || 'blue'}}">&bull;</span></a></li>
+                        <li class="list-group-item clickable" ng-click="searchBy(type.name)" ng-repeat="type in eventTypes"><a ng-class="{'nav-list-active': searchType == type.name}">{{type.name}} <span class="pull-right event-{{type.color || 'blue'}}">&#x25cf;</span></a></li>
                     </ul>
 		</div>
             </div>

@@ -98,7 +98,7 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
                 // the calendar. This is done by checking the event type.
                 var thisEventType = snapshot.child('types').val();
                 thisEventType = (thisEventType != null) ? thisEventType[0] : '';
-                for ( i = 0; i < eventTypes.length; ++i) {
+                for (var i = 0; i < eventTypes.length; ++i) {
                     if (thisEventType === eventTypes[i].name) {
                         extraData.color = eventTypes[i].color;
                         break;
