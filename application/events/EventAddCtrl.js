@@ -59,13 +59,9 @@ angular.module('myhonorsEvents').controller('EventAddCtrl', ['$scope', '$locatio
         var endMin = getMinute($scope.newItem.date.ends.time);
         newItem.date.ends = moment($scope.newItem.date.ends.date, "MM-DD-YYYY").hour(endHour).minute(endMin).valueOf();
 
-        /*var newEventId = */EventService.create(newItem);
+        var newEventId = EventService.create(newItem);
 
-        //        // If the event creation was succesful and the event is associated to a club, update the club's node to have this event
-        //        if ( newEventId && newItem.hasOwnProperty( "club" ) && newItem.club.length )
-        //            ClubService.addEventToClub( newItem.club, newEventId );
-
-        $location.path('events');
+        $location.path('events/' + newEventId);
     };
 
     $scope.resetForm = function() {
