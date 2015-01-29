@@ -23,8 +23,8 @@
 					<td><a href="" ng-click="columnOrder = 'heartsEventsNum'; reverseOrder = !reverseOrder"><b>HEARTS</b></td>
 					<td><a href="" ng-click="columnOrder = ''; reverseOrder = !reverseOrder"><b>Leadership</b></td>
 					<td><a href="" ng-click="columnOrder = ''; reverseOrder = !reverseOrder"><b>Sponsored</b></td>
-					<td><a href="" ng-click="columnOrder = 'totalPoints'; reverseOrder = !reverseOrder"><b>Total Points</b></a></td>
 					<td><a href="" ng-click="columnOrder = ''; reverseOrder = !reverseOrder"><b>Club Total</b></a></td>
+					<td><a href="" ng-click="columnOrder = 'totalPoints'; reverseOrder = !reverseOrder"><b>Total Points</b></a></td>
 					<td><a href="" ng-click="columnOrder = ''; reverseOrder = !reverseOrder"><b>Labs</b></a></td>
 					<td><a href="" ng-click="columnOrder = 'volunteerHoursNum'; reverseOrder = !reverseOrder"><b>Volunteer</b></a></td>
 				</tr>
@@ -37,10 +37,10 @@
 					<td>{{student.honorsHoursNum}}</td>
 					<td>{{student.colloquiaNum}}</td>
 					<td>{{student.heartsEventsNum}}</td>
-					<td>Not Yet Working</td>
-					<td>Not Yet Working</td>
+                    <td>{{student.leadershipLecturesNum}}</td>
+                    <td>{{student.sponsoredEventsNum}}</td>
+                    <td>{{student.clubsTotal}}</td>
 					<td>{{student.totalPoints}}</td>
-                    <td>Not Yet Working</td>
                     <td>Not Yet Working</td>
 					<td>{{student.volunteerHoursNum}}</td>
 
