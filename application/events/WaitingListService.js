@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('myhonorsEvents').factory('WaitingListService', function($http, FirebaseIO, FirebaseCollection, RSVPService, UserService) {
+angular.module('myhonorsEvents').factory('WaitingListService', function($http, FirebaseIO, FirebaseCollection, UserService) {
 	
 	return {
 		create: function(eventId, options, callback) {

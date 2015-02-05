@@ -28,10 +28,12 @@ angular.module('myhonorsInternal').controller('RSVPListCtrl', function($scope, $
 	};
 	
 	$scope.removeRSVP = function(rsvp) {	
+        /* FIX THIS: fix waiting list service */
 		var confirmation = confirm("Are you sure you wish to delete this user's RSVP?")	
 
 		if (confirmation) {
-			RSVPService.delete($scope.eventID, rsvp.pid);
+            var waitingListInfo = ($scope.event.options.waitingList && $scope.event.waitingList) ? {openings: 1 + rsvp.guests} : {};
+			RSVPService.delete($scope.eventID, rsvp.pid, waitingListInfo);
 		}
 		
 	}

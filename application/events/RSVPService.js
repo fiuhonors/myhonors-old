@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('myhonorsEvents').factory('RSVPService', function(FirebaseIO, FirebaseCollection, UserService) {
+angular.module('myhonorsEvents').factory('RSVPService', function(FirebaseIO, FirebaseCollection, UserService, WaitingListService) {
 	
 	return {
 		create: function(eventId, options, callback) {		
@@ -91,11 +91,16 @@ angular.module('myhonorsEvents').factory('RSVPService', function(FirebaseIO, Fir
 			callback();
 		},
 
-		delete: function(eventId, userId) {
+		delete: function(eventId, userId, waitingListInfo) {
 			// remove attendance info from event and user's profile
 			FirebaseIO.child('/events/' + eventId + '/rsvps/' + userId).remove();
 			FirebaseIO.child('/user_profiles/' + userId + '/rsvps/' + eventId).remove();
+            
+            // check if waiting list info is given so it can be updated accordingly
+            if(waitingListInfo && waitingListInfo.openings)
+                WaitingListService.transferFromWaitingListToRSVP(eventId, waitingListInfo.openings);
 		},
+
 		hasRSVP: function(eventId) {
 			return UserService.profile && UserService.profile.rsvps && UserService.profile.rsvps[eventId];
 		}

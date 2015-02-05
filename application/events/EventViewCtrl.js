@@ -75,11 +75,12 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 	};
 
 	$scope.removeRSVP = function() {
-		RSVPService.delete($routeParams.eventId, UserService.profile.id);
+        var waitingListInfo = ($scope.event.options.waitingList && $scope.event.waitingList) ? {openings: 1 + $scope.rsvp.guests} : {};
+        RSVPService.delete($routeParams.eventId, UserService.profile.id, waitingListInfo);
 		
 		// If waiting list is being used and there are people in it, we update accordingly now that someone removed his RSVP
-		if ($scope.event.options.waitingList && $scope.event.waitingList)
-			WaitingListService.transferFromWaitingListToRSVP($routeParams.eventId, 1 + $scope.rsvp.guests); // New openings =  user's spot + his guests
+		//if ($scope.event.options.waitingList && $scope.event.waitingList)
+			//WaitingListService.transferFromWaitingListToRSVP($routeParams.eventId, 1 + $scope.rsvp.guests); // New openings =  user's spot + his guests
 		
 		
 		$scope.rsvp = $scope.originalRSVP = {guests: 0, error: false};

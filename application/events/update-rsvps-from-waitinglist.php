@@ -9,6 +9,7 @@ require_once "../../config.php"; // Include all the necessary Firebase config va
 include_once "../../auth/FirebaseToken.php";
 require_once '../lib/firebaseLib/firebaseLib.php';
 
+define("ENABLE_EMAIL", false);	// Enable for testing purposes
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
@@ -67,10 +68,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			$fb = new fireBase(FIREBASE_USERS_URL, $temp_token);
 			$path = $pantherID . "/rsvps/" . $eventId;
 			$fb->set($path, array( "guests" => 0, "time" => $time));
-			
-			// An email notification is sent to the user to inform him that he has been added to the RSVP list
-			$userInfo = getUserInfo($pantherID, $temp_token);
-            sendEmailNotification($userInfo, $eventInfo);
+
+            if (ENABLE_EMAIL) {
+                // An email notification is sent to the user to inform him that he has been added to the RSVP list
+                $userInfo = getUserInfo($pantherID, $temp_token);
+                sendEmailNotification($userInfo, $eventInfo);
+            }
 		} 
 	}
     
