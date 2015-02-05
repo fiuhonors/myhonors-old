@@ -1,12 +1,10 @@
 <?php
 /* Config settings */
 session_start();
-define("SERVER_ADDRESS", "");
-define("BEFORE_USERNAME", "");
-define("AFTER_USERNAME", "");
-define("ERROR_STATEMENT", "");
-
-
+define("SERVER_ADDRESS", "fiuldap1.fiu.edu");
+define("BEFORE_USERNAME", "uid=");
+define("AFTER_USERNAME", ",ou=panthersoft,dc=fiu,dc=edu");
+define("ERROR_STATEMENT", "Verification failed. Please check your Panther ID and MyAccounts password and try again.");
 
 // Warning: only disable LDAP for development. This is useful when you're developing
 // off-site and can't access the LDAP server due to security restrictions
@@ -14,7 +12,17 @@ define("DISABLE_LDAP", true);
 
 /* DO NOT EDIT BELOW THIS LINE */
 require_once "../config.php"; // Include all the necessary Firebase config variables
-include_once "FirebaseToken.php";
+include_once "FirebaseToken.php"; 
+
+function getSSLPage($url) {
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_HEADER, false);
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_SSLVERSION, 3);
+    $result = curl_exec($curl);
+    curl_close($curl);
+    return $result;
+}
 
 function getData($username, $data) {
 	// create token generator
@@ -23,7 +31,9 @@ function getData($username, $data) {
 
 	// create a temporary admin token to access the admin users/roles in the 'settings' area of our Firebase
 	$temp_token = $tokenGen->createToken(array(), array('admin' => true));
-	$access_levels = json_decode(file_get_contents(FIREBASE_SETTINGS_URL . 'accessLevels/.json?auth=' . $temp_token), true);
+	$access_levels = json_decode(getSSLPage(FIREBASE_SETTINGS_URL . 'accessLevels/.json?auth=' . $temp_token), true);
+    
+    
 
 	$auth_payload = array(
 		'id' => $username,
