@@ -283,6 +283,33 @@ ul.block-clickable li:hover {
 
 /* COLOR CODED EVENT LABELS */
 
+span[class*="event-"].pull-right {
+    font-size:40px;
+    line-height:40px;
+    margin-top:-13px;
+}
+
+.event-purple {
+    color: #2E0854;
+}
+.label.event-purple {
+    color: white;
+    background-color: #2E0854;
+}
+.event-sienna {
+    color: #a0522d;
+}
+.label.event-sienna {
+    color: white;
+    background-color: #a0522d;
+}
+.event-slategray {
+    color: #2F4F4F;
+}
+.label.event-slategray {
+    color: white;
+    background-color: #2F4F4F;
+}
 .event-green {
     color: #468847;
 }
@@ -290,7 +317,6 @@ ul.block-clickable li:hover {
     color: white;
     background-color: #468847;
 }
-
 .event-blue {
     color: #3a87ad;
 }
@@ -298,7 +324,6 @@ ul.block-clickable li:hover {
     color: white;
     background-color: #3a87ad;
 }
-
 .event-gold {
     color: #f89406;
 }
@@ -306,7 +331,6 @@ ul.block-clickable li:hover {
     color: white;
     background-color: #f89406;
 }
-
 .event-red {
     color: #b94a48;
 }
@@ -314,7 +338,6 @@ ul.block-clickable li:hover {
     color: white;
     background-color: #b94a48;
 }
-
 .event-black {
     color: #333333;
 }
