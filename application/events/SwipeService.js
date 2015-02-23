@@ -26,25 +26,33 @@ angular.module('myhonorsEvents').factory('SwipeService', function($q, FirebaseIO
 	};
 
 	return {
-		create: function(eventId, userId, eventType, callback) {
+		create: function(eventId, userId, eventType, callback, isNonHonors) {
 			if (!angular.isString(eventId) || !angular.isString(userId)) {
 				throw new Error('Invalid input when creating swipe');
 				return;
 			}
 
 			var now = Date.now();
-			var userRef = FirebaseIO.child('events/' + eventId + '/attendance/' + userId);
+            var userRef;
+            
+            // Student is not an Honors student
+            if (isNonHonors === true) {
+                userRef = FirebaseIO.child('events/' + eventId + '/attendanceNonHonors/' + userId);  
+            } else {
+                userRef = FirebaseIO.child('events/' + eventId + '/attendance/' + userId);   
+            }
 
 			var swipeRef = userRef.push(now, function() {
 				// we can't set the priority of an empty location, so push the data first and
 				// then set the priority in this onComplete callback
 				userRef.setPriority(now);
 			});
-
-			//Push the event type and swipe time to the user's profile record
-			FirebaseIO.child('user_profiles/' + userId + '/attendance/' + eventId + "/eventType").set(eventType);	
-			FirebaseIO.child('user_profiles/' + userId + '/attendance/' + eventId + '/' + swipeRef.name()).set(now);
-			
+            
+            //Push the event type and swipe time to the user's profile record
+            if (isNonHonors !== true) {
+                FirebaseIO.child('user_profiles/' + userId + '/attendance/' + eventId + "/eventType").set(eventType);	
+                FirebaseIO.child('user_profiles/' + userId + '/attendance/' + eventId + '/' + swipeRef.name()).set(now);
+            }
 
 			if (angular.isFunction(callback)) callback(swipeRef);
 		},

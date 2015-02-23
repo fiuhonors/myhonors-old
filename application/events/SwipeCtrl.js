@@ -3,7 +3,10 @@
 angular.module('myhonorsEvents').controller('SwipeCtrl', ['$scope', '$timeout', '$routeParams', '$fileUploader', 'UserService', 'EventService', 'SwipeService', 'RFIDTagService', function ($scope, $timeout, $routeParams, $fileUploader, UserService, EventService, SwipeService, RFIDTagService) {
 	$scope.data = {id: ''};
 	
-	$scope.rfid
+	$scope.rfid;
+    
+    // Record non-Honors students in this event?
+    $scope.allowNonHonorsStudents = false;
 	
 	$scope.event = EventService.read($routeParams.eventId, function(event) {
 		$scope.eventType = event.types;	//Store the event type
@@ -41,8 +44,16 @@ angular.module('myhonorsEvents').controller('SwipeCtrl', ['$scope', '$timeout', 
 				});
 			} else {
 				$timeout(function() {
-					$scope.lastSwipe = false;
-					$scope.error = true;
+                    $scope.lastSwipe = false;
+				    $scope.error = true;
+                    if ($scope.allowNonHonorsStudents == true) {
+                        SwipeService.create($routeParams.eventId, userId, $scope.eventType, undefined, true);
+                        $scope.lastSwipe = {
+                            nonHonors: true,
+                            userId: userId
+                        };
+                        $scope.error = false;
+                    }
 				});
 			}
 		});
