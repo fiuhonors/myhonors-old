@@ -32,6 +32,9 @@ logs/
 access.log
 error.log
 
+# SASS
+.sass-cache
+
 # Server-possible directories (Portfolio, CRS, etc)
 portfolio/
 crs/
