@@ -4,6 +4,10 @@ angular.module('myhonorsEvents').controller('SwipeCtrl', ['$scope', '$timeout', 
 	$scope.data = {id: ''};
 	$scope.rfid = '';
     $scope.eventInfo = EventInfo;
+  
+    // Record non-Honors students in this event?
+    $scope.allowNonHonorsStudents = false;
+    
 	$scope.swipes = SwipeService.listByEvent($routeParams.eventId);
 
 	// used in ng-repeat's orderBy to reverse the array
@@ -38,8 +42,16 @@ angular.module('myhonorsEvents').controller('SwipeCtrl', ['$scope', '$timeout', 
 				});
 			} else {
 				$timeout(function() {
-					$scope.lastSwipe = false;
-					$scope.error = true;
+                    $scope.lastSwipe = false;
+				    $scope.error = true;
+                    if ($scope.allowNonHonorsStudents == true) {
+                        SwipeService.create($routeParams.eventId, userId, eventSwipeInfo, undefined, true);
+                        $scope.lastSwipe = {
+                            nonHonors: true,
+                            userId: userId
+                        };
+                        $scope.error = false;
+                    }
 				});
 			}
 		});
