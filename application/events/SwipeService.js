@@ -26,11 +26,20 @@ angular.module('myhonorsEvents').factory('SwipeService', function($q, FirebaseIO
 	};
 
 	return {
-		create: function(eventId, userId, eventType, callback) {
+		create: function(eventId, userId, eventInfo, callback) {
 			if (!angular.isString(eventId) || !angular.isString(userId)) {
 				throw new Error('Invalid input when creating swipe');
 				return;
 			}
+            if (!eventInfo.hasOwnProperty("eventType")) {
+				throw new Error('The type of the event must be given');
+				return;
+            }
+            if (!eventInfo.hasOwnProperty("clubName")) {
+                throw new Error('The name of the club this event belongs to must be given (or null if the event has no club)');
+				return;
+            }
+
 
 			var now = Date.now();
 			var userRef = FirebaseIO.child('events/' + eventId + '/attendance/' + userId);
@@ -41,10 +50,15 @@ angular.module('myhonorsEvents').factory('SwipeService', function($q, FirebaseIO
 				userRef.setPriority(now);
 			});
 
+            var eventType = eventInfo.eventType;
+            var clubName = eventInfo.clubName;
+
 			//Push the event type and swipe time to the user's profile record
-			FirebaseIO.child('user_profiles/' + userId + '/attendance/' + eventId + "/eventType").set(eventType);	
+			FirebaseIO.child('user_profiles/' + userId + '/attendance/' + eventId + "/eventType/0").set(eventType);	
 			FirebaseIO.child('user_profiles/' + userId + '/attendance/' + eventId + '/' + swipeRef.name()).set(now);
 			
+            if (eventInfo.clubName)
+			    FirebaseIO.child('user_profiles/' + userId + '/attendance/' + eventId + "/clubName").set(clubName);	
 
 			if (angular.isFunction(callback)) callback(swipeRef);
 		},

@@ -14,6 +14,11 @@ angular.module('myhonorsEvents').config(['$routeProvider', function($routeProvid
 			templateUrl: 'application/events/swipe.html',
 			controller: 'SwipeCtrl',
 			requireLogin: true,
-			resolve: appResolve,
+			resolve: {
+                auth: appResolve.auth,
+                EventInfo: function($route, EventService) {
+                    return EventService.read($route.current.params.eventId);
+                }
+            },
 			showPanels: false });
 }]);

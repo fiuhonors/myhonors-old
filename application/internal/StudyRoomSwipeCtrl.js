@@ -28,7 +28,8 @@ angular.module('myhonorsInternal').controller('StudyRoomSwipeCtrl', function($sc
 	
 
 	$scope.save = function(answer) {
-		SwipeService.create('studyroomswipe', $scope.data.userId, "studyroomswipe", function(swipeRef) {
+        var eventInfo = {eventType: "studyroomswipe", clubName: null};
+		SwipeService.create('studyroomswipe', $scope.data.userId, eventInfo, function(swipeRef) {
 			swipeRef.set({time: Date.now(), answer: answer});
 		});
 		$scope.clear();

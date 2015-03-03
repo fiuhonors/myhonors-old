@@ -30,7 +30,8 @@ angular.module('myhonorsInternal').controller('BBCLabSwipeCtrl', function($scope
 	
 
 	$scope.save = function(answer) {
-		SwipeService.create('bbclabswipe', $scope.data.userId, "bbclabswipe", function(swipeRef) {
+        var eventInfo = {eventType: "bbclabswipe", clubName: null};
+		SwipeService.create('bbclabswipe', $scope.data.userId, eventInfo, function(swipeRef) {
 			swipeRef.set({time: Date.now(), answer: answer});
 		});
 		$scope.clear();

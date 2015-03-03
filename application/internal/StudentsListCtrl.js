@@ -7,13 +7,13 @@ angular.module('myhonorsInternal').controller('StudentsListCtrl', function($scop
 
     var citizenshipTypes = CitizenshipService.getTypes();
     citizenshipTypes.then(function(promise) {
-        console.log(promise);
         var enabledEventTypes = promise.enabledTypes;
 
 
         $scope.students = new FirebaseCollection(usersRef, {metaFunction: function(doAdd, snapshot) {
             var attendance = snapshot.child('attendance').val();
             var eventsAttendance = {};
+            var clubsAttendance = {};
 
             angular.forEach(enabledEventTypes, function(key, eventType) {
                 eventsAttendance[eventType] = 0;
@@ -22,12 +22,21 @@ angular.module('myhonorsInternal').controller('StudentsListCtrl', function($scop
             if (attendance !== null && attendance.length !== 0) {
                 angular.forEach(attendance, function(value,key) {
                     var eventType = value.eventType[0];
-                    if(eventsAttendance[eventType] != null) {  /* this is to skip attendances of events whose type is disabled */                 
+
+                    if (eventType == "Club Meeting") {
+                        var clubName = value.clubName;
+                        if (clubsAttendance[clubName] == null) 
+                            clubsAttendance[clubName] = 0;
+                        clubsAttendance[clubName]++;
+                    }
+                    
+                    if (eventsAttendance[eventType] != null) {  /* this is to skip attendances of events whose type is disabled */             
                         eventsAttendance[eventType]++;
                     }
                 });
             }
 
+            /* calculate accepted volunteer hours */
             var volunteerHours = snapshot.child("volunteerHours").val();
             var totalVolunteerHours = 0;
             angular.forEach(volunteerHours, function(value, key) {
@@ -40,12 +49,27 @@ angular.module('myhonorsInternal').controller('StudentsListCtrl', function($scop
             /* calculate total points */
             var totalPoints = 0;
             angular.forEach(eventsAttendance, function(attendances, eventType) {
-                var maxPoints = enabledEventTypes[eventType].maxPoints;
-                var pointsEventType = enabledEventTypes[eventType].points * attendances;
-                if(maxPoints != 0 && pointsEventType > maxPoints)
-                    pointsEventType = maxPoints;
-                totalPoints += pointsEventType;
+                if (eventType != "Club Meeting") {
+                    var maxPoints = enabledEventTypes[eventType].maxPoints;
+                    var pointsEventType = enabledEventTypes[eventType].points * attendances;
+                    if (maxPoints != 0 && pointsEventType > maxPoints)
+                        pointsEventType = maxPoints;
+                    totalPoints += pointsEventType;
+                }
             });
+
+            /* calculate total club points */
+            var totalClubPoints = 0;
+            angular.forEach(clubsAttendance, function(attendances, clubName) {
+                var maxPoints = enabledEventTypes["Club Meeting"].maxPoints;
+                var totalPointsForClub = enabledEventTypes["Club Meeting"].points * attendances;
+                if (maxPoints != 0 && totalPointsForClub > maxPoints)
+                    totalPointsForClub = maxPoints;
+                totalClubPoints += totalPointsForClub;
+            });
+
+            
+            totalPoints += totalClubPoints;
 
             var extraData = {
                 id: snapshot.name(),

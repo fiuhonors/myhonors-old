@@ -1,14 +1,9 @@
 'use strict';
 
-angular.module('myhonorsEvents').controller('SwipeCtrl', ['$scope', '$timeout', '$routeParams', '$fileUploader', 'UserService', 'EventService', 'SwipeService', 'RFIDTagService', function ($scope, $timeout, $routeParams, $fileUploader, UserService, EventService, SwipeService, RFIDTagService) {
+angular.module('myhonorsEvents').controller('SwipeCtrl', ['$scope', '$timeout', '$routeParams', '$fileUploader', 'UserService', 'EventService', 'SwipeService', 'RFIDTagService', 'EventInfo', function ($scope, $timeout, $routeParams, $fileUploader, UserService, EventService, SwipeService, RFIDTagService, EventInfo) {
 	$scope.data = {id: ''};
-	
-	$scope.rfid
-	
-	$scope.event = EventService.read($routeParams.eventId, function(event) {
-		$scope.eventType = event.types;	//Store the event type
-	});
-	
+	$scope.rfid = '';
+    $scope.eventInfo = EventInfo;
 	$scope.swipes = SwipeService.listByEvent($routeParams.eventId);
 
 	// used in ng-repeat's orderBy to reverse the array
@@ -31,10 +26,12 @@ angular.module('myhonorsEvents').controller('SwipeCtrl', ['$scope', '$timeout', 
 
 	$scope.doAdd = function(pid) {
 		var userId = pid;
+        var eventSwipeInfo = {eventType: $scope.eventInfo.types[0]};
+        eventSwipeInfo["clubName"] = $scope.eventInfo.hasOwnProperty("club") ? $scope.eventInfo.club : null; 
 
 		UserService.exists(userId, function(result, userData) {
 			if (result === true) {
-				SwipeService.create($routeParams.eventId, userId, $scope.eventType);
+				SwipeService.create($routeParams.eventId, userId, eventSwipeInfo);
 				$timeout(function() {
 					$scope.lastSwipe = userData;
 					$scope.error = false;
