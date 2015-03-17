@@ -41,6 +41,13 @@ angular.module('myhonorsEvents').controller('EventAddCtrl', ['$scope', '$locatio
         if (theForm.$invalid) { return; }
 
         var newItem = angular.copy($scope.newItem);
+        newItem.types[0] = newItem.types[0] || "General Event"; 
+
+        /* Check that if the user chose 'Club Meeting' type, he also chose a club */
+        if (newItem.types[0] === "Club Meeting" && !newItem.club) {
+            alert("This event is a Club Meeting but has no club associated to it. Please choose a club.");
+            return;
+        }
 
         newItem.location = {
             name: $scope.newItem.location.name, 
@@ -49,7 +56,6 @@ angular.module('myhonorsEvents').controller('EventAddCtrl', ['$scope', '$locatio
         };
 
         // Ensure that the event type is not empty in case it was not added by the staff
-        newItem.types[0] = newItem.types[0] || "General Event"; 
 
         var startHour = getHour($scope.newItem.date.starts.time);
         var startMin = getMinute($scope.newItem.date.starts.time);

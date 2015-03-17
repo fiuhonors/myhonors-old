@@ -26,8 +26,6 @@ angular.module('myhonorsEvents').controller('EventEditCtrl', ['$scope', '$locati
 
                         angular.extend( $scope.event, data );
                         
-			//$scope.event = data;
-
 			// format the starting/ending dates and times
 			var start = moment(data.date.starts);
 			$scope.event.date.starts = {
@@ -76,6 +74,12 @@ angular.module('myhonorsEvents').controller('EventEditCtrl', ['$scope', '$locati
 	
 	$scope.doSaveChanges = function(theForm) {
 		if (theForm.$invalid) { return; }
+
+        /* Check that if the user chose 'Club Meeting' type, he also chose a club */
+        if ($scope.event.types[0] === "Club Meeting" && !$scope.event.club) {
+            alert("This event is a Club Meeting but has no club associated to it. Please choose a club.");
+            return;
+        }
 
 		var startHour = getHour($scope.event.date.starts.time),
 			startMin = getMinute($scope.event.date.starts.time),
