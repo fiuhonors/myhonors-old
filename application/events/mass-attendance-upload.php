@@ -77,6 +77,8 @@ for ($row = 1; $row <= $highestRow; $row++){
 	$path = $pid . "/attendance/" . $eventId;
 	$fb->push($path, $now);
 	$fb->set($path . '/eventType', $eventInfo["types"]);
+    if (isset($eventInfo["club"]))
+        $fb->set($path . '/clubName', $eventInfo["club"]);
 	
 	// Update the event's attendance field
 	$fb = new fireBase(FIREBASE_EVENTS_URL, $temp_token);
