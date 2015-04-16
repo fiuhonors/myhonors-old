@@ -43,7 +43,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 	$to  = $_POST[ 'referenceEmail' ];
 	
 	// subject
-	$subject = 'Volunteer Hours Confirmation';
+	$subject = 'Volunteer Hours Confirmation for ' . $_POST[ 'userName' ];
 	
 	// message
 	$message = '

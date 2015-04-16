@@ -45,13 +45,18 @@
                         {{ $index + 1}}.
                         <label class="label label-info" ng-show="volunteer.status != 'accepted'" style="margin-right: 2px">WAITING FOR VERIFICATION</label> 
                         <label class="label label-success" ng-show="volunteer.status == 'accepted'" ng-init="countVolunteerHours(volunteer)" style="margin-right: 2px">ACCEPTED</label> 
-                        {{volunteer.agency}} - {{volunteer.activity}} <a href="" class="icon icon-remove" ng-click="removeVolunteerHours(volunteer)"></a>
+                        <b>{{volunteer.agency}}</b> - {{volunteer.activity}} <a href="" class="icon icon-remove" ng-click="removeVolunteerHours(volunteer)"></a>
                         <br>
-                        Hours: {{volunteer.hours}} <span ng-show="!volunteer.hours">N/A</span>  <br>
-                        Reference Name: {{volunteer.referenceName}} <span ng-show="!volunteer.referenceName">N/A</span> <br>
-                        Reference Title: {{volunteer.referenceTitle}} <span ng-show="!volunteer.referenceTitle">N/A</span> <br>
-                        Reference Email: {{volunteer.referenceEmail}} <span ng-show="!volunteer.referenceEmail">N/A</span> <br>
-                        Reference Phone Number: {{volunteer.referencePhone}} <span ng-show="!volunteer.referencePhone">N/A</span>
+                        <b>Hours:</b> {{volunteer.hours}} <span ng-show="!volunteer.hours">N/A</span>  <br>
+                        <b>Reference Name:</b> {{volunteer.referenceName}} <span ng-show="!volunteer.referenceName">N/A</span> <br>
+                        <b>Reference Title:</b> {{volunteer.referenceTitle}} <span ng-show="!volunteer.referenceTitle">N/A</span> <br>
+                        <b>Reference Email:</b> {{volunteer.referenceEmail}} <span ng-show="!volunteer.referenceEmail">N/A</span> <br>
+                        <b>Reference Phone Number:</b> {{volunteer.referencePhone}} <span ng-show="!volunteer.referencePhone">N/A</span> <br>
+                        <b>Start-End Date:</b> {{volunteer.startDate}} - {{volunteer.endDate}}
+                        <span ng-show="volunteer.status != 'accepted'">
+                            <br>
+                            <b>Accept Link: <a href="https://myhonors.fiu.edu/application/citizenship/confirmation.php?volunteerHoursID={{volunteer.$id}}&userID={{pid}}"> Click Here </a> </b>
+                        </span>
                     </li>
                 </ul>
             </div>

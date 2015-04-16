@@ -149,7 +149,9 @@
 						{{ $index + 1 }}.
 						<label class="label label-info" ng-show="sub.status != 'accepted'" style="margin-right: 2px">WAITING FOR VERIFICATION</label> 
 						<label class="label label-success" ng-show="sub.status == 'accepted'" ng-init="addVolunteerHours(sub)" style="margin-right: 2px">ACCEPTED</label> 
-						{{sub.agency}} - {{sub.activity}} <a href="" class="glyphicon glyphicon-remove icon" ng-click="removeVolunteerHours(sub)"></a>
+                        <b>{{sub.agency}}</b> - {{sub.activity}} <a href="" class="glyphicon glyphicon-remove icon" ng-click="removeVolunteerHours(sub)"></a>
+                        <br>
+                        Start-End Date: {{sub.startDate}} - {{sub.endDate}}
 					</li>
 				</ul>
 			</div>
