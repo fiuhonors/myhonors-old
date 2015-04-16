@@ -27,22 +27,28 @@
 						}
 						var typeIsEnabled = value.citizenship.enabled == undefined ? true : value.citizenship.enabled,
 							typePoints = value.citizenship.points || 0,
-							typeMaxPoints = value.citizenship.maxPoints || 0;
+							typeMaxPoints = value.citizenship.maxPoints || 0,
+                            typeMinAttendance = value.citizenship.minAttendance || 0,
+                            typeHide = value.citizenship.hide || false;
 
 						citizenshipTypes[key] = {
 							enabled: typeIsEnabled,
 							points: typePoints,
-							maxPoints: typeMaxPoints
+							maxPoints: typeMaxPoints,
+                            minAttendance: typeMinAttendance
 						};
 						if (typeIsEnabled) {
 							citizenshipTypesEnabled[key] = {
 								points: typePoints,
-								maxPoints: typeMaxPoints
+								maxPoints: typeMaxPoints,
+                                minAttendance: typeMinAttendance,
+                                hide: typeHide
 							};
 						} else {
 							citizenshipTypesDisabled[key] = {
 								points: typePoints,
-								maxPoints: typeMaxPoints
+								maxPoints: typeMaxPoints,
+                                minAttendance: typeMinAttendance
 							};
 						}
 					});

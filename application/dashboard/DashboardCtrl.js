@@ -41,7 +41,22 @@ angular.module('myhonorsDashboard').controller('DashboardCtrl', ['$scope', '$loc
 			// Event Names added here just like $scope.citizenship.events. This checks for duplicate swipes in one event and prevents additional points for such.
 			var eventsArray = [];
             var clubsAttendance = {};
-			
+            
+            /**** calculate the points for BBC and Study Room Swipes *****/
+            var labAttendance = 0;
+            var bbcLabSwipes = UserService.profile.attendance.bbclabswipe;
+            var studyRoomSwipes = UserService.profile.attendance.studyroomswipe;
+            for (var k in bbcLabSwipes) if (bbcLabSwipes.hasOwnProperty(k)) labAttendance++;
+            for (var k in studyRoomSwipes) if (studyRoomSwipes.hasOwnProperty(k)) labAttendance++;
+            labAttendance -= 2; /* to remove the eventType properties in each object */
+			var labPoints = labAttendance * promise.enabledTypes["Labs"].points;
+
+            if (labAttendance < promise.enabledTypes["Labs"].minAttendance) labPoints = 0;
+            else if (labPoints > promise.enabledTypes["Labs"].maxPoints) labPoints = promise.enabledTypes["Labs"].maxPoints;
+
+            $scope.citizenshipPoints += labPoints;
+            /************************************************************/
+            
 			angular.forEach($scope.eventsAttended, function(eventInfo, key) {
 				if (eventInfo.name == undefined || eventInfo.types == undefined){
 					return;

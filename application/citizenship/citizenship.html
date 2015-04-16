@@ -13,15 +13,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="citizenship in citizenship.types.enabledTypes | orderCitizenship:'points':'true'">
+                            <tr ng-repeat="citizenship in citizenship.types.enabledTypes | orderCitizenship:'points':'true'" ng-hide="citizenship.hide">
                                 <td>{{ citizenship.keyValue }}</td>
                                 <td>{{ citizenship.points }}</td>
                                 <td ng-if="citizenship.maxPoints > 0">{{ citizenship.maxPoints }}</td>
                                 <td ng-if="citizenship.maxPoints == 0">Unrestricted</td>
                             </tr>
                             <tr>
-                                <td>Study Room</td>
-                                <td>10 visits = 1 point</td>
+                                <td>Study Room and BBC Lab</td>
+                                <td>10 total visits = 1 point</td>
                                 <td>1</td>
                             </tr>
                         </tbody>
