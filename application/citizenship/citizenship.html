@@ -47,14 +47,15 @@
                         </div>
                     </div>
                     <div id="accordion" ng-if="citizenship.roomswipeCount">
-                        <div class="space-below" ng-repeat="(roomswipeType, roomswipeList) in citizenship.roomswipe">
+                        <div class="space-below" ng-repeat="(roomswipeType, swipeTotal) in citizenship.roomswipe">
                             <a data-target="#citizenshipRoomswipeType-{{$index}}" data-toggle="collapse" style="cursor:pointer;">
                                 <b><i class="fa fa-caret-square-o-down"></i> {{ roomswipeType }}</b>
                             </a>
                             <ul class="block-hover collapse" id="citizenshipRoomswipeType-{{$index}}">
-                                <li ng-repeat="roomswipeContent in roomswipeList">
-                                    Visit reason: {{ roomswipeContent.answer }}
-                                </li>
+                                <b> Total Visits: </b> {{swipeTotal}}
+                                <!--<li ng-repeat="roomswipeContent in roomswipeList">-->
+                                    <!--Visit reason: {{ roomswipeContent.answer }}-->
+                                <!--</li>-->
                             </ul>
                         </div>
                     </div>

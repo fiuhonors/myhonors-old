@@ -46,7 +46,10 @@ angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$time
         points: 0,
         events: {},
         eventsCount: 0,
-        roomswipe: {},
+        roomswipe: {
+            'BBC Lab': 0,
+            'Study Room': 0
+        },
         roomswipeCount: 0
     };
     $scope.eventsAttended = SwipeService.listByUser(UserService.profile.id);
@@ -56,6 +59,7 @@ angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$time
 		citizenshipTypes.then( function (promise) {
 			$scope.citizenship.points = 0;
 			$scope.citizenship.eventsCount = $scope.eventsAttended.length;
+            $scope.citizenship.roomswipe["BBC Lab"] = $scope.citizenship.roomswipe["Study Room"] = 0;
 			// Event Names added here just like $scope.citizenship.events. This checks for duplicate swipes in one event and prevents additional points for such.
 			var eventsArray = [];
             var clubsAttendance = {};
@@ -64,9 +68,11 @@ angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$time
             var labAttendance = 0;
             var bbcLabSwipes = UserService.profile.attendance.bbclabswipe;
             var studyRoomSwipes = UserService.profile.attendance.studyroomswipe;
-            for (var k in bbcLabSwipes) if (bbcLabSwipes.hasOwnProperty(k)) labAttendance++;
-            for (var k in studyRoomSwipes) if (studyRoomSwipes.hasOwnProperty(k)) labAttendance++;
-            labAttendance -= 2; /* to remove the eventType properties in each object */
+            for (var k in bbcLabSwipes) if (bbcLabSwipes.hasOwnProperty(k)) $scope.citizenship.roomswipe["BBC Lab"]++;
+            for (var k in studyRoomSwipes) if (studyRoomSwipes.hasOwnProperty(k)) $scope.citizenship.roomswipe["Study Room"]++;
+
+            var labAttendance = $scope.citizenship.roomswipe["BBC Lab"] + $scope.citizenship.roomswipe["Study Room"];
+            $scope.citizenship.roomswipeCount = labAttendance -= 2; /* to remove the eventType properties in each object */
 			var labPoints = labAttendance * promise.enabledTypes["Labs"].points;
 
             if (labAttendance < promise.enabledTypes["Labs"].minAttendance) labPoints = 0;
