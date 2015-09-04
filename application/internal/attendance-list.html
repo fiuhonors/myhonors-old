@@ -26,7 +26,9 @@
 					<td ng-if="event.name == 'BBC Lab Kiosk' ||  event.name == 'Study Room'" ng-init="getLabAttendance(user.pid)">
 						<ul>
 							<li ng-repeat="attendance in labAttendance[user.pid]">
-								{{attendance.answer}} on {{attendance.time | date:'short'}} 
+                                <span ng-if="attendance.answer && attendance.time">
+                                    {{attendance.answer}} on {{attendance.time | date:'short'}} 
+                                </span>
 							</li>
 						</ul>
 					</td> 					
