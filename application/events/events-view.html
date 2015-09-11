@@ -29,8 +29,8 @@
                     <strong>Date: </strong> {{event.date.starts| date:"EEE, MMMM d 'at' h:mm a"}}<br />
                     <strong>Location: </strong> {{event.location.name}} <br/>
                     <span ng-if="event.contactName && event.contactEmail">
-                    <strong>Contact: </strong> {{event.contactName}} <br/>
-                    &nbsp;&nbsp;&nbsp; {{event.contactEmail}}
+                        <strong>Contact: </strong> {{event.contactName}} <br/>
+                        <strong>Contact Email: {{event.contactEmail}}</strong>
                     </span>
                 </p>
                 <hr style="margin-top: 10px; margin-bottom: 10px" ng-show="user.auth.isEventMod" />
