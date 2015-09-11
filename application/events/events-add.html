@@ -78,7 +78,23 @@
                             </select>
                         </div>
                     </div>
-
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="contactName" class="control-label">Contact Name</label><br />
+                                <input type="text" id="contactName" class="form-control" ng-model="newItem.contactName">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="contactEmail" class="control-label">Contact Email</label><br />
+                                <input type="text" id="contactEmail" class="form-control" ng-model="newItem.contactEmail">
+                            </div>
+                        </div>
+                    </div>
                     <hr />
                     <label class="checkbox" style="margin-left: 20px">
                         <input type="checkbox" ng-model="newItem.options.disableRSVP"> Disable RSVPs

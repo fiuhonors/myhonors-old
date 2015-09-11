@@ -80,6 +80,12 @@ angular.module('myhonorsEvents').controller('EventEditCtrl', ['$scope', '$locati
             alert("This event is a Club Meeting but has no club associated to it. Please choose a club.");
             return;
         }
+        // Check that if the user provides both a Contact Name and Email, if he/she provides one or the other.
+        if (($scope.event.contactName && !$scope.event.contactEmail) && 
+            ($scope.event.contactEmail && !$scope.event.contactName)) {
+            alert("If you specify a Contact Name or Contact Email, you must also provide the other information.");
+            return;
+        }
 
 		var startHour = getHour($scope.event.date.starts.time),
 			startMin = getMinute($scope.event.date.starts.time),

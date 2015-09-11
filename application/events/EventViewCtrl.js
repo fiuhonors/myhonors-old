@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeParams', '$timeout', '$location', '$window', 'FirebaseIO', 'FirebaseCollection', 'EventService', 'WaitingListService', 'CommentService', 'RSVPService', 'SwipeService', 'UserService', 'ClubService', 'apikey_google', function ($scope, $routeParams, $timeout, $location, $window, FirebaseIO, FirebaseCollection, EventService, WaitingListService, CommentService, RSVPService, SwipeService, UserService, ClubService, apikey_google) {
+angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$http', '$routeParams', '$timeout', '$location', '$window', 'FirebaseIO', 'FirebaseCollection', 'EventService', 'WaitingListService', 'CommentService', 'RSVPService', 'SwipeService', 'UserService', 'ClubService', 'apikey_google', function ($scope, $http, $routeParams, $timeout, $location, $window, FirebaseIO, FirebaseCollection, EventService, WaitingListService, CommentService, RSVPService, SwipeService, UserService, ClubService, apikey_google) {
 	var discussionRef = FirebaseIO.child('events/' + $routeParams.eventId + '/comments');
 	$scope.rsvp = RSVPService.read($routeParams.eventId) || {guests: 0, error: false};
 	$scope.originalRSVP = angular.copy($scope.rsvp); // Save an original to compare changes with hasRSVPChanges()
@@ -203,6 +203,30 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$routeP
 	$scope.comments = CommentService.listClutch2(discussionRef);
 
 	$scope.addComment = function() {
+        var currentTime = new Date(),
+            serializedData = $.param({
+                eventContactEmail: $scope.event.contactEmail,
+                eventTitle: $scope.event.name,
+                comment: $scope.userComment,
+                commenter: UserService.profile.id,
+                commentTime: (currentTime.getMonth() + 1) + 
+                    "/" + currentTime.getDate() +
+                    "/" + currentTime.getFullYear() + 
+                    " - " + currentTime.getHours() + 
+                    ":" + currentTime.getMinutes() + 
+                    ":" + currentTime.getSeconds()
+            });
+            // Send out a notice that a new comment has been posted to the system
+        $http
+            .post('application/comments/newComment.php', serializedData, {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+            .catch(function (error) {
+                alert("A notification email cannot be sent to the Event Contact about your comment.");
+            });
+        // Comment is actually created
 		CommentService.create($scope.userComment, discussionRef);
 		$scope.userComment = '';
 	};

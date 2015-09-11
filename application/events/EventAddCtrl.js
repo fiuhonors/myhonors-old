@@ -48,6 +48,12 @@ angular.module('myhonorsEvents').controller('EventAddCtrl', ['$scope', '$locatio
             alert("This event is a Club Meeting but has no club associated to it. Please choose a club.");
             return;
         }
+        // Check that if the user provides both a Contact Name and Email, if he/she provides one or the other.
+        if ((newItem.contactName && !newItem.contactEmail) && 
+            (newItem.contactEmail && !newItem.contactName)) {
+            alert("If you specify a Contact Name or Contact Email, you must also provide the other information.");
+            return;
+        }
 
         newItem.location = {
             name: $scope.newItem.location.name, 
