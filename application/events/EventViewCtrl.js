@@ -222,9 +222,6 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$http',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
-            })
-            .catch(function (error) {
-                alert("A notification email cannot be sent to the Event Contact about your comment.");
             });
         // Comment is actually created
 		CommentService.create($scope.userComment, discussionRef);
