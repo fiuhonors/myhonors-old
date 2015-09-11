@@ -15,7 +15,7 @@ if (!isset($comment) ||
     !isset($commenter) ||
     !isset($commentTime) ||
     !isset($eventContactEmail)) {
-    json_encode(array(
+    echo json_encode(array(
         'success' => false,
         'error' => 'Only partial details have been filled.'
     ));
@@ -45,5 +45,9 @@ $emailHeaders =
     'To: ' . $eventContactEmail . "\r\n";
 
 mail($eventContactEmail, $emailTitle, $emailMessage, $emailHeaders);
+
+echo json_encode(array(
+        'success' => true
+));
 
 ?>
