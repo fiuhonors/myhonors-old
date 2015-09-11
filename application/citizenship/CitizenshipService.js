@@ -74,10 +74,6 @@
 					studentId = UserService.profile.id;
 				}
 				var userEvents = citizenshipFactory.getEvents();
-				console.log(userEvents);
-				angular.forEach(userEvents, function(eventInfo, key) {
-					console.log('test');
-				});
 			}
 			
 		};
