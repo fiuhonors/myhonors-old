@@ -208,7 +208,8 @@ angular.module('myhonorsEvents').controller('EventViewCtrl', ['$scope', '$http',
                 eventContactEmail: $scope.event.contactEmail,
                 eventTitle: $scope.event.name,
                 comment: $scope.userComment,
-                commenter: UserService.profile.id,
+                commenter: UserService.profile.fname + " " + UserService.profile.lname,
+                commenterPantherId: UserService.profile.id,
                 commentTime: (currentTime.getMonth() + 1) + 
                     "/" + currentTime.getDate() +
                     "/" + currentTime.getFullYear() + 

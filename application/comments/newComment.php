@@ -7,6 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] !== "POST") {
 
 $comment = $_POST['comment'];
 $commenter = $_POST['commenter'];
+$commenterPantherId = $_POST['commenterPantherId'];
 $commentTime = $_POST['commentTime'];
 $eventTitle = $_POST['eventTitle'];
 $eventContactEmail = $_POST['eventContactEmail'];
@@ -22,7 +23,7 @@ if (!isset($comment) ||
     die();
 }
 
-$emailTitle = "{$commenter} commented on {$eventTitle}";
+$emailTitle = "{$commenter}({$commenterPantherId}) commented on {$eventTitle}";
 $emailMessage = "
     <html>
     <head>
