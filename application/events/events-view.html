@@ -30,7 +30,7 @@
                     <strong>Location: </strong> {{event.location.name}} <br/>
                     <span ng-if="event.contactName && event.contactEmail">
                         <strong>Contact: </strong> {{event.contactName}} <br/>
-                        <strong>Contact Email: {{event.contactEmail}}</strong>
+                        <strong>Contact Email: </strong> {{event.contactEmail}}
                     </span>
                 </p>
                 <hr style="margin-top: 10px; margin-bottom: 10px" ng-show="user.auth.isEventMod" />

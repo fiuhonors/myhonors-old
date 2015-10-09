@@ -107,7 +107,10 @@ angular.module('myhonorsEvents').controller('EventEditCtrl', ['$scope', '$locati
 			},
 			types: $scope.event.types || [],
             club: $scope.event.club || '',
-			options: $scope.event.options
+			options: $scope.event.options,
+            
+            contactName: $scope.event.contactName,
+            contactEmail: $scope.event.contactEmail
 		});
 
 		EventService.update($routeParams.eventId, event);
