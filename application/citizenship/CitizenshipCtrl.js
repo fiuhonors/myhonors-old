@@ -109,7 +109,7 @@ angular.module('myhonorsEvents').controller('CitizenshipCtrl', ['$scope', '$time
                         else {
                             var clubName = eventInfo.club;
                             clubsAttendance[clubName] = (clubsAttendance[clubName] == null) ? 1 : clubsAttendance[clubName] + pointsForEventType;
-                            if (clubName.indexOf("HEARTS") > -1) {
+                            if (clubName.indexOf("HEARTS A CAPELLA") > -1) {
                                 maxPointsForEventType += 3;   
                             }
                             if (clubsAttendance[clubName] * pointsForEventType <= maxPointsForEventType)
