@@ -115,7 +115,8 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
 		 * Updates an event
 		 */
 		update: function(eventId, eventObject) {
-			if (!angular.isString(eventObject.name) ||
+			if (!angular.isObject(eventObject) ||
+                !angular.isString(eventObject.name) ||
 				!angular.isObject(eventObject.date) ||
 				!angular.isNumber(eventObject.date.starts) ||
 				!angular.isNumber(eventObject.date.ends) ||
@@ -126,14 +127,18 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
 				// invalid input, do nothing
 				return;
 			}
-
-                        // go through each property in the object and add that specifically, this prevents
-                        // us from overwriting the entire /events/eventId location (which prevents us from
-                        // deleting the RSVPs, attendance, comments, etc.)
-                        angular.forEach(eventObject, function(value, key) {
-                            FirebaseIO.child('events/' + eventId + '/' + key).set(value);
-                        }); 
-
+            
+            // go through each property in the object and add that specifically, this prevents
+            // us from overwriting the entire /events/eventId location (which prevents us from
+            // deleting the RSVPs, attendance, comments, etc.)
+            angular.forEach(eventObject, function(value, key) {
+                if (!value) {
+                    return;    
+                }
+                
+                FirebaseIO.child('events/' + eventId + '/' + key).set(value);
+            });
+            
 			// setting the priority to the date.ends value allows us to show an event that is currently
 			// taking place in any 'Upcoming Events' section
 			FirebaseIO.child('events/' + eventId).setPriority(eventObject.date.ends);
