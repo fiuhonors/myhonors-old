@@ -25,8 +25,9 @@ angular.module('myhonorsInternal').controller('StudentsListCtrl', function($scop
 
                     if (eventType == "Club Meeting") {
                         var clubName = value.clubName;
-                        if (clubsAttendance[clubName] == null) 
+                        if (clubsAttendance[clubName] == null) {
                             clubsAttendance[clubName] = 0;
+                        }
                         clubsAttendance[clubName]++;
                     }
                     
@@ -76,7 +77,12 @@ angular.module('myhonorsInternal').controller('StudentsListCtrl', function($scop
             /* calculate total club points */
             var totalClubPoints = 0;
             angular.forEach(clubsAttendance, function(attendances, clubName) {
-                var maxPoints = enabledEventTypes["Club Meeting"].maxPoints;
+                var maxPoints;
+                if (clubName.indexOf("HEARTS A CAPELLA") > -1) {
+                    maxPoints = enabledEventTypes["Club Meeting"].maxPoints + 3;
+                } else {
+                    maxPoints = enabledEventTypes["Club Meeting"].maxPoints
+                }
                 var totalPointsForClub =  enabledEventTypes["Club Meeting"].points * attendances;
                 if (maxPoints != 0 && totalPointsForClub > maxPoints)
                     totalPointsForClub = maxPoints;
