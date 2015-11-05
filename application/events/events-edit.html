@@ -109,6 +109,9 @@
                         <input type="checkbox" ng-model="event.options.waitingList" ng-disabled="!event.options.maxRSVPs"> Allow Waiting List 
                     </label>
                     <label class="checkbox" style="margin-left: 20px">
+                        <input type="checkbox" ng-model="event.options.disallowGuests" ng-true-value="false" ng-false-value="true" ng-enabled="event.options.disallowGuests"> Allow Guests
+                    </label>
+                    <label class="checkbox" style="margin-left: 20px">
                         <input type="checkbox" ng-model="event.options.requirePhone"> Require Phone Number to RSVP
                     </label>
                 </div>
