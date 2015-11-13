@@ -19,7 +19,6 @@ config.php
 mHconfig.php
 
 # AngularJS
-application/config.js
 
 #Auth
 auth/auth.php
