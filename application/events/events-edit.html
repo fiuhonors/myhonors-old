@@ -108,8 +108,8 @@
                     <label class="checkbox" style="margin-left: 20px">
                         <input type="checkbox" ng-model="event.options.waitingList" ng-disabled="!event.options.maxRSVPs"> Allow Waiting List 
                     </label>
-                    <label class="checkbox" style="margin-left: 20px">
-                        <input type="checkbox" ng-model="event.options.disallowGuests" ng-true-value="false" ng-false-value="true" ng-enabled="event.options.disallowGuests"> Allow Guests
+                    <label class="checkbox" style="margin-left: 20px" ng-if="noGuestsAllowed">
+                        <input type="checkbox" ng-model="event.options.disallowGuests" ng-true-value="" ng-false-value="true"> Allow Guests? <span class="label label-danger">Guests previously disallowed in this event</span>
                     </label>
                     <label class="checkbox" style="margin-left: 20px">
                         <input type="checkbox" ng-model="event.options.requirePhone"> Require Phone Number to RSVP

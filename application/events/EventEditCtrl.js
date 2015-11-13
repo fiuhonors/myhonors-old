@@ -52,6 +52,8 @@ angular.module('myhonorsEvents').controller('EventEditCtrl', ['$scope', '$locati
 					$scope.event.date.ends.date = moment($scope.event.date.starts.date, 'MM-DD-YYYY').format('MM/DD/YYYY');
 				}
 			};
+            
+            $scope.noGuestsAllowed = $scope.event.options.disallowGuests;
 		});
 	});
 
@@ -112,7 +114,10 @@ angular.module('myhonorsEvents').controller('EventEditCtrl', ['$scope', '$locati
             contactName: $scope.event.contactName,
             contactEmail: $scope.event.contactEmail
 		});
-
+        if (event && event.options && event.options.disallowGuests === "") {
+            delete event.options.disallowGuests;
+        }
+        
 		EventService.update($routeParams.eventId, event);
 		
 		if ($scope.event.options.waitingList)

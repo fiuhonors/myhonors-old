@@ -70,6 +70,10 @@ angular.module('myhonorsEvents').controller('EventAddCtrl', ['$scope', '$locatio
         var endHour = getHour($scope.newItem.date.ends.time);
         var endMin = getMinute($scope.newItem.date.ends.time);
         newItem.date.ends = moment($scope.newItem.date.ends.date, "MM-DD-YYYY").hour(endHour).minute(endMin).valueOf();
+        
+        if (newItem.options && newItem.options.disallowGuests == "") {
+            delete newItem.options.disallowGuests;
+        }
 
         var newEventId = EventService.create(newItem);
 
