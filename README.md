@@ -6,7 +6,7 @@ We use [Firebase](https://www.firebase.com/) to handle real-time data from the b
 All necessary files are already included in the repository, so you can get started with just a few steps. Note that we are assuming you use LDAP for authentication and already have an account with Firebase.
 
 1. [Download](https://github.com/sergiopantoja/myhonors/archive/master.zip) or [clone](https://github.com/sergiopantoja/myhonors) the MyHonors repository and upload the files to your webserver.
-2. Rename `auth/auth.sample.php` to `auth/auth.php`. Edit the file with the appropriate config settings.
+2. Modify `auth/auth.php` and define the 4 PHP constants that are left undefined in the file.
 3. Rename `config.sample.php` to `config.php`. Edit the file with the appropriate Firebase info.
 4. Rename `application/config.sample.js` to `application/config.js`.
 5. If you haven't already, install LDAP support for your server (e.g. *apt-get install php5-ldap*).
