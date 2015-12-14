@@ -76,12 +76,15 @@
             <div class="box-header">Internship Details</div>
             <div class="box-content padded clearfix word-wrap">		
                 <h4 class="text-center">Internship Details</h4>
-
                 <div class="space-below">
-                    <b>Start Date: </b> {{position.date.starts}}
+                    <b>Start Date: </b> 
+                    <span ng-show="position.date.starts">{{position.date.starts}}</span>
+                    <span ng-hide="position.date.starts">No definite start date</span>
                 </div>
                 <div class="space-below">
-                    <b>End Date: </b> {{position.date.ends}}
+                    <b>End Date: </b> 
+                    <span ng-show="position.date.ends">{{position.date.ends}}</span>
+                    <span ng-hide="position.date.ends">Ongoing</span>
                 </div>
                 <div class="space-below">
                     <b>Hourly Rate: </b> 
@@ -117,7 +120,7 @@
                 <hr>
 
                 <div class="space-below">
-                    <b>Details: </b> {{position.details}}
+                    <b>Details: </b><span ng-bind-html="position.details"></span>
                 </div>
 
                 <div ng-show="position.status != 'pending'">

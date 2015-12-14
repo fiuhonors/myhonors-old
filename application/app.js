@@ -2,6 +2,7 @@
 
 angular.module('myhonors', [
 	// module dependencies
+    'ngSanitize',
 	'webStorageModule',
 	'ui.bootstrap',
 	'ui.bootstrap.calendar',

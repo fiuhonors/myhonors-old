@@ -10,15 +10,11 @@ angular.module('myhonorsCareer').factory('CareerService', function($q, FirebaseI
 				!angular.isString(careerObject.address) ||
 				!angular.isString(careerObject.pointOfContact) ||
 				!angular.isString(careerObject.details) ||
-				!angular.isObject(careerObject.date) ||
-				!angular.isString(careerObject.date.starts) ||
-				!angular.isString(careerObject.date.ends) ||
-				!angular.isObject(careerObject.time) ||
 				!angular.isString(careerObject.description) ||
 				!angular.isString(careerObject.status)
 			) {
 				return false;
-			}
+            }
 			
 			return true;
 	};
@@ -67,6 +63,7 @@ angular.module('myhonorsCareer').factory('CareerService', function($q, FirebaseI
 			var eventsRef = FirebaseIO.child('careers');
 
 			var options = options || {};
+            
 			if (options.hasOwnProperty('startAt')) eventsRef = eventsRef.startAt(options.startAt);
 			if (options.hasOwnProperty('endAt'))   eventsRef = eventsRef.endAt(options.endAt);
 			if (options.hasOwnProperty('limit'))   eventsRef = eventsRef.limit(options.limit);

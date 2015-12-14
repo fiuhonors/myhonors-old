@@ -32,6 +32,10 @@ angular.module('myhonorsCareer').controller('CareersFormCtrl', ['$scope', '$time
 					
 					if ( $scope.newPosition.status === "pending" ) {
 						var serializedData = $.param( $scope.newPosition ); //Serializes the data so we can pass it to the POST request
+                        
+                        
+                        
+                        
 						sendNotificationEmail( positionID, serializedData );
 					}
 					

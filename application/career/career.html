@@ -17,8 +17,12 @@
                             <a href class="pull-right" ng-show="(user.auth.isAdmin || user.auth.isStaff) && item.status == 'inactive'" ng-click="toggleActivation($event, item.id, item.status)"> Activate </a> 
                         </small>
                         <h5 class="media-heading"><a href="#/career/{{item.id}}">{{item.companyName}}</a> <span class="label label-success" ng-show="item.paid">$</span></h5>
-                        <small><b>Start Date:</b> {{item.date.starts}} </small> <br />
-                        <small><b>End Date:</b> {{item.date.ends}} </small> <br />
+                        <small><b>Start Date:</b>
+                            <span ng-show="item.date.starts">{{position.date.starts}}</span>
+                            <span ng-hide="item.date.starts">No definite start date</span></small> <br />
+                        <small><b>End Date:</b> 
+                            <span ng-show="item.date.ends">{{position.date.ends}}</span>
+                            <span ng-hide="item.date.ends">Ongoing</span> </small> <br />
                         <small><b>Hours per Week:</b> {{item.time.hoursPerWeek}} </small> <br />
                         <small>{{item.description| truncate:150}}</small>
                         <br />
