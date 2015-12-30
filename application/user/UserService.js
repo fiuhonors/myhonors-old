@@ -7,14 +7,14 @@ angular.module('myhonorsUser').factory('UserService', function($http, $location,
 
 		var self = this;
 		var defer = $q.defer();
-		
+
 		if(username.length === 0 || password.length === 0){
 			defer.reject("No username and/or password provided");
 			this.profile = null;
 			this.status.loading = false;
 			return defer.promise;
 		}
-		
+
 		var data = 'pid=' + username + '&password=' + password;
 		$http.post('auth/auth.php', data, {headers: {'Content-Type' : 'application/x-www-form-urlencoded'}}).success(function(result) {
 			var loginSuccess = false;
@@ -31,6 +31,20 @@ angular.module('myhonorsUser').factory('UserService', function($http, $location,
 						alert(error);
 					}
 					else if (authObject) {
+						//checks if the id in the auth object is found in the barred list. if so a flag is to true to block them
+						var isUnauthorized = false;
+						var ref2 = FirebaseIO.child('/system_settings/isUnauthorized/' + authObject.auth.id);
+						ref2.once('value', function(snapshot) {
+							if(snapshot.val() !== null) {
+								alert("Sorry, but you are not authorized to enter.");
+								$timeout(function() {
+									self.profile = null;
+									self.status.loading = false;
+								});
+								isUnauthorized = true;
+								return;
+							}
+						});
 
 						// then check if the user has a profile. if not, create it
 						var ref = FirebaseIO.child('/user_profiles/' + authObject.auth.id);
@@ -55,6 +69,9 @@ angular.module('myhonorsUser').factory('UserService', function($http, $location,
 								ref.child('lname').set(result.lname);
 								ref.child('pid').set(result.pid);
 								ref.child('lastActivity').set(Date.now());
+							} else if(isUnauthorized) {
+								//The alert and timeout function could be placed here. The return needs to be called so the user is not logged in.
+									return;
 							} else {
 								// user has profile. update lastActivity
 								ref.child('lastActivity').set(Date.now());
@@ -95,21 +112,21 @@ angular.module('myhonorsUser').factory('UserService', function($http, $location,
 				alert(result.error);
 				self.status.loading = false;
 			}
-			
+
 		});
-		
+
 		return defer.promise;
-		
+
 	};
 
 	var logout = function() {
 		$http.get('auth/un_auth.php', {headers: {'Content-Type' : 'application/x-www-form-urlencoded'}});
 		webStorage.remove('auth_token');
-		FirebaseIO.unauth(); 
+		FirebaseIO.unauth();
 		this.profile = null;
 		$location.path('/login');
 	};
-	
+
 	/**
 	 * Check if a certain userId already exists and executes a callback with the boolean result
 	 */
@@ -127,24 +144,24 @@ angular.module('myhonorsUser').factory('UserService', function($http, $location,
 			}
 		});
 	};
-    
+
     /**
      * Method that accepts a student's username and returns a promise containing that student's PID
      */
     var getPIDFromUsername = function( username ) {
         var deferred = $q.defer();
-        
+
         $timeout(function() {
             FirebaseIO.child( 'usernames/' + username ).once( 'value', function( snapshot ) {
                 if ( snapshot.val() === null )
                     deferred.reject( "No student with that username was found" );
                 else
-                    deferred.resolve( snapshot.val().toString()  ); 
+                    deferred.resolve( snapshot.val().toString()  );
                 $rootScope.$apply();
             });
         });
-        
-        
+
+
         return deferred.promise;
     };
 
