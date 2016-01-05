@@ -36,7 +36,6 @@ angular.module('myhonorsUser').factory('UserService', function($http, $location,
 						var ref2 = FirebaseIO.child('/system_settings/isUnauthorized/' + authObject.auth.id);
 						ref2.once('value', function(snapshot) {
 							if(snapshot.val() !== null) {
-								alert("Sorry, but you are not authorized to enter.");
 								$timeout(function() {
 									self.profile = null;
 									self.status.loading = false;
@@ -70,12 +69,12 @@ angular.module('myhonorsUser').factory('UserService', function($http, $location,
 								ref.child('pid').set(result.pid);
 								ref.child('lastActivity').set(Date.now());
 							} else if(isUnauthorized) {
-								//The alert and timeout function could be placed here. The return needs to be called so the user is not logged in.
+								//The return needs to be called so the user is not logged in.
+								alert("Sorry, but you are not authorized to enter.");//need to put alert here because firefox alert "pauses" functions when alert is calld
 									return;
 							} else {
 								// user has profile. update lastActivity
 								ref.child('lastActivity').set(Date.now());
-
 								var profile = snapshot.val();
 								profile.id = snapshot.name();
 
