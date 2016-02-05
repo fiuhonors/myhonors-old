@@ -132,7 +132,7 @@ angular.module('myhonorsEvents').factory('EventService', function($q, FirebaseIO
             // us from overwriting the entire /events/eventId location (which prevents us from
             // deleting the RSVPs, attendance, comments, etc.)
             angular.forEach(eventObject, function(value, key) {
-                if (!value) {
+                if (!value && key != "club") {
                     return;    
                 }
                 
