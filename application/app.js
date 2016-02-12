@@ -20,6 +20,7 @@ angular.module('myhonors', [
 	'myhonorsInternal',
 	'myhonorsCareer',
 	'myhonorsArch',
+  'myhonorsArchive',
 	'ngTouch',
 	'angular-carousel',
 ]);
@@ -36,6 +37,7 @@ angular.module('myhonorsEvents', []);
 angular.module('myhonorsInternal', []);
 angular.module('myhonorsCareer', []);
 angular.module('myhonorsArch', []);
+angular.module('myhonorsArchive', [])
 
 var appResolve = {
 	/**
