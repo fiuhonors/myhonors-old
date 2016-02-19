@@ -1,8 +1,3 @@
-<!--<div>{{message}}</div>
-<div class="row">
-
-</div> -->
-
 <div class="row" ng-show="user.auth.isAdmin || user.auth.isStaff">
   <div class="box">
     <div class="box-header">Archive Administration Panel</div>
@@ -24,17 +19,17 @@
             <br ng-show="addingVideo">
 
         <div ng-show="addingVideo" align="center">
-          <label class="control-label">Video URL : </label>
+          <label class="control-label">Video URL: </label>
           <input type="text" ng-model="newVideo.videolink" class="form-control" style="width: 60%;"></div>
           <br ng-show="addingVideo">
 
         <div ng-show="addingVideo" align="center">
-          <label class="control-label">Description : </label>
+          <label class="control-label">Description: </label>
           <textarea type="text" ng-model="newVideo.desc" class="form-control" rows="4" style="width: 60%;"></textarea></div>
           <br ng-show="addingVideo">
 
           <div ng-show="addingVideo" align="center">
-            <label class="control-label">Event type : </label>
+            <label class="control-label">Event type: </label>
             <!--<input type="text" ng-model="newVideo.eventType" class="form-control" style="width: 60%;">-->
             <select ng-model="newVideo.eventType">
               <option value="Leadership Lecture">Leadership Lecture</option>
@@ -79,7 +74,7 @@
         <a ng-click="submit()" ng-show="addingVideo" class="btn btn-primary btn-block">Submit</a>
 
         <div class="well media" ng-show="addingVideo">
-          <a class="pull-left" ><img ng-src='{{newVideo.thumbnail}}' width="200px" height="200px"></a>
+          <a class="pull-left" href="{{newVideo.videolink}}" traget="_blank"><img ng-src='{{newVideo.thumbnail}}' width="200px" height="200px"></a>
           <h5>{{newVideo.title}} - <small>{{newVideo.eventType}} : {{newVideo.numPoints}}</small></h5> </br>
           <small><b>Description.</b> {{newVideo.desc}}</small> </br>
           <small><b>Date: </b> <span>{{newVideo.date}}</span></small>
@@ -104,8 +99,60 @@
   </div>
   <div class="box" ng-show="editingVideo" align="center">
     <label class="control-label">Survey Link: </label>
-    <input type="text" ng-model="editSurvey" class="form-control" style="width: 60%;"> Type "Close" to close the survey
-    <a ng-click="edit(item, editSurvey)" class="btn btn-primary btn-block">Edit Survey URL</a> </br>
+    <input type="text" ng-model="editVideo.survey" class="form-control" style="width: 60%;"> Type "Close" to close the survey </br>
+
+    <label class="control-label">Title: </label>
+    <input type="text" ng-model="editVideo.title" class="form-control" style="width: 60%;">
+
+    <label class="control-label">Date: </label>
+    <input type="text" ng-model="editVideo.date" class="form-control" data-date-format="mm/dd/yyyy" date-type="string" bs-datepicker style="width: 15%;">
+    <span class="input-group-btn" data-toggle="datepicker">
+        <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
+    </span>
+    </br>
+
+    <label class="control-label">Video URL: </label>
+    <input type="text" ng-model="editVideo.videolink" class="form-control" style="width: 60%;">
+    </br>
+
+    <label class="control-label">Description: </label>
+    <textarea type="text" ng-model="editVideo.desc" class="form-control" rows="4" style="width: 60%;"></textarea>
+    </br>
+
+    <label class="control-label">Event type: </label>
+      <!--<input type="text" ng-model="newVideo.eventType" class="form-control" style="width: 60%;">-->
+      <select ng-model="editVideo.eventType">
+        <option value="Leadership Lecture">Leadership Lecture</option>
+        <option value="Colloquium">Colloquium</option>
+        <option value="Honors Hour">Honors Hour</option>
+        <option value="HEARTS">HEARTS</option>
+        <option value="Sponsored Event">Sponsored Event</option>
+        <option value="Club Meeting">Club Meeting</option>
+        <option value="Study Room and BBC Lab">Study Room and BBC Lab</option>
+      </select>
+    </br>
+
+    <label class="control-label">numPoints: </label>
+      <select ng-model="editVideo.numPoints">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+    </br>
+
+    <label class="control-label">Thumbnail URL: </label>
+    <input type="text" ng-model="editVideo.thumbnail" class="form-control" style="width: 60%;">
+    </br>
+
+    <label class="control-label">Survey Deadline: </label>
+    <input type="text" ng-model="editVideo.deadline" class="form-control" data-date-format="mm/dd/yyyy" date-type="string" bs-datepicker style="width: 15%;">
+    <span class="input-group-btn" data-toggle="datepicker">
+        <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
+    </span>
+    </br>
+
+    <a ng-click="edit(item, editVideo)" class="btn btn-primary btn-block">Edit Video</a> </br>
     <a ng-click="delete(item)" ng-confirm="Are you sure you want to delete {{item.title}}" class="btn btn-primary btn-block">Delete Video</a>
-    </div>
+  </div>
 </div>

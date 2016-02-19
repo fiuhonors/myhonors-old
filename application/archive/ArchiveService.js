@@ -7,8 +7,6 @@ angular.module('myhonorsArchive').factory('ArchiveService', function(FirebaseIO,
        !angular.isString(video.date) ||
        !angular.isString(video.videolink) ||
        !angular.isString(video.desc) ||
-       !angular.isString(video.eventType) ||
-       !angular.isString(video.numPoints) ||
        !angular.isString(video.thumbnail) ||
        !angular.isString(video.survey) ||
        !angular.isString(video.deadline)) {
@@ -39,7 +37,11 @@ angular.module('myhonorsArchive').factory('ArchiveService', function(FirebaseIO,
       },
 
       edit: function(video, editSurvey) {
-        FirebaseIO.child('archive/' + video['createdAt'] + '/' + 'survey').set(editSurvey);
+        angular.forEach(editSurvey, function(value, key) {
+          if(value.length > 0)
+  				    FirebaseIO.child('archive/' + video['createdAt'] + '/' + key).set(value);
+  			});
+        //FirebaseIO.child('archive/' + video['createdAt'] + '/' + 'survey').set(editSurvey);
       },
 
       submit: function(video) {
