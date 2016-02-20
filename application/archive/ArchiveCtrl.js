@@ -4,20 +4,19 @@ angular.module('myhonorsArchive').controller('ArchiveCtrl', ['$scope', 'Firebase
 
   $scope.list = ArchiveService.list();
   $scope.addingVideo = false;
-  $scope.editingVideo = false;
   $scope.newVideo = {};
 
   $scope.adding = function() {
       $scope.addingVideo = !$scope.addingVideo;
   };
 
-  $scope.editing = function() {
-      $scope.newVideo = {};
-      $scope.editingVideo = !$scope.editingVideo;
+  $scope.editing = function(video) {
+    video.editing = !video.editing;
   };
 
-  $scope.edit = function(video, editSurvey) {
-    ArchiveService.edit(video, editSurvey);
+  $scope.edit = function(video, edit) {
+    ArchiveService.edit(video, edit);
+    video.editing = false;
   };
 
   $scope.submit = function() {

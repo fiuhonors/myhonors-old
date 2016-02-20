@@ -36,8 +36,8 @@ angular.module('myhonorsArchive').factory('ArchiveService', function(FirebaseIO,
   			}});
       },
 
-      edit: function(video, editSurvey) {
-        angular.forEach(editSurvey, function(value, key) {
+      edit: function(video, edit) {
+        angular.forEach(edit, function(value, key) {
           if(value.length > 0)
   				    FirebaseIO.child('archive/' + video['createdAt'] + '/' + key).set(value);
   			});

@@ -91,16 +91,13 @@
     <small><b>Description.</b> {{item.desc}}</small> </br>
     <small><b>Date: </b> <span>{{item.date}}</span></small>
     <div align="right" ng-show="user.auth.isAdmin || user.auth.isStaff">
-      <a ng-click="editing()" class="btn btn-primary">Edit</a>
+      <a ng-click="editing(item)" class="btn btn-primary">Edit</a>
       </div>
   </div>
   <div class="well well-sm" ng-show="survey(item.survey)"><a href="{{item.survey}}">Click here to take Survey for {{item.title}}.</a>
     Survey Deadline: {{item.surveyDeadline}}
   </div>
-  <div class="box" ng-show="editingVideo" align="center">
-    <label class="control-label">Survey Link: </label>
-    <input type="text" ng-model="editVideo.survey" class="form-control" style="width: 60%;"> Type "Close" to close the survey </br>
-
+  <div class="box" ng-show="item.editing" align="center">
     <label class="control-label">Title: </label>
     <input type="text" ng-model="editVideo.title" class="form-control" style="width: 60%;">
 
@@ -144,6 +141,9 @@
     <label class="control-label">Thumbnail URL: </label>
     <input type="text" ng-model="editVideo.thumbnail" class="form-control" style="width: 60%;">
     </br>
+
+    <label class="control-label">Survey Link: </label>
+    <input type="text" ng-model="editVideo.survey" class="form-control" style="width: 60%;"> Type "Close" to close the survey </br>
 
     <label class="control-label">Survey Deadline: </label>
     <input type="text" ng-model="editVideo.deadline" class="form-control" data-date-format="mm/dd/yyyy" date-type="string" bs-datepicker style="width: 15%;">
