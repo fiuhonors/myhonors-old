@@ -62,6 +62,7 @@
           <input type="text" ng-model="newVideo.survey" class="form-control" style="width: 60%;"></div>
           <br ng-show="addingVideo">
 
+          <div ng-show="false"> <!-- Survey deadline will be later implemented in myHonors 2.0 -->
           <div ng-show="addingVideo" align="center">
             <label class="control-label">Survey Deadline: </label>
             <input type="text" ng-model="newVideo.deadline" class="form-control" data-date-format="mm/dd/yyyy" date-type="string" bs-datepicker style="width: 15%;">
@@ -70,23 +71,24 @@
             </span>
           </div>
             <br ng-show="addingVideo">
+          </div>
 
         <a ng-click="submit()" ng-show="addingVideo" class="btn btn-primary btn-block">Submit</a>
 
         <div class="well media" ng-show="addingVideo">
-          <a class="pull-left" href="{{newVideo.videolink}}" traget="_blank"><img ng-src='{{newVideo.thumbnail}}' width="200px" height="200px"></a>
+          <a class="pull-left" href="{{newVideo.videolink}}" target="_blank"><img ng-src='{{newVideo.thumbnail}}' width="200px" height="200px"></a>
           <h5>{{newVideo.title}} - <small>{{newVideo.eventType}} : {{newVideo.numPoints}}</small></h5> </br>
           <small><b>Description.</b> {{newVideo.desc}}</small> </br>
           <small><b>Date: </b> <span>{{newVideo.date}}</span></small>
         </div>
-        <div ng-show="addingVideo" class="well well-sm"><a href="{{newVideo.survey}}">Click here to take Survey for {{newVideo.title}}.</a></div>
+        <div ng-show="addingVideo" class="well well-sm"><a href="{{newVideo.survey}}">Click here to take Survey for {{newVideo.title}}</a></div>
     </div>
   </div>
 </div>
 
 <div class="row" ng-repeat="item in list" style="margin-bottom:15px;">
   <div class="well media">
-    <a class="pull-left" href="#/archive/videoplayer/{{item.id}}"><img ng-src='{{item.thumbnail}}' width="200px" height="200px"></a>
+    <a class="pull-left" href="{{item.videolink}}" target="_blank"><img ng-src='{{item.thumbnail}}' width="200px" height="200px"></a>
     <h5>{{item.title}} - <small>{{item.eventType}} : {{item.numPoints}}</small></h5> </br>
     <small><b>Description.</b> {{item.desc}}</small> </br>
     <small><b>Date: </b> <span>{{item.date}}</span></small>
@@ -95,30 +97,30 @@
       </div>
   </div>
   <div class="well well-sm" ng-show="survey(item.survey)"><a href="{{item.survey}}">Click here to take Survey for {{item.title}}.</a>
-    Survey Deadline: {{item.surveyDeadline}}
+    <!-- Survey Deadline: {{item.surveyDeadline}} Deadlines will be implemented in myHonors 2.0-->
   </div>
   <div class="box" ng-show="item.editing" align="center">
     <label class="control-label">Title: </label>
-    <input type="text" ng-model="editVideo.title" class="form-control" style="width: 60%;">
+    <input ng-init="editVideo.title = item.title" type="text" ng-model="editVideo.title" class="form-control" style="width: 60%;">
 
     <label class="control-label">Date: </label>
-    <input type="text" ng-model="editVideo.date" class="form-control" data-date-format="mm/dd/yyyy" date-type="string" bs-datepicker style="width: 15%;">
+    <input ng-init="editVideo.date = item.date" type="text" ng-model="editVideo.date" class="form-control" data-date-format="mm/dd/yyyy" date-type="string" bs-datepicker style="width: 15%;">
     <span class="input-group-btn" data-toggle="datepicker">
         <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
     </span>
     </br>
 
     <label class="control-label">Video URL: </label>
-    <input type="text" ng-model="editVideo.videolink" class="form-control" style="width: 60%;">
+    <input ng-init="editVideo.videolink = item.videolink" type="text" ng-model="editVideo.videolink" class="form-control" style="width: 60%;">
     </br>
 
     <label class="control-label">Description: </label>
-    <textarea type="text" ng-model="editVideo.desc" class="form-control" rows="4" style="width: 60%;"></textarea>
+    <textarea ng-init="editVideo.desc = item.desc" type="text" ng-model="editVideo.desc" class="form-control" rows="4" style="width: 60%;"></textarea>
     </br>
 
     <label class="control-label">Event type: </label>
       <!--<input type="text" ng-model="newVideo.eventType" class="form-control" style="width: 60%;">-->
-      <select ng-model="editVideo.eventType">
+      <select ng-init="editVideo.eventType = item.eventType" ng-model="editVideo.eventType">
         <option value="Leadership Lecture">Leadership Lecture</option>
         <option value="Colloquium">Colloquium</option>
         <option value="Honors Hour">Honors Hour</option>
@@ -130,7 +132,7 @@
     </br>
 
     <label class="control-label">numPoints: </label>
-      <select ng-model="editVideo.numPoints">
+      <select ng-init="editVideo.numPoints = item.numPoints" ng-model="editVideo.numPoints">
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -139,18 +141,21 @@
     </br>
 
     <label class="control-label">Thumbnail URL: </label>
-    <input type="text" ng-model="editVideo.thumbnail" class="form-control" style="width: 60%;">
+    <input ng-init="editVideo.thumbnail = item.thumbnail" type="text" ng-model="editVideo.thumbnail" class="form-control" style="width: 60%;">
     </br>
 
     <label class="control-label">Survey Link: </label>
-    <input type="text" ng-model="editVideo.survey" class="form-control" style="width: 60%;"> Type "Close" to close the survey </br>
+    <input ng-init="editVideo.survey = item.survey" type="text" ng-model="editVideo.survey" class="form-control" style="width: 60%;"> Type "Close" to close the survey </br>
 
+
+    <div ng-show="false"> <!-- Survey deadline will be later implemented in myHonors 2.0 -->
     <label class="control-label">Survey Deadline: </label>
-    <input type="text" ng-model="editVideo.deadline" class="form-control" data-date-format="mm/dd/yyyy" date-type="string" bs-datepicker style="width: 15%;">
+    <input ng-init="editVideo.deadline = item.deadline" type="text" ng-model="editVideo.deadline" class="form-control" data-date-format="mm/dd/yyyy" date-type="string" bs-datepicker style="width: 15%;">
     <span class="input-group-btn" data-toggle="datepicker">
         <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
     </span>
     </br>
+    </div>
 
     <a ng-click="edit(item, editVideo)" class="btn btn-primary btn-block">Edit Video</a> </br>
     <a ng-click="delete(item)" ng-confirm="Are you sure you want to delete {{item.title}}" class="btn btn-primary btn-block">Delete Video</a>
