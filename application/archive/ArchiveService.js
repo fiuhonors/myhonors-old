@@ -8,7 +8,7 @@ angular.module('myhonorsArchive').factory('ArchiveService', function(FirebaseIO,
        !angular.isString(video.videolink) ||
        !angular.isString(video.desc) ||
        !angular.isString(video.thumbnail) ||
-       !angular.isString(video.survey) {
+       !angular.isString(video.survey) ){
       return false;
     } else {
       return true;
