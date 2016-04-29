@@ -25,11 +25,9 @@ angular.module('myhonorsArchive').factory('ArchiveService', function(FirebaseIO,
             date: snapshot.val()['date'],
             desc: snapshot.val()['desc'],
             eventType: snapshot.val()['eventType'],
-            numPoints: snapshot.val()['numPoints'],
             thumbnail: snapshot.val()['thumbnail'],
             videolink: snapshot.val()['videolink'],
-            survey: snapshot.val()['survey'],
-            deadline: snapshot.val()['deadline']
+            survey: snapshot.val()['survey']
   				};
   				doAdd(snapshot, extraData);
   			}});
@@ -37,8 +35,10 @@ angular.module('myhonorsArchive').factory('ArchiveService', function(FirebaseIO,
 
       edit: function(video, edit) {
         angular.forEach(edit, function(value, key) {
-          if(value.length > 0)
-  				    FirebaseIO.child('archive/' + video['createdAt'] + '/' + key).set(value);
+          if(value !== undefined) {
+            if(value.length > 0)
+    				    FirebaseIO.child('archive/' + video['createdAt'] + '/' + key).set(value);
+            }
   			});
         //FirebaseIO.child('archive/' + video['createdAt'] + '/' + 'survey').set(editSurvey);
       },
